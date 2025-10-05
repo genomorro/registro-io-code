@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Date index{% endblock %}
+
+{% block body %}
+    <h1>Date index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Time</th>
+                <th>Place</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for date in dates %}
+            <tr>
+                <td>{{ date.id }}</td>
+                <td>{{ date.time ? date.time|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ date.place }}</td>
+                <td>{{ date.type }}</td>
+                <td>
+                    <a href="{{ path('app_date_show', {'id': date.id}) }}">show</a>
+                    <a href="{{ path('app_date_edit', {'id': date.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_date_new') }}">Create new</a>
+{% endblock %}

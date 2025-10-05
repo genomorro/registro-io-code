@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Date{% endblock %}
+
+{% block body %}
+    <h1>Edit Date</h1>
+
+    {{ include('date/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_date_index') }}">back to list</a>
+
+    {{ include('date/_delete_form.html.twig') }}
+{% endblock %}
