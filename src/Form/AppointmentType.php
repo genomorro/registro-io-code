@@ -2,24 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Date;
+use App\Entity\Appointment;
 use App\Entity\Patient;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateType extends AbstractType
+class AppointmentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('time')
             ->add('place')
+            ->add('date_at', null, [
+                'widget' => 'single_text',
+            ])
             ->add('type')
             ->add('patient', EntityType::class, [
                 'class' => Patient::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
         ;
     }
@@ -27,7 +29,7 @@ class DateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Date::class,
+            'data_class' => Appointment::class,
         ]);
     }
 }

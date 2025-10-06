@@ -25,14 +25,14 @@ class Patient
     private ?bool $disability = null;
 
     /**
-     * @var Collection<int, Date>
+     * @var Collection<int, Appointment>
      */
-    #[ORM\OneToMany(targetEntity: Date::class, mappedBy: 'patient', orphanRemoval: true)]
-    private Collection $dates;
+    #[ORM\OneToMany(targetEntity: Appointment::class, mappedBy: 'patient', orphanRemoval: true)]
+    private Collection $appointments;
 
     public function __construct()
     {
-        $this->dates = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,29 +77,29 @@ class Patient
     }
 
     /**
-     * @return Collection<int, Date>
+     * @return Collection<int, Appointment>
      */
-    public function getDates(): Collection
+    public function getAppointments(): Collection
     {
-        return $this->dates;
+        return $this->appointments;
     }
 
-    public function addDate(Date $date): static
+    public function addAppointment(Appointment $appointment): static
     {
-        if (!$this->dates->contains($date)) {
-            $this->dates->add($date);
-            $date->setPatient($this);
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setPatient($this);
         }
 
         return $this;
     }
 
-    public function removeDate(Date $date): static
+    public function removeAppointment(Appointment $appointment): static
     {
-        if ($this->dates->removeElement($date)) {
+        if ($this->appointments->removeElement($appointment)) {
             // set the owning side to null (unless already changed)
-            if ($date->getPatient() === $this) {
-                $date->setPatient(null);
+            if ($appointment->getPatient() === $this) {
+                $appointment->setPatient(null);
             }
         }
 
