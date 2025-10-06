@@ -26,6 +26,107 @@
         </tbody>
     </table>
 
+    <hr>
+
+    <h2>Today's Appointments</h2>
+    {% set todays_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') == "now"|date('Y-m-d')) %}
+    {% if todays_appointments is not empty %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Place</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for appointment in todays_appointments %}
+                <tr>
+                    <td>{{ appointment.place }}</td>
+                    <td>{{ appointment.type }}</td>
+                    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No appointments for today.</p>
+    {% endif %}
+
+    <h2>Other Appointments</h2>
+    {% set other_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') != "now"|date('Y-m-d')) %}
+    {% if other_appointments is not empty %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Place</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for appointment in other_appointments %}
+                <tr>
+                    <td>{{ appointment.place }}</td>
+                    <td>{{ appointment.type }}</td>
+                    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No other appointments.</p>
+    {% endif %}
+
+    {#
+    <h2>Today's Appointments</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Place</th>
+            <th>Date</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for appointment in patient.appointments|filter(a => a.dateAt|date('Y-m-d') == 'now'|date('Y-m-d')) %}
+            <tr>
+                <td>{{ appointment.place }}</td>
+                <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ appointment.type }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No appointments for today</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Other Appointments</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Place</th>
+            <th>Date</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for appointment in patient.appointments|filter(a => a.dateAt|date('Y-m-d') != 'now'|date('Y-m-d')) %}
+            <tr>
+                <td>{{ appointment.place }}</td>
+                <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ appointment.type }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No other appointments</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> #}
+    
     <a href="{{ path('app_patient_index') }}">back to list</a>
 
     <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>

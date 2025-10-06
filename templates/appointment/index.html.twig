@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+		<th>Patient</th>
                 <th>Place</th>
                 <th>Date_at</th>
                 <th>Type</th>
@@ -19,6 +20,7 @@
         {% for appointment in appointments %}
             <tr>
                 <td>{{ appointment.id }}</td>
+		<td>{{ appointment.patient.name }}</td>
                 <td>{{ appointment.place }}</td>
                 <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ appointment.type }}</td>

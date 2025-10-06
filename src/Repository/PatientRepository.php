@@ -16,6 +16,24 @@ class PatientRepository extends ServiceEntityRepository
         parent::__construct($registry, Patient::class);
     }
 
+    /**
+     * @return Patient[] Returns an array of Patient objects
+     */
+    public function findWithAppointmentsToday(): array
+    {
+        $today = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.appointments', 'a')
+            ->where('a.date_at >= :today AND a.date_at < :tomorrow')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
+            ->getQuery()
+            ->getResult();
+    }
+    
     //    /**
     //     * @return Patient[] Returns an array of Patient objects
     //     */
