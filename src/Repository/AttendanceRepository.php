@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Attendance;
+use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,32 @@ class AttendanceRepository extends ServiceEntityRepository
         parent::__construct($registry, Attendance::class);
     }
 
-    //    /**
-    //     * @return Attendance[] Returns an array of Attendance objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findOneByPatientAndDate(Patient $patient, \DateTimeInterface $date): ?Attendance
+    {
+        $startOfDay = (clone $date)->setTime(0, 0, 0);
+        $endOfDay = (clone $date)->setTime(23, 59, 59);
 
-    //    public function findOneBySomeField($value): ?Attendance
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.patient = :patient')
+            ->andWhere('a.checkin_at >= :startOfDay')
+            ->andWhere('a.checkin_at <= :endOfDay')
+            ->setParameter('patient', $patient)
+            ->setParameter('startOfDay', $startOfDay)
+            ->setParameter('endOfDay', $endOfDay)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @return Attendance[]
+     */
+    public function findAllWithPatient(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'p')
+            ->leftJoin('a.patient', 'p')
+            ->getQuery()
+            ->getResult();
+    }
 }

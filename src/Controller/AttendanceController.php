@@ -18,8 +18,17 @@ final class AttendanceController extends AbstractController
     public function index(AttendanceRepository $attendanceRepository): Response
     {
         return $this->render('attendance/index.html.twig', [
-            'attendances' => $attendanceRepository->findAll(),
+            'attendances' => $attendanceRepository->findAllWithPatient(),
         ]);
+    }
+
+    #[Route('/{id}/check-out', name: 'app_attendance_check_out', methods: ['POST'])]
+    public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
+    {
+        $attendance->setCheckoutAt(new \DateTimeImmutable());
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_attendance_index');
     }
 
     #[Route('/new', name: 'app_attendance_new', methods: ['GET', 'POST'])]

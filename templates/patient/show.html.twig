@@ -28,6 +28,27 @@
 
     <hr>
 
+    <h2>Today's Attendance</h2>
+    {% set todays_attendance = patient.attendances|filter(a => a.checkinAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+    {% if todays_attendance %}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Check-in</th>
+                    <td>{{ todays_attendance.checkinAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Check-out</th>
+                    <td>{{ todays_attendance.checkoutAt ? todays_attendance.checkoutAt|date('Y-m-d H:i:s') : 'Not checked out yet' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No attendance record for today.</p>
+    {% endif %}
+    
+    <hr>
+
     <h2>Today's Appointments</h2>
     {% set todays_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') == "now"|date('Y-m-d')) %}
     {% if todays_appointments is not empty %}

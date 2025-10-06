@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Attendance;
 use App\Entity\Patient;
 use App\Form\PatientType;
+use App\Repository\AttendanceRepository;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,11 +16,36 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/patient')]
 final class PatientController extends AbstractController
 {
+    #[Route('/{id}/check-in', name: 'app_patient_check_in', methods: ['POST'])]
+    public function checkIn(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    {
+        $attendance = new Attendance();
+        $attendance->setPatient($patient);
+        $attendance->setCheckinAt(new \DateTimeImmutable());
+
+        $entityManager->persist($attendance);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_patient_index');
+    }
+
+    #[Route('/{id}/check-out', name: 'app_patient_check_out', methods: ['POST'])]
+    public function checkOut(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
+    {
+        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
+        if ($attendance) {
+            $attendance->setCheckoutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_patient_index');
+    }
+
     #[Route(name: 'app_patient_index', methods: ['GET'])]
     public function index(PatientRepository $patientRepository): Response
     {
         return $this->render('patient/index.html.twig', [
-            'patients' => $patientRepository->findWithAppointmentsToday(),
+            'patients' => $patientRepository->findWithAppointmentsAndAttendanceToday(),
         ]);
     }
 
