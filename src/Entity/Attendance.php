@@ -23,6 +23,9 @@ class Attendance
     #[ORM\JoinColumn(nullable: false)]
     private ?Patient $patient = null;
 
+    #[ORM\Column]
+    private ?int $tag = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Attendance
     public function setPatient(?Patient $patient): static
     {
         $this->patient = $patient;
+
+        return $this;
+    }
+
+    public function getTag(): ?int
+    {
+        return $this->tag;
+    }
+
+    public function setTag(int $tag): static
+    {
+        $this->tag = $tag;
 
         return $this;
     }
