@@ -36,10 +36,17 @@ class Patient
     #[ORM\OneToMany(targetEntity: Attendance::class, mappedBy: 'patient', orphanRemoval: true)]
     private Collection $attendances;
 
+    /**
+     * @var Collection<int, Visitor>
+     */
+    #[ORM\ManyToMany(targetEntity: Visitor::class, mappedBy: 'patient')]
+    private Collection $visitors;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
         $this->attendances = new ArrayCollection();
+        $this->visitors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +145,33 @@ class Patient
             if ($attendance->getPatient() === $this) {
                 $attendance->setPatient(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Visitor>
+     */
+    public function getVisitors(): Collection
+    {
+        return $this->visitors;
+    }
+
+    public function addVisitor(Visitor $visitor): static
+    {
+        if (!$this->visitors->contains($visitor)) {
+            $this->visitors->add($visitor);
+            $visitor->addPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitor(Visitor $visitor): static
+    {
+        if ($this->visitors->removeElement($visitor)) {
+            $visitor->removePatient($this);
         }
 
         return $this;
