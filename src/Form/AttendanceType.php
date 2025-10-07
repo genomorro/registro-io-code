@@ -14,10 +14,10 @@ class AttendanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('checkin_at', null, [
+            ->add('checkInAt', null, [
                 'widget' => 'single_text',
             ])
-            ->add('checkout_at', null, [
+            ->add('checkOutAt', null, [
                 'widget' => 'single_text',
             ])
             ->add('patient', EntityType::class, [

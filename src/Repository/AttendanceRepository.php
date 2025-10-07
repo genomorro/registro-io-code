@@ -24,8 +24,8 @@ class AttendanceRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('a')
             ->andWhere('a.patient = :patient')
-            ->andWhere('a.checkin_at >= :startOfDay')
-            ->andWhere('a.checkin_at <= :endOfDay')
+            ->andWhere('a.checkInAt >= :startOfDay')
+            ->andWhere('a.checkInAt <= :endOfDay')
             ->setParameter('patient', $patient)
             ->setParameter('startOfDay', $startOfDay)
             ->setParameter('endOfDay', $endOfDay)

@@ -10,36 +10,36 @@
             <tr>
                 <th>Id</th>
                 <th>Patient</th>
-                <th>Checkin_at</th>
-                <th>Checkout_at</th>
+                <th>CheckInAt</th>
+                <th>CheckOutAt</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for attendance in attendances %}
-            <tr>
-                <td>{{ attendance.id }}</td>
-                <td>{{ attendance.patient.name }}</td>
-                <td>{{ attendance.checkinAt ? attendance.checkinAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    {% if attendance.checkoutAt %}
-                        {{ attendance.checkoutAt|date('Y-m-d H:i:s') }}
-                    {% else %}
-                        <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
-                            <button type="submit" class="btn btn-sm btn-secondary">Check out</button>
-                        </form>
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('app_attendance_show', {'id': attendance.id}) }}">show</a>
-                    <a href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">edit</a>
-                </td>
-            </tr>
+            {% for attendance in attendances %}
+		<tr>
+                    <td>{{ attendance.id }}</td>
+                    <td>{{ attendance.patient.name }}</td>
+                    <td>{{ attendance.checkinAt ? attendance.checkinAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+			{% if attendance.checkoutAt %}
+                            {{ attendance.checkoutAt|date('Y-m-d H:i:s') }}
+			{% else %}
+                            <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
+				<button type="submit" class="btn btn-sm btn-secondary">Check out</button>
+                            </form>
+			{% endif %}
+                    </td>
+                    <td>
+			<a href="{{ path('app_attendance_show', {'id': attendance.id}) }}">show</a>
+			<a href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">edit</a>
+                    </td>
+		</tr>
         {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+		<tr>
+                    <td colspan="5">no records found</td>
+		</tr>
+            {% endfor %}
         </tbody>
     </table>
 

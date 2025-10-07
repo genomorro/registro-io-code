@@ -83,7 +83,7 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}/check-out-show', name: 'app_attendance_check_out_show', methods: ['POST'])]
     public function checkOutShow(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
-        $attendance->setCheckoutAt(new \DateTimeImmutable());
+        $attendance->setCheckOutAt(new \DateTimeImmutable());
         $entityManager->flush();
 
         return $this->redirectToRoute('app_attendance_show', ['id' => $attendance->getId()]);
@@ -93,7 +93,7 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_attendance_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
-        $attendance->setCheckoutAt(new \DateTimeImmutable());
+        $attendance->setCheckOutAt(new \DateTimeImmutable());
         $entityManager->flush();
 
         return $this->redirectToRoute('app_attendance_index');

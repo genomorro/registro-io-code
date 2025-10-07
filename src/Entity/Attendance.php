@@ -14,10 +14,10 @@ class Attendance
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $checkin_at = null;
+    private ?\DateTimeImmutable $checkInAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $checkout_at = null;
+    private ?\DateTimeImmutable $checkOutAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'attendances')]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,26 +28,26 @@ class Attendance
         return $this->id;
     }
 
-    public function getCheckinAt(): ?\DateTimeImmutable
+    public function getCheckInAt(): ?\DateTimeImmutable
     {
-        return $this->checkin_at;
+        return $this->checkInAt;
     }
 
-    public function setCheckinAt(\DateTimeImmutable $checkin_at): static
+    public function setCheckInAt(\DateTimeImmutable $checkInAt): static
     {
-        $this->checkin_at = $checkin_at;
+        $this->checkInAt = $checkInAt;
 
         return $this;
     }
 
-    public function getCheckoutAt(): ?\DateTimeImmutable
+    public function getCheckOutAt(): ?\DateTimeImmutable
     {
-        return $this->checkout_at;
+        return $this->checkOutAt;
     }
 
-    public function setCheckoutAt(?\DateTimeImmutable $checkout_at): static
+    public function setCheckOutAt(?\DateTimeImmutable $checkOutAt): static
     {
-        $this->checkout_at = $checkout_at;
+        $this->checkOutAt = $checkOutAt;
 
         return $this;
     }

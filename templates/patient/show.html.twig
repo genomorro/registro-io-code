@@ -29,17 +29,25 @@
     <hr>
 
     <h2>Today's Attendance</h2>
-    {% set todays_attendance = patient.attendances|filter(a => a.checkinAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
     {% if todays_attendance %}
         <table class="table">
             <tbody>
                 <tr>
                     <th>Check-in</th>
-                    <td>{{ todays_attendance.checkinAt|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
                     <th>Check-out</th>
-                    <td>{{ todays_attendance.checkoutAt ? todays_attendance.checkoutAt|date('Y-m-d H:i:s') : 'Not checked out yet' }}</td>
+                    <td>
+                        {% if todays_attendance.checkOutAt %}
+                            {{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
+                        {% else %}
+                            <form method="post" action="{{ path('app_patient_check_out_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');" style="display: inline-block;">
+                                <button class="btn btn-sm btn-secondary">Check out</button>
+                            </form>
+                        {% endif %}
+                    </td>
                 </tr>
             </tbody>
         </table>

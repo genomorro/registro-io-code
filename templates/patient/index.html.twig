@@ -18,43 +18,43 @@
             </tr>
         </thead>
         <tbody>
-        {% for patient in patients %}
-            {% set todays_attendance = patient.attendances|filter(a => a.checkinAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
-            <tr>
-                <td>{{ patient.id }}</td>
-                <td>{{ patient.file }}</td>
-                <td>{{ patient.name }}</td>
-                <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
-                <td>
-                    {% if todays_attendance %}
-                        {{ todays_attendance.checkinAt|date('H:i:s') }}
-                    {% else %}
-                        <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
-                            <button type="submit" class="btn btn-sm btn-primary">Check in</button>
-                        </form>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if todays_attendance and todays_attendance.checkoutAt %}
-                        {{ todays_attendance.checkoutAt|date('H:i:s') }}
-                    {% elseif todays_attendance %}
-                        <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
-                            <button type="submit" class="btn btn-sm btn-secondary">Check out</button>
-                        </form>
-                    {% else %}
-                        <button type="button" class="btn btn-sm btn-secondary" disabled>Check out</button>
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{{ path('app_patient_show', {'id': patient.id}) }}">show</a>
-                    <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>
-                </td>
-            </tr>
+            {% for patient in patients %}
+		{% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+		<tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.file }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
+                    <td>
+			{% if todays_attendance %}
+                            {{ todays_attendance.checkInAt|date('H:i:s') }}
+			{% else %}
+                            <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
+				<button type="submit" class="btn btn-sm btn-primary">Check in</button>
+                            </form>
+			{% endif %}
+                    </td>
+                    <td>
+			{% if todays_attendance and todays_attendance.checkOutAt %}
+                            {{ todays_attendance.checkOutAt|date('H:i:s') }}
+			{% elseif todays_attendance %}
+                            <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
+				<button type="submit" class="btn btn-sm btn-secondary">Check out</button>
+                            </form>
+			{% else %}
+                            <button type="button" class="btn btn-sm btn-secondary" disabled>Check out</button>
+			{% endif %}
+                    </td>
+                    <td>
+			<a href="{{ path('app_patient_show', {'id': patient.id}) }}">show</a>
+			<a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>
+                    </td>
+		</tr>
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
+		<tr>
+                    <td colspan="7">no records found</td>
+		</tr>
+            {% endfor %}
         </tbody>
     </table>
 

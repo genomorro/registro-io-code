@@ -27,7 +27,7 @@ class PatientRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->select('p', 'a', 'att')
             ->innerJoin('p.appointments', 'a', 'WITH', 'a.date_at >= :today AND a.date_at < :tomorrow')
-            ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkin_at >= :today AND att.checkin_at < :tomorrow')
+            ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
             ->setParameter('today', $today)
             ->setParameter('tomorrow', $tomorrow)
             ->getQuery()

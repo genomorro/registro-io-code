@@ -88,7 +88,7 @@ final class PatientController extends AbstractController
     {
         $attendance = new Attendance();
         $attendance->setPatient($patient);
-        $attendance->setCheckinAt(new \DateTimeImmutable());
+        $attendance->setCheckInAt(new \DateTimeImmutable());
 
         $entityManager->persist($attendance);
         $entityManager->flush();
@@ -101,10 +101,23 @@ final class PatientController extends AbstractController
     {
         $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
         if ($attendance) {
-            $attendance->setCheckoutAt(new \DateTimeImmutable());
+            $attendance->setCheckOutAt(new \DateTimeImmutable());
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_patient_index');
+    }
+
+    #[Route('/{id}/check-out-show', name: 'app_patient_check_out_show', methods: ['POST'])]
+    public function CheckOutShow(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
+    {
+        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
+
+        if ($attendance) {
+            $attendance->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
     }
 }
