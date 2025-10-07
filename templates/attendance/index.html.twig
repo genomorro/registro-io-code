@@ -25,7 +25,7 @@
                     {% if attendance.checkoutAt %}
                         {{ attendance.checkoutAt|date('Y-m-d H:i:s') }}
                     {% else %}
-                        <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id}) }}" style="display: inline-block;">
+                        <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
                             <button type="submit" class="btn btn-sm btn-secondary">Check out</button>
                         </form>
                     {% endif %}

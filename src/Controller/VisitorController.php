@@ -30,6 +30,7 @@ final class VisitorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $visitor->setCheckInAt(new \DateTimeImmutable());
             $entityManager->persist($visitor);
             $entityManager->flush();
 
@@ -77,5 +78,27 @@ final class VisitorController extends AbstractController
         }
 
         return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/check-out', name: 'app_visitor_check_out', methods: ['POST'])]
+    public function checkOut(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
+            $visitor->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_visitor_index');
+    }
+
+    #[Route('/{id}/check-out-show', name: 'app_visitor_check_out_show', methods: ['POST'])]
+    public function checkOutShow(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
+            $visitor->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getId()]);
     }
 }

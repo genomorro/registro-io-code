@@ -29,7 +29,7 @@
                     {% if todays_attendance %}
                         {{ todays_attendance.checkinAt|date('H:i:s') }}
                     {% else %}
-                        <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;">
+                        <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
                             <button type="submit" class="btn btn-sm btn-primary">Check in</button>
                         </form>
                     {% endif %}
@@ -38,7 +38,7 @@
                     {% if todays_attendance and todays_attendance.checkoutAt %}
                         {{ todays_attendance.checkoutAt|date('H:i:s') }}
                     {% elseif todays_attendance %}
-                        <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;">
+                        <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
                             <button type="submit" class="btn btn-sm btn-secondary">Check out</button>
                         </form>
                     {% else %}

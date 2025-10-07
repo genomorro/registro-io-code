@@ -37,11 +37,30 @@
             </tr>
             <tr>
                 <th>CheckOutAt</th>
-                <td>{{ visitor.CheckOutAt ? visitor.CheckOutAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {% if visitor.CheckOutAt %}
+                        {{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
+                    {% else %}
+                        <form method="post" action="{{ path('app_visitor_check_out_show', {'id': visitor.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
+                            <button class="btn btn-sm btn-warning">Check Out</button>
+                        </form>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Relationship</th>
                 <td>{{ visitor.relationship }}</td>
+            </tr>
+            <tr>
+                <th>Patients</th>
+                <td>
+                    <ul>
+			{% for patient in visitor.patient %}
+                            <li>{{ patient.name }} (File: {{ patient.file }})</li>
+			{% endfor %}
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>

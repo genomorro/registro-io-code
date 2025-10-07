@@ -18,8 +18,8 @@ class Visitor
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $phone = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $dni = null;
@@ -67,12 +67,12 @@ class Visitor
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function setPhone(?int $phone): static
+    public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
 

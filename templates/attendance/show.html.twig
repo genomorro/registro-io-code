@@ -20,7 +20,7 @@
                 <td>
                     {{ attendance.checkoutAt ? attendance.checkoutAt|date('Y-m-d H:i:s') : '' }}
                     {% if attendance.checkoutAt is null %}
-                        <form method="post" action="{{ path('app_attendance_checkout', {'id': attendance.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+                        <form method="post" action="{{ path('app_attendance_check_out_show', {'id': attendance.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
                             <button class="btn btn-primary">Checkout</button>
                         </form>
