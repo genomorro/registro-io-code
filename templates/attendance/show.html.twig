@@ -17,7 +17,23 @@
             </tr>
             <tr>
                 <th>Checkout_at</th>
-                <td>{{ attendance.checkoutAt ? attendance.checkoutAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {{ attendance.checkoutAt ? attendance.checkoutAt|date('Y-m-d H:i:s') : '' }}
+                    {% if attendance.checkoutAt is null %}
+                        <form method="post" action="{{ path('app_attendance_checkout', {'id': attendance.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
+                            <button class="btn btn-primary">Checkout</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Patient name</th>
+                <td>{{ attendance.patient.name }}</td>
+            </tr>
+            <tr>
+                <th>Patient file</th>
+                <td>{{ attendance.patient.file }}</td>
             </tr>
         </tbody>
     </table>

@@ -22,6 +22,16 @@ final class AttendanceController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/checkout', name: 'app_attendance_checkout', methods: ['POST'])]
+    public function checkOutShow(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
+    {
+        $attendance->setCheckoutAt(new \DateTimeImmutable());
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_attendance_show', ['id' => $attendance->getId()]);
+    }
+
+
     #[Route('/{id}/check-out', name: 'app_attendance_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
