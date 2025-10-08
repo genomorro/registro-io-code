@@ -43,11 +43,17 @@ class AttendanceType extends AbstractType
                 $form->add('checkInAt', DateTimeType::class, [
                     'widget' => 'single_text',
                 ]);
-                $form->add('checkOutAt', DateTimeType::class, [
+
+                $checkOutOptions = [
                     'widget' => 'single_text',
-                    'data' => new \DateTimeImmutable(),
                     'required' => false,
-                ]);
+                ];
+
+                if (null === $attendance->getCheckOutAt()) {
+                    $checkOutOptions['data'] = new \DateTimeImmutable();
+                }
+
+                $form->add('checkOutAt', DateTimeType::class, $checkOutOptions);
             }
         });
     }
