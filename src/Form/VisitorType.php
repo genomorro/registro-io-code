@@ -6,10 +6,11 @@ use App\Entity\Patient;
 use App\Entity\Visitor;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VisitorType extends AbstractType
 {
@@ -33,12 +34,24 @@ class VisitorType extends AbstractType
             $visitor = $event->getData();
             $form = $event->getForm();
 
-            if ($visitor && null !== $visitor->getId()) {
-                $form->add('checkInAt', null, [
+            if (!$visitor || null === $visitor->getId()) {
+                // New visitor
+                $form->add('checkInAt', DateTimeType::class, [
+                    'widget' => 'single_text',
+                    'data' => new \DateTimeImmutable(),
+                ]);
+                $form->add('checkOutAt', DateTimeType::class, [
+                    'widget' => 'single_text',
+                    'required' => false,
+                ]);
+            } else {
+                // Existing visitor
+                $form->add('checkInAt', DateTimeType::class, [
                     'widget' => 'single_text',
                 ]);
-                $form->add('CheckOutAt', null, [
+                $form->add('checkOutAt', DateTimeType::class, [
                     'widget' => 'single_text',
+                    'data' => new \DateTimeImmutable(),
                     'required' => false,
                 ]);
             }

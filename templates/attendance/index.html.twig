@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Patient</th>
+                <th>Tag</th>
                 <th>CheckInAt</th>
                 <th>CheckOutAt</th>
                 <th>actions</th>
@@ -20,6 +21,7 @@
 		<tr>
                     <td>{{ attendance.id }}</td>
                     <td>{{ attendance.patient.name }}</td>
+                    <td>{{ attendance.tag }}</td>
                     <td>{{ attendance.checkinAt ? attendance.checkinAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td>
 			{% if attendance.checkoutAt %}
@@ -37,7 +39,7 @@
 		</tr>
         {% else %}
 		<tr>
-                    <td colspan="5">no records found</td>
+                    <td colspan="6">no records found</td>
 		</tr>
             {% endfor %}
         </tbody>

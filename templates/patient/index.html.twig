@@ -30,6 +30,7 @@
                             {{ todays_attendance.checkInAt|date('H:i:s') }}
 			{% else %}
                             <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
+                                <input type="number" name="tag" placeholder="Tag" required style="width: 80px; display: inline-block;" class="form-control form-control-sm"/>
 				<button type="submit" class="btn btn-sm btn-primary">Check in</button>
                             </form>
 			{% endif %}

@@ -86,14 +86,45 @@ final class PatientController extends AbstractController
     #[Route('/{id}/check-in', name: 'app_patient_check_in', methods: ['POST'])]
     public function checkIn(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
+        $tag = $request->request->get('tag');
+
+        if (!is_numeric($tag)) {
+            $this->addFlash('danger', 'A numeric tag is required to check in.');
+
+            return $this->redirectToRoute('app_patient_index');
+        }
+
         $attendance = new Attendance();
         $attendance->setPatient($patient);
         $attendance->setCheckInAt(new \DateTimeImmutable());
+        $attendance->setTag((int) $tag);
 
         $entityManager->persist($attendance);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_patient_index');
+    }
+
+    #[Route('/{id}/check-in-show', name: 'app_patient_check_in_show', methods: ['POST'])]
+    public function checkInShow(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    {
+        $tag = $request->request->get('tag');
+
+        if (!is_numeric($tag)) {
+            $this->addFlash('danger', 'A numeric tag is required to check in.');
+
+            return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
+        }
+
+        $attendance = new Attendance();
+        $attendance->setPatient($patient);
+        $attendance->setCheckInAt(new \DateTimeImmutable());
+        $attendance->setTag((int) $tag);
+
+        $entityManager->persist($attendance);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
     }
 
     #[Route('/{id}/check-out', name: 'app_patient_check_out', methods: ['POST'])]

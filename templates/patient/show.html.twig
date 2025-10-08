@@ -33,6 +33,9 @@
     {% if todays_attendance %}
         <table class="table">
             <tbody>
+		<tr>
+		    <th>Tag</th>
+		    <td>{{ todays_attendance.tag }}</td>
                 <tr>
                     <th>Check-in</th>
                     <td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
@@ -52,7 +55,10 @@
             </tbody>
         </table>
     {% else %}
-        <p>No attendance record for today.</p>
+        <form method="post" action="{{ path('app_patient_check_in_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check in?');" style="display: inline-block;">
+            <input type="number" name="tag" placeholder="Tag" required style="width: 80px; display: inline-block;" class="form-control form-control-sm"/>
+            <button type="submit" class="btn btn-sm btn-primary">Check in</button>
+        </form>
     {% endif %}
     
     <hr>

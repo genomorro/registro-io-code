@@ -34,7 +34,7 @@ class Visitor
     private ?\DateTimeImmutable $checkInAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $CheckOutAt = null;
+    private ?\DateTimeImmutable $checkOutAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $relationship = null;
@@ -129,12 +129,12 @@ class Visitor
 
     public function getCheckOutAt(): ?\DateTimeImmutable
     {
-        return $this->CheckOutAt;
+        return $this->checkOutAt;
     }
 
-    public function setCheckOutAt(?\DateTimeImmutable $CheckOutAt): static
+    public function setCheckOutAt(?\DateTimeImmutable $checkOutAt): static
     {
-        $this->CheckOutAt = $CheckOutAt;
+        $this->checkOutAt = $checkOutAt;
 
         return $this;
     }

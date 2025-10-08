@@ -12,6 +12,10 @@
                 <td>{{ attendance.id }}</td>
             </tr>
             <tr>
+                <th>Tag</th>
+                <td>{{ attendance.tag }}</td>
+            </tr>
+            <tr>
                 <th>CheckInAt</th>
                 <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
