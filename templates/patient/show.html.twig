@@ -27,6 +27,7 @@
             </tbody>
 	</table>
     </div>
+
     <hr>
 
     <h2>Today's Attendance</h2>
@@ -125,24 +126,26 @@
 
     <h2>Today's Visitors</h2>
     {% if todays_visitors is not empty %}
-        <table class="table table table-responsible table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>DNI</th>
-                    <th>Check-in</th>
-                </tr>
-            </thead>
-            <tbody>
-		{% for visitor in todays_visitors %}
+	<div class="table-responsible">
+            <table class="table table-striped">
+		<thead>
                     <tr>
-			<td>{{ visitor.name }}</td>
-			<td>{{ visitor.dni }}</td>
-			<td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			<th>Name</th>
+			<th>DNI</th>
+			<th>Check-in</th>
                     </tr>
-		{% endfor %}
-            </tbody>
-        </table>
+		</thead>
+		<tbody>
+		    {% for visitor in todays_visitors %}
+			<tr>
+			    <td>{{ visitor.name }}</td>
+			    <td>{{ visitor.dni }}</td>
+			    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		    {% endfor %}
+		</tbody>
+            </table>
+	</div>
     {% else %}
         <p>No visitors for today.</p>
     {% endif %}
