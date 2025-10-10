@@ -5,34 +5,36 @@
 {% block body %}
     <h1>Appointment</h1>
 
-    <table class="table table-responsible table-striped">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ appointment.id }}</td>
-            </tr>
-            <tr>
-                <th>Place</th>
-                <td>{{ appointment.place }}</td>
-            </tr>
-            <tr>
-                <th>Date_at</th>
-                <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ appointment.type }}</td>
-            </tr>
-            <tr>
-                <th>Patient name</th>
-                <td>{{ appointment.patient.name }}</td>
-            </tr>
-            <tr>
-                <th>Patient file</th>
-                <td>{{ appointment.patient.file }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsible">
+	<table class="table table-striped">
+            <tbody>
+		<tr>
+                    <th>Id</th>
+                    <td>{{ appointment.id }}</td>
+		</tr>
+		<tr>
+                    <th>Place</th>
+                    <td>{{ appointment.place }}</td>
+		</tr>
+		<tr>
+                    <th>Date_at</th>
+                    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+		</tr>
+		<tr>
+                    <th>Type</th>
+                    <td>{{ appointment.type }}</td>
+		</tr>
+		<tr>
+                    <th>Patient name</th>
+                    <td>{{ appointment.patient.name }}</td>
+		</tr>
+		<tr>
+                    <th>Patient file</th>
+                    <td>{{ appointment.patient.file }}</td>
+		</tr>
+            </tbody>
+	</table>
+    </div>
 
     <a href="{{ path('app_appointment_index') }}">back to list</a>
 
