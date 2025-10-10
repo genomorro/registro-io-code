@@ -5,42 +5,44 @@
 {% block body %}
     <h1>Attendance</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ attendance.id }}</td>
-            </tr>
-            <tr>
-                <th>Tag</th>
-                <td>{{ attendance.tag }}</td>
-            </tr>
-            <tr>
-                <th>CheckInAt</th>
-                <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CheckOutAt</th>
-                <td>
-                    {{ attendance.checkOutAt ? attendance.checkOutAt|date('Y-m-d H:i:s') : '' }}
-                    {% if attendance.checkoutAt is null %}
-                        <form method="post" action="{{ path('app_attendance_check_out_show', {'id': attendance.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
-                            <button class="btn btn-primary">Checkout</button>
-                        </form>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Patient name</th>
-                <td>{{ attendance.patient.name }}</td>
-            </tr>
-            <tr>
-                <th>Patient file</th>
-                <td>{{ attendance.patient.file }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsible">
+	<table class="table table-striped">
+            <tbody>
+		<tr>
+                    <th>Id</th>
+                    <td>{{ attendance.id }}</td>
+		</tr>
+		<tr>
+                    <th>Tag</th>
+                    <td>{{ attendance.tag }}</td>
+		</tr>
+		<tr>
+                    <th>CheckInAt</th>
+                    <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+		</tr>
+		<tr>
+                    <th>CheckOutAt</th>
+                    <td>
+			{{ attendance.checkOutAt ? attendance.checkOutAt|date('Y-m-d H:i:s') : '' }}
+			{% if attendance.checkoutAt is null %}
+                            <form method="post" action="{{ path('app_attendance_check_out_show', {'id': attendance.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
+				<button class="btn btn-primary">Checkout</button>
+                            </form>
+			{% endif %}
+                    </td>
+		</tr>
+		<tr>
+                    <th>Patient name</th>
+                    <td>{{ attendance.patient.name }}</td>
+		</tr>
+		<tr>
+                    <th>Patient file</th>
+                    <td>{{ attendance.patient.file }}</td>
+		</tr>
+            </tbody>
+	</table>
+    </div>
 
     <a href="{{ path('app_attendance_index') }}">back to list</a>
 

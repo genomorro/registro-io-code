@@ -5,59 +5,61 @@
 {% block body %}
     <h1>Patient index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>File</th>
-                <th>Name</th>
-                <th>Disability</th>
-                <th>Check in</th>
-                <th>Check out</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for patient in patients %}
-		{% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+    <div class="table-responsible">
+	<table class="table table-hover">
+            <thead>
 		<tr>
-                    <td>{{ patient.id }}</td>
-                    <td>{{ patient.file }}</td>
-                    <td>{{ patient.name }}</td>
-                    <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
-                    <td>
-			{% if todays_attendance %}
-                            {{ todays_attendance.checkInAt|date('H:i:s') }}
-			{% else %}
-                            <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
-                                <input type="number" name="tag" placeholder="Tag" required style="width: 80px; display: inline-block;" class="form-control form-control-sm"/>
-				<button type="submit" class="btn btn-sm btn-primary">Check in</button>
-                            </form>
-			{% endif %}
-                    </td>
-                    <td>
-			{% if todays_attendance and todays_attendance.checkOutAt %}
-                            {{ todays_attendance.checkOutAt|date('H:i:s') }}
-			{% elseif todays_attendance %}
-                            <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
-				<button type="submit" class="btn btn-sm btn-secondary">Check out</button>
-                            </form>
-			{% else %}
-                            <button type="button" class="btn btn-sm btn-secondary" disabled>Check out</button>
-			{% endif %}
-                    </td>
-                    <td>
-			<a href="{{ path('app_patient_show', {'id': patient.id}) }}">show</a>
-			<a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>
-                    </td>
+                    <th>Id</th>
+                    <th>File</th>
+                    <th>Name</th>
+                    <th>Disability</th>
+                    <th>Check in</th>
+                    <th>Check out</th>
+                    <th>actions</th>
 		</tr>
+            </thead>
+            <tbody>
+		{% for patient in patients %}
+		    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+		    <tr>
+			<td>{{ patient.id }}</td>
+			<td>{{ patient.file }}</td>
+			<td>{{ patient.name }}</td>
+			<td>{{ patient.disability ? 'Yes' : 'No' }}</td>
+			<td>
+			    {% if todays_attendance %}
+				{{ todays_attendance.checkInAt|date('H:i:s') }}
+			    {% else %}
+				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
+                                    <input type="number" name="tag" placeholder="Tag" required style="width: 80px; display: inline-block;" class="form-control form-control-sm"/>
+				    <button type="submit" class="btn btn-sm btn-primary">Check in</button>
+				</form>
+			    {% endif %}
+			</td>
+			<td>
+			    {% if todays_attendance and todays_attendance.checkOutAt %}
+				{{ todays_attendance.checkOutAt|date('H:i:s') }}
+			    {% elseif todays_attendance %}
+				<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
+				    <button type="submit" class="btn btn-sm btn-secondary">Check out</button>
+				</form>
+			    {% else %}
+				<button type="button" class="btn btn-sm btn-secondary" disabled>Check out</button>
+			    {% endif %}
+			</td>
+			<td>
+			    <a href="{{ path('app_patient_show', {'id': patient.id}) }}">show</a>
+			    <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>
+			</td>
+		    </tr>
         {% else %}
-		<tr>
-                    <td colspan="7">no records found</td>
-		</tr>
-            {% endfor %}
-        </tbody>
-    </table>
+		    <tr>
+			<td colspan="7">no records found</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
 
     <a href="{{ path('app_patient_new') }}">Create new</a>
 {% endblock %}

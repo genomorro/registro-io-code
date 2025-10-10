@@ -4,38 +4,38 @@
 
 {% block body %}
     <h1>Appointment index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-		<th>Patient</th>
-                <th>Place</th>
-                <th>Date_at</th>
-                <th>Type</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for appointment in appointments %}
-            <tr>
-                <td>{{ appointment.id }}</td>
-		<td>{{ appointment.patient.name }}</td>
-                <td>{{ appointment.place }}</td>
-                <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ appointment.type }}</td>
-                <td>
-                    <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}">show</a>
-                    <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    <div class="table-responsible">
+	<table class="table table-hover">
+            <thead>
+		<tr>
+                    <th>Id</th>
+		    <th>Patient</th>
+                    <th>Place</th>
+                    <th>Date_at</th>
+                    <th>Type</th>
+                    <th>actions</th>
+		</tr>
+            </thead>
+            <tbody>
+		{% for appointment in appointments %}
+		    <tr>
+			<td>{{ appointment.id }}</td>
+			<td>{{ appointment.patient.name }}</td>
+			<td>{{ appointment.place }}</td>
+			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+			<td>{{ appointment.type }}</td>
+			<td>
+			    <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}">show</a>
+			    <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">edit</a>
+			</td>
+		    </tr>
+{% else %}
+		    <tr>
+			<td colspan="5">no records found</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
     <a href="{{ path('app_appointment_new') }}">Create new</a>
 {% endblock %}

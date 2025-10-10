@@ -5,56 +5,58 @@
 {% block body %}
     <h1>Visitor index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Dni</th>
-                <th>Tag</th>
-                <th>Destination</th>
-                <th>CheckInAt</th>
-                <th>CheckOutAt</th>
-                <th>Relationship</th>
-                <th>Patients</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for visitor in visitors %}
+    <div class="table-responsible">
+	<table class="table table-hover">
+            <thead>
 		<tr>
-                    <td>{{ visitor.id }}</td>
-                    <td>{{ visitor.name }}</td>
-                    <td>{{ visitor.phone }}</td>
-                    <td>{{ visitor.dni }}</td>
-                    <td>{{ visitor.tag }}</td>
-                    <td>{{ visitor.destination }}</td>
-                    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>
-			{% if visitor.CheckOutAt %}
-                            {{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
-			{% else %}
-                            <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
-				<button class="btn btn-sm btn-warning">Check Out</button>
-                            </form>
-			{% endif %}
-                    </td>
-                    <td>{{ visitor.relationship }}</td>
-                    <td>{{ visitor.patient|map(p => p.name)|join(', ') }}</td>
-                    <td>
-			<a href="{{ path('app_visitor_show', {'id': visitor.id}) }}">show</a>
-			<a href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">edit</a>
-                    </td>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Dni</th>
+                    <th>Tag</th>
+                    <th>Destination</th>
+                    <th>CheckInAt</th>
+                    <th>CheckOutAt</th>
+                    <th>Relationship</th>
+                    <th>Patients</th>
+                    <th>actions</th>
 		</tr>
+            </thead>
+            <tbody>
+		{% for visitor in visitors %}
+		    <tr>
+			<td>{{ visitor.id }}</td>
+			<td>{{ visitor.name }}</td>
+			<td>{{ visitor.phone }}</td>
+			<td>{{ visitor.dni }}</td>
+			<td>{{ visitor.tag }}</td>
+			<td>{{ visitor.destination }}</td>
+			<td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			<td>
+			    {% if visitor.CheckOutAt %}
+				{{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
+			    {% else %}
+				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
+				    <button class="btn btn-sm btn-warning">Check Out</button>
+				</form>
+			    {% endif %}
+			</td>
+			<td>{{ visitor.relationship }}</td>
+			<td>{{ visitor.patient|map(p => p.name)|join(', ') }}</td>
+			<td>
+			    <a href="{{ path('app_visitor_show', {'id': visitor.id}) }}">show</a>
+			    <a href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">edit</a>
+			</td>
+		    </tr>
         {% else %}
-		<tr>
-                    <td colspan="11">no records found</td>
-		</tr>
-            {% endfor %}
-        </tbody>
-    </table>
+		    <tr>
+			<td colspan="11">no records found</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
 
     <a href="{{ path('app_visitor_new') }}">Create new</a>
 {% endblock %}

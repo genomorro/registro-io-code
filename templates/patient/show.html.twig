@@ -5,55 +5,59 @@
 {% block body %}
     <h1>Patient</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ patient.id }}</td>
-            </tr>
-            <tr>
-                <th>File</th>
-                <td>{{ patient.file }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ patient.name }}</td>
-            </tr>
-            <tr>
-                <th>Disability</th>
-                <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
+    <div class="table-responsible">
+	<table class="table table-striped">
+            <tbody>
+		<tr>
+                    <th>Id</th>
+                    <td>{{ patient.id }}</td>
+		</tr>
+		<tr>
+                    <th>File</th>
+                    <td>{{ patient.file }}</td>
+		</tr>
+		<tr>
+                    <th>Name</th>
+                    <td>{{ patient.name }}</td>
+		</tr>
+		<tr>
+                    <th>Disability</th>
+                    <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
+		</tr>
+            </tbody>
+	</table>
+    </div>
     <hr>
 
     <h2>Today's Attendance</h2>
     {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
     {% if todays_attendance %}
-        <table class="table">
-            <tbody>
-		<tr>
-		    <th>Tag</th>
-		    <td>{{ todays_attendance.tag }}</td>
-                <tr>
-                    <th>Check-in</th>
-                    <td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>Check-out</th>
-                    <td>
-                        {% if todays_attendance.checkOutAt %}
-                            {{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
-                        {% else %}
-                            <form method="post" action="{{ path('app_patient_check_out_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');" style="display: inline-block;">
-                                <button class="btn btn-sm btn-secondary">Check out</button>
-                            </form>
-                        {% endif %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsible">
+	    <table class="table table-striped">
+		<tbody>
+		    <tr>
+			<th>Tag</th>
+			<td>{{ todays_attendance.tag }}</td>
+		    </tr>
+                    <tr>
+			<th>Check-in</th>
+			<td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                    <tr>
+			<th>Check-out</th>
+			<td>
+                            {% if todays_attendance.checkOutAt %}
+				{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
+                            {% else %}
+				<form method="post" action="{{ path('app_patient_check_out_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');" style="display: inline-block;">
+                                    <button class="btn btn-sm btn-secondary">Check out</button>
+				</form>
+                            {% endif %}
+			</td>
+                    </tr>
+		</tbody>
+            </table>
+	</div>
     {% else %}
         <form method="post" action="{{ path('app_patient_check_in_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check in?');" style="display: inline-block;">
             <input type="number" name="tag" placeholder="Tag" required style="width: 80px; display: inline-block;" class="form-control form-control-sm"/>
@@ -66,24 +70,26 @@
     <h2>Today's Appointments</h2>
     {% set todays_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') == "now"|date('Y-m-d')) %}
     {% if todays_appointments is not empty %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Place</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-		{% for appointment in todays_appointments %}
+	<div class="table-responsible">
+            <table class="table table-striped">
+		<thead>
                     <tr>
-			<td>{{ appointment.place }}</td>
-			<td>{{ appointment.type }}</td>
-			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+			<th>Place</th>
+			<th>Type</th>
+			<th>Date</th>
                     </tr>
-		{% endfor %}
-            </tbody>
-        </table>
+		</thead>
+		<tbody>
+		    {% for appointment in todays_appointments %}
+			<tr>
+			    <td>{{ appointment.place }}</td>
+			    <td>{{ appointment.type }}</td>
+			    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		    {% endfor %}
+		</tbody>
+            </table>
+	</div>
     {% else %}
         <p>No appointments for today.</p>
     {% endif %}
@@ -91,82 +97,35 @@
     <h2>Other Appointments</h2>
     {% set other_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') != "now"|date('Y-m-d')) %}
     {% if other_appointments is not empty %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Place</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-		{% for appointment in other_appointments %}
+	<div class="table-responsible">
+            <table class="table table-striped">
+		<thead>
                     <tr>
-			<td>{{ appointment.place }}</td>
-			<td>{{ appointment.type }}</td>
-			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+			<th>Place</th>
+			<th>Type</th>
+			<th>Date</th>
                     </tr>
-		{% endfor %}
-            </tbody>
-        </table>
+		</thead>
+		<tbody>
+		    {% for appointment in other_appointments %}
+			<tr>
+			    <td>{{ appointment.place }}</td>
+			    <td>{{ appointment.type }}</td>
+			    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		    {% endfor %}
+		</tbody>
+            </table>
+	</div>
     {% else %}
         <p>No other appointments.</p>
     {% endif %}
-
-    {#
-    <h2>Today's Appointments</h2>
-    <table class="table">
-    <thead>
-    <tr>
-    <th>Place</th>
-    <th>Date</th>
-    <th>Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for appointment in patient.appointments|filter(a => a.dateAt|date('Y-m-d') == 'now'|date('Y-m-d')) %}
-    <tr>
-    <td>{{ appointment.place }}</td>
-    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-    <td>{{ appointment.type }}</td>
-    </tr>
-    {% else %}
-    <tr>
-    <td colspan="3">No appointments for today</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    </table>
-
-    <h2>Other Appointments</h2>
-    <table class="table">
-    <thead>
-    <tr>
-    <th>Place</th>
-    <th>Date</th>
-    <th>Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for appointment in patient.appointments|filter(a => a.dateAt|date('Y-m-d') != 'now'|date('Y-m-d')) %}
-    <tr>
-    <td>{{ appointment.place }}</td>
-    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-    <td>{{ appointment.type }}</td>
-    </tr>
-    {% else %}
-    <tr>
-    <td colspan="3">No other appointments</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    </table> #}
     
     <hr>
 
     <h2>Today's Visitors</h2>
     {% if todays_visitors is not empty %}
-        <table class="table">
+        <table class="table table table-responsible table-striped table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
