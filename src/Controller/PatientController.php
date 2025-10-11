@@ -18,10 +18,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PatientController extends AbstractController
 {
     #[Route(name: 'app_patient_index', methods: ['GET'])]
-    public function index(PatientRepository $patientRepository): Response
+    public function index(PatientRepository $patientRepository, Request $request): Response
     {
+        $queryBuilder = $patientRepository->findWithAppointmentsAndAttendanceTodayQueryBuilder();
+
+        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
+        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(50);
+        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+
         return $this->render('patient/index.html.twig', [
-            'patients' => $patientRepository->findWithAppointmentsAndAttendanceToday(),
+            'patients' => $pagerfanta,
         ]);
     }
 
