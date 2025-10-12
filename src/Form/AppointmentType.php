@@ -6,8 +6,10 @@ use App\Entity\Appointment;
 use App\Entity\Patient;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AppointmentType extends AbstractType
 {
@@ -18,7 +20,16 @@ class AppointmentType extends AbstractType
             ->add('date_at', null, [
                 'widget' => 'single_text',
             ])
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Estudio' => 'Estudio',
+                    'Consulta' => 'Consulta',
+                    'Procedimiento' => 'Procedimiento',
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
             ->add('patient', EntityType::class, [
                 'class' => Patient::class,
                 'choice_label' => 'name',

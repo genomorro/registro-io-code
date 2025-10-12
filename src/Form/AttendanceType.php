@@ -11,13 +11,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttendanceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('tag')
+            ->add('tag', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    new LessThanOrEqual(9999),
+                ],
+            ])
             ->add('patient', EntityType::class, [
                 'class' => Patient::class,
                 'choice_label' => 'name',

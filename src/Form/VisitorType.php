@@ -11,6 +11,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class VisitorType extends AbstractType
 {
@@ -18,9 +22,23 @@ class VisitorType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('phone')
+            ->add('phone', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 10, 'max' => 10]),
+                    new Regex([
+                        'pattern' => '/^[0-9]+$/',
+                        'message' => 'Please enter a valid phone number.',
+                    ]),
+                ],
+            ])
             ->add('dni')
-            ->add('tag')
+            ->add('tag', null, [
+                'constraints' => [
+                    new NotBlank(),
+                    new LessThanOrEqual(9999),
+                ],
+            ])
             ->add('destination')
             ->add('relationship')
             ->add('patient', EntityType::class, [
