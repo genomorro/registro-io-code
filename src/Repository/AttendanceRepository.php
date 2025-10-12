@@ -35,14 +35,12 @@ class AttendanceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Attendance[]
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findAllWithPatient(): array
+    public function findAllWithPatient(): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->select('a', 'p')
-            ->leftJoin('a.patient', 'p')
-            ->getQuery()
-            ->getResult();
+            ->leftJoin('a.patient', 'p');
     }
 }

@@ -15,10 +15,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AttendanceController extends AbstractController
 {
     #[Route(name: 'app_attendance_index', methods: ['GET'])]
-    public function index(AttendanceRepository $attendanceRepository): Response
+    public function index(AttendanceRepository $attendanceRepository, Request $request): Response
     {
+	$queryBuilder = $attendanceRepository->findAllWithPatient();
+
+        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
+        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(20);
+        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+
         return $this->render('attendance/index.html.twig', [
-            'attendances' => $attendanceRepository->findAllWithPatient(),
+            'attendances' => $pagerfanta,
         ]);
     }
 

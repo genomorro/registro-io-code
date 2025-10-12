@@ -51,7 +51,7 @@
 				{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
                             {% else %}
 				<form method="post" action="{{ path('app_patient_check_out_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');" style="display: inline-block;">
-                                    <button class="btn btn-sm btn-danger">Check out</button>
+                                    <button class="btn btn-sm btn-secondary">Check out</button>
 				</form>
                             {% endif %}
 			</td>
@@ -61,65 +61,71 @@
 	</div>
     {% else %}
         <form method="post" action="{{ path('app_patient_check_in_show', {'id': patient.id}) }}" onsubmit="return confirm('Are you sure you want to check in?');" style="display: inline-block;">
-	    <div class="input-group mb-3">
-		<input type="text" name="tag" placeholder="Tag" required style="width: 80px; height: 34px;" class="form-control form-control-sm"/>
-		<button type="submit" class="btn btn-sm btn-success">Check in</button>
-	    </div>
+            <input type="number" name="tag" placeholder="Tag" required style="width: 80px; display: inline-block;" class="form-control form-control-sm"/>
+            <button type="submit" class="btn btn-sm btn-primary">Check in</button>
         </form>
     {% endif %}
     
     <hr>
 
     <h2>Today's Appointments</h2>
-    {% set todays_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') == "now"|date('Y-m-d')) %}
-    {% if todays_appointments is not empty %}
-	<div class="table-responsible">
+    {% if todays_appointments.nbResults > 0 %}
+        <div class="table-responsible">
             <table class="table table-striped">
-		<thead>
+                <thead>
                     <tr>
-			<th>Place</th>
-			<th>Type</th>
-			<th>Date</th>
+                        <th>Place</th>
+                        <th>Type</th>
+                        <th>Date</th>
                     </tr>
-		</thead>
-		<tbody>
-		    {% for appointment in todays_appointments %}
-			<tr>
-			    <td>{{ appointment.place }}</td>
-			    <td>{{ appointment.type }}</td>
-			    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-		    {% endfor %}
-		</tbody>
+                </thead>
+                <tbody>
+                    {% for appointment in todays_appointments %}
+                        <tr>
+                            <td>{{ appointment.place }}</td>
+                            <td>{{ appointment.type }}</td>
+                            <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-	</div>
+        </div>
+	{% if todays_appointments.nbResults > 20 %}
+            <div class="navigation">
+		{{ pagerfanta(todays_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_today_appointments'}) }}
+            </div>
+	{% endif %}
     {% else %}
         <p>No appointments for today.</p>
     {% endif %}
 
     <h2>Other Appointments</h2>
-    {% set other_appointments = patient.appointments|filter(a => a.dateAt|date('Y-m-d') != "now"|date('Y-m-d')) %}
-    {% if other_appointments is not empty %}
-	<div class="table-responsible">
+    {% if other_appointments.nbResults > 0 %}
+        <div class="table-responsible">
             <table class="table table-striped">
-		<thead>
+                <thead>
                     <tr>
-			<th>Place</th>
-			<th>Type</th>
-			<th>Date</th>
+                        <th>Place</th>
+                        <th>Type</th>
+                        <th>Date</th>
                     </tr>
-		</thead>
-		<tbody>
-		    {% for appointment in other_appointments %}
-			<tr>
-			    <td>{{ appointment.place }}</td>
-			    <td>{{ appointment.type }}</td>
-			    <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-		    {% endfor %}
-		</tbody>
+                </thead>
+                <tbody>
+                    {% for appointment in other_appointments %}
+                        <tr>
+                            <td>{{ appointment.place }}</td>
+                            <td>{{ appointment.type }}</td>
+                            <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-	</div>
+        </div>
+	{% if other_appointments.nbResults > 20 %}
+            <div class="navigation">
+		{{ pagerfanta(other_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_other_appointments'}) }}
+            </div>
+	{% endif %}
     {% else %}
         <p>No other appointments.</p>
     {% endif %}
@@ -127,27 +133,32 @@
     <hr>
 
     <h2>Today's Visitors</h2>
-    {% if todays_visitors is not empty %}
-	<div class="table-responsible">
+    {% if todays_visitors.nbResults > 0 %}
+        <div class="table-responsible">
             <table class="table table-striped">
-		<thead>
+                <thead>
                     <tr>
-			<th>Name</th>
-			<th>DNI</th>
-			<th>Check-in</th>
+                        <th>Name</th>
+                        <th>DNI</th>
+                        <th>Check-in</th>
                     </tr>
-		</thead>
-		<tbody>
-		    {% for visitor in todays_visitors %}
-			<tr>
-			    <td>{{ visitor.name }}</td>
-			    <td>{{ visitor.dni }}</td>
-			    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-		    {% endfor %}
-		</tbody>
+                </thead>
+                <tbody>
+                    {% for visitor in todays_visitors %}
+                        <tr>
+                            <td>{{ visitor.name }}</td>
+                            <td>{{ visitor.dni }}</td>
+                            <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-	</div>
+        </div>
+	{% if todays_visitors.nbResults > 20 %}
+            <div class="navigation">
+		{{ pagerfanta(todays_visitors, 'twitter_bootstrap5', {'pageParameter': 'page_today_visitors'}) }}
+            </div>
+	{% endif %}
     {% else %}
         <p>No visitors for today.</p>
     {% endif %}

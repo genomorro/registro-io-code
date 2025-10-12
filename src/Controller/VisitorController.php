@@ -15,10 +15,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class VisitorController extends AbstractController
 {
     #[Route(name: 'app_visitor_index', methods: ['GET'])]
-    public function index(VisitorRepository $visitorRepository): Response
+    public function index(VisitorRepository $visitorRepository, Request $request): Response
     {
+	$queryBuilder = $visitorRepository->createQueryBuilder('v');
+
+	$adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
+	$pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
+	$pagerfanta->setMaxPerPage(20);
+	$pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+	
         return $this->render('visitor/index.html.twig', [
-            'visitors' => $visitorRepository->findAll(),
+            'visitors' => $pagerfanta,
         ]);
     }
 

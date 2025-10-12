@@ -47,5 +47,9 @@
 	</table>
     </div>
 
+    <div class="navigation">
+        {{ pagerfanta(attendances) }}
+    </div>
+
     <a href="{{ path('app_attendance_new') }}">Create new</a>
 {% endblock %}

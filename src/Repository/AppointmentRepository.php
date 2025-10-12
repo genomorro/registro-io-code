@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Appointment;
+use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,36 @@ class AppointmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Appointment::class);
     }
 
-    //    /**
-    //     * @return Appointment[] Returns an array of Appointment objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createTodaysAppointmentsByPatientQueryBuilder(Patient $patient): \Doctrine\ORM\QueryBuilder
+    {
+        $todayStart = new \DateTime('today');
+        $todayEnd = new \DateTime('tomorrow');
 
-    //    public function findOneBySomeField($value): ?Appointment
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        return $this->createQueryBuilder('a')
+		    ->andWhere('a.patient = :patient')
+		    ->andWhere('a.date_at >= :todayStart')
+		    ->andWhere('a.date_at < :todayEnd')
+		    ->setParameter('patient', $patient)
+		    ->setParameter('todayStart', $todayStart)
+		    ->setParameter('todayEnd', $todayEnd)
+		    ->orderBy('a.date_at', 'DESC');
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createOtherAppointmentsByPatientQueryBuilder(Patient $patient): \Doctrine\ORM\QueryBuilder
+    {
+        $todayStart = new \DateTime('today');
+
+        return $this->createQueryBuilder('a')
+		    ->andWhere('a.patient = :patient')
+		    ->andWhere('a.date_at != :todayStart')
+		    ->setParameter('patient', $patient)
+		    ->setParameter('todayStart', $todayStart)
+		    ->orderBy('a.date_at', 'DESC');
+    }
 }
