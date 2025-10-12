@@ -17,9 +17,9 @@ class PatientRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Patient[] Returns an array of Patient objects
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findWithAppointmentsAndAttendanceToday(): array
+    public function findWithAppointmentsAndAttendanceTodayQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         $today = new \DateTime('today');
         $tomorrow = new \DateTime('tomorrow');
@@ -29,8 +29,6 @@ class PatientRepository extends ServiceEntityRepository
             ->innerJoin('p.appointments', 'a', 'WITH', 'a.date_at >= :today AND a.date_at < :tomorrow')
             ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
             ->setParameter('today', $today)
-            ->setParameter('tomorrow', $tomorrow)
-            ->getQuery()
-            ->getResult();
+            ->setParameter('tomorrow', $tomorrow);
     }
 }
