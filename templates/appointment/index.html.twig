@@ -26,8 +26,8 @@
 			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>{{ appointment.type }}</td>
 			<td>
-			    <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}">show</a>
-			    <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">edit</a>
+			    <a class="btn btn-link" href="{{ path('app_appointment_show', {'id': appointment.id}) }}">Show</a>
+			    <a class="btn btn-secondary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">Edit</a>
 			</td>
 		    </tr>
 {% else %}
@@ -45,5 +45,5 @@
 	</div>
     {% endif %}
     
-    <a href="{{ path('app_appointment_new') }}">Create new</a>
+    <a  class="btn btn-primary" href="{{ path('app_appointment_new') }}">Create new</a>
 {% endblock %}

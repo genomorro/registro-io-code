@@ -45,8 +45,8 @@
 			<td>{{ visitor.relationship }}</td>
 			<td>{{ visitor.patient|map(p => p.name)|join(', ') }}</td>
 			<td>
-			    <a href="{{ path('app_visitor_show', {'id': visitor.id}) }}">show</a>
-			    <a href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">edit</a>
+			    <a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">Show</a>
+			    <a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">Edit</a>
 			</td>
 		    </tr>
         {% else %}
@@ -64,5 +64,5 @@
 	</div>
     {% endif %}
 
-    <a href="{{ path('app_visitor_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('app_visitor_new') }}">Create new</a>
 {% endblock %}

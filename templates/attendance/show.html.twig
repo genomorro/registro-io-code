@@ -44,9 +44,15 @@
 	</table>
     </div>
 
-    <a href="{{ path('app_attendance_index') }}">back to list</a>
+    <div class="d-grid gap-2 d-md-block">
+	<a class="btn btn-primary" href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">Edit</a>
+	<a class="btn btn-link" href="{{ path('app_attendance_index') }}">Back to list</a>
+    </div>
 
-    <a href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">edit</a>
-
-    {{ include('attendance/_delete_form.html.twig') }}
+    <div class="row">
+	<div class="col-md-10"></div>
+	<div class="col-md-1">
+	    {{ include('attendance/_delete_form.html.twig') }}
+	</div>
+    </div>
 {% endblock %}

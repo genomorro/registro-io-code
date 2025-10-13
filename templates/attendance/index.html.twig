@@ -34,8 +34,8 @@
 			    {% endif %}
 			</td>
 			<td>
-			    <a href="{{ path('app_attendance_show', {'id': attendance.id}) }}">show</a>
-			    <a href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">edit</a>
+			    <a class="btn btn-link" href="{{ path('app_attendance_show', {'id': attendance.id}) }}">Show</a>
+			    <a class="btn btn-secondary" href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">Edit</a>
 			</td>
 		    </tr>
         {% else %}
@@ -53,5 +53,5 @@
 	</div>
     {% endif %}
 
-    <a href="{{ path('app_attendance_new') }}">Create new</a>
+    <a  class="btn btn-primary" href="{{ path('app_attendance_new') }}">Create new</a>
 {% endblock %}
