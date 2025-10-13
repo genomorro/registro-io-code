@@ -47,9 +47,11 @@
 	</table>
     </div>
 
-    <div class="navigation">
-        {{ pagerfanta(attendances) }}
-    </div>
+    {% if attendances.haveToPaginate == true %}
+	<div class="navigation">
+            {{ pagerfanta(attendances) }}
+	</div>
+    {% endif %}
 
     <a href="{{ path('app_attendance_new') }}">Create new</a>
 {% endblock %}

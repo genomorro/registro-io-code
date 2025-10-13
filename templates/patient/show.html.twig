@@ -121,7 +121,7 @@
                 </tbody>
             </table>
         </div>
-	{% if other_appointments.nbResults > 20 %}
+	{% if other_appointments.haveToPaginate == true %}
             <div class="navigation">
 		{{ pagerfanta(other_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_other_appointments'}) }}
             </div>
@@ -154,7 +154,7 @@
                 </tbody>
             </table>
         </div>
-	{% if todays_visitors.nbResults > 20 %}
+	{% if todays_visitors.haveToPaginate == true %}
             <div class="navigation">
 		{{ pagerfanta(todays_visitors, 'twitter_bootstrap5', {'pageParameter': 'page_today_visitors'}) }}
             </div>
