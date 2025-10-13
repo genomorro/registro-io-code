@@ -21,8 +21,11 @@ class VisitorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+		'label' => 'Name',
+	    ])
             ->add('phone', null, [
+		'label' => 'Phone number',
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 10, 'max' => 10]),
@@ -32,16 +35,24 @@ class VisitorType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('dni')
+            ->add('dni', null, [
+		'label' => 'DNI',
+	    ])
             ->add('tag', null, [
+		'label' => 'Tag',
                 'constraints' => [
                     new NotBlank(),
                     new LessThanOrEqual(9999),
                 ],
             ])
-            ->add('destination')
-            ->add('relationship')
+            ->add('destination', null, [
+		'label' => 'Destination',
+	    ])
+            ->add('relationship', null, [
+		'label' => 'Relationship',
+	    ])
             ->add('patient', EntityType::class, [
+		'label' => 'Patient',
                 'class' => Patient::class,
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -55,20 +66,24 @@ class VisitorType extends AbstractType
             if (!$visitor || null === $visitor->getId()) {
                 // New visitor
                 $form->add('checkInAt', DateTimeType::class, [
+		    'label' => 'Check in',
                     'widget' => 'single_text',
                     'data' => new \DateTimeImmutable(),
                 ]);
                 $form->add('checkOutAt', DateTimeType::class, [
+		    'label' => 'Check out',
                     'widget' => 'single_text',
                     'required' => false,
                 ]);
             } else {
                 // Existing visitor
                 $form->add('checkInAt', DateTimeType::class, [
+		    'label' => 'Check in',
                     'widget' => 'single_text',
                 ]);
 
                 $checkOutOptions = [
+		    'label' => 'Check out',
                     'widget' => 'single_text',
                     'required' => false,
                 ];

@@ -20,12 +20,14 @@ class AttendanceType extends AbstractType
     {
         $builder
             ->add('tag', null, [
+		'label' => 'Tag',
                 'constraints' => [
                     new NotBlank(),
                     new LessThanOrEqual(9999),
                 ],
             ])
             ->add('patient', EntityType::class, [
+		'label' => 'Patient',
                 'class' => Patient::class,
                 'choice_label' => 'name',
             ])
@@ -38,20 +40,24 @@ class AttendanceType extends AbstractType
             if (!$attendance || null === $attendance->getId()) {
                 // New attendance
                 $form->add('checkInAt', DateTimeType::class, [
+		    'label' => 'Check in',
                     'widget' => 'single_text',
                     'data' => new \DateTimeImmutable(),
                 ]);
                 $form->add('checkOutAt', DateTimeType::class, [
+		    'label' => 'Check out',
                     'widget' => 'single_text',
                     'required' => false,
                 ]);
             } else {
                 // Existing attendance
                 $form->add('checkInAt', DateTimeType::class, [
+		    'label' => 'Check In',
                     'widget' => 'single_text',
                 ]);
 
                 $checkOutOptions = [
+		    'label' => 'Check out',
                     'widget' => 'single_text',
                     'required' => false,
                 ];

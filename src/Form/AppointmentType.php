@@ -16,11 +16,15 @@ class AppointmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('place')
+            ->add('place', null, [
+		'label' => 'Place',
+	    ])
             ->add('date_at', null, [
+		'label' => 'Date at',
                 'widget' => 'single_text',
             ])
             ->add('type', ChoiceType::class, [
+		'label' => 'Type',
                 'choices' => [
                     'Estudio' => 'Estudio',
                     'Consulta' => 'Consulta',
@@ -31,6 +35,7 @@ class AppointmentType extends AbstractType
                 ],
             ])
             ->add('patient', EntityType::class, [
+		'label' => 'Patient',
                 'class' => Patient::class,
                 'choice_label' => 'name',
             ])
