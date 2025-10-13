@@ -15,13 +15,18 @@ class PatientType extends AbstractType
     {
         $builder
             ->add('file', null, [
+		'label' => 'File',
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 6, 'max' => 9]),
                 ],
             ])
-            ->add('name')
-            ->add('disability')
+            ->add('name', null, [
+		'label' => 'Name',
+	    ])
+            ->add('disability', null, [
+		'label' => 'Disability',
+	    ])
         ;
     }
 

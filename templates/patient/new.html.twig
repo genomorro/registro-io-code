@@ -5,7 +5,35 @@
 {% block body %}
     <h1>Create new Patient</h1>
 
-    {{ include('patient/_form.html.twig') }}
+    <div class="row">
+	{{ form_start(form) }}
+	    <div class="form-group">
+		{{ form_label(form.file) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.file) }}
+			<span class="text-danger">{{ form_errors(form.file) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.name) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.name) }}
+			<span class="text-danger">{{ form_errors(form.name) }}</span>
+		    </div>
+		</div>
+	    </div>
 
-    <a href="{{ path('app_patient_index') }}">back to list</a>
+	    {{form_widget(form.disability)}}
+	    
+	    <div class="form-group btn-group">
+		<button type="submit" value="Save" class="btn btn-primary">Save</button>
+		<a class="btn btn-link" href="{{ path('app_patient_index') }}" role="button">Back to list</a>
+	    </div>
+	{{ form_end(form) }}
+    </div>
+
+
 {% endblock %}
