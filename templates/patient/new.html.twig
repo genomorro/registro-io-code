@@ -26,10 +26,11 @@
 		</div>
 	    </div>
 
-	    {{form_widget(form.disability)}}
+	    {{ form_widget(form.disability) }}
 	    
-	    <div class="form-group btn-group">
+	    <div class="d-grid gap-2 d-md-block">
 		<button type="submit" value="Save" class="btn btn-primary">Save</button>
+		<button type="reset" value="Reset" class="btn btn-secondary">Reset</button>
 		<a class="btn btn-link" href="{{ path('app_patient_index') }}" role="button">Back to list</a>
 	    </div>
 	{{ form_end(form) }}
