@@ -40,7 +40,8 @@ class AttendanceRepository extends ServiceEntityRepository
     public function findAllWithPatient(): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('a')
-            ->select('a', 'p')
-            ->leftJoin('a.patient', 'p');
+		    ->select('a', 'p')
+		    ->leftJoin('a.patient', 'p')
+		    ->orderBy('a.checkInAt', 'DESC');
     }
 }
