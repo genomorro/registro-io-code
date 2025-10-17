@@ -30,6 +30,7 @@ class AppointmentType extends AbstractType
                     'Consulta' => 'Consulta',
                     'Procedimiento' => 'Procedimiento',
                 ],
+		'autocomplete' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -38,6 +39,7 @@ class AppointmentType extends AbstractType
 		'label' => 'Patient',
                 'class' => Patient::class,
                 'choice_label' => 'name',
+		'autocomplete' => true,
             ])
         ;
     }
