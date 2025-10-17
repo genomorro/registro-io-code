@@ -41,6 +41,7 @@
         "symfony/string": "6.4.*",
         "symfony/translation": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
+        "symfony/ux-autocomplete": "^2.30",
         "symfony/ux-turbo": "^2.30",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",
@@ -103,6 +104,7 @@
         "symfony/css-selector": "6.4.*",
         "symfony/debug-bundle": "6.4.*",
         "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^7.3",
         "symfony/stopwatch": "6.4.*",
         "symfony/web-profiler-bundle": "6.4.*"
     }
