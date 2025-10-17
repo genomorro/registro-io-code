@@ -35,12 +35,7 @@ class AppointmentType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('patient', EntityType::class, [
-		'label' => 'Patient',
-                'class' => Patient::class,
-                'choice_label' => 'name',
-		'autocomplete' => true,
-            ])
+            ->add('patient', PatientAutocompleteField::Class)
         ;
     }
 
