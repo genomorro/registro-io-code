@@ -51,12 +51,7 @@ class VisitorType extends AbstractType
             ->add('relationship', null, [
 		'label' => 'Relationship',
 	    ])
-            ->add('patient', EntityType::class, [
-		'label' => 'Patient',
-                'class' => Patient::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-            ])
+            ->add('patient', PatientAutocompleteMultipleField::class)
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

@@ -30,15 +30,12 @@ class AppointmentType extends AbstractType
                     'Consulta' => 'Consulta',
                     'Procedimiento' => 'Procedimiento',
                 ],
+		'autocomplete' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
-            ->add('patient', EntityType::class, [
-		'label' => 'Patient',
-                'class' => Patient::class,
-                'choice_label' => 'name',
-            ])
+            ->add('patient', PatientAutocompleteField::Class)
         ;
     }
 

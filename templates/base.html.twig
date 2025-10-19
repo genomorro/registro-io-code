@@ -7,13 +7,11 @@
         <title>{% block title %}INER patient and visitor check-in and check-out{% endblock %}</title>
         {% block stylesheets %}
         {% endblock %}
-	<link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
-	<link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
-	{# Falta documentación de este bloque
 	{% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
+	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
         {% endblock %}
-	#}
     </head>
     <body>
 	<main class="page">
@@ -24,7 +22,7 @@
 	    </div>
 	</main>
 	<script src="https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js"></script>
-	{% block javascripts %}
+	{% block custom_javascripts %}
 	{% endblock %}
     </body>
 </html>
