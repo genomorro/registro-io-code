@@ -15,12 +15,12 @@ class PatientAutocompleteField extends AbstractType
     {
         $resolver->setDefaults([
             'class' => Patient::class,
-            'placeholder' => 'Choose a Patient',
-            // 'choice_label' => 'name',
+            'placeholder' => 'Search by name or by file',
+            'choice_label' => 'name',
 
             // choose which fields to use in the search
             // if not passed, *all* fields are used
-            // 'searchable_fields' => ['name'],
+            'searchable_fields' => ['name', 'file'],
 
             // 'security' => 'ROLE_SOMETHING',
         ]);
