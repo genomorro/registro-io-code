@@ -26,11 +26,7 @@ class AttendanceType extends AbstractType
                     new LessThanOrEqual(9999),
                 ],
             ])
-            ->add('patient', EntityType::class, [
-		'label' => 'Patient',
-                'class' => Patient::class,
-                'choice_label' => 'name',
-            ])
+            ->add('patient', PatientAutocompleteField::class)
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

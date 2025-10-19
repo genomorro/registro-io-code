@@ -9,7 +9,7 @@ use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
 use Symfony\UX\Autocomplete\Form\BaseEntityAutocompleteType;
 
 #[AsEntityAutocompleteField]
-class PatientAutocompleteField extends AbstractType
+class PatientAutocompleteMultipleField extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -18,6 +18,9 @@ class PatientAutocompleteField extends AbstractType
             'class' => Patient::class,
             'placeholder' => 'Search by name or by file',
             'choice_label' => 'name',
+	    'multiple' => true,
+	    'required'=> false,
+
 
             // choose which fields to use in the search
             // if not passed, *all* fields are used
