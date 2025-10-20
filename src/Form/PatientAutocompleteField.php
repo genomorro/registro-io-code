@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
 use Symfony\UX\Autocomplete\Form\BaseEntityAutocompleteType;
@@ -14,17 +15,21 @@ class PatientAutocompleteField extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-	    'label' => 'Patient',
+            'label' => 'Patient',
             'class' => Patient::class,
             'placeholder' => 'Search by name or by file',
             'choice_label' => 'name',
-
-            // choose which fields to use in the search
-            // if not passed, *all* fields are used
             'searchable_fields' => ['name', 'file'],
-
-            // 'security' => 'ROLE_SOMETHING',
+            'extra_options' => [],
         ]);
+
+        $resolver->setDefault('multiple', static function (Options $options) {
+            return $options['extra_options']['multiple'] ?? false;
+        });
+
+        $resolver->setDefault('required', static function (Options $options) {
+            return $options['extra_options']['required'] ?? true;
+        });
     }
 
     public function getParent(): string
