@@ -20,6 +20,12 @@
                 "enabled": false,
                 "fetch": "eager"
             }
+        },
+        "@wedevelopnl/ux-table": {
+            "ux-table": {
+                "enabled": true,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []

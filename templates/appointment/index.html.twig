@@ -5,45 +5,61 @@
 {% block body %}
     <h1>Appointment index</h1>
 
-    <div class="table-responsible">
-	<table class="table table-hover">
-            <thead>
-		<tr>
-                    <th>Id</th>
-		    <th>Patient</th>
-                    <th>Place</th>
-                    <th>Date_at</th>
-                    <th>Type</th>
-                    <th>actions</th>
-		</tr>
-            </thead>
-            <tbody>
-		{% for appointment in appointments %}
-		    <tr>
-			<td>{{ appointment.id }}</td>
-			<td>{{ appointment.patient.name }}</td>
-			<td>{{ appointment.place }}</td>
-			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-			<td>{{ appointment.type }}</td>
-			<td>
-			    <a class="btn btn-link" href="{{ path('app_appointment_show', {'id': appointment.id}) }}">Show</a>
-			    <a class="btn btn-secondary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">Edit</a>
-			</td>
-		    </tr>
-{% else %}
-		    <tr>
-			<td colspan="5">no records found</td>
-		    </tr>
-		{% endfor %}
-            </tbody>
-	</table>
-    </div>
+    <twig:UXTable:Table :table="appointmentTable">
+        <div class="table-responsible">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <twig:UXTable:SortLink :table="appointmentTable" title="Id" field="id" />
+                        </th>
+                        <th>
+                            <twig:UXTable:SortLink :table="appointmentTable" title="Patient" field="patient.name" />
+                            <twig:UXTable:Filter :table="appointmentTable" filter="patient" />
+                        </th>
+                        <th>
+                            <twig:UXTable:SortLink :table="appointmentTable" title="Place" field="place" />
+                            <twig:UXTable:Filter :table="appointmentTable" filter="place" />
+                        </th>
+                        <th>
+                            <twig:UXTable:SortLink :table="appointmentTable" title="Date_at" field="dateAt" />
+                        </th>
+                        <th>
+                            <twig:UXTable:SortLink :table="appointmentTable" title="Type" field="type" />
+                        </th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for appointment in appointmentTable.results %}
+                    <tr>
+                        <td>{{ appointment.id }}</td>
+                        <td>{{ appointment.patient.name }}</td>
+                        <td>{{ appointment.place }}</td>
+                        <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ appointment.type }}</td>
+                        <td>
+                            <a class="btn btn-link" href="{{ path('app_appointment_show', {'id': appointment.id}) }}">Show</a>
+                            <a class="btn btn-secondary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    {% if appointments.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(appointments) }}
-	</div>
-    {% endif %}
+        <div class="row">
+            <div class="col-6">
+                Page size {{ form_widget(appointmentTable.formView.pageSize) }}
+            </div>
+            <div class="col-6">
+            </div>
+        </div>
+    </twig:UXTable:Table>
     
     <a  class="btn btn-primary" href="{{ path('app_appointment_new') }}">Create new</a>
 {% endblock %}

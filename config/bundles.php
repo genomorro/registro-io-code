@@ -15,4 +15,7 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+    WeDevelop\UXTable\WeDevelopUXTableBundle::class => ['all' => true],
 ];

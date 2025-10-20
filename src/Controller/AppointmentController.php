@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Appointment;
 use App\Form\AppointmentType;
-use App\Repository\AppointmentRepository;
+use App\UXTable\AppointmentTable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,17 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AppointmentController extends AbstractController
 {
     #[Route(name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository, Request $request): Response
+    public function index(Request $request, AppointmentTable $appointmentTable): Response
     {
-        $queryBuilder = $appointmentRepository->createQueryBuilder('a');
-
-        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
-        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
-        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+        $appointmentTable->process($request);
 
         return $this->render('appointment/index.html.twig', [
-            'appointments' => $pagerfanta,
+            'appointmentTable' => $appointmentTable,
         ]);
     }
 
