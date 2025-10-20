@@ -31,4 +31,53 @@ class PatientRepository extends ServiceEntityRepository
             ->setParameter('today', $today)
             ->setParameter('tomorrow', $tomorrow);
     }
+
+    public function findByNameAndAppointmentToday(string $name): array
+    {
+        $today = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.appointments', 'a')
+            ->where('a.date_at >= :today AND a.date_at < :tomorrow')
+            ->andWhere('p.name LIKE :name')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
+            ->setParameter('name', '%' . $name . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByFileAndAppointmentToday(string $file): array
+    {
+        $today = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.appointments', 'a')
+            ->where('a.date_at >= :today AND a.date_at < :tomorrow')
+            ->andWhere('p.file = :file')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
+            ->setParameter('file', $file)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByTagAndAppointmentToday(int $tag): array
+    {
+        $today = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.appointments', 'a')
+            ->innerJoin('p.attendances', 'att')
+            ->where('a.date_at >= :today AND a.date_at < :tomorrow')
+            ->andWhere('att.tag = :tag')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
+            ->setParameter('tag', $tag)
+            ->getQuery()
+            ->getResult();
+    }
 }

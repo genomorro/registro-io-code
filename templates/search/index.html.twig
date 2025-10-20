@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search{% endblock %}
+
+{% block body %}
+    <h1>Search</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">Search</button>
+    {{ form_end(form) }}
+
+    {% if patients is not empty %}
+        <h2>Patients</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Name</th>
+                    <th>Disability</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.file }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('app_patient_show', {'id': patient.id}) }}">show</a>
+                        <a href="{{ path('app_patient_edit', {'id': patient.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if visitors is not empty %}
+        <h2>Visitors</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>DNI</th>
+                    <th>Tag</th>
+                    <th>CheckInAt</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for visitor in visitors %}
+                <tr>
+                    <td>{{ visitor.name }}</td>
+                    <td>{{ visitor.dni }}</td>
+                    <td>{{ visitor.tag }}</td>
+                    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_visitor_show', {'id': visitor.id}) }}">show</a>
+                        <a href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

@@ -35,4 +35,36 @@ class VisitorRepository extends ServiceEntityRepository
 		    ->setParameter('todayEnd', $todayEnd)
 		    ->orderBy('v.checkInAt', 'DESC');
     }
+
+    public function findByNameAndCheckInToday(string $name): array
+    {
+        $today = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+
+        return $this->createQueryBuilder('v')
+            ->where('v.checkInAt >= :today AND v.checkInAt < :tomorrow')
+            ->andWhere('v.name LIKE :name')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
+            ->setParameter('name', '%' . $name . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByTagAndCheckInToday(int $tag): array
+    {
+        $today = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
+
+        return $this->createQueryBuilder('v')
+            ->innerJoin('v.patient', 'p')
+            ->innerJoin('p.attendances', 'att')
+            ->where('v.checkInAt >= :today AND v.checkInAt < :tomorrow')
+            ->andWhere('att.tag = :tag')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
+            ->setParameter('tag', $tag)
+            ->getQuery()
+            ->getResult();
+    }
 }

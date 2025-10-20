@@ -1,0 +1,14 @@
+[30;43m                                                                                [39;49m
+[30;43m [WARNING] The local web server is already running                              [39;49m
+[30;43m                                                                                [39;49m
+
+[32mLocal Web Server[39m
+    Listening on ]8;;http://127.0.0.1:8000\http://127.0.0.1:8000]8;;\
+    The Web server is using [32mPHP CLI 8.4.13[39m (from default version in $PATH)
+
+[32mLocal Domains[39m
+
+[32mWorkers[39m
+    PID [32m14661[39m: /usr/bin/php8.4 -S 127.0.0.1:43911 -d variables_order=EGPCS /home/jules/.symfony5/php/0c35eebf403cf91fe77a64921d76aa1ca6411d20/8.4.13-router.php
+
+[32mEnvironment Variables[39m
