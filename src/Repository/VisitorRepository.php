@@ -33,6 +33,19 @@ class VisitorRepository extends ServiceEntityRepository
 		    ->setParameter('patientId', $patient->getId())
 		    ->setParameter('todayStart', $todayStart)
 		    ->setParameter('todayEnd', $todayEnd)
-		    ->orderBy('v.checkInAt', 'DESC');
+		    ->orderBy('v.checkInAt', 'DESC')
+	;
+    }
+
+    public function findOneByTag(int $tag): ?Visitor
+    {
+        return $this->createQueryBuilder('v')
+		    ->andWhere('v.tag = :tag')
+		    ->andWhere('v.checkInAt IS NOT NULL')
+		    ->andWhere('v.checkOutAt IS NULL')
+		    ->setParameter('tag', $tag)
+		    ->getQuery()
+		    ->getOneOrNullResult()
+        ;
     }
 }

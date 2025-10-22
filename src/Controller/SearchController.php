@@ -6,6 +6,7 @@ use App\Form\SearchTagType;
 use App\Form\SearchType;
 use App\Repository\AttendanceRepository;
 use App\Repository\PatientRepository;
+use App\Repository\VisitorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,7 +62,32 @@ class SearchController extends AbstractController
             }
 
             $this->addFlash('error', 'Patient not found for the given tag.');
-            return $this->redirectToRoute('app_search_tag_index');
+            return $this->redirectToRoute('app_search_patient_tag_index');
+        }
+
+        return $this->render('search/tag.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/search_visitor_tag', name: 'app_search_visitor_tag_index')]
+    public function searchVisitorByTag(Request $request, VisitorRepository $visitorRepository): Response
+    {
+        $form = $this->createForm(SearchTagType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $tag = (int)$data['tag'];
+
+            $visitor = $visitorRepository->findOneByTag($tag);
+
+            if ($visitor) {
+                return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getId()]);
+            }
+
+            $this->addFlash('error', 'Visitor not found for the given tag.');
+            return $this->redirectToRoute('app_search_visitor_tag_index');
         }
 
         return $this->render('search/tag.html.twig', [
