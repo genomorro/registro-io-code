@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search by Tag{% endblock %}
+
+{% block body %}
+    <h1>Search by Tag</h1>
+    <div class="row">
+	{{ form_start(form) }}
+	    <div class="form-group">
+		{{ form_label(form.tag) }}
+		<div class="row">
+		    <div class="col-md-6">
+			<small>{{ form_help(form.tag) }}</small>
+			{{ form_widget(form.tag) }}
+			<span class="text-danger">
+			    {{ form_errors(form.tag) }}
+			    {% for label, messages in app.flashes %}
+				{% for message in messages %}
+				    <div class="alert alert-{{ label }}">
+					{{ message }}
+				    </div>
+				{% endfor %}
+			    {% endfor %}
+			</span>
+		    </div>
+		</div>
+	    </div>
+
+	    <div class="d-grid gap-2 d-md-block">
+		<button type="submit" value="Search" class="btn btn-primary">Search</button>
+		<button type="reset" value="Reset" class="btn btn-secondary">Reset</button>
+	    </div>
+	{{ form_end(form) }}
+    </div>
+{% endblock %}

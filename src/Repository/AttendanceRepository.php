@@ -23,14 +23,14 @@ class AttendanceRepository extends ServiceEntityRepository
         $endOfDay = (clone $date)->setTime(23, 59, 59);
 
         return $this->createQueryBuilder('a')
-            ->andWhere('a.patient = :patient')
-            ->andWhere('a.checkInAt >= :startOfDay')
-            ->andWhere('a.checkInAt <= :endOfDay')
-            ->setParameter('patient', $patient)
-            ->setParameter('startOfDay', $startOfDay)
-            ->setParameter('endOfDay', $endOfDay)
-            ->getQuery()
-            ->getOneOrNullResult()
+		    ->andWhere('a.patient = :patient')
+		    ->andWhere('a.checkInAt >= :startOfDay')
+		    ->andWhere('a.checkInAt <= :endOfDay')
+		    ->setParameter('patient', $patient)
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->getQuery()
+		    ->getOneOrNullResult()
         ;
     }
 
@@ -43,5 +43,22 @@ class AttendanceRepository extends ServiceEntityRepository
 		    ->select('a', 'p')
 		    ->leftJoin('a.patient', 'p')
 		    ->orderBy('a.checkInAt', 'DESC');
+    }
+
+    public function findPatientByTag(int $tag): ?Patient
+    {
+        $attendance = $this->createQueryBuilder('a')
+			   ->where('a.tag = :tag')
+			   ->andWhere('a.checkInAt IS NOT NULL')
+			   ->andWhere('a.checkOutAt IS NULL')
+			   ->setParameter('tag', $tag)
+			   ->getQuery()
+			   ->getOneOrNullResult();
+
+        if ($attendance) {
+            return $attendance->getPatient();
+        }
+
+        return null;
     }
 }
