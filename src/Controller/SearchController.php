@@ -11,6 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SearchController extends AbstractController
 {
+    #[Route('/', name: 'app_index')]
+    public function index(): Response
+    {
+        return $this->render('search/index.html.twig');
+    }
+
     #[Route('/search_file', name: 'app_search_file_index')]
     public function searchFile(Request $request, PatientRepository $patientRepository): Response
     {
@@ -31,7 +37,7 @@ class SearchController extends AbstractController
 	    return $this->redirectToRoute('app_search_file_index');
         }
 
-        return $this->render('search/index.html.twig', [
+        return $this->render('search/file.html.twig', [
             'form' => $form->createView(),
         ]);
     }

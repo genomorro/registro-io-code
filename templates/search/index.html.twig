@@ -1,35 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search Patient{% endblock %}
+{% block title %}Search{% endblock %}
 
 {% block body %}
-    <h1>Search Patient by File</h1>
-    <div class="row">
-	{{ form_start(form) }}
-	    <div class="form-group">
-		{{ form_label(form.file) }}
-		<div class="row">
-		    <div class="col-md-6">
-			<small>{{ form_help(form.file) }}</small>
-			{{ form_widget(form.file) }}
-			<span class="text-danger">
-			    {{ form_errors(form.file) }}
-			    {% for label, messages in app.flashes %}
-				{% for message in messages %}
-				    <div class="alert alert-{{ label }}">
-					{{ message }}
-				    </div>
-				{% endfor %}
-			    {% endfor %}
-			</span>
-		    </div>
-		</div>
-	    </div>
+    <h1>Search Options</h1>
 
-	    <div class="d-grid gap-2 d-md-block">
-		<button type="submit" value="Search" class="btn btn-primary">Search</button>
-		<button type="reset" value="Reset" class="btn btn-secondary">Reset</button>
-	    </div>
-	{{ form_end(form) }}
-    </div>
+    <div class="d-grid gap-2">
+	<a href="{{  path('app_search_file_index') }}" class="btn btn-primary" type="button">Search Patient by file</a>    </div>
 {% endblock %}

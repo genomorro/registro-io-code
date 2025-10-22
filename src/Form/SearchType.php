@@ -20,7 +20,7 @@ class SearchType extends AbstractType
 		'label' => 'File',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 6, 'max' => 9]),
+                    new Length(min: 6, max: 9),
                     new Callback([$this, 'validateFile']),
                 ],
             ]);
