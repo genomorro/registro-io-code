@@ -16,7 +16,7 @@ class SearchTagType extends AbstractType
             ->add('tag', NumberType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Range(['min' => 1, 'max' => 9999]),
+                    new Range(min: 1, max: 9999),
                 ],
             ]);
     }
