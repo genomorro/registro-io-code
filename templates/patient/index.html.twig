@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Patient index{% endblock %}
+{% block title %}{% trans %}Patient index{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Patient index</h1>
+    <h1>{% trans %}Patient index{% endtrans %}</h1>
 
     <div class="table-responsible">
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th>Id</th>
-                    <th>File</th>
-                    <th>Name</th>
-                    <th>Disability</th>
-                    <th>Check in</th>
-                    <th>Check out</th>
-                    <th>actions</th>
+                    <th>{% trans %}Id{% endtrans %}</th>
+                    <th>{% trans %}File{% endtrans %}</th>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}Disability{% endtrans %}</th>
+                    <th>{% trans %}Check in{% endtrans %}</th>
+                    <th>{% trans %}Check out{% endtrans %}</th>
+                    <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
             <tbody>
@@ -30,10 +30,10 @@
 			    {% if todays_attendance %}
 				{{ todays_attendance.checkInAt|date('H:i:s') }}
 			    {% else %}
-				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check in?');">
+				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
 				    <div class="input-group mb-3">
 					<input type="text" name="tag" placeholder="Tag" required style="width: 80px; height: 34px" class="form-control form-control-sm"/>
-					<button type="submit" class="btn btn-sm btn-success">Check in</button>
+					<button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
 				    </div>				    
 				</form>
 			    {% endif %}
@@ -42,21 +42,21 @@
 			    {% if todays_attendance and todays_attendance.checkOutAt %}
 				{{ todays_attendance.checkOutAt|date('H:i:s') }}
 			    {% elseif todays_attendance %}
-				<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to check out?');">
-				    <button type="submit" class="btn btn-sm btn-danger">Check out</button>
+				<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				    <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% else %}
-				<button type="button" class="btn btn-sm btn-secondary" disabled>Check out</button>
+				<button type="button" class="btn btn-sm btn-secondary" disabled>{% trans %}Check out{% endtrans %}</button>
 			    {% endif %}
 			</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">Show</a>
-			    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">Edit</a>
+			    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
 			</td>
 		    </tr>
         {% else %}
 		    <tr>
-			<td colspan="7">no records found</td>
+			<td colspan="7">{% trans %}no records found{% endtrans %}</td>
 		    </tr>
 		{% endfor %}
             </tbody>
@@ -69,5 +69,5 @@
 	</div>
     {% endif %}
     
-    <a  class="btn btn-primary" href="{{ path('app_patient_new') }}">Create new</a>
+    <a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
 {% endblock %}

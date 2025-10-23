@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search{% endblock %}
-
 {% block body %}
-    <h1>Search Options</h1>
+    <h1>{% trans %}Search Options{% endtrans %}</h1>
 
     <div class="d-grid gap-2">
-	<a href="{{  path('app_search_file_index') }}" class="btn btn-primary" type="button">Search Patient by file</a>
-	<a href="{{  path('app_search_patient_tag_index') }}" class="btn btn-primary" type="button">Search Patient by tag</a>
-	<a href="{{  path('app_search_visitor_tag_index') }}" class="btn btn-primary" type="button">Search Visitor by tag</a>
+	<a href="{{  path('app_search_file_index') }}" class="btn btn-primary" type="button">{% trans %}Search Patient by File{% endtrans %}</a>
+	<a href="{{  path('app_search_patient_tag_index') }}" class="btn btn-primary" type="button">{% trans %}Search Patient by Tag{% endtrans %}</a>
+	<a href="{{  path('app_search_visitor_tag_index') }}" class="btn btn-primary" type="button">{% trans %}Search Visitor by Tag{% endtrans %}</a>
     </div>
 {% endblock %}

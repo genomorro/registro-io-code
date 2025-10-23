@@ -48,7 +48,7 @@ class AttendanceType extends AbstractType
             } else {
                 // Existing attendance
                 $form->add('checkInAt', DateTimeType::class, [
-		    'label' => 'Check In',
+		    'label' => 'Check in',
                     'widget' => 'single_text',
                 ]);
 

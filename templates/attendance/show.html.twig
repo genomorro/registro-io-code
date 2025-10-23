@@ -1,43 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attendance{% endblock %}
+{% block title %}{% trans %}Attendance{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Attendance</h1>
+    <h1>{% trans %}Attendance{% endtrans %}</h1>
 
     <div class="table-responsible">
 	<table class="table table-striped">
             <tbody>
 		<tr>
-                    <th>Id</th>
+                    <th>{% trans %}Id{% endtrans %}</th>
                     <td>{{ attendance.id }}</td>
 		</tr>
 		<tr>
-                    <th>Tag</th>
+                    <th>{% trans %}Tag{% endtrans %}</th>
                     <td>{{ attendance.tag }}</td>
 		</tr>
 		<tr>
-                    <th>CheckInAt</th>
+                    <th>{% trans %}Check in{% endtrans %}</th>
                     <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 		</tr>
 		<tr>
-                    <th>CheckOutAt</th>
+                    <th>{% trans %}Check out{% endtrans %}</th>
                     <td>
 			{{ attendance.checkOutAt ? attendance.checkOutAt|date('Y-m-d H:i:s') : '' }}
 			{% if attendance.checkoutAt is null %}
-                            <form method="post" action="{{ path('app_attendance_check_out_show', {'id': attendance.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+                            <form method="post" action="{{ path('app_attendance_check_out_show', {'id': attendance.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
-				<button class="btn btn-primary">Checkout</button>
+				<button class="btn btn-primary">{% trans %}Check out{% endtrans %}</button>
                             </form>
 			{% endif %}
                     </td>
 		</tr>
 		<tr>
-                    <th>Patient name</th>
+                    <th>{% trans %}Patient name{% endtrans %}</th>
                     <td>{{ attendance.patient.name }}</td>
 		</tr>
 		<tr>
-                    <th>Patient file</th>
+                    <th>{% trans %}Patient file{% endtrans %}</th>
                     <td>{{ attendance.patient.file }}</td>
 		</tr>
             </tbody>
@@ -45,8 +45,8 @@
     </div>
 
     <div class="d-grid gap-2 d-md-block">
-	<a class="btn btn-primary" href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">Edit</a>
-	<a class="btn btn-link" href="{{ path('app_attendance_index') }}">Back to list</a>
+	<a class="btn btn-primary" href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	<a class="btn btn-link" href="{{ path('app_attendance_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>
 
     <div class="row">

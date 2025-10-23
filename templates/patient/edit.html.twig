@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Patient{% endblock %}
+{% block title %}{% trans %}Edit Patient{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Edit Patient</h1>
+    <h1>{% trans %}Edit Patient{% endtrans %}</h1>
 
     <div class="row">
 	{{ form_start(form) }}
@@ -28,8 +28,8 @@
 	    {{ form_widget(form.disability) }}
 	    
 	    <div class="d-grid gap-2 d-md-block">
-		<button type="submit" value="Update" class="btn btn-primary">Update</button>
-		<a class="btn btn-link" href="{{ path('app_patient_index') }}" role="button">Back to list</a>
+		<button type="submit" value="Update" class="btn btn-primary">{% trans %}Update{% endtrans %}</button>
+		<a class="btn btn-link" href="{{ path('app_patient_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
 	    </div>
 	{{ form_end(form) }}
     </div>

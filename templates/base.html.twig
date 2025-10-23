@@ -4,7 +4,11 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}INER patient and visitor check-in and check-out{% endblock %}</title>
+        <title>
+	    {% block title %}
+		{% trans %}INER patient and visitor check-in and check-out{% endtrans %}
+	    {% endblock %}
+	</title>
         {% block stylesheets %}
         {% endblock %}
 	{% block javascripts %}

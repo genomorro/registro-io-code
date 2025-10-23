@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search by Tag{% endblock %}
+{% block title %}{{ title|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Search by Tag</h1>
+    <h1>{{ title|trans }}</h1>
     <div class="row">
 	{{ form_start(form) }}
 	    <div class="form-group">
@@ -17,7 +17,7 @@
 			    {% for label, messages in app.flashes %}
 				{% for message in messages %}
 				    <div class="alert alert-{{ label }}">
-					{{ message }}
+					{{ message|trans }}
 				    </div>
 				{% endfor %}
 			    {% endfor %}
@@ -27,8 +27,8 @@
 	    </div>
 
 	    <div class="d-grid gap-2 d-md-block">
-		<button type="submit" value="Search" class="btn btn-primary">Search</button>
-		<button type="reset" value="Reset" class="btn btn-secondary">Reset</button>
+		<button type="submit" value="Search" class="btn btn-primary">{% trans %}Search{% endtrans %}</button>
+		<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
 	    </div>
 	{{ form_end(form) }}
     </div>

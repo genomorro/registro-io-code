@@ -1,35 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Appointment{% endblock %}
+{% block title %}{% trans %}Appointment{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Appointment</h1>
+    <h1>{% trans %}Appointment{% endtrans %}</h1>
 
     <div class="table-responsible">
 	<table class="table table-striped">
             <tbody>
 		<tr>
-                    <th>Id</th>
+                    <th>{% trans %}Id{% endtrans %}</th>
                     <td>{{ appointment.id }}</td>
 		</tr>
 		<tr>
-                    <th>Place</th>
+                    <th>{% trans %}Place{% endtrans %}</th>
                     <td>{{ appointment.place }}</td>
 		</tr>
 		<tr>
-                    <th>Date_at</th>
+                    <th>{% trans %}Date at{% endtrans %}</th>
                     <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 		</tr>
 		<tr>
-                    <th>Type</th>
+                    <th>{% trans %}Type{% endtrans %}</th>
                     <td>{{ appointment.type }}</td>
 		</tr>
 		<tr>
-                    <th>Patient name</th>
+                    <th>{% trans %}Patient name{% endtrans %}</th>
                     <td>{{ appointment.patient.name }}</td>
 		</tr>
 		<tr>
-                    <th>Patient file</th>
+                    <th>{% trans %}Patient file{% endtrans %}</th>
                     <td>{{ appointment.patient.file }}</td>
 		</tr>
             </tbody>
@@ -37,8 +37,8 @@
     </div>
 
     <div class="d-grid gap-2 d-md-block">
-	<a class="btn btn-primary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">Edit</a>
-	<a class="btn btn-link" href="{{ path('app_appointment_index') }}">Back to list</a>
+	<a class="btn btn-primary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	<a class="btn btn-link" href="{{ path('app_appointment_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>
 
     <div class="row">

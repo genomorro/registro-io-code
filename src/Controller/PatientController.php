@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/patient')]
 final class PatientController extends AbstractController
@@ -117,12 +118,13 @@ final class PatientController extends AbstractController
     }
 
     #[Route('/{id}/check-in', name: 'app_patient_check_in', methods: ['POST'])]
-    public function checkIn(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    public function checkIn(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $tag = $request->request->get('tag');
+	$flash = $translator->trans('A numeric tag is required to check in.');
 
         if (!is_numeric($tag)) {
-            $this->addFlash('danger', 'A numeric tag is required to check in.');
+            $this->addFlash('danger', $flash);
 
             return $this->redirectToRoute('app_patient_index');
         }
@@ -139,12 +141,13 @@ final class PatientController extends AbstractController
     }
 
     #[Route('/{id}/check-in-show', name: 'app_patient_check_in_show', methods: ['POST'])]
-    public function checkInShow(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    public function checkInShow(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $tag = $request->request->get('tag');
+	$flash = $translator->trans('A numeric tag is required to check in.');
 
         if (!is_numeric($tag)) {
-            $this->addFlash('danger', 'A numeric tag is required to check in.');
+            $this->addFlash('danger', $flash);
 
             return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
         }
