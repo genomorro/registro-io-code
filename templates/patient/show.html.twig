@@ -94,7 +94,7 @@
         </div>
 	{% if todays_appointments.nbResults > 20 %}
             <div class="navigation">
-		{{ pagerfanta(todays_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_today_appointments'}) }}
+		{{ pagerfanta(todays_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_today_appointments', prev_message: '<', next_message: '>'}) }}
             </div>
 	{% endif %}
     {% else %}
@@ -125,7 +125,7 @@
         </div>
 	{% if other_appointments.haveToPaginate == true %}
             <div class="navigation">
-		{{ pagerfanta(other_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_other_appointments'}) }}
+		{{ pagerfanta(other_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_other_appointments', prev_message: '<', next_message: '>'}) }}
             </div>
 	{% endif %}
     {% else %}
@@ -158,7 +158,7 @@
         </div>
 	{% if todays_visitors.haveToPaginate == true %}
             <div class="navigation">
-		{{ pagerfanta(todays_visitors, 'twitter_bootstrap5', {'pageParameter': 'page_today_visitors'}) }}
+		{{ pagerfanta(todays_visitors, 'twitter_bootstrap5', {'pageParameter': 'page_today_visitors', prev_message: '<', next_message: '>'}) }}
             </div>
 	{% endif %}
     {% else %}

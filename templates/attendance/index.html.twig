@@ -49,7 +49,7 @@
 
     {% if attendances.haveToPaginate == true %}
 	<div class="navigation">
-            {{ pagerfanta(attendances) }}
+            {{ pagerfanta(attendances, { prev_message: '<', next_message: '>'}) }}
 	</div>
     {% endif %}
 

@@ -60,7 +60,7 @@
 
     {% if visitors.haveToPaginate == true %}
 	<div class="navigation">
-            {{ pagerfanta(visitors) }}
+            {{ pagerfanta(visitors, { prev_message: '<', next_message: '>'}) }}
 	</div>
     {% endif %}
 
