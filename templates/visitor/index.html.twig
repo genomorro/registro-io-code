@@ -1,25 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Visitor index{% endblock %}
+{% block title %}{% trans %}Visitor index{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Visitor index</h1>
+    <h1>{% trans %}Visitor index{% endtrans %}</h1>
 
     <div class="table-responsible">
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Dni</th>
-                    <th>Tag</th>
-                    <th>Destination</th>
-                    <th>CheckInAt</th>
-                    <th>CheckOutAt</th>
-                    <th>Relationship</th>
-                    <th>Patients</th>
-                    <th>actions</th>
+                    <th>{% trans %}Id{% endtrans %}</th>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}Phone{% endtrans %}</th>
+                    <th>{% trans %}DNI{% endtrans %}</th>
+                    <th>{% trans %}Tag{% endtrans %}</th>
+                    <th>{% trans %}Destination{% endtrans %}</th>
+                    <th>{% trans %}Check in{% endtrans %}</th>
+                    <th>{% trans %}Check out{% endtrans %}</th>
+                    <th>{% trans %}Relationship{% endtrans %}</th>
+                    <th>{% trans %}Patients{% endtrans %}</th>
+                    <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
             <tbody>
@@ -36,22 +36,22 @@
 			    {% if visitor.CheckOutAt %}
 				{{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
 			    {% else %}
-				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id}) }}" onsubmit="return confirm('Are you sure you want to check out?');">
+				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
-				    <button class="btn btn-sm btn-danger">Check Out</button>
+				    <button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% endif %}
 			</td>
 			<td>{{ visitor.relationship }}</td>
 			<td>{{ visitor.patient|map(p => p.name)|join(', ') }}</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">Show</a>
-			    <a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">Edit</a>
+			    <a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
 			</td>
 		    </tr>
         {% else %}
 		    <tr>
-			<td colspan="11">no records found</td>
+			<td colspan="11">{% trans %}no records found{% endtrans %}</td>
 		    </tr>
 		{% endfor %}
             </tbody>
@@ -64,5 +64,5 @@
 	</div>
     {% endif %}
 
-    <a class="btn btn-primary" href="{{ path('app_visitor_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('app_visitor_new') }}">{% trans %}Create new{% endtrans %}</a>
 {% endblock %}

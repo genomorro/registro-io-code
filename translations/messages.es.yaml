@@ -90,3 +90,18 @@
 ### tag.html.twig
 'Search Patient by Tag': 'Buscar paciente por gafete'
 'Search Visitor by Tag': 'Buscar visitante por gafete'
+## visitor
+### edit.html.twig
+'Edit Visitor': 'Editar visitante'
+'Phone number': 'Número de teléfono'
+'DNI': 'Identificación'
+'Destination': 'Destino'
+'Relationship': 'Parentesco'
+### index.html.twig
+'Visitor index': 'Índice de visitantes'
+'Phone': 'Teléfono'
+### new.html.twig
+'New Visitor': 'Nuevo visitante'
+'Create new Visitor': 'Crear nuevo visitante'
+### show.html.twig
+'Visitor': 'Visitante'

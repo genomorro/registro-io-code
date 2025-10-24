@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Visitor{% endblock %}
+{% block title %}{% trans %}Edit Visitor{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Edit Visitor</h1>
+    <h1>{% trans %}Edit Visitor{% endtrans %}</h1>
 
     <div class="row">
 	{{ form_start(form) }}
@@ -92,8 +92,8 @@
 		    </div>
 
 		    <div class="d-grid gap-2 d-md-block">
-			<button type="submit" value="Update" class="btn btn-primary">Update</button>
-			<a class="btn btn-link" href="{{ path('app_visitor_index') }}" role="button">Back to list</a>
+			<button type="submit" value="Update" class="btn btn-primary">{% trans %}Update{% endtrans %}</button>
+			<a class="btn btn-link" href="{{ path('app_visitor_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
 		    </div>		    
 		{{ form_end(form) }}
 	    </div>
