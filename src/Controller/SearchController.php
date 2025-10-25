@@ -13,15 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/search')]
 class SearchController extends AbstractController
 {
-    #[Route('/', name: 'app_index')]
-    public function index(): Response
-    {
-        return $this->render('search/index.html.twig');
-    }
-
-    #[Route('/search_file', name: 'app_search_file_index')]
+    #[Route('/file', name: 'app_search_file_index')]
     public function searchFile(Request $request, PatientRepository $patientRepository, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(SearchType::class);
@@ -47,7 +42,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    #[Route('/search_patient_tag', name: 'app_search_patient_tag_index')]
+    #[Route('/patient_tag', name: 'app_search_patient_tag_index')]
     public function searchPatientByTag(Request $request, AttendanceRepository $attendanceRepository, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(SearchTagType::class);
@@ -74,7 +69,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    #[Route('/search_visitor_tag', name: 'app_search_visitor_tag_index')]
+    #[Route('/visitor_tag', name: 'app_search_visitor_tag_index')]
     public function searchVisitorByTag(Request $request, VisitorRepository $visitorRepository, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(SearchTagType::class);
