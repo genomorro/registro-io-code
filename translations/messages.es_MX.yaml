@@ -1,0 +1,111 @@
+# src
+## Controller
+### PatientController.php
+'A numeric tag is required to check in.': 'El número de gafete es requerido para la entrada.'
+### SearchController.php
+'Patient not found': 'Paciente no encontrado'
+'Patient not found for the given tag.': 'Paciente no encontrado para ese número de gafete.'
+'Visitor not found for the given tag.': 'Visitante no encontrado para ese número de gafete.'
+# templates
+## base.html.twig
+'INER patient and visitor check-in and check-out': 'Registro de entrada y salida de pacientes y visitantes del INER'
+## menu.html.twig
+'Search': 'Búsqueda'
+'Patients': 'Pacientes'
+'Appointments': 'Citas'
+'Attendances': 'Asistencias'
+'Visitors': 'Visitantes'
+'Language': 'Idioma'
+'es': 'Español'
+'en': 'English'
+## appointment
+### _delete_form.html.twig
+'Are you sure you want to delete this item?': '¿Está seguro que desea borrar este registro?'
+'Delete': 'Borrar'
+### edit.html.twig
+'Edit Appointment': 'Editar cita'
+'Patient': 'Paciente'
+'Search by name or by file': 'Buscar por nombre o por expediente'
+'Date at': 'Fecha'
+'Place': 'Lugar'
+'Type': 'Tipo'
+'Estudio': 'Estudio'
+'Consulta': 'Consulta'
+'Procedimiento': 'Procedimiento'
+'Update': 'Actualizar'
+'Back to list': 'Volver a la lista'
+### index.html.twig
+'Id': 'Id'
+'actions': 'acciones'
+'Appointment index': 'Índice de citas'
+'Show': 'Mostrar'
+'Edit': 'Editar'
+'no records found': 'no se encontraron registros'
+'Create new': 'Crear nuevo'
+### new.html.twig
+'New Appointment': 'Nueva cita'
+'Create new Appointment': 'Crear nueva cita'
+'Save': 'Guardar'
+'Reset': 'Limpiar'
+### show.html.twig
+'Appointment': 'Cita'
+'Patient name': 'Nombre del paciente'
+'Patient file': 'Expediente del paciente'
+## attendance
+### edit.html.twig
+'Edit Attendance': 'Editar asistencia'
+'Tag': 'Gafete'
+'Check in': 'Hora de entrada'
+'Check out': 'Hora de salida'
+### index.html.twig
+'Attendance index': 'Índice de asistencia'
+'Are you sure you want to check out?': '¿Está seguro que desea registrar la salida?'
+### new.html.twig
+'New Attendance': 'Nueva asistencia'
+'Create new Attendance': 'Crear nueva asistencia'
+### show.html.twig
+'Attendance': 'Asistencia'
+## patient
+### edit.html.twig
+'File': 'Expediente'
+'Name': 'Nombre'
+'Disability': 'Discapacidad'
+'Edit Patient': 'Editar paciente'
+### index.html.twig
+'Patient index': 'Índice de pacientes'
+### new.html.twig
+'Create new Patient': 'Crear nuevo paciente'
+'New Patient': 'Nuevo paciente'
+### show.html.twig
+"Today's Attendance": 'Asistencia de hoy'
+'Are you sure you want to check in?': '¿Está seguro que desea registrar la entrada?'
+"Today's Appointments": 'Citas agendadas para hoy'
+'No appointments for today.': 'No hay citas agendadas para hoy.'
+'Other Appointments': 'Otras citas'
+'No other appointments.': 'No hay otras citas.'
+"Today's Visitors": 'Visitantes registrados hoy'
+'No visitors for today.': 'No hay visitantes registrados hoy.'
+'Date': 'Fecha'
+### file.html.twig
+'Search Patient': 'Buscar paciente'
+'Search Patient by File': 'Buscar paciente por expediente'
+### index.html.twig
+'Search Options': 'Opciones de búsqueda'
+### tag.html.twig
+'Search Patient by Tag': 'Buscar paciente por gafete'
+'Search Visitor by Tag': 'Buscar visitante por gafete'
+## visitor
+### edit.html.twig
+'Edit Visitor': 'Editar visitante'
+'Phone number': 'Número de teléfono'
+'DNI': 'Identificación'
+'Destination': 'Destino'
+'Relationship': 'Parentesco'
+### index.html.twig
+'Visitor index': 'Índice de visitantes'
+'Phone': 'Teléfono'
+### new.html.twig
+'New Visitor': 'Nuevo visitante'
+'Create new Visitor': 'Crear nuevo visitante'
+### show.html.twig
+'Visitor': 'Visitante'
