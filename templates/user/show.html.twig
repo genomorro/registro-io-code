@@ -29,8 +29,14 @@
     </div>
 
     <div class="d-grid gap-2 d-md-block">
-	<a class="btn btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">{% trans %}Edit{% endtrans %}</a>
-	<a class="btn btn-link" href="{{ path('app_user_index') }}">{% trans %}Back to list{% endtrans %}</a>
+	{% if not is_granted('ROLE_SUPER_ADMIN') and ('ROLE_SUPER_ADMIN' in user.roles) %}
+	    <p></p>
+	{% else %}
+	    <a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+	    <a class="btn btn-link" href="{{ path('app_user_index') }}">{% trans %}Back to list{% endtrans %}</a>
+	{% endif %}
     </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}

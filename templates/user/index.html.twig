@@ -25,7 +25,12 @@
 			<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_user_show', {'id': user.id}) }}">{% trans %}Show{% endtrans %}</a>
-			    <a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+
+			    {% if not is_granted('ROLE_SUPER_ADMIN') and ('ROLE_SUPER_ADMIN' in user.roles) %}
+				<p></p>
+			    {% else %}
+				<a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
 			</td>
 		    </tr>
 {% else %}
@@ -37,5 +42,7 @@
 	</table>
     </div>
 
-    <a class="btn btn-primary" href="{{ path('app_register') }}">{% trans %}Create new{% endtrans %}</a>
+    {% if is_granted('ROLE_ADMIN') %}
+	<a class="btn btn-primary" href="{{ path('app_register') }}">{% trans %}Create new{% endtrans %}</a>
+    {% endif %}
 {% endblock %}
