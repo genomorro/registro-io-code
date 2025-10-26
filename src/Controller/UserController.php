@@ -18,6 +18,8 @@ final class UserController extends AbstractController
     #[Route(name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
@@ -34,6 +36,8 @@ final class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -58,6 +62,8 @@ final class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();

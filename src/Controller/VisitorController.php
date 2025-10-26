@@ -17,6 +17,8 @@ final class VisitorController extends AbstractController
     #[Route(name: 'app_visitor_index', methods: ['GET'])]
     public function index(VisitorRepository $visitorRepository, Request $request): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
 	$queryBuilder = $visitorRepository->createQueryBuilder('v');
 
 	$adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
@@ -32,6 +34,8 @@ final class VisitorController extends AbstractController
     #[Route('/new', name: 'app_visitor_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $visitor = new Visitor();
         $form = $this->createForm(VisitorType::class, $visitor);
         $form->handleRequest($request);
@@ -53,6 +57,8 @@ final class VisitorController extends AbstractController
     #[Route('/{id}', name: 'app_visitor_show', methods: ['GET'])]
     public function show(Visitor $visitor): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('visitor/show.html.twig', [
             'visitor' => $visitor,
         ]);
@@ -61,6 +67,8 @@ final class VisitorController extends AbstractController
     #[Route('/{id}/edit', name: 'app_visitor_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(VisitorType::class, $visitor);
         $form->handleRequest($request);
 
@@ -79,6 +87,8 @@ final class VisitorController extends AbstractController
     #[Route('/{id}', name: 'app_visitor_delete', methods: ['POST'])]
     public function delete(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($visitor);
             $entityManager->flush();
@@ -90,6 +100,8 @@ final class VisitorController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_visitor_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $visitor->setCheckOutAt(new \DateTimeImmutable());
             $entityManager->flush();
@@ -101,6 +113,8 @@ final class VisitorController extends AbstractController
     #[Route('/{id}/check-out-show', name: 'app_visitor_check_out_show', methods: ['POST'])]
     public function checkOutShow(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $visitor->setCheckOutAt(new \DateTimeImmutable());
             $entityManager->flush();

@@ -19,6 +19,8 @@ class SearchController extends AbstractController
     #[Route('/file', name: 'app_search_file_index')]
     public function searchFile(Request $request, PatientRepository $patientRepository, TranslatorInterface $translator): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
 	$flash = $translator->trans('Patient not found');
@@ -45,6 +47,8 @@ class SearchController extends AbstractController
     #[Route('/patient_tag', name: 'app_search_patient_tag_index')]
     public function searchPatientByTag(Request $request, AttendanceRepository $attendanceRepository, TranslatorInterface $translator): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(SearchTagType::class);
         $form->handleRequest($request);
 	$flash = $translator->trans('Patient not found for the given tag.');
@@ -72,6 +76,8 @@ class SearchController extends AbstractController
     #[Route('/visitor_tag', name: 'app_search_visitor_tag_index')]
     public function searchVisitorByTag(Request $request, VisitorRepository $visitorRepository, TranslatorInterface $translator): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(SearchTagType::class);
         $form->handleRequest($request);
 	$flash = $translator->trans('Visitor not found for the given tag.');

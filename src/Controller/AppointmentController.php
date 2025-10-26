@@ -17,6 +17,8 @@ final class AppointmentController extends AbstractController
     #[Route(name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository, Request $request): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $queryBuilder = $appointmentRepository->createQueryBuilder('a');
 
         $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
@@ -32,6 +34,8 @@ final class AppointmentController extends AbstractController
     #[Route('/new', name: 'app_appointment_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $appointment = new Appointment();
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);
@@ -52,6 +56,8 @@ final class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'])]
     public function show(Appointment $appointment): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('appointment/show.html.twig', [
             'appointment' => $appointment,
         ]);
@@ -60,6 +66,8 @@ final class AppointmentController extends AbstractController
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);
 
@@ -78,6 +86,8 @@ final class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
     public function delete(Request $request, Appointment $appointment, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($appointment);
             $entityManager->flush();

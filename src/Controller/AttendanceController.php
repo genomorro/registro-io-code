@@ -17,6 +17,8 @@ final class AttendanceController extends AbstractController
     #[Route(name: 'app_attendance_index', methods: ['GET'])]
     public function index(AttendanceRepository $attendanceRepository, Request $request): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
 	$queryBuilder = $attendanceRepository->findAllWithPatient();
 
         $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
@@ -32,6 +34,8 @@ final class AttendanceController extends AbstractController
     #[Route('/new', name: 'app_attendance_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $attendance = new Attendance();
         $form = $this->createForm(AttendanceType::class, $attendance);
         $form->handleRequest($request);
@@ -52,6 +56,8 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}', name: 'app_attendance_show', methods: ['GET'])]
     public function show(Attendance $attendance): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('attendance/show.html.twig', [
             'attendance' => $attendance,
         ]);
@@ -60,6 +66,8 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}/edit', name: 'app_attendance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(AttendanceType::class, $attendance);
         $form->handleRequest($request);
 
@@ -78,6 +86,8 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}', name: 'app_attendance_delete', methods: ['POST'])]
     public function delete(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         if ($this->isCsrfTokenValid('delete'.$attendance->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($attendance);
             $entityManager->flush();
@@ -90,6 +100,8 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}/check-out-show', name: 'app_attendance_check_out_show', methods: ['POST'])]
     public function checkOutShow(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $attendance->setCheckOutAt(new \DateTimeImmutable());
         $entityManager->flush();
 
@@ -100,6 +112,8 @@ final class AttendanceController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_attendance_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+
         $attendance->setCheckOutAt(new \DateTimeImmutable());
         $entityManager->flush();
 

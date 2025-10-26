@@ -83,10 +83,16 @@
 			{% trans %}User{% endtrans %}
 		    </a>
 		    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<li><a class="dropdown-item" href="{{ path('app_login') }}">{% trans %}Log in{% endtrans %}</a></li>
-			<li><a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a></li>
-			<li><hr class="dropdown-divider"></li>
-			<li><a class="dropdown-item" href="{{ path('app_user_index') }}">{% trans %}User index{% endtrans %}</a></li>
+			{% if app.user %}
+			    <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id}) }}">{% trans %}Profile{% endtrans %}</a></li>
+			    <li><a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a></li>
+			{% else %}
+			    <li><a class="dropdown-item" href="{{ path('app_login') }}">{% trans %}Log in{% endtrans %}</a></li>
+			{% endif %}
+			{% if is_granted('ROLE_ADMIN') %}
+			    <li><hr class="dropdown-divider"></li>
+			    <li><a class="dropdown-item" href="{{ path('app_user_index') }}">{% trans %}User index{% endtrans %}</a></li>
+			{% endif %}
 		    </ul>
 		</li>
 		{# End: Dropdown user #}
