@@ -10,12 +10,20 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -24,15 +32,24 @@ class RegistrationFormType extends AbstractType
 	    ])
             ->add('username', null, [
 		'label' => 'Username',
-	    ])
-	    ->add('roles', ChoiceType::class, array(
+	    ]);
+
+	$choices = [
+	    'User' => 'ROLE_USER',
+	];
+
+	if ($this->security->isGranted('ROLE_ADMIN')) {
+	    $choices['Admin'] = 'ROLE_ADMIN';
+	}
+
+	if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+	    $choices['Super Admin'] = 'ROLE_SUPER_ADMIN';
+	}
+	
+	$builder->add('roles', ChoiceType::class, array(
 		'label' => 'User roles',
 		'autocomplete' => true,
-		'choices'  => [
-		    'User' => 'ROLE_USER',
-		    'Admin' => 'ROLE_ADMIN',
-		    'Super Admin' => 'ROLE_SUPER_ADMIN',
-		],
+		'choices'  => $choices,
 		'multiple' => true,
 		'required' => true,
 	    ))

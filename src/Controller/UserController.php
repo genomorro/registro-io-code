@@ -28,6 +28,10 @@ final class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser()->getId() !== $user->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -36,7 +40,13 @@ final class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+        if (!$this->isGranted('ROLE_SUPER_ADMIN') && in_array('ROLE_SUPER_ADMIN', $user->getRoles(), true)) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser()->getId() !== $user->getId()) {
+            throw $this->createAccessDeniedException();
+        }
 
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
