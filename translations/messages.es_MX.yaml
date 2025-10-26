@@ -16,11 +16,13 @@
 'Attendances': 'Asistencias'
 'Visitors': 'Visitantes'
 'Language': 'Idioma'
+'es_MX': 'Español'
 'es': 'Español'
 'en': 'English'
 'User': 'Usuario'
-'Log in': 'Iniciar sesión'
+'Sign in': 'Iniciar sesión'
 'Log out': 'Terminar sesión'
+'Profile': 'Perfil'
 ## appointment
 ### _delete_form.html.twig
 'Are you sure you want to delete this item?': '¿Está seguro que desea borrar este registro?'
@@ -125,3 +127,8 @@
 'User roles': 'Permisos de usuario'
 'Admin': 'Administrador'
 'Super Admin': 'Súper administrador'
+## security
+### login.html.twig
+'Sign in!': '¡Iniciar sesión!'
+'You are logged in as': 'Iniciaste sesión como'
+'Please sign in': 'Inicia sesión, por favor'
