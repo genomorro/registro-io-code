@@ -72,6 +72,25 @@
 		    </ul>
 		</li>
 		{# End: Dropdown language #}
+		{# Begin: Dropdown user #}
+		<li class="nav-item dropdown">
+		    <a class="nav-link subnav-link dropdown-toggle"
+		       href="#"
+		       id="navbarDropdown"
+		       role="button"
+		       data-bs-toggle="dropdown"
+		       aria-expanded="false">
+			{% trans %}User{% endtrans %}
+		    </a>
+		    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<li><a class="dropdown-item" href="{{ path('app_login') }}">{% trans %}Log in{% endtrans %}</a></li>
+			<li><a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a></li>
+			<li><hr class="dropdown-divider"></li>
+			<li><a class="dropdown-item" href="{{ path('app_user_index') }}">{% trans %}User index{% endtrans %}</a></li>
+		    </ul>
+		</li>
+		{# End: Dropdown user #}
+
 	    </ul>
 	</div>
     </div>
