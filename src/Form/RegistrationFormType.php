@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -23,6 +25,17 @@ class RegistrationFormType extends AbstractType
             ->add('username', null, [
 		'label' => 'Username',
 	    ])
+	    ->add('roles', ChoiceType::class, array(
+		'label' => 'User roles',
+		'autocomplete' => true,
+		'choices'  => [
+		    'User' => 'ROLE_USER',
+		    'Admin' => 'ROLE_ADMIN',
+		    'Super Admin' => 'ROLE_SUPER_ADMIN',
+		],
+		'multiple' => true,
+		'required' => true,
+	    ))
         /* ->add('agreeTerms', CheckboxType::class, [
 	 *     'mapped' => false,
 	 *     'constraints' => [
@@ -31,12 +44,11 @@ class RegistrationFormType extends AbstractType
 	 *         ]),
 	 *     ],
 	 * ]) */
-            ->add('plainPassword', PasswordType::class, [
-		'label' => 'Password',
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+	    ->add('plainPassword', RepeatedType::class, [
+		'type' => PasswordType::class,
+		'first_options'  => ['label' => 'Password', 'hash_property_path' => 'password'],
+		'second_options' => ['label' => 'Repeat Password'],
+		'mapped' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -48,7 +60,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
+	    ])
         ;
     }
 
