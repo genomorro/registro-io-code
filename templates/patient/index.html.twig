@@ -69,5 +69,7 @@
 	</div>
     {% endif %}
     
-    <a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% if is_granted('ROLE_ADMIN') %}
+	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% endif %}
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Log in!{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Sign in!{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -11,7 +11,7 @@
 
             {% if app.user %}
 		<div class="mb-3">
-                    {% trans %}You are logged in as{% endtrans %} {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
+                    {% trans %}You are logged in as{% endtrans %} {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a>
 		</div>
             {% endif %}
 
@@ -46,7 +46,7 @@
 
 	    <div class="d-grid gap-2 d-md-block">
 		<button class="btn btn-primary" type="submit">
-		    {% trans %}Log in{% endtrans %}
+		    {% trans %}Sign in{% endtrans %}
 		</button>
 		<button type="reset" value="Reset" class="btn btn-secondary">
 		    {% trans %}Reset{% endtrans %}

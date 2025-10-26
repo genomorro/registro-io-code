@@ -27,7 +27,9 @@
 			<td>{{ appointment.type }}</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_appointment_show', {'id': appointment.id}) }}">{% trans %}Show{% endtrans %}</a>
-			    <a class="btn btn-secondary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% if is_granted('ROLE_ADMIN') %}
+				<a class="btn btn-secondary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
 			</td>
 		    </tr>
 {% else %}
@@ -45,5 +47,7 @@
 	</div>
     {% endif %}
     
-    <a  class="btn btn-primary" href="{{ path('app_appointment_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% if is_granted('ROLE_ADMIN') %}
+	<a  class="btn btn-primary" href="{{ path('app_appointment_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% endif %}
 {% endblock %}

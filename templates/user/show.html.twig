@@ -33,10 +33,12 @@
 	<a class="btn btn-link" href="{{ path('app_user_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>
 
-    <div class="row">
-	<div class="col-md-10"></div>
-	<div class="col-md-1">
-	    {{ include('user/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('user/_delete_form.html.twig') }}
+	    </div>
 	</div>
-    </div>
+    {% endif %}
 {% endblock %}
