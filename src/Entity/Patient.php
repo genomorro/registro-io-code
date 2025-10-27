@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PatientRepository::class)]
 #[UniqueEntity(fields: ['file'], message: 'There is already a patient with this file')]
@@ -15,15 +16,19 @@ class Patient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['Api', 'Appointment', 'Attendance', 'Visitor'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 12)]
+    #[Groups(['Api', 'Appointment', 'Attendance', 'Visitor'])]
     private ?string $file = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['Api', 'Appointment', 'Attendance', 'Visitor'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['Api', 'Appointment', 'Attendance', 'Visitor'])]
     private ?bool $disability = null;
 
     /**
