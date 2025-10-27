@@ -22,7 +22,15 @@
 		</tr>
 		<tr>
                     <th>{% trans %}Roles{% endtrans %}</th>
-                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td>
+			{% if 'ROLE_SUPER_ADMIN' in user.roles %}
+			    {% trans %}Super Admin{% endtrans %}
+			{% elseif 'ROLE_ADMIN' in user.roles %}
+			    {% trans %}Admin{% endtrans %}
+			{% else %}
+			    {% trans %}User{% endtrans %}
+			{% endif %}
+		    </td>
 		</tr>
             </tbody>
 	</table>

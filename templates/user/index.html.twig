@@ -22,7 +22,15 @@
 			<td>{{ user.id }}</td>
 			<td>{{ user.name }}</td>
 			<td>{{ user.username }}</td>
-			<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+			<td>
+			    {% if 'ROLE_SUPER_ADMIN' in user.roles %}
+				{% trans %}Super Admin{% endtrans %}
+			    {% elseif 'ROLE_ADMIN' in user.roles %}
+				{% trans %}Admin{% endtrans %}
+			    {% else %}
+				{% trans %}User{% endtrans %}
+			    {% endif %}
+			</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_user_show', {'id': user.id}) }}">{% trans %}Show{% endtrans %}</a>
 
