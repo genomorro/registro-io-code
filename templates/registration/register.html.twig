@@ -50,7 +50,9 @@
 	  <div class="d-grid gap-2 d-md-block">
 		<button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
 		<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
-		<a class="btn btn-link" href="{{ path('app_user_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+		{% if is_granted('ROLE_ADMIN') %}
+		    <a class="btn btn-link" href="{{ path('app_user_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+		{% endif %}
 	    </div>
       {{ form_end(registrationForm) }}
     </div>
