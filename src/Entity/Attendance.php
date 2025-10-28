@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AttendanceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AttendanceRepository::class)]
 class Attendance
@@ -11,19 +12,24 @@ class Attendance
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['attendance_list', 'attendance_detail', 'patient_detail'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['attendance_list', 'attendance_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $checkInAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['attendance_list', 'attendance_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $checkOutAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'attendances')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['attendance_detail'])]
     private ?Patient $patient = null;
 
     #[ORM\Column]
+    #[Groups(['attendance_list', 'attendance_detail', 'patient_detail'])]
     private ?int $tag = null;
 
     public function getId(): ?int
