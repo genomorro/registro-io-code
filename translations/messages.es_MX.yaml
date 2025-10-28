@@ -8,7 +8,9 @@
 'Visitor not found for the given tag.': 'Visitante no encontrado para ese número de gafete.'
 # templates
 ## base.html.twig
-'INER patient and visitor check-in and check-out': 'Registro de entrada y salida de pacientes y visitantes del INER'
+'Patient and visitor check-in and check-out system': 'Sistema de registro de entrada y salida de pacientes y visitantes'
+## index.html.twig
+'Known issues': 'Problemas conocidos'
 ## menu.html.twig
 'Search': 'Búsqueda'
 'Patients': 'Pacientes'

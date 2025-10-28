@@ -8,7 +8,9 @@
 'Visitor not found for the given tag.': 'Visitor not found for the given tag.'
 # templates
 ## base.html.twig
-'INER patient and visitor check-in and check-out': 'INER patient and visitor check-in and check-out'
+'Patient and visitor check-in and check-out system': 'Patient and visitor check-in and check-out system'
+## index.html.twig
+'Known issues': 'Known issues'
 ## menu.html.twig
 'Search': 'Search'
 'Patients': 'Patients'

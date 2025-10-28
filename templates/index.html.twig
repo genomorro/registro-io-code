@@ -3,15 +3,87 @@
 {% block body %}
     <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="/">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
     </ol>
 
-    <h1>{% trans %}Search Options{% endtrans %}</h1>
+    <h1>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</h1>
     <hr class="red">
-    
-    <div class="d-grid gap-2">
-	<a href="{{ path('app_search_file_index') }}" class="btn btn-primary" type="button">{% trans %}Search Patient by File{% endtrans %}</a>
-	<a href="{{ path('app_search_patient_tag_index') }}" class="btn btn-primary" type="button">{% trans %}Search Patient by Tag{% endtrans %}</a>
-	<a href="{{ path('app_search_visitor_tag_index') }}" class="btn btn-primary" type="button">{% trans %}Search Visitor by Tag{% endtrans %}</a>
+    <div>
+	<p>
+	    <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+		<li class="nav-link active" id="nav-tab-01" data-bs-toggle="tab" href="#nav-01" role="tab" aria-controls="nav-01" aria-selected="true">{% trans %}es{% endtrans %}</li>
+		<li class="nav-link" id="nav-tab-02" data-bs-toggle="tab" href="#nav-02" role="tab" aria-controls="nav-02" aria-selected="false">{% trans %}en{% endtrans %}</li>
+	    </ul>
+	</p>
+	<div class="tab-content" id="nav-tabContent">
+	    <div class="tab-pane fade show active" id="nav-01" role="tabpanel" aria-labelledby="nav-tab-01">
+		<h3>¡Bienvenido!</h3>
+		<p>Has entrado en el <i>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</i>. Para usar este sitio web debes tener en cuenta los siguientes elementos de navegación:</p>
+		<ul>
+		    <li><b>Menú principal</b>: Se encuentra en la parte superior, justa abajo del encabezado del sitio web. Sirve para encontrar las distintas secciones disponibles en el sistema. Es de color rojo y contiene siete elementos:
+			<ul>
+			    <li>Submenú de búsqueda</li>
+			    <li>Enlace a sección de <i>Pacientes</i></li>
+			    <li>Enlace a sección de <i>Citas</i></li>
+			    <li>Enlace a sección de <i>Asistencias</i></li>
+			    <li>Enlace a sección de <i>Visitantes</i></li>
+			    <li>Submenú de idioma (<i class="bi bi-translate"></i>)</li>
+			    <li>Submenú de acceso a usuario (<i class="icon icon-user"></i>)</li>
+			</ul>
+		    </li>
+		    <li><b>Menú de ruta de exploración</b>: Es el primer elemento de contenido que se observa en el sitio web. Permite conocer la ruta de su ubicación en directorios y subdirectorios, además puede permitirle una navegación más rápida. Tiene el siguiente aspecto:
+			<ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a href="#"><i class="icon icon-home"></i></a></li>
+			    <li class="breadcrumb-item"><a href="#">{% trans %}Begin{% endtrans %}</a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a href="#">{% trans %}Patients{% endtrans %}</a></li>
+			</ol>
+			El ícono de Home (<i class="icon icon-home"></i>) siempre será un enlace al sitio principal del Gobierno de México, los otros elementos corresponden a enlaces a páginas de este sitio web, el último elemento, siempre en <b>negritas</b>, es la página donde se ubica actualmente.
+		    </li>
+		</ul>
+		<hr>
+		<h3>{% trans %}Sign in{% endtrans %}</h3>
+		<p>Para iniciar sesión, debe ir al <i>submenú de acceso a usuario(<i class="icon icon-user"></i>)</i> y presionar la opción de {% trans %}Sign in{% endtrans %}.</p>
+		<p>Una vez que ha iniciado sesión ese mismo menú le permitirá {% trans %}Log out{% endtrans %}.</p>
+		<p>Si usted no tiene un usuario para este sitio web, deberá solicitarlo a su superior en el área de trabajo correspondiente.</p>
+		<h3>{% trans %}Language{% endtrans %}</h3>
+		<p>Es posible cambiar el idioma de este sitio web, presione el <i>submenú de idioma (<i class="bi bi-translate"></i>)</i> y seleccione su preferencia. Actualmente está disponible el idioma inglés y español.</p>
+		<h3>{% trans %}Known issues{% endtrans %}</h3>
+		<p>Actualmente, existe la posibilidad que el <i>Menú principal</i> no se despliegue correctamente, este defecto es ajeno a la construcción de este sitio web. Si sufre de este problema, use el <i>Menú de ruta de exploración</i> para recargar la página actual, el <i>Menú principal</i> debe funcionar completamente.</p>
+	    </div>
+	    <div class="tab-pane fade" id="nav-02" role="tabpanel" aria-labelledby="nav-tab-02">
+		<h3>Welcome!</h3>
+		<p>You have entered the <i>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</i>. To use this website, please note the following navigation elements:</p>
+		<ul>
+		    <li><b>Main Menu</b>: Located at the top, just below the website header. It is used to locate the different sections available in the system. It is red and contains seven elements:
+			<ul>
+			    <li>Search submenu</li>
+			    <li>Link to the <i>Patients</i></li> section
+			    <li>Link to the <i>Appointments</i></li> section
+			    <li>Link to the <i>Attendance</i></li> section
+			    <li>Link to the <i>Visitors</i></li> section
+			    <li>Language submenu (<i class="bi bi-translate"></i>)</li>
+			    <li>User access submenu (<i class="icon icon-user"></i>)</li>
+			</ul>
+		    </li>
+		    <li><b>Breadcrumb menu</b>: This is the first content element you see on the website. It lets you know your location in directories and subdirectories and can also allow for faster navigation. It looks like this:
+			<ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a href="#"><i class="icon icon-home"></i></a></li>
+			    <li class="breadcrumb-item"><a href="#">{% trans %}Begin{% endtrans %}</a></li>
+			    <li class="breadcrumb-item active" aria-current="page"><a href="#">{% trans %}Patients{% endtrans %}</a></li>
+			</ol>
+			The Home icon (<i class="icon icon-home"></i>) will always be a link to the main Government of Mexico website. The other elements correspond to links to pages on this website. The last element, always in <b>bold</b>, is the page where you are currently located.
+		    </li>
+		</ul>
+		<hr>
+		<h3>{% trans %}Sign in{% endtrans %}</h3>
+		<p>To log in, go to the <i>User access submenu (<i class="icon icon-user"></i>)</i> and press the {% trans %}Sign in{% endtrans %} option.</p>
+		<p>Once you're logged in, that same menu will allow you to {% trans %}Log out{% endtrans %}.</p>
+		<p>If you don't have a username for this website, you must request one from your supervisor in the corresponding work area.</p>
+		<h3>{% trans %}Language{% endtrans %}</h3>
+		<p>You can change the language of this website by pressing the <i>Language submenu (<i class="bi bi-translate"></i>)</i> and selecting your preference. English and Spanish are currently available.</p>
+		<h3>{% trans %}Known issues{% endtrans %}</h3>
+		<p>Currently, there is a possibility that the <i>Main Menu</i> may not display correctly; this defect is unrelated to the construction of this website. If you experience this issue, use the <i>Breadcrumb Menu</i> to reload the current page; the <i>Main Menu</i> should work fully.</p>
+	    </div>
+	</div>
     </div>
 {% endblock %}
