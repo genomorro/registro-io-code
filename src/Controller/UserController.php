@@ -70,6 +70,7 @@ final class UserController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'user' => $user,
             'registrationForm' => $form,
+	    'title' => 'Edit User',
         ]);
     }
 

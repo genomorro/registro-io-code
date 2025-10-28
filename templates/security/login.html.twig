@@ -3,6 +3,12 @@
 {% block title %}{% trans %}Sign in!{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="">{% trans %}Sign in{% endtrans %}</a></li>
+    </ol>
+    
     <div class="row">
 	<form method="post">
             {% if error %}
@@ -10,12 +16,13 @@
             {% endif %}
 
             {% if app.user %}
-		<div class="mb-3">
+		<div class="mb-3 alert alert-success">
                     {% trans %}You are logged in as{% endtrans %} {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a>
 		</div>
             {% endif %}
 
             <h1 class="h3 mb-3 font-weight-normal">{% trans %}Please sign in{% endtrans %}</h1>
+	    <hr class="red">
 	    <div class="form-group">
 		<label for="username">{% trans %}Username{% endtrans %}</label>
 		<div class="row">

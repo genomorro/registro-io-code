@@ -3,7 +3,14 @@
 {% block title %}{% trans %}Search Patient{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_file_index') }}">{% trans %}Search Patient by File{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}Search Patient by File{% endtrans %}</h1>
+    <hr class="red">
     <div class="row">
 	{{ form_start(form) }}
 	    <div class="form-group">

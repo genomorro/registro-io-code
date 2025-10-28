@@ -39,6 +39,7 @@
 'Procedimiento': 'Procedimiento'
 'Update': 'Actualizar'
 'Back to list': 'Volver a la lista'
+'Begin': 'Inicio'
 ### index.html.twig
 'Id': 'Id'
 'actions': 'acciones'
@@ -119,6 +120,8 @@
 'User index': 'Índice de usuarios'
 'Username': 'Nombre de usuario'
 'Roles': 'Permisos'
+### edit.html.twig
+'Edit User': 'Editar usuario'
 ## registration
 ### register.html.twig
 'Register': 'Registro'

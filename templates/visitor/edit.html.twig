@@ -3,7 +3,15 @@
 {% block title %}{% trans %}Edit Visitor{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_visitor_index') }}">{% trans %}Visitor{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}Edit Visitor{% endtrans %}</h1>
+    <hr class="red">
 
     <div class="row">
 	{{ form_start(form) }}

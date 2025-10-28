@@ -1,0 +1,16 @@
+  /home/genomorro/registro-io/public_html/translations:
+  -rw-rw-r--  1 genomorro genomorro  176 lun 27 oct 2025 07:51:40 AutocompleteBundle.en.yaml
+  -rw-rw-r--  1 genomorro genomorro  203 lun 27 oct 2025 07:51:40 AutocompleteBundle.es_MX.yaml
+  -rw-rw-r--  1 genomorro genomorro  203 lun 27 oct 2025 07:51:40 AutocompleteBundle.es.yaml
+  -rw-rw-r--  1 genomorro genomorro 3.9K lun 27 oct 2025 22:46:05 messages.en.yaml
+C -rw-rw-r--  1 genomorro genomorro 4.2K lun 27 oct 2025 22:45:52 messages.es_MX.yaml
+  -rw-rw-r--  1 genomorro genomorro 4.2K lun 27 oct 2025 22:45:52 messages.es.yaml
+  -rw-rw-r--  1 genomorro genomorro   30 lun 27 oct 2025 07:51:40 pagerfanta.en.yaml
+  -rw-rw-r--  1 genomorro genomorro   35 lun 27 oct 2025 07:51:40 pagerfanta.es_MX.yaml
+  -rw-rw-r--  1 genomorro genomorro   35 lun 27 oct 2025 07:51:40 pagerfanta.es.yaml
+  -rw-rw-r--  1 genomorro genomorro 1.7K lun 27 oct 2025 07:51:40 security.en.yaml
+  -rw-rw-r--  1 genomorro genomorro 1.9K lun 27 oct 2025 07:51:40 security.es_MX.yaml
+  -rw-rw-r--  1 genomorro genomorro 1.9K lun 27 oct 2025 07:51:40 security.es.yaml
+  -rw-rw-r--  1 genomorro genomorro  20K lun 27 oct 2025 07:51:40 validators.en.yaml
+  -rw-rw-r--  1 genomorro genomorro  21K lun 27 oct 2025 07:51:40 validators.es_MX.yaml
+  -rw-rw-r--  1 genomorro genomorro  21K lun 27 oct 2025 07:51:40 validators.es.yaml

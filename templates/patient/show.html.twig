@@ -3,7 +3,15 @@
 {% block title %}{% trans %}Patient{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_patient_index') }}">{% trans %}Patient{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}Patient{% endtrans %}</h1>
+    <hr class="red">
 
     <div class="table-responsible">
 	<table class="table table-striped">
@@ -31,6 +39,7 @@
     <hr>
 
     <h2>{% trans %}Today's Attendance{% endtrans %}</h2>
+    <hr class="red">
     {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
     {% if todays_attendance %}
         <div class="table-responsible">
@@ -71,6 +80,7 @@
     <hr>
 
     <h2>{% trans %}Today's Appointments{% endtrans %}</h2>
+    <hr class="red">
     {% if todays_appointments.nbResults > 0 %}
         <div class="table-responsible">
             <table class="table table-striped">
@@ -102,6 +112,7 @@
     {% endif %}
 
     <h2>{% trans %}Other Appointments{% endtrans %}</h2>
+    <hr class="red">
     {% if other_appointments.nbResults > 0 %}
         <div class="table-responsible">
             <table class="table table-striped">
@@ -135,6 +146,7 @@
     <hr>
 
     <h2>{% trans %}Today's Visitors{% endtrans %}</h2>
+    <hr class="red">
     {% if todays_visitors.nbResults > 0 %}
         <div class="table-responsible">
             <table class="table table-striped">

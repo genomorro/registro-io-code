@@ -3,7 +3,14 @@
 {% block title %}{% trans %}Patient index{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_patient_index') }}">{% trans %}Patient{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}Patient index{% endtrans %}</h1>
+    <hr class="red">
 
     <div class="table-responsible">
 	<table class="table table-hover">

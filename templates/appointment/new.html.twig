@@ -3,7 +3,15 @@
 {% block title %}{% trans %}New Appointment{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_appointment_index') }}">{% trans %}Appointment{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_appointment_new') }}">{% trans %}New{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}Create new Appointment{% endtrans %}</h1>
+    <hr class="red">
 
     <div class="row">
 	{{ form_start(form) }}

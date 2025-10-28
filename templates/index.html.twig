@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{% trans %}Search Options{% endtrans %}</h1>
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="/">{% trans %}Begin{% endtrans %}</a></li>
+    </ol>
 
+    <h1>{% trans %}Search Options{% endtrans %}</h1>
+    <hr class="red">
+    
     <div class="d-grid gap-2">
 	<a href="{{ path('app_search_file_index') }}" class="btn btn-primary" type="button">{% trans %}Search Patient by File{% endtrans %}</a>
 	<a href="{{ path('app_search_patient_tag_index') }}" class="btn btn-primary" type="button">{% trans %}Search Patient by Tag{% endtrans %}</a>

@@ -3,7 +3,15 @@
 {% block title %}{% trans %}User{% endtrans %}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_user_index') }}">{% trans %}User{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_user_show', {'id': user.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}User{% endtrans %}</h1>
+    <hr class="red">
 
     <div class="table-responsible">
 	<table class="table table-striped">

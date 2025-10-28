@@ -54,7 +54,7 @@
 		       role="button"
 		       data-bs-toggle="dropdown"
 		       aria-expanded="false">
-			{% trans %}Language{% endtrans %}
+			<i class="bi bi-translate"></i>
 		    </a>
 		    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 			<li><a class="dropdown-item" href="">{{ app.locale|trans }}</a></li>
@@ -80,7 +80,7 @@
 		       role="button"
 		       data-bs-toggle="dropdown"
 		       aria-expanded="false">
-			{% trans %}User{% endtrans %}
+			<i class="icon icon-user"></i>
 		    </a>
 		    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 			{% if app.user %}
