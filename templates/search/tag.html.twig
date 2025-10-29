@@ -6,6 +6,7 @@
     <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a></li>
 	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path(app.request.get('_route'),app.request.get('_route_params')) }}">{{ title|trans }}</a></li>
     </ol>
     

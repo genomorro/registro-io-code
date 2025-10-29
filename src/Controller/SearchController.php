@@ -16,6 +16,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/search')]
 class SearchController extends AbstractController
 {
+    #[Route('/', name: 'app_search_index')]
+    public function index(): Response
+    {
+	return $this->render('search/index.html.twig');
+    }
     #[Route('/file', name: 'app_search_file_index')]
     public function searchFile(Request $request, PatientRepository $patientRepository, TranslatorInterface $translator): Response
     {
