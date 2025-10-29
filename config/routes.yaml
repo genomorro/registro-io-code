@@ -1,3 +1,7 @@
+app_redirect:
+    path: /
+    controller: App\Controller\IndexController::redirectToLocale
+
 controllers:
     resource:
         path: ../src/Controller/
@@ -7,4 +11,3 @@ controllers:
     prefix:
       en: '/en'
       es: '/es'
-      es_MX: ''
