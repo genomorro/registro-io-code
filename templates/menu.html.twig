@@ -12,14 +12,13 @@
 	    <span class="navbar-toggler-icon"></span>
 	</button>
 
-	<a class="navbar-brand sub-navbar" href="#"></a>
-
+	<a class="navbar-brand sub-navbar" style="width: 0px;" href="#"></a>
+	
 	<div class="collapse navbar-collapse" id="subNavBarDropdown">
 	    <ul class="navbar-nav">
 		{# Begin: Dropdown search #}
 		<li class="nav-item dropdown">
 		    <a class="nav-link subnav-link dropdown-toggle"
-		       href="#"
 		       id="navbarDropdown"
 		       role="button"
 		       data-bs-toggle="dropdown"
@@ -34,6 +33,7 @@
 		    </ul>
 		</li>
 		{# End: Dropdown search #}
+		{# Begin: main options #}
 		<li class="nav-item">
 		    <a class="nav-link subnav-link" href="{{ path('app_patient_index') }}">{% trans %}Patients{% endtrans %}</a>
 		</li>
@@ -46,58 +46,37 @@
 		<li class="nav-item">
 		    <a class="nav-link subnav-link" href="{{ path('app_visitor_index') }}">{% trans %}Visitors{% endtrans %}</a>
 		</li>
-		{# Begin: Dropdown language #}
-		<li class="nav-item dropdown">
-		    <a class="nav-link subnav-link dropdown-toggle"
-		       href="#"
-		       id="navbarDropdown"
-		       role="button"
-		       data-bs-toggle="dropdown"
-		       aria-expanded="false">
-			<i class="bi bi-translate"></i>
-		    </a>
-		    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<li><a class="dropdown-item" href="">{{ app.locale|trans }}</a></li>
-			<li><hr class="dropdown-divider"></li>
-			{% for locale in app.enabled_locales %}
-                            {% if locale != app.locale %}
-				<li>
-				    <a class="dropdown-item"
-				       href="{{ path(app.current_route, app.current_route_parameters|merge({_locale: locale})) }}">
-					{{ locale|trans }}
-				    </a>
-				</li>
-			    {% endif %}
-                        {% endfor %}
-		    </ul>
-		</li>
-		{# End: Dropdown language #}
-		{# Begin: Dropdown user #}
-		<li class="nav-item dropdown">
-		    <a class="nav-link subnav-link dropdown-toggle"
-		       href="#"
-		       id="navbarDropdown"
-		       role="button"
-		       data-bs-toggle="dropdown"
-		       aria-expanded="false">
-			<i class="icon icon-user"></i>
-		    </a>
-		    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			{% if app.user %}
-			    <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id}) }}">{% trans %}Profile{% endtrans %}: ({{ app.user.username }})</a></li>
-			    <li><hr class="dropdown-divider"></li>
-			    <li><a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a></li>
-			{% else %}
-			    <li><a class="dropdown-item" href="{{ path('app_login') }}">{% trans %}Sign in{% endtrans %}</a></li>
-			{% endif %}
-			{% if is_granted('ROLE_ADMIN') %}
-			    <li><hr class="dropdown-divider"></li>
-			    <li><a class="dropdown-item" href="{{ path('app_user_index') }}">{% trans %}User index{% endtrans %}</a></li>
-			{% endif %}
-		    </ul>
-		</li>
-		{# End: Dropdown user #}
-
+		{% if is_granted('ROLE_ADMIN') %}
+		    <li class="nav-item">
+			<a class="nav-link subnav-link" href="{{ path('app_user_index') }}">{% trans %}Users{% endtrans %}</a>
+		    </li>
+		{% endif %}
+		{# End: main options #}
+		{# Begin: Language switcher #}
+		{% for locale in app.enabled_locales %}
+		    {% if locale != app.locale %}
+			<li class="nav-item">
+			    <a class="nav-link subnav-link" href="{{ path(app.current_route, app.current_route_parameters|merge({_locale: locale})) }}">
+				<i class="bi bi-translate"></i><b class="text-uppercase">{{ locale }}</b>
+			    </a>
+			</li>
+		    {% endif %}
+		{% endfor %}
+		{# End: Language switcher #}
+		{# Begin: user submenu #}
+		{% if app.user %}
+		    <li class="nav-item">
+			<a class="nav-link subnav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}"><i class="icon-user"></i> ({{ app.user.username }})</a>
+		    </li>
+		    <li class="nav-item">
+			<a class="nav-link subnav-link" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-left"></i></a>
+		    </li>
+		{% else %}
+		    <li class="nav-item">
+			<a class="nav-link subnav-link" href="{{ path('app_login') }}"><i class="bi bi-box-arrow-in-right"></i></a>
+		    </li>
+		{% endif %}
+		{# End: user submenu #}
 	    </ul>
 	</div>
     </div>
