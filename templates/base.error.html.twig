@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ app.locale }}">
+    <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+	    {% block title %}
+		{% trans %}Patient and visitor check-in and check-out system{% endtrans %}
+	    {% endblock %}
+	</title>
+	{% block javascripts %}
+	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
+	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+	<main class="page">
+	    <div class="container-md">
+		{% block body %}		    
+		{% endblock %}
+	    </div>
+	</main>
+	<script src="https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js"></script>
+    </body>
+</html>
+
