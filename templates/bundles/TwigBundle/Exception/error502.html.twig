@@ -1,0 +1,31 @@
+{# templates/bundles/TwigBundle/Exception/error502.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Patient and visitor check-in and check-out system{% endtrans %} | Error 502
+{% endblock %}
+
+{% block body %}
+    <div class="section section-error vertical-buffer">
+        <div class="row">
+            <div class="col-sm-7">
+                <h2>Puerta de enlace incorrecta</h2>
+                <h3>Error 502</h3>
+                <p>Un servidor está actuando como una puerta de enlace o proxy para cumplir tu solicitud para acceder a la URL requerida. Este servidor recibió una respuesta inválida desde un servidor de flujo ascendente al cual accedió para completar tu solicitud.</p>
+                <p>Por favor intentalo más tarde.</p>
+                <hr>
+            </div>
+            <div class="col-sm-4 col-sm-offset-1">
+                <figure>
+                    <img src="./images/error.svg" alt="Migrando a gob.mx">
+                </figure>
+                <h3>Otras opciones:</h3>
+                <ul>
+                    <li><a href="http://www.gob.mx/">Regresar al inicio</a></li>
+                    <li><a href="http://www.gob.mx/busqueda">Buscar en gob.mx</a></li>
+                    <li><a href="javascript:history.back();">Volver a la página anterior</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

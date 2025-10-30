@@ -1,0 +1,31 @@
+{# templates/bundles/TwigBundle/Exception/error503.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Patient and visitor check-in and check-out system{% endtrans %} | Error 503
+{% endblock %}
+
+{% block body %}
+    <div class="section section-error vertical-buffer">
+        <div class="row">
+            <div class="col-sm-7">
+                <h2>Servicio no disponible</h2>
+                <h3>Error 503</h3>
+                <p>El servidor web actualmente no está disponible para manejar tu solicitud debido a una sobrecarga temporal o a un mantenimiento del servidor.</p>
+                <p>Por favor intentalo más tarde.</p>
+                <hr>
+            </div>
+            <div class="col-sm-4 col-sm-offset-1">
+                <figure>
+                    <img src="./images/error.svg" alt="Migrando a gob.mx">
+                </figure>
+                <h3>Otras opciones:</h3>
+                <ul>
+                    <li><a href="http://www.gob.mx/">Regresar al inicio</a></li>
+                    <li><a href="http://www.gob.mx/busqueda">Buscar en gob.mx</a></li>
+                    <li><a href="javascript:history.back();">Volver a la página anterior</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
