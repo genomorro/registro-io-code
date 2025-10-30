@@ -1,6 +1,11 @@
 body {
-    background-color: skyblue;
+    background-color: #eaeaea;
 }
+
+main.page {
+margin-bottom: 1%;
+}
+
 .ts-control {
     height: 39px;
     font-size: 18px !important;
