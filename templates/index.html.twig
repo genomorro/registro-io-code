@@ -22,13 +22,13 @@
 		<ul>
 		    <li><b>Menú principal</b>: Se encuentra en la parte superior, justa abajo del encabezado del sitio web. Sirve para encontrar las distintas secciones disponibles en el sistema. Es de color rojo y contiene siete elementos:
 			<ul>
-			    <li>Submenú de búsqueda</li>
+			    <li>Enlace a la búsqueda</li>
 			    <li>Enlace a sección de <i>Pacientes</i></li>
 			    <li>Enlace a sección de <i>Citas</i></li>
 			    <li>Enlace a sección de <i>Asistencias</i></li>
 			    <li>Enlace a sección de <i>Visitantes</i></li>
-			    <li>Submenú de idioma (<i class="bi bi-translate"></i>)</li>
-			    <li>Submenú de acceso a usuario (<i class="icon icon-user"></i>)</li>
+			    <li>Cambiar idioma (<i class="bi bi-translate"></i>)</li>
+			    <li>Opciones de usuario (<i class="icon icon-user"></i>)</li>
 			</ul>
 		    </li>
 		    <li><b>Menú de ruta de exploración</b>: Es el primer elemento de contenido que se observa en el sitio web. Permite conocer la ruta de su ubicación en directorios y subdirectorios, además puede permitirle una navegación más rápida. Tiene el siguiente aspecto:
@@ -42,13 +42,11 @@
 		</ul>
 		<hr>
 		<h3>{% trans %}Sign in{% endtrans %}</h3>
-		<p>Para iniciar sesión, debe ir al <i>submenú de acceso a usuario(<i class="icon icon-user"></i>)</i> y presionar la opción de {% trans %}Sign in{% endtrans %}.</p>
-		<p>Una vez que ha iniciado sesión ese mismo menú le permitirá {% trans %}Log out{% endtrans %}.</p>
+		<p>Para iniciar sesión, debe ir al <i>botón {% trans %}Sign in{% endtrans %} (<i class="bi bi-box-arrow-left"></i>)</i> e ingresar sus credenciales.</p>
+		<p>Una vez que ha iniciado sesión el botón {% trans %}Sign in{% endtrans %} será sustituido por el <i>botón {% trans %}Log out{% endtrans %}(<i class="bi bi-box-arrow-in-right"></i>)</i>.</p>
 		<p>Si usted no tiene un usuario para este sitio web, deberá solicitarlo a su superior en el área de trabajo correspondiente.</p>
 		<h3>{% trans %}Language{% endtrans %}</h3>
-		<p>Es posible cambiar el idioma de este sitio web, presione el <i>submenú de idioma (<i class="bi bi-translate"></i>)</i> y seleccione su preferencia. Actualmente está disponible el idioma inglés y español.</p>
-		<h3>{% trans %}Known issues{% endtrans %}</h3>
-		<p>Actualmente, existe la posibilidad que el <i>Menú principal</i> no se despliegue correctamente, este defecto es ajeno a la construcción de este sitio web. Si sufre de este problema, use el <i>Menú de ruta de exploración</i> para recargar la página actual, el <i>Menú principal</i> debe funcionar completamente.</p>
+		<p>Es posible cambiar el idioma de este sitio web, presione el <i>botón de idioma (<i class="bi bi-translate"></i>)</i> y seleccione su preferencia. Actualmente está disponible el idioma inglés y español.</p>
 	    </div>
 	    <div class="tab-pane fade" id="nav-02" role="tabpanel" aria-labelledby="nav-tab-02">
 		<h3>Welcome!</h3>
