@@ -16,10 +16,12 @@
     <div class="table-responsible">
 	<table class="table table-striped">
             <tbody>
-		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
-                    <td>{{ visitor.id }}</td>
-		</tr>
+		{% if is_granted('ROLE_ADMIN') %}
+		    <tr>
+			<th>{% trans %}Id{% endtrans %}</th>
+			<td>{{ visitor.id }}</td>
+		    </tr>
+		{% endif %}
 		<tr>
                     <th>{% trans %}Name{% endtrans %}</th>
                     <td>{{ visitor.name }}</td>

@@ -16,7 +16,9 @@
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
+		    {% if is_granted('ROLE_ADMIN') %}
+			<th>{% trans %}Id{% endtrans %}</th>
+		    {% endif %}
                     <th>{% trans %}Patient{% endtrans %}</th>
                     <th>{% trans %}Tag{% endtrans %}</th>
                     <th>{% trans %}Check in{% endtrans %}</th>
@@ -27,7 +29,9 @@
             <tbody>
 		{% for attendance in attendances %}
 		    <tr>
-			<td>{{ attendance.id }}</td>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <td>{{ attendance.id }}</td>
+			{% endif %}
 			<td>{{ attendance.patient.name }}</td>
 			<td>{{ attendance.tag }}</td>
 			<td>{{ attendance.checkinAt ? attendance.checkinAt|date('Y-m-d H:i:s') : '' }}</td>

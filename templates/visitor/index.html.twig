@@ -16,7 +16,9 @@
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
+		    {% if is_granted('ROLE_ADMIN') %}
+			<th>{% trans %}Id{% endtrans %}</th>
+		    {% endif %}
                     <th>{% trans %}Name{% endtrans %}</th>
                     <th>{% trans %}Phone{% endtrans %}</th>
                     <th>{% trans %}DNI{% endtrans %}</th>
@@ -32,7 +34,9 @@
             <tbody>
 		{% for visitor in visitors %}
 		    <tr>
-			<td>{{ visitor.id }}</td>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <td>{{ visitor.id }}</td>
+			{% endif %}
 			<td>{{ visitor.name }}</td>
 			<td>{{ visitor.phone }}</td>
 			<td>{{ visitor.dni }}</td>

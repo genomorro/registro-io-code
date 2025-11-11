@@ -16,7 +16,9 @@
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
+		    {% if is_granted('ROLE_ADMIN') %}
+			<th>{% trans %}Id{% endtrans %}</th>
+		    {% endif %}
                     <th>{% trans %}File{% endtrans %}</th>
                     <th>{% trans %}Name{% endtrans %}</th>
                     <th>{% trans %}Disability{% endtrans %}</th>
@@ -29,7 +31,9 @@
 		{% for patient in patients %}
 		    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
 		    <tr>
-			<td>{{ patient.id }}</td>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <td>{{ patient.id }}</td>
+			{% endif %}
 			<td>{{ patient.file }}</td>
 			<td>{{ patient.name }}</td>
 			<td>{{ patient.disability ? 'Yes' : 'No' }}</td>
@@ -58,7 +62,9 @@
 			</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
-			    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% if is_granted('ROLE_ADMIN') %}
+				<a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
 			</td>
 		    </tr>
         {% else %}

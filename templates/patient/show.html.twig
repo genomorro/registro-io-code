@@ -16,10 +16,12 @@
     <div class="table-responsible">
 	<table class="table table-striped">
             <tbody>
-		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
-                    <td>{{ patient.id }}</td>
-		</tr>
+		{% if is_granted('ROLE_ADMIN') %}
+		    <tr>
+			<th>{% trans %}Id{% endtrans %}</th>
+			<td>{{ patient.id }}</td>
+		    </tr>
+		{% endif %}
 		<tr>
                     <th>{% trans %}File{% endtrans %}</th>
                     <td>{{ patient.file }}</td>
@@ -38,6 +40,38 @@
 
     <hr>
 
+    <h2>{% trans %}Today's Appointments{% endtrans %}</h2>
+    <hr class="red">
+    {% if todays_appointments.nbResults > 0 %}
+        <div class="table-responsible">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans %}Place{% endtrans %}</th>
+                        <th>{% trans %}Type{% endtrans %}</th>
+                        <th>{% trans %}Date{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in todays_appointments %}
+                        <tr>
+                            <td>{{ appointment.place }}</td>
+                            <td>{{ appointment.type }}</td>
+                            <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	{% if todays_appointments.nbResults > 20 %}
+            <div class="navigation">
+		{{ pagerfanta(todays_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_today_appointments', prev_message: '<', next_message: '>'}) }}
+            </div>
+	{% endif %}
+    {% else %}
+        <p>{% trans %}No appointments for today.{% endtrans %}</p>
+    {% endif %}
+    
     <h2>{% trans %}Today's Attendance{% endtrans %}</h2>
     <hr class="red">
     {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
@@ -78,38 +112,6 @@
     {% endif %}
     
     <hr>
-
-    <h2>{% trans %}Today's Appointments{% endtrans %}</h2>
-    <hr class="red">
-    {% if todays_appointments.nbResults > 0 %}
-        <div class="table-responsible">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>{% trans %}Place{% endtrans %}</th>
-                        <th>{% trans %}Type{% endtrans %}</th>
-                        <th>{% trans %}Date{% endtrans %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for appointment in todays_appointments %}
-                        <tr>
-                            <td>{{ appointment.place }}</td>
-                            <td>{{ appointment.type }}</td>
-                            <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-	{% if todays_appointments.nbResults > 20 %}
-            <div class="navigation">
-		{{ pagerfanta(todays_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_today_appointments', prev_message: '<', next_message: '>'}) }}
-            </div>
-	{% endif %}
-    {% else %}
-        <p>{% trans %}No appointments for today.{% endtrans %}</p>
-    {% endif %}
 
     <h2>{% trans %}Other Appointments{% endtrans %}</h2>
     <hr class="red">
