@@ -39,7 +39,7 @@ final class PatientController extends AbstractController
     #[Route('/new', name: 'app_patient_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $patient = new Patient();
         $form = $this->createForm(PatientType::class, $patient);
@@ -97,7 +97,7 @@ final class PatientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);

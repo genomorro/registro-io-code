@@ -34,7 +34,7 @@ final class AppointmentController extends AbstractController
     #[Route('/new', name: 'app_appointment_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $appointment = new Appointment();
         $form = $this->createForm(AppointmentType::class, $appointment);
@@ -66,7 +66,7 @@ final class AppointmentController extends AbstractController
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_ADMIN');
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);

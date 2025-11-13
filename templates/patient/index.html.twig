@@ -16,7 +16,7 @@
 	<table class="table table-hover">
             <thead>
 		<tr>
-		    {% if is_granted('ROLE_ADMIN') %}
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
 			<th>{% trans %}Id{% endtrans %}</th>
 		    {% endif %}
                     <th>{% trans %}File{% endtrans %}</th>
@@ -31,7 +31,7 @@
 		{% for patient in patients %}
 		    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
 		    <tr>
-			{% if is_granted('ROLE_ADMIN') %}
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
 			    <td>{{ patient.id }}</td>
 			{% endif %}
 			<td>{{ patient.file }}</td>
@@ -62,7 +62,7 @@
 			</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
-			    {% if is_granted('ROLE_ADMIN') %}
+			    {% if is_granted('ROLE_SUPER_ADMIN') %}
 				<a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
 			    {% endif %}
 			</td>
@@ -82,7 +82,7 @@
 	</div>
     {% endif %}
     
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
     {% endif %}
 {% endblock %}

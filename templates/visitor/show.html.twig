@@ -16,7 +16,7 @@
     <div class="table-responsible">
 	<table class="table table-striped">
             <tbody>
-		{% if is_granted('ROLE_ADMIN') %}
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
 		    <tr>
 			<th>{% trans %}Id{% endtrans %}</th>
 			<td>{{ visitor.id }}</td>
@@ -78,7 +78,9 @@
     </div>
 
     <div class="d-grid gap-2 d-md-block">
-	<a class="btn btn-primary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+	    <a class="btn btn-primary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
 	<a class="btn btn-link" href="{{ path('app_visitor_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>
 
