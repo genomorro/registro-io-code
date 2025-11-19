@@ -26,9 +26,12 @@ class AppointmentType extends AbstractType
             ->add('type', ChoiceType::class, [
 		'label' => 'Type',
                 'choices' => [
-                    'Estudio' => 'Estudio',
-                    'Consulta' => 'Consulta',
-                    'Procedimiento' => 'Procedimiento',
+		    'Apertura/Primera vez' => 'APERTURA/PRIMERA VEZ',
+		    'Estudios' => 'ESTUDIOS',
+		    'Preconsulta' => 'PRECONSULTA',
+		    'Primera vez y subsecuente' => 'PRIMERA VEZ Y SUBSECUENTE', 
+		    'Primera vez' => 'PRIMERA VEZ',
+		    'Subsecuente' => 'SUBSECUENTE',
                 ],
 		'autocomplete' => true,
                 'constraints' => [
@@ -43,6 +46,6 @@ class AppointmentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Appointment::class,
-        ]);
-    }
-}
+            ]);
+	    }
+	    }
