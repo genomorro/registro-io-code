@@ -51,6 +51,8 @@
 'Edit': 'Editar'
 'no records found': 'no se encontraron registros'
 'Create new': 'Crear nuevo'
+'Specialty': 'Especialidad'
+'Status': 'Estado'
 ### new.html.twig
 'New Appointment': 'Nueva cita'
 'Create new Appointment': 'Crear nueva cita'

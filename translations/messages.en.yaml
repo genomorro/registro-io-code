@@ -51,6 +51,8 @@
 'Edit': 'Edit'
 'no records found': 'no records found'
 'Create new': 'Create new'
+'Specialty': 'Specialty'
+'Status': 'Status'
 ### new.html.twig
 'New Appointment': 'New Appointment'
 'Create new Appointment': 'Create new Appointment'
