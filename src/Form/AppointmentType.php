@@ -19,6 +19,9 @@ class AppointmentType extends AbstractType
             ->add('place', null, [
 		'label' => 'Place',
 	    ])
+	    ->add('specialty', null, [
+		'label' => 'Specialty',
+	    ])
             ->add('date_at', null, [
 		'label' => 'Date at',
                 'widget' => 'single_text',
@@ -38,6 +41,17 @@ class AppointmentType extends AbstractType
                     new NotBlank(),
                 ],
             ])
+	    ->add('status', ChoiceType::class, [
+		'label' => 'Status',
+		'choices' => [
+		    'Agendada' => 'Agendada',
+		    'Cancelada' => 'Cancelada',
+		],
+		'autocomplete' => true,
+		'constraints' => [
+		    new NotBlank(),
+		],
+	    ])
             ->add('patient', PatientAutocompleteField::Class)
         ;
     }

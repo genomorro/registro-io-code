@@ -19,6 +19,10 @@ class Appointment
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $place = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
+    private ?string $specialty = null;
+
     #[ORM\Column]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $date_at = null;
@@ -26,6 +30,10 @@ class Appointment
     #[ORM\Column(length: 255)]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $type = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
+    private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -45,6 +53,18 @@ class Appointment
     public function setPlace(string $place): static
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getSpecialty(): ?string
+    {
+        return $this->specialty;
+    }
+
+    public function setSpecialty(string $specialty): static
+    {
+        $this->specialty = $specialty;
 
         return $this;
     }
@@ -69,6 +89,18 @@ class Appointment
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

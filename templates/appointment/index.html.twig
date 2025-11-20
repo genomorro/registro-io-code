@@ -21,8 +21,10 @@
 		    {% endif %}
 		    <th>{% trans %}Patient{% endtrans %}</th>
                     <th>{% trans %}Place{% endtrans %}</th>
+                    <th>{% trans %}Specialty{% endtrans %}</th>
                     <th>{% trans %}Date at{% endtrans %}</th>
                     <th>{% trans %}Type{% endtrans %}</th>
+                    <th>{% trans %}Status{% endtrans %}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -34,8 +36,10 @@
 			{% endif %}
 			<td>{{ appointment.patient.name }}</td>
 			<td>{{ appointment.place }}</td>
+			<td>{{ appointment.specialty }}</td>
 			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>{{ appointment.type }}</td>
+			<td>{{ appointment.status }}</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_appointment_show', {'id': appointment.id}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
