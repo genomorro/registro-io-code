@@ -23,7 +23,6 @@ class AttendanceType extends AbstractType
 		'label' => 'Tag',
                 'constraints' => [
                     new NotBlank(),
-                    new LessThanOrEqual(9999),
                 ],
             ])
             ->add('patient', PatientAutocompleteField::class)

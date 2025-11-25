@@ -29,9 +29,15 @@ class Visitor
     #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?string $dni = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 4)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 4)]
+    #[Assert\Regex(
+    pattern: '/^[A-Z]\d{3}$/',
+    message: 'The tag must start with one letter and continue with three numbers'
+    )]
     #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
-    private ?int $tag = null;
+    private ?string $tag = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['visitor_detail'])]
@@ -102,12 +108,12 @@ class Visitor
         return $this;
     }
 
-    public function getTag(): ?int
+    public function getTag(): ?string
     {
         return $this->tag;
     }
 
-    public function setTag(int $tag): static
+    public function setTag(string $tag): static
     {
         $this->tag = $tag;
 

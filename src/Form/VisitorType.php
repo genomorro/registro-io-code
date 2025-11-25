@@ -42,7 +42,6 @@ class VisitorType extends AbstractType
 		'label' => 'Tag',
                 'constraints' => [
                     new NotBlank(),
-                    new LessThanOrEqual(9999),
                 ],
             ])
             ->add('destination', null, [
