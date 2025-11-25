@@ -34,7 +34,7 @@
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
 			    <td>{{ appointment.id }}</td>
 			{% endif %}
-			<td>{{ appointment.patient.name }}</td>
+			<td>{{ appointment.patient.name|title }}</td>
 			<td>{{ appointment.place }}</td>
 			<td>{{ appointment.specialty }}</td>
 			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>

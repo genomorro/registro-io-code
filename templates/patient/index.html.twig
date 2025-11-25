@@ -35,7 +35,7 @@
 			    <td>{{ patient.id }}</td>
 			{% endif %}
 			<td>{{ patient.file }}</td>
-			<td>{{ patient.name }}</td>
+			<td>{{ patient.name|title }}</td>
 			<td>{{ patient.disability ? 'Yes' : 'No' }}</td>
 			<td>
 			    {% if todays_attendance %}
