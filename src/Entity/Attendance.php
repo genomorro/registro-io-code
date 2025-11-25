@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AttendanceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AttendanceRepository::class)]
 class Attendance
@@ -28,9 +29,15 @@ class Attendance
     #[Groups(['attendance_detail'])]
     private ?Patient $patient = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 4)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 4)]
+    #[Assert\Regex(
+        pattern: '/^[A-Z]\d{3}$/',
+        message: 'El gafete debe iniciar con una letra y continuar con tres números'
+    )]
     #[Groups(['attendance_list', 'attendance_detail', 'patient_detail'])]
-    private ?int $tag = null;
+    private ?string $tag = null;
 
     public function getId(): ?int
     {
@@ -73,12 +80,12 @@ class Attendance
         return $this;
     }
 
-    public function getTag(): ?int
+    public function getTag(): ?string
     {
         return $this->tag;
     }
 
-    public function setTag(int $tag): static
+    public function setTag(string $tag): static
     {
         $this->tag = $tag;
 

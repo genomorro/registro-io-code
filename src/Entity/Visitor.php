@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
 class Visitor
@@ -29,9 +30,15 @@ class Visitor
     #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?string $dni = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 4)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 4)]
+    #[Assert\Regex(
+        pattern: '/^[A-Z]\d{3}$/',
+        message: 'El gafete debe iniciar con una letra y continuar con tres números'
+    )]
     #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
-    private ?int $tag = null;
+    private ?string $tag = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['visitor_detail'])]
@@ -102,12 +109,12 @@ class Visitor
         return $this;
     }
 
-    public function getTag(): ?int
+    public function getTag(): ?string
     {
         return $this->tag;
     }
 
-    public function setTag(int $tag): static
+    public function setTag(string $tag): static
     {
         $this->tag = $tag;
 
