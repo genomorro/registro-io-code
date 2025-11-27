@@ -20,7 +20,7 @@
 			<th>{% trans %}Id{% endtrans %}</th>
 		    {% endif %}
 		    <th>{% trans %}Patient{% endtrans %}</th>
-                    <th>{% trans %}Place{% endtrans %}</th>
+                    <th>{% trans %}Agenda{% endtrans %}</th>
                     <th>{% trans %}Specialty{% endtrans %}</th>
                     <th>{% trans %}Date at{% endtrans %}</th>
                     <th>{% trans %}Type{% endtrans %}</th>
@@ -35,7 +35,7 @@
 			    <td>{{ appointment.id }}</td>
 			{% endif %}
 			<td>{{ appointment.patient.name|title }}</td>
-			<td>{{ appointment.place }}</td>
+			<td>{{ appointment.agenda }}</td>
 			<td>{{ appointment.specialty }}</td>
 			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>{{ appointment.type }}</td>

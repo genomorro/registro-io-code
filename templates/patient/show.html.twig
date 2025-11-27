@@ -47,7 +47,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>{% trans %}Place{% endtrans %}</th>
+                        <th>{% trans %}Agenda{% endtrans %}</th>
                         <th>{% trans %}Specialty{% endtrans %}</th>
                         <th>{% trans %}Type{% endtrans %}</th>
                         <th>{% trans %}Status{% endtrans %}</th>
@@ -57,7 +57,7 @@
                 <tbody>
                     {% for appointment in todays_appointments %}
                         <tr>
-                            <td>{{ appointment.place }}</td>
+                            <td>{{ appointment.agenda }}</td>
                             <td>{{ appointment.specialty }}</td>
                             <td>{{ appointment.type }}</td>
                             <td>{{ appointment.status }}</td>
@@ -124,7 +124,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>{% trans %}Place{% endtrans %}</th>
+                        <th>{% trans %}Agenda{% endtrans %}</th>
                         <th>{% trans %}Specialty{% endtrans %}</th>
                         <th>{% trans %}Type{% endtrans %}</th>
                         <th>{% trans %}Status{% endtrans %}</th>
@@ -134,7 +134,7 @@
                 <tbody>
                     {% for appointment in other_appointments %}
                         <tr>
-                            <td>{{ appointment.place }}</td>
+                            <td>{{ appointment.agenda }}</td>
                             <td>{{ appointment.specialty }}</td>
                             <td>{{ appointment.type }}</td>
                             <td>{{ appointment.status }}</td>

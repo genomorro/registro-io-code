@@ -17,7 +17,7 @@ class Appointment
 
     #[ORM\Column(length: 255)]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
-    private ?string $place = null;
+    private ?string $agenda = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
@@ -45,14 +45,14 @@ class Appointment
         return $this->id;
     }
 
-    public function getPlace(): ?string
+    public function getAgenda(): ?string
     {
-        return $this->place;
+        return $this->agenda;
     }
 
-    public function setPlace(string $place): static
+    public function setAgenda(string $agenda): static
     {
-        $this->place = $place;
+        $this->agenda = $agenda;
 
         return $this;
     }

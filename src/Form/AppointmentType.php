@@ -16,8 +16,8 @@ class AppointmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('place', null, [
-		'label' => 'Place',
+            ->add('agenda', null, [
+		'label' => 'Agenda',
 	    ])
 	    ->add('specialty', null, [
 		'label' => 'Specialty',
