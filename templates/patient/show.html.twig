@@ -49,6 +49,7 @@
                     <tr>
                         <th>{% trans %}Agenda{% endtrans %}</th>
                         <th>{% trans %}Specialty{% endtrans %}</th>
+                        <th>{% trans %}Location{% endtrans %}</th>
                         <th>{% trans %}Type{% endtrans %}</th>
                         <th>{% trans %}Status{% endtrans %}</th>
                         <th>{% trans %}Date{% endtrans %}</th>
@@ -59,6 +60,7 @@
                         <tr>
                             <td>{{ appointment.agenda }}</td>
                             <td>{{ appointment.specialty }}</td>
+                            <td>{{ appointment.location }}</td>
                             <td>{{ appointment.type }}</td>
                             <td>{{ appointment.status }}</td>
                             <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -126,6 +128,7 @@
                     <tr>
                         <th>{% trans %}Agenda{% endtrans %}</th>
                         <th>{% trans %}Specialty{% endtrans %}</th>
+                        <th>{% trans %}Location{% endtrans %}</th>
                         <th>{% trans %}Type{% endtrans %}</th>
                         <th>{% trans %}Status{% endtrans %}</th>
                         <th>{% trans %}Date{% endtrans %}</th>
@@ -136,6 +139,7 @@
                         <tr>
                             <td>{{ appointment.agenda }}</td>
                             <td>{{ appointment.specialty }}</td>
+                            <td>{{ appointment.location }}</td>
                             <td>{{ appointment.type }}</td>
                             <td>{{ appointment.status }}</td>
                             <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>

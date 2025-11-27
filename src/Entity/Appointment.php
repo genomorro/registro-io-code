@@ -23,6 +23,10 @@ class Appointment
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $specialty = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
+    private ?string $location = null;
+
     #[ORM\Column]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $date_at = null;
@@ -65,6 +69,18 @@ class Appointment
     public function setSpecialty(string $specialty): static
     {
         $this->specialty = $specialty;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

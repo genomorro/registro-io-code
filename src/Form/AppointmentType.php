@@ -22,6 +22,9 @@ class AppointmentType extends AbstractType
 	    ->add('specialty', null, [
 		'label' => 'Specialty',
 	    ])
+	    ->add('location', null, [
+		'label' => 'Location',
+	    ])
             ->add('date_at', null, [
 		'label' => 'Date at',
                 'widget' => 'single_text',
@@ -60,6 +63,6 @@ class AppointmentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Appointment::class,
-            ]);
-	    }
-	    }
+        ]);
+    }
+}

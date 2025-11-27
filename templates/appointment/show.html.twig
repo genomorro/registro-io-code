@@ -31,6 +31,10 @@
                     <td>{{ appointment.specialty }}</td>
 		</tr>
 		<tr>
+                    <th>{% trans %}Location{% endtrans %}</th>
+                    <td>{{ appointment.location }}</td>
+		</tr>
+		<tr>
                     <th>{% trans %}Date at{% endtrans %}</th>
                     <td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 		</tr>
