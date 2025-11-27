@@ -40,13 +40,13 @@ class AppointmentRepository extends ServiceEntityRepository
      */
     public function createOtherAppointmentsByPatientQueryBuilder(Patient $patient): \Doctrine\ORM\QueryBuilder
     {
-        $todayStart = new \DateTime('today');
+        $tomorrow = new \DateTime('tomorrow');
 
         return $this->createQueryBuilder('a')
 		    ->andWhere('a.patient = :patient')
-		    ->andWhere('a.date_at != :todayStart')
+		    ->andWhere('a.date_at >= :tomorrow')
 		    ->setParameter('patient', $patient)
-		    ->setParameter('todayStart', $todayStart)
-		    ->orderBy('a.date_at', 'DESC');
+		    ->setParameter('tomorrow', $tomorrow)
+		    ->orderBy('a.date_at', 'ASC');
     }
 }
