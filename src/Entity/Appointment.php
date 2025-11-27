@@ -17,11 +17,15 @@ class Appointment
 
     #[ORM\Column(length: 255)]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
-    private ?string $place = null;
+    private ?string $agenda = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $specialty = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
+    private ?string $place = null;
 
     #[ORM\Column]
     #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
@@ -45,14 +49,14 @@ class Appointment
         return $this->id;
     }
 
-    public function getPlace(): ?string
+    public function getAgenda(): ?string
     {
-        return $this->place;
+        return $this->agenda;
     }
 
-    public function setPlace(string $place): static
+    public function setAgenda(string $agenda): static
     {
-        $this->place = $place;
+        $this->place = $agenda;
 
         return $this;
     }
@@ -65,6 +69,18 @@ class Appointment
     public function setSpecialty(string $specialty): static
     {
         $this->specialty = $specialty;
+
+        return $this;
+    }
+
+    public function getPlace(): ?string
+    {
+        return $this->place;
+    }
+
+    public function setPlace(string $place): static
+    {
+        $this->place = $place;
 
         return $this;
     }
