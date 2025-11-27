@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
                     <th>{% trans %}Disability{% endtrans %}</th>
-                    <td>{{ patient.disability ? 'Yes' : 'No' }}</td>
+                    <td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
 		</tr>
             </tbody>
 	</table>

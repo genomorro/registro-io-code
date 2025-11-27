@@ -98,6 +98,8 @@
 "Today's Visitors": 'Visitantes registrados hoy'
 'No visitors for today.': 'No hay visitantes registrados hoy.'
 'Date': 'Fecha'
+'Yes': 'Si'
+'No': 'No'
 ### file.html.twig
 'Search Patient': 'Buscar paciente'
 'Search Patient by File': 'Buscar paciente por expediente'
