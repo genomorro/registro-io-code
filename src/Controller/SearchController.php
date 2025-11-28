@@ -6,6 +6,7 @@ use App\Form\SearchTagType;
 use App\Form\SearchType;
 use App\Repository\AttendanceRepository;
 use App\Repository\PatientRepository;
+use App\Repository\SearchRepository;
 use App\Repository\VisitorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,6 +105,21 @@ class SearchController extends AbstractController
         return $this->render('search/tag.html.twig', [
             'form' => $form->createView(),
 	    'title' => "Search Visitor by Tag",
+        ]);
+    }
+
+    #[Route('/{tag}/checkOut', name: 'app_search_check_index')]
+    public function checkOut(string $tag, SearchRepository $searchRepository): Response
+    {
+        // $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $patients = $searchRepository->findCurrentPatientsByTag($tag);
+        $visitors = $searchRepository->findCurrentVisitorsByTag($tag);
+
+        return $this->render('search/check_out.html.twig', [
+            'patients' => $patients,
+            'visitors' => $visitors,
+            'tag' => $tag,
         ]);
     }
 }

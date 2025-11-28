@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Check Out{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}Check Out by Tag{% endtrans %}</h1>
+
+    <h2>{% trans %}Patients{% endtrans %}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{% trans %}File{% endtrans %}</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Tag{% endtrans %}</th>
+                <th>{% trans %}Check In At{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attendance in patients %}
+            <tr>
+                <td>{{ attendance.patient.id }}</td>
+                <td>{{ attendance.patient.file }}</td>
+                <td>{{ attendance.patient.name }}</td>
+                <td>{{ attendance.tag }}</td>
+                <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_patient_check_out_tag', {'id': attendance.patient.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                        <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{% trans %}No patients found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>{% trans %}Visitors{% endtrans %}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Tag{% endtrans %}</th>
+                <th>{% trans %}Check In At{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for visitor in visitors %}
+            <tr>
+                <td>{{ visitor.id }}</td>
+                <td>{{ visitor.name }}</td>
+                <td>{{ visitor.tag }}</td>
+                <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_visitor_check_out_tag', {'id': visitor.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                        <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{% trans %}No visitors found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
