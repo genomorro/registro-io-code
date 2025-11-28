@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path(app.request.get('_route'),app.request.get('_route_params')) }}">{{ title|trans }}</a></li>
+	<li class="breadcrumb-item active" aria-current="page">{{ title|trans }}</li>
     </ol>
     
     <h1>{{ title|trans }}</h1>
@@ -40,4 +40,80 @@
 	    </div>
 	{{ form_end(form) }}
     </div>
+
+    {% if searched and not patients and not visitors %}
+        <div class="alert alert-warning">{% trans %}No results found for the given tag.{% endtrans %}</div>
+    {% endif %}
+
+    {% if patients %}
+        <h2>{% trans %}Patients{% endtrans %}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{% trans %}File{% endtrans %}</th>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}Tag{% endtrans %}</th>
+                    <th>{% trans %}Check in at{% endtrans %}</th>
+                    <th>{% trans %}Actions{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for attendance in patients %}
+                <tr>
+                    <td>{{ attendance.patient.id }}</td>
+                    <td>{{ attendance.patient.file }}</td>
+                    <td>{{ attendance.patient.name }}</td>
+                    <td>{{ attendance.tag }}</td>
+                    <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <form method="post" action="{{ path('app_patient_check_out_tag', {'id': attendance.patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.patient.id) }}">
+                            <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">{% trans %}no records found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if visitors %}
+        <h2>{% trans %}Visitors{% endtrans %}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}Tag{% endtrans %}</th>
+                    <th>{% trans %}Check in at{% endtrans %}</th>
+                    <th>{% trans %}Actions{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for visitor in visitors %}
+                <tr>
+                    <td>{{ visitor.id }}</td>
+                    <td>{{ visitor.name }}</td>
+                    <td>{{ visitor.tag }}</td>
+                    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <form method="post" action="{{ path('app_visitor_check_out_tag', {'id': visitor.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
+                            <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">{% trans %}no records found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
