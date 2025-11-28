@@ -122,4 +122,17 @@ final class VisitorController extends AbstractController
 
         return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getId()]);
     }
+
+    #[Route('/{id}/check-out-tag', name: 'app_visitor_check_out_tag', methods: ['POST'])]
+    public function checkOutTag(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
+            $visitor->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_search_tag_index');
+    }
 }

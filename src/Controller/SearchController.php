@@ -4,9 +4,8 @@ namespace App\Controller;
 
 use App\Form\SearchTagType;
 use App\Form\SearchType;
-use App\Repository\AttendanceRepository;
 use App\Repository\PatientRepository;
-use App\Repository\VisitorRepository;
+use App\Repository\SearchRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,61 +48,33 @@ class SearchController extends AbstractController
         ]);
     }
 
-    #[Route('/patient_tag', name: 'app_search_patient_tag_index')]
-    public function searchPatientByTag(Request $request, AttendanceRepository $attendanceRepository, TranslatorInterface $translator): Response
+    #[Route('/tag', name: 'app_search_tag_index')]
+    public function searchByTag(Request $request, SearchRepository $searchRepository, TranslatorInterface $translator): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $form = $this->createForm(SearchTagType::class);
         $form->handleRequest($request);
-	$flash = $translator->trans('Patient not found for the given tag.');
+
+        $patients = [];
+        $visitors = [];
+        $searched = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $tag = (int)$data['tag'];
+            $tag = $data['tag'];
 
-            $patient = $attendanceRepository->findPatientByTag($tag);
-
-            if ($patient) {
-                return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
-            }
-
-            $this->addFlash('error', $flash);
-            return $this->redirectToRoute('app_search_patient_tag_index');
+            $patients = $searchRepository->findPatientsByTag($tag);
+            $visitors = $searchRepository->findVisitorsByTag($tag);
+            $searched = true;
         }
 
         return $this->render('search/tag.html.twig', [
             'form' => $form->createView(),
-	    'title' => "Search Patient by Tag",
-        ]);
-    }
-
-    #[Route('/visitor_tag', name: 'app_search_visitor_tag_index')]
-    public function searchVisitorByTag(Request $request, VisitorRepository $visitorRepository, TranslatorInterface $translator): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        $form = $this->createForm(SearchTagType::class);
-        $form->handleRequest($request);
-	$flash = $translator->trans('Visitor not found for the given tag.');
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $tag = (int)$data['tag'];
-
-            $visitor = $visitorRepository->findOneByTag($tag);
-
-            if ($visitor) {
-                return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getId()]);
-            }
-
-            $this->addFlash('error', $flash);
-            return $this->redirectToRoute('app_search_visitor_tag_index');
-        }
-
-        return $this->render('search/tag.html.twig', [
-            'form' => $form->createView(),
-	    'title' => "Search Visitor by Tag",
+            'patients' => $patients,
+            'visitors' => $visitors,
+            'title' => 'Search by Tag',
+            'searched' => $searched,
         ]);
     }
 }
