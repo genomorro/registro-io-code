@@ -72,21 +72,22 @@ class SearchController extends AbstractController
 	}
 
 	#[Route('/checkOut', name: 'app_search_check_list_index')]
-	public function checkOutList(SearchRepository $searchRepository): Response
+	public function checkOutList(SearchRepository $searchRepository, TranslatorInterface $translator): Response
 	{
             $this->denyAccessUnlessGranted('ROLE_USER');
 
             $patients = $searchRepository->findCurrentPatients();
             $visitors = $searchRepository->findCurrentVisitors();
 
-            return $this->render('search/check_out_list.html.twig', [
+            return $this->render('search/check_out.html.twig', [
 		'patients' => $patients,
 		'visitors' => $visitors,
+		'title' => $translator->trans('Check Out List'),
             ]);
 	}
 	
 	#[Route('/tag/{tag}/check_out', name: 'app_search_check_index')]
-	public function checkOut(string $tag, SearchRepository $searchRepository): Response
+	public function checkOut(string $tag, SearchRepository $searchRepository, TranslatorInterface $translator): Response
 	{
             $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -97,6 +98,7 @@ class SearchController extends AbstractController
 		'patients' => $patients,
 		'visitors' => $visitors,
 		'tag' => $tag,
+		'title' => $translator->trans('Check Out by Tag'),
             ]);
 	}
     }
