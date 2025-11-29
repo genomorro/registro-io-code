@@ -33,7 +33,7 @@
                     <td>{{ attendance.patient.id }}</td>
 		{% endif %}
                 <td>{{ attendance.patient.file }}</td>
-                <td>{{ attendance.patient.name }}</td>
+                <td>{{ attendance.patient.name|title }}</td>
                 <td>{{ attendance.tag }}</td>
                 <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
@@ -73,7 +73,7 @@
         {% for visitor in visitors %}
             <tr>
                 <td>{{ visitor.id }}</td>
-                <td>{{ visitor.name }}</td>
+                <td>{{ visitor.name|title }}</td>
                 <td>{{ visitor.tag }}</td>
                 <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

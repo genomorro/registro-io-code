@@ -37,7 +37,7 @@
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
 			    <td>{{ visitor.id }}</td>
 			{% endif %}
-			<td>{{ visitor.name }}</td>
+			<td>{{ visitor.name|title }}</td>
 			<td>{{ visitor.phone }}</td>
 			<td>{{ visitor.dni }}</td>
 			<td>{{ visitor.tag }}</td>
