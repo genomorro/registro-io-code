@@ -42,7 +42,7 @@ class AttendanceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
 		    ->select('a', 'p')
 		    ->leftJoin('a.patient', 'p')
-		    ->orderBy('a.checkInAt', 'DESC');
+		    ->orderBy('a.checkInAt', 'ASC');
     }
 
     public function findPatientByTag(int $tag): ?Patient
@@ -51,6 +51,7 @@ class AttendanceRepository extends ServiceEntityRepository
 			   ->where('a.tag = :tag')
 			   ->andWhere('a.checkInAt IS NOT NULL')
 			   ->andWhere('a.checkOutAt IS NULL')
+			   ->orderBy('a.checkInAt', 'ASC')
 			   ->setParameter('tag', $tag)
 			   ->getQuery()
 			   ->getOneOrNullResult();

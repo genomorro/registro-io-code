@@ -19,7 +19,9 @@ final class VisitorController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
-	$queryBuilder = $visitorRepository->createQueryBuilder('v');
+	$queryBuilder = $visitorRepository->createQueryBuilder('v')
+					  ->orderBy('v.checkInAt', 'ASC')
+					  ->orderBy('v.name', 'ASC');
 
 	$adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
 	$pagerfanta = new \Pagerfanta\Pagerfanta($adapter);

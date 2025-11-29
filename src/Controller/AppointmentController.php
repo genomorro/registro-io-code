@@ -19,7 +19,8 @@ final class AppointmentController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
-        $queryBuilder = $appointmentRepository->createQueryBuilder('a');
+        $queryBuilder = $appointmentRepository->createQueryBuilder('a')
+					      ->orderBy('a.date_at', 'ASC');
 
         $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
         $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);

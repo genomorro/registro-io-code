@@ -28,14 +28,16 @@ class PatientRepository extends ServiceEntityRepository
 		    ->select('p', 'a', 'att')
 		    ->innerJoin('p.appointments', 'a', 'WITH', 'a.date_at >= :today AND a.date_at < :tomorrow')
 		    ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
+		    ->orderBy('a.date_at', 'ASC')
+		    ->orderBy('att.checkInAt', 'ASC')
 		    ->setParameter('today', $today)
 		    ->setParameter('tomorrow', $tomorrow);
     }
 
     /**
-    * @param string $file
-    * @return Patient[]
-    */
+     * @param string $file
+     * @return Patient[]
+     */
     public function findByFile(string $file): array
     {
         return $this->createQueryBuilder('p')

@@ -30,6 +30,7 @@ class VisitorRepository extends ServiceEntityRepository
 		    ->andWhere('p.id = :patientId')
 		    ->andWhere('v.checkInAt >= :todayStart')
 		    ->andWhere('v.checkInAt < :todayEnd')
+		    ->orderBy('v.checkInAt', 'ASC')
 		    ->setParameter('patientId', $patient->getId())
 		    ->setParameter('todayStart', $todayStart)
 		    ->setParameter('todayEnd', $todayEnd)
