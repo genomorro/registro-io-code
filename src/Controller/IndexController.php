@@ -16,6 +16,26 @@ class IndexController extends AbstractController
         return $this->render('index.html.twig');
     }
 
+    #[Route('/php')]
+    public function php(): Response
+    {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        ob_start();
+        phpinfo();
+        $info = ob_get_clean();
+
+        return new Response($info);
+    }
+
+    #[Route('/about')]
+    public function about (): Response
+    {
+	$creator = 'Edgar Uriel Domínguez Espinoza';
+	$year = '2025';
+
+	return new Response("Created by ".$creator." (".$year.").");
+    }
+
     public function redirectToLocale(): RedirectResponse
     {
         return $this->redirectToRoute('app_index', ['_locale' => 'es']);
