@@ -32,7 +32,7 @@
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
 			    <td>{{ attendance.id }}</td>
 			{% endif %}
-			<td>{{ attendance.patient.name }}</td>
+			<td>{{ attendance.patient.name|title }}</td>
 			<td>{{ attendance.tag }}</td>
 			<td>{{ attendance.checkinAt ? attendance.checkinAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>
