@@ -21,8 +21,8 @@ class PatientRepository extends ServiceEntityRepository
      */
     public function findWithAppointmentsAndAttendanceTodayQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
-        $today = new \DateTime('today');
-        $tomorrow = new \DateTime('tomorrow');
+        $today = new \DateTime('today midnight');
+        $tomorrow = new \DateTime('tomorrow midnight');
 
         return $this->createQueryBuilder('p')
 		    ->select('p', 'a', 'att')

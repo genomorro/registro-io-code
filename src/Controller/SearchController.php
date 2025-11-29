@@ -39,64 +39,66 @@ class SearchController extends AbstractController
 		$flashFile = $translator->trans('Improve the search criteria');
 	    }
 
-		$this->addFlash('error', $flashFile);
-		return $this->redirectToRoute('app_search_index');
-            }
+	    $this->addFlash('error', $flashFile);
+	    return $this->redirectToRoute('app_search_index');
+        }
 
-	    
-            $formTag = $this->createForm(SearchTagType::class);
-            $formTag->handleRequest($request);
-	    $flashTag = $translator->trans('Patient nor Visitor not found for the given tag.');
-
-            if ($formTag->isSubmitted() && $formTag->isValid()) {
-		$data = $formTag->getData();
-		$tag = (int)$data['tag'];
-
-		$patients = $searchRepository->findCurrentPatientsByTag($tag);
-		$visitors = $searchRepository->findCurrentVisitorsByTag($tag);
-
-		if ($patients or $visitors) {
-		    return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
-		}
-
-		$this->addFlash('error', $flashTag);
-		return $this->redirectToRoute('app_search_index');
-            }
-
-	    
-            return $this->render('search/index.html.twig', [
-		'formFile' => $formFile->createView(),
-		'formTag' => $formTag->createView(),
-		'title' => "Search Check Out by Tag",
-            ]);
-	}
-
-	#[Route('/checkOut', name: 'app_search_check_list_index')]
-	public function checkOutList(SearchRepository $searchRepository): Response
-	{
-            $this->denyAccessUnlessGranted('ROLE_USER');
-
-            $patients = $searchRepository->findCurrentPatients();
-            $visitors = $searchRepository->findCurrentVisitors();
-
-            return $this->render('search/check_out_list.html.twig', [
-		'patients' => $patients,
-		'visitors' => $visitors,
-            ]);
-	}
 	
-	#[Route('/tag/{tag}/check_out', name: 'app_search_check_index')]
-	public function checkOut(string $tag, SearchRepository $searchRepository): Response
-	{
-            $this->denyAccessUnlessGranted('ROLE_USER');
+        $formTag = $this->createForm(SearchTagType::class);
+        $formTag->handleRequest($request);
+	$flashTag = $translator->trans('Patient nor Visitor not found for the given tag.');
 
-            $patients = $searchRepository->findCurrentPatientsByTag($tag);
-            $visitors = $searchRepository->findCurrentVisitorsByTag($tag);
+        if ($formTag->isSubmitted() && $formTag->isValid()) {
+	    $data = $formTag->getData();
+	    $tag = (int)$data['tag'];
 
-            return $this->render('search/check_out.html.twig', [
-		'patients' => $patients,
-		'visitors' => $visitors,
-		'tag' => $tag,
-            ]);
-	}
+	    $patients = $searchRepository->findCurrentPatientsByTag($tag);
+	    $visitors = $searchRepository->findCurrentVisitorsByTag($tag);
+
+	    if ($patients or $visitors) {
+		return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
+	    }
+
+	    $this->addFlash('error', $flashTag);
+	    return $this->redirectToRoute('app_search_index');
+        }
+
+	
+        return $this->render('search/index.html.twig', [
+	    'formFile' => $formFile->createView(),
+	    'formTag' => $formTag->createView(),
+	    'title' => "Search Check Out by Tag",
+        ]);
     }
+
+    #[Route('/check-out-list', name: 'app_search_check_list_index')]
+    public function checkOutList(SearchRepository $searchRepository, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $patients = $searchRepository->findCurrentPatients();
+        $visitors = $searchRepository->findCurrentVisitors();
+
+        return $this->render('search/check_out.html.twig', [
+	    'patients' => $patients,
+	    'visitors' => $visitors,
+	    'title' => $translator->trans('Check Out List'),
+        ]);
+    }
+    
+    #[Route('/tag/{tag}/check-out', name: 'app_search_check_index')]
+    public function checkOut(string $tag, SearchRepository $searchRepository, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $patients = $searchRepository->findCurrentPatientsByTag($tag);
+        $visitors = $searchRepository->findCurrentVisitorsByTag($tag);
+
+        return $this->render('search/check_out.html.twig', [
+	    'patients' => $patients,
+	    'visitors' => $visitors,
+	    'tag' => $tag,
+	    'title' => $translator->trans('Check Out by Tag'),
+        ]);
+    }
+}

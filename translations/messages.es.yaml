@@ -105,8 +105,9 @@
 'Search Options': 'Opciones de búsqueda'
 'Search by Tag': 'Buscar por gafete'
 'Improve the search criteria': 'Mejora el criterio de búsqueda'
-### check_out_list.html.twig
+### check_out.html.twig
 'Check Out List': 'Lista de registro de salida'
+'Check Out by Tag': 'Registro de salida por gafete'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Editar visitante'

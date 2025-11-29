@@ -19,11 +19,15 @@ class SearchRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, \App\Entity\Patient::class);
     }
-
+    
+    /**
+     * @param string $tag
+     * @return Attendance[]
+     */
     public function findCurrentPatientsByTag(string $tag): array
     {
-        $startOfDay = new \DateTime('today');
-        $endOfDay = new \DateTime('tomorrow');
+        $startOfDay = new \DateTime('today midnight');
+        $endOfDay = new \DateTime('tomorrow midnight');
 
         return $this->getEntityManager()->createQuery(
             'SELECT a FROM App\Entity\Attendance a
@@ -35,10 +39,14 @@ class SearchRepository extends ServiceEntityRepository
 		    ->getResult();
     }
 
+    /**
+     * @param string $tag
+     * @return Visitor[]
+     */
     public function findCurrentVisitorsByTag(string $tag): array
     {
-        $startOfDay = new \DateTime('today');
-        $endOfDay = new \DateTime('tomorrow');
+        $startOfDay = new \DateTime('today midnight');
+        $endOfDay = new \DateTime('tomorrow midnight');
 
         return $this->getEntityManager()->createQuery(
             'SELECT v FROM App\Entity\Visitor v
@@ -50,6 +58,9 @@ class SearchRepository extends ServiceEntityRepository
 		    ->getResult();
     }
 
+    /**
+     * @return Attendance[]
+     */
     public function findCurrentPatients(): array
     {
         $startOfDay = new \DateTime('today midnight');
@@ -64,6 +75,9 @@ class SearchRepository extends ServiceEntityRepository
 		    ->getResult();
     }
 
+    /**
+     * @return Visitor[]
+     */
     public function findCurrentVisitors(): array
     {
         $startOfDay = new \DateTime('today midnight');
