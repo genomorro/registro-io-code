@@ -24,7 +24,8 @@ class SearchController extends AbstractController
 
 	$formFile = $this->createForm(SearchType::class);
         $formFile->handleRequest($request);
-	$flashFile = $translator->trans('Patient not found');
+	$flashFile1 = $translator->trans('Patient not found');
+	$flashFile2 = $translator->trans('Improve the search criteria');
 
         if ($formFile->isSubmitted() && $formFile->isValid()) {
             $data = $formFile->getData();
@@ -36,7 +37,7 @@ class SearchController extends AbstractController
                 return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
             }
 
-            $this->addFlash('error', $flashFile);
+            $this->addFlash('error', $flashFile1);
 	    return $this->redirectToRoute('app_search_index');
         }
 
