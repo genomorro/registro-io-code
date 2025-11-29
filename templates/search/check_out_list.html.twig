@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Check Out Results{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Check Out List{% endtrans %}{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_check_index', {'tag': tag}) }}">{% trans %}Check Out Results{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_check_list_index') }}">{% trans %}Check Out List{% endtrans %}</a></li>
     </ol>
 
-    <h1>{% trans %}Check Out by Tag{% endtrans %}</h1>
+    <h1>{% trans %}Check Out List{% endtrans %}</h1>
 
     <h2>{% trans %}Patients{% endtrans %}</h2>
     <table class="table">
@@ -37,9 +37,8 @@
                 <td>{{ attendance.tag }}</td>
                 <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
-                        <input type="hidden" name="redirect_route" value="app_search_check_index">
-                        <input type="hidden" name="redirect_params[tag]" value="{{ tag }}">
+                    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                        <input type="hidden" name="redirect_route" value="app_search_check_list_index">
                         <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
                     </form>
 		    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': attendance.patient.id}) }}">{% trans %}Show{% endtrans %}</a>
@@ -77,7 +76,7 @@
                 <td>{{ visitor.tag }}</td>
                 <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_check_list_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
                         <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
                         <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
                     </form>

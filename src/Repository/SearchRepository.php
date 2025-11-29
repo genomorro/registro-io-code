@@ -29,10 +29,10 @@ class SearchRepository extends ServiceEntityRepository
             'SELECT a FROM App\Entity\Attendance a
              WHERE a.checkInAt >= :startOfDay AND a.checkInAt < :endOfDay AND a.checkOutAt IS NULL AND a.tag LIKE :tag'
         )
-        ->setParameter('startOfDay', $startOfDay)
-        ->setParameter('endOfDay', $endOfDay)
-        ->setParameter('tag', '%'.$tag.'%')
-        ->getResult();
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->setParameter('tag', '%'.$tag.'%')
+		    ->getResult();
     }
 
     public function findCurrentVisitorsByTag(string $tag): array
@@ -44,9 +44,37 @@ class SearchRepository extends ServiceEntityRepository
             'SELECT v FROM App\Entity\Visitor v
              WHERE v.checkInAt >= :startOfDay AND v.checkInAt < :endOfDay AND v.checkOutAt IS NULL AND v.tag LIKE :tag'
         )
-        ->setParameter('startOfDay', $startOfDay)
-        ->setParameter('endOfDay', $endOfDay)
-        ->setParameter('tag', '%'.$tag.'%')
-        ->getResult();
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->setParameter('tag', '%'.$tag.'%')
+		    ->getResult();
+    }
+
+    public function findCurrentPatients(): array
+    {
+        $startOfDay = new \DateTime('today midnight');
+        $endOfDay = new \DateTime('today 23:59:59');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT a FROM App\Entity\Attendance a
+             WHERE a.checkInAt >= :startOfDay AND a.checkInAt < :endOfDay AND a.checkOutAt IS NULL'
+        )
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->getResult();
+    }
+
+    public function findCurrentVisitors(): array
+    {
+        $startOfDay = new \DateTime('today midnight');
+        $endOfDay = new \DateTime('today 23:59:59');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT v FROM App\Entity\Visitor v
+             WHERE v.checkInAt >= :startOfDay AND v.checkInAt < :endOfDay AND v.checkOutAt IS NULL'
+        )
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->getResult();
     }
 }

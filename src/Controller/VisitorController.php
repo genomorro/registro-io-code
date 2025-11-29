@@ -107,30 +107,18 @@ final class VisitorController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_visitor_index');
-    }
+        $redirectRoute = $request->query->get('redirect_route', 'app_visitor_index');
+        $routeParameters = [];
 
-    #[Route('/{id}/check-out-show', name: 'app_visitor_check_out_show', methods: ['POST'])]
-    public function checkOutShow(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
-            $visitor->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
+        switch ($redirectRoute) {
+            case 'app_visitor_show':
+                $routeParameters['id'] = $visitor->getId();
+                break;
+            case 'app_search_check_index':
+                $routeParameters['tag'] = $request->query->get('tag');
+                break;
         }
 
-        return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getId()]);
-    }
-
-    #[Route('/{id}/check-out-tag/{tag}', name: 'app_visitor_check_out_tag', methods: ['POST'])]
-    public function checkOutTag(Request $request, Visitor $visitor, string $tag, EntityManagerInterface $entityManager): Response
-    {
-        // $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $visitor->setCheckOutAt(new \DateTimeImmutable());
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
+        return $this->redirectToRoute($redirectRoute, $routeParameters);
     }
 }

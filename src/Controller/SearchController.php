@@ -67,6 +67,20 @@ class SearchController extends AbstractController
 	    'title' => "Search Check Out by Tag",
         ]);
     }
+
+    #[Route('/checkOut', name: 'app_search_check_list_index')]
+    public function checkOutList(SearchRepository $searchRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $patients = $searchRepository->findCurrentPatients();
+        $visitors = $searchRepository->findCurrentVisitors();
+
+        return $this->render('search/check_out_list.html.twig', [
+            'patients' => $patients,
+            'visitors' => $visitors,
+        ]);
+    }
     
     #[Route('/tag/{tag}/check_out', name: 'app_search_check_index')]
     public function checkOut(string $tag, SearchRepository $searchRepository): Response

@@ -99,10 +99,13 @@
 'Date': 'Date'
 'Yes': 'Yes'
 'No': 'No'
+## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'
 'Search Options': 'Search Options'
 'Search by Tag': 'Search by Tag'
+### check_out_list.html.twig
+'Check Out List': 'Check Out List'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Edit Visitor'
