@@ -22,7 +22,7 @@ final class PatientController extends AbstractController
     #[Route(name: 'app_patient_index', methods: ['GET'])]
     public function index(PatientRepository $patientRepository, Request $request): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         $queryBuilder = $patientRepository->findWithAppointmentsAndAttendanceTodayQueryBuilder();
 
@@ -39,7 +39,7 @@ final class PatientController extends AbstractController
     #[Route('/new', name: 'app_patient_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	// $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $patient = new Patient();
         $form = $this->createForm(PatientType::class, $patient);
@@ -65,7 +65,7 @@ final class PatientController extends AbstractController
 	Request $request,
 	VisitorRepository $visitorRepository
     ): Response {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         $todaysAppointmentsQB = $appointmentRepository->createTodaysAppointmentsByPatientQueryBuilder($patient);
         $otherAppointmentsQB = $appointmentRepository->createOtherAppointmentsByPatientQueryBuilder($patient);
@@ -97,7 +97,7 @@ final class PatientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	// $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);
@@ -117,7 +117,7 @@ final class PatientController extends AbstractController
     #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'])]
     public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	// $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         if ($this->isCsrfTokenValid('delete'.$patient->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($patient);
@@ -130,7 +130,7 @@ final class PatientController extends AbstractController
     #[Route('/{id}/check-in', name: 'app_patient_check_in', methods: ['POST'])]
     public function checkIn(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         $tag = $request->request->get('tag');
 	$flash = $translator->trans('A numeric tag is required to check in.');
@@ -155,7 +155,7 @@ final class PatientController extends AbstractController
     #[Route('/{id}/check-in-show', name: 'app_patient_check_in_show', methods: ['POST'])]
     public function checkInShow(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         $tag = $request->request->get('tag');
 	$flash = $translator->trans('A numeric tag is required to check in.');
@@ -178,9 +178,13 @@ final class PatientController extends AbstractController
     }
 
     #[Route('/{id}/check-out', name: 'app_patient_check_out', methods: ['POST'])]
-    public function checkOut(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+    public function checkOut(
+        Request $request,
+        Patient $patient,
+        AttendanceRepository $attendanceRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // $this->denyAccessUnlessGranted('ROLE_USER');
 
         $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
         if ($attendance) {
@@ -188,35 +192,9 @@ final class PatientController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_patient_index');
-    }
+        $redirectRoute = $request->request->get('redirect_route', 'app_patient_index');
+        $redirectParams = $request->request->all('redirect_params');
 
-    #[Route('/{id}/check-out-show', name: 'app_patient_check_out_show', methods: ['POST'])]
-    public function CheckOutShow(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
-
-        if ($attendance) {
-            $attendance->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
-    }
-
-    #[Route('/{id}/check-out-tag/{tag}', name: 'app_patient_check_out_tag', methods: ['POST'])]
-    public function checkOutTag(Request $request, Patient $patient, string $tag, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
-        if ($attendance) {
-            $attendance->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
+        return $this->redirectToRoute($redirectRoute, $redirectParams);
     }
 }
