@@ -41,7 +41,8 @@
 			    {% if todays_attendance %}
 				{{ todays_attendance.checkInAt|date('H:i:s') }}
 			    {% else %}
-				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
+				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
+				    <input type="hidden" name="redirect_route" value="app_patient_index">
 				    <div class="input-group mb-3">
 					<input type="text" name="tag" placeholder="Tag" required style="width: 80px; height: 34px" class="form-control form-control-sm"/>
 					<button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
