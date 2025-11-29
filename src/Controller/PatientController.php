@@ -188,35 +188,9 @@ final class PatientController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_patient_index');
-    }
+        $redirectRoute = $request->request->get('redirect_route', 'app_patient_index');
+        $redirectParams = $request->request->all('redirect_params');
 
-    #[Route('/{id}/check-out-show', name: 'app_patient_check_out_show', methods: ['POST'])]
-    public function CheckOutShow(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
-
-        if ($attendance) {
-            $attendance->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
-    }
-
-    #[Route('/{id}/check-out-tag/{tag}', name: 'app_patient_check_out_tag', methods: ['POST'])]
-    public function checkOutTag(Request $request, Patient $patient, string $tag, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
-        if ($attendance) {
-            $attendance->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
+        return $this->redirectToRoute($redirectRoute, $redirectParams);
     }
 }

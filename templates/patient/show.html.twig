@@ -99,7 +99,9 @@
                             {% if todays_attendance.checkOutAt %}
 				{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
                             {% else %}
-				<form method="post" action="{{ path('app_patient_check_out_show', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');" style="display: inline-block;">
+				<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');" style="display: inline-block;">
+				    <input type="hidden" name="redirect_route" value="app_patient_show">
+				    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">				    
                                     <button class="btn btn-sm btn-secondary">{% trans %}Check out{% endtrans %}</button>
 				</form>
                             {% endif %}
