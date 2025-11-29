@@ -33,15 +33,15 @@ class PatientRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $file
-     * @return Patient|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOneByFile(string $file): ?Patient
+    * @param string $file
+    * @return Patient[]
+    */
+    public function findByFile(string $file): array
     {
         return $this->createQueryBuilder('p')
 		    ->andWhere('p.file LIKE :file')
 		    ->setParameter('file', '%' . $file)
-		    ->getQuery()->getOneOrNullResult();
+		    ->getQuery()
+		    ->getResult();
     }
 }

@@ -104,6 +104,7 @@
 'Search Patient by File': 'Search Patient by File'
 'Search Options': 'Search Options'
 'Search by Tag': 'Search by Tag'
+'Improve the search criteria': 'Improve the search criteria' 
 ### check_out_list.html.twig
 'Check Out List': 'Check Out List'
 ## visitor

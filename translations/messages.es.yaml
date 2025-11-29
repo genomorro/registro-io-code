@@ -104,6 +104,7 @@
 'Search Patient by File': 'Buscar paciente por expediente'
 'Search Options': 'Opciones de búsqueda'
 'Search by Tag': 'Buscar por gafete'
+'Improve the search criteria': 'Mejora el criterio de búsqueda'
 ### check_out_list.html.twig
 'Check Out List': 'Lista de registro de salida'
 ## visitor
