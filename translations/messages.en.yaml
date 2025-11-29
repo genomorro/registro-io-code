@@ -4,8 +4,7 @@
 'A numeric tag is required to check in.': 'A numeric tag is required to check in.'
 ### SearchController.php
 'Patient not found': 'Patient not found'
-'Patient not found for the given tag.': 'Patient not found for the given tag.'
-'Visitor not found for the given tag.': 'Visitor not found for the given tag.'
+'Patient nor Visitor not found for the given tag.': 'Patient nor Visitor not found for the given tag.'
 # templates
 ## base.html.twig
 'Patient and visitor check-in and check-out system': 'Patient and visitor check-in and check-out system'
@@ -100,14 +99,10 @@
 'Date': 'Date'
 'Yes': 'Yes'
 'No': 'No'
-### file.html.twig
-'Search Patient': 'Search Patient'
-'Search Patient by File': 'Search Patient by File'
 ### index.html.twig
+'Search Patient by File': 'Search Patient by File'
 'Search Options': 'Search Options'
-### tag.html.twig
-'Search Patient by Tag': 'Search Patient by Tag'
-'Search Visitor by Tag': 'Search Visitor by Tag'
+'Search by Tag': 'Search by Tag'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Edit Visitor'

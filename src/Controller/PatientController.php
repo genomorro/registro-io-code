@@ -205,4 +205,18 @@ final class PatientController extends AbstractController
 
         return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
     }
+
+    #[Route('/{id}/check-out-tag/{tag}', name: 'app_patient_check_out_tag', methods: ['POST'])]
+    public function checkOutTag(Request $request, Patient $patient, string $tag, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
+        if ($attendance) {
+            $attendance->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
+    }
 }

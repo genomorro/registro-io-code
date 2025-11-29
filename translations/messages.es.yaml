@@ -4,15 +4,14 @@
 'A numeric tag is required to check in.': 'El número de gafete es requerido para la entrada.'
 ### SearchController.php
 'Patient not found': 'Paciente no encontrado'
-'Patient not found for the given tag.': 'Paciente no encontrado para ese número de gafete.'
-'Visitor not found for the given tag.': 'Visitante no encontrado para ese número de gafete.'
+'Patient nor Visitor not found for the given tag.': 'Paciente ni Visitante encontrado para ese número de gafete.'
 # templates
 ## base.html.twig
 'Patient and visitor check-in and check-out system': 'Sistema de registro de entrada y salida de pacientes y visitantes'
 ## index.html.twig
 'Known issues': 'Problemas conocidos'
 ## menu.html.twig
-'Search': 'Búsqueda'
+'Search': 'Buscar'
 'Patients': 'Pacientes'
 'Appointments': 'Citas'
 'Attendances': 'Asistencias'
@@ -100,14 +99,11 @@
 'Date': 'Fecha'
 'Yes': 'Si'
 'No': 'No'
-### file.html.twig
-'Search Patient': 'Buscar paciente'
-'Search Patient by File': 'Buscar paciente por expediente'
+## search
 ### index.html.twig
+'Search Patient by File': 'Buscar paciente por expediente'
 'Search Options': 'Opciones de búsqueda'
-### tag.html.twig
-'Search Patient by Tag': 'Buscar paciente por gafete'
-'Search Visitor by Tag': 'Buscar visitante por gafete'
+'Search by Tag': 'Buscar por gafete'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Editar visitante'

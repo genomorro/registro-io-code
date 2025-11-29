@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Check Out Results{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_check_index', {'tag': tag}) }}">{% trans %}Check Out Results{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Check Out by Tag{% endtrans %}</h1>
+
+    <h2>{% trans %}Patients{% endtrans %}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+		{% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <th>{% trans %}Id{% endtrans %}</th>
+		{% endif %}
+                <th>{% trans %}File{% endtrans %}</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Tag{% endtrans %}</th>
+                <th>{% trans %}Check in{% endtrans %}</th>
+                <th>{% trans %}actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attendance in patients %}
+            <tr>
+		{% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <td>{{ attendance.patient.id }}</td>
+		{% endif %}
+                <td>{{ attendance.patient.file }}</td>
+                <td>{{ attendance.patient.name }}</td>
+                <td>{{ attendance.tag }}</td>
+                <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_patient_check_out_tag', {'id': attendance.patient.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                        <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
+                    </form>
+		    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': attendance.patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': attendance.patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+		    {% endif %}		    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{% trans %}no records found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>{% trans %}Visitors{% endtrans %}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+		{% if is_granted("ROLE_SUPER_ADMIN") %}
+                    <th>{% trans %}Id{% endtrans %}</th>
+		{% endif %}
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Tag{% endtrans %}</th>
+                <th>{% trans %}Check in{% endtrans %}</th>
+                <th>{% trans %}actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for visitor in visitors %}
+            <tr>
+                <td>{{ visitor.id }}</td>
+                <td>{{ visitor.name }}</td>
+                <td>{{ visitor.tag }}</td>
+                <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_visitor_check_out_tag', {'id': visitor.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                        <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
+                    </form>
+		    <a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+		    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{% trans %}no records found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
