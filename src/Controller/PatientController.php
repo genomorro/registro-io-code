@@ -133,9 +133,9 @@ final class PatientController extends AbstractController
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $tag = $request->request->get('tag');
-	$flash = $translator->trans('A numeric tag is required to check in.');
+	$flash = $translator->trans('The badge must start with a letter and continue with three numbers.');
 
-        if (!is_numeric($tag)) {
+        if (!preg_match('/^[A-Z]\d{3}$/i', $tag)) {
             $this->addFlash('danger', $flash);
 
             return $this->redirectToRoute('app_patient_index');
@@ -144,7 +144,7 @@ final class PatientController extends AbstractController
         $attendance = new Attendance();
         $attendance->setPatient($patient);
         $attendance->setCheckInAt(new \DateTimeImmutable());
-        $attendance->setTag((int) $tag);
+        $attendance->setTag(strtoupper($tag));
 
         $entityManager->persist($attendance);
         $entityManager->flush();
@@ -158,9 +158,9 @@ final class PatientController extends AbstractController
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $tag = $request->request->get('tag');
-	$flash = $translator->trans('A numeric tag is required to check in.');
+	$flash = $translator->trans('The badge must start with a letter and continue with three numbers.');
 
-        if (!is_numeric($tag)) {
+        if (!preg_match('/^[A-Z]\d{3}$/i', $tag)) {
             $this->addFlash('danger', $flash);
 
             return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
@@ -169,7 +169,7 @@ final class PatientController extends AbstractController
         $attendance = new Attendance();
         $attendance->setPatient($patient);
         $attendance->setCheckInAt(new \DateTimeImmutable());
-        $attendance->setTag((int) $tag);
+        $attendance->setTag(strtoupper($tag));
 
         $entityManager->persist($attendance);
         $entityManager->flush();
