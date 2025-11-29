@@ -47,7 +47,7 @@
 			    {% if visitor.CheckOutAt %}
 				{{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
 			    {% else %}
-				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_visitor_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				    <button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>

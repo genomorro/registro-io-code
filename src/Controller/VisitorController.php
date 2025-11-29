@@ -17,7 +17,7 @@ final class VisitorController extends AbstractController
     #[Route(name: 'app_visitor_index', methods: ['GET'])]
     public function index(VisitorRepository $visitorRepository, Request $request): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
 	$queryBuilder = $visitorRepository->createQueryBuilder('v');
 
@@ -34,7 +34,7 @@ final class VisitorController extends AbstractController
     #[Route('/new', name: 'app_visitor_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         $visitor = new Visitor();
         $form = $this->createForm(VisitorType::class, $visitor);
@@ -57,7 +57,7 @@ final class VisitorController extends AbstractController
     #[Route('/{id}', name: 'app_visitor_show', methods: ['GET'])]
     public function show(Visitor $visitor): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('visitor/show.html.twig', [
             'visitor' => $visitor,
@@ -67,7 +67,7 @@ final class VisitorController extends AbstractController
     #[Route('/{id}/edit', name: 'app_visitor_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+	// $this->denyAccessUnlessGranted('ROLE_USER');
 
         $form = $this->createForm(VisitorType::class, $visitor);
         $form->handleRequest($request);
@@ -87,7 +87,7 @@ final class VisitorController extends AbstractController
     #[Route('/{id}', name: 'app_visitor_delete', methods: ['POST'])]
     public function delete(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	// $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         if ($this->isCsrfTokenValid('delete'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($visitor);
@@ -100,37 +100,25 @@ final class VisitorController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_visitor_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
-            $visitor->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_visitor_index');
-    }
-
-    #[Route('/{id}/check-out-show', name: 'app_visitor_check_out_show', methods: ['POST'])]
-    public function checkOutShow(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
-            $visitor->setCheckOutAt(new \DateTimeImmutable());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getId()]);
-    }
-
-    #[Route('/{id}/check-out-tag/{tag}', name: 'app_visitor_check_out_tag', methods: ['POST'])]
-    public function checkOutTag(Request $request, Visitor $visitor, string $tag, EntityManagerInterface $entityManager): Response
-    {
         // $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $visitor->setCheckOutAt(new \DateTimeImmutable());
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->request->get('_token'))) {
+            $visitor->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
 
-        return $this->redirectToRoute('app_search_check_index', ['tag' => $tag]);
+        $redirectRoute = $request->query->get('redirect_route', 'app_visitor_index');
+        $routeParameters = [];
+
+        switch ($redirectRoute) {
+            case 'app_visitor_show':
+                $routeParameters['id'] = $visitor->getId();
+                break;
+            case 'app_search_check_index':
+                $routeParameters['tag'] = $request->query->get('tag');
+                break;
+        }
+
+        return $this->redirectToRoute($redirectRoute, $routeParameters);
     }
 }
