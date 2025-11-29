@@ -31,14 +31,17 @@ class SearchController extends AbstractController
             $data = $formFile->getData();
             $file = $data['file'];
 
-            $patient = $patientRepository->findOneByFile($file);
+            $patients = $patientRepository->findByFile($file);
 
-            if ($patient) {
-                return $this->redirectToRoute('app_patient_show', ['id' => $patient->getId()]);
+            if (count($patients) === 1) {
+                return $this->redirectToRoute('app_patient_show', ['id' => $patients[0]->getId()]);
+            } elseif (count($patients) > 1) {
+                $this->addFlash('error', $flashFile2);
+            } else {
+                $this->addFlash('error', $flashFile1);
             }
 
-            $this->addFlash('error', $flashFile1);
-	    return $this->redirectToRoute('app_search_index');
+            return $this->redirectToRoute('app_search_index');
         }
 
 	
