@@ -18,7 +18,9 @@ class PatientAutocompleteField extends AbstractType
             'label' => 'Patient',
             'class' => Patient::class,
             'placeholder' => 'Search by name or by file',
-            'choice_label' => 'name',
+            'choice_label' => function(Patient $patient) {
+                return sprintf('(%s) %s', $patient->getFile(), $patient->getName());
+            },
             'searchable_fields' => ['name', 'file'],
             'extra_options' => [],
         ]);

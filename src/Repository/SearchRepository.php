@@ -91,4 +91,43 @@ class SearchRepository extends ServiceEntityRepository
 		    ->setParameter('endOfDay', $endOfDay)
 		    ->getResult();
     }
+
+    /**
+     * @param string $name
+     * @return Attendance[]
+     */
+    public function findCurrentPatientsByName(string $name): array
+    {
+        $startOfDay = new \DateTime('today midnight');
+        $endOfDay = new \DateTime('tomorrow midnight');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT a FROM App\Entity\Attendance a
+	     JOIN a.patient p
+             WHERE a.checkInAt >= :startOfDay AND a.checkInAt < :endOfDay AND a.checkOutAt IS NULL AND LOWER(p.name) LIKE LOWER(:name)'
+        )
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->setParameter('name', '%'.str_replace(' ', '%', $name).'%')
+		    ->getResult();
+    }
+
+    /**
+     * @param string $name
+     * @return Visitor[]
+     */
+    public function findCurrentVisitorsByName(string $name): array
+    {
+        $startOfDay = new \DateTime('today midnight');
+        $endOfDay = new \DateTime('tomorrow midnight');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT v FROM App\Entity\Visitor v
+             WHERE v.checkInAt >= :startOfDay AND v.checkInAt < :endOfDay AND v.checkOutAt IS NULL AND LOWER(v.name) LIKE LOWER(:name)'
+        )
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->setParameter('name', '%'.str_replace(' ', '%', $name).'%')
+		    ->getResult();
+    }
 }
