@@ -101,4 +101,36 @@ class SearchController extends AbstractController
 	    'title' => $translator->trans('Check Out by Tag'),
         ]);
     }
+
+    #[Route('/{name}/name', name: 'app_search_name_index')]
+    public function name(string $name, SearchRepository $searchRepository, TranslatorInterface $translator): Response
+    {
+        // $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $patients = $searchRepository->findCurrentPatientsByName($name);
+        $visitors = $searchRepository->findCurrentVisitorsByName($name);
+
+        return $this->render('search/check_out.html.twig', [
+            'patients' => $patients,
+            'visitors' => $visitors,
+            'name' => $name,
+            'title' => $translator->trans('Search by Name'),
+        ]);
+    }
+
+    #[Route('/{name}/nameAll', name: 'app_search_nameAll_index')]
+    public function nameAll(string $name, PatientRepository $patientRepository, VisitorRepository $visitorRepository, TranslatorInterface $translator): Response
+    {
+        // $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $patients = $patientRepository->findByName($name);
+        $visitors = $visitorRepository->findByName($name);
+
+        return $this->render('search/name.html.twig', [
+            'patients' => $patients,
+            'visitors' => $visitors,
+            'name' => $name,
+            'title' => $translator->trans('Search by Name (All)'),
+        ]);
+    }
 }

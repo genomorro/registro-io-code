@@ -9,6 +9,8 @@
 	<li class="breadcrumb-item"><a href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a></li>
 	{% if tag is defined %}
 	    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_check_index', {'tag': tag}) }}">{{ title }}</a></li>
+	{% elseif name is defined %}
+	    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_name_index', {'name': name}) }}">{{ title }}</a></li>
 	{% else %}
 	    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_search_check_list_index') }}">{{ title }}</a></li>
 	{% endif %}
@@ -45,6 +47,12 @@
 			    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				<input type="hidden" name="redirect_route" value="app_search_check_index">
 				<input type="hidden" name="redirect_params[tag]" value="{{ tag }}">
+				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
+			    </form>
+			{% elseif name is defined %}
+			    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<input type="hidden" name="redirect_route" value="app_search_name_index">
+				<input type="hidden" name="redirect_params[name]" value="{{ name }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% else %}
@@ -90,6 +98,11 @@
                     <td>
 			{% if tag is defined %}
 			    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
+				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
+			    </form>
+			{% elseif name is defined %}
+			    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_name_index', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
