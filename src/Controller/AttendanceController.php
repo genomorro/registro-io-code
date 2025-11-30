@@ -96,27 +96,21 @@ final class AttendanceController extends AbstractController
         return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
-    #[Route('/{id}/check-out-show', name: 'app_attendance_check_out_show', methods: ['POST'])]
-    public function checkOutShow(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/check-out/{redirectRoute}', name: 'app_attendance_check_out', methods: ['POST'])]
+    public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager, string $redirectRoute): Response
     {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $attendance->setCheckOutAt(new \DateTimeImmutable());
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('checkout'.$attendance->getId(), $request->getPayload()->getString('_token'))) {
+            $attendance->setCheckOutAt(new \DateTimeImmutable());
+            $entityManager->flush();
+        }
 
-        return $this->redirectToRoute('app_attendance_show', ['id' => $attendance->getId()]);
-    }
+        $routeParameters = [];
+        if ($redirectRoute === 'app_attendance_show') {
+            $routeParameters['id'] = $attendance->getId();
+        }
 
-
-    #[Route('/{id}/check-out', name: 'app_attendance_check_out', methods: ['POST'])]
-    public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-
-        $attendance->setCheckOutAt(new \DateTimeImmutable());
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_attendance_index');
+        return $this->redirectToRoute($redirectRoute, $routeParameters);
     }
 }

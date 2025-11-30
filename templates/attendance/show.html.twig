@@ -35,7 +35,7 @@
                     <td>
 			{{ attendance.checkOutAt ? attendance.checkOutAt|date('Y-m-d H:i:s') : '' }}
 			{% if attendance.checkoutAt is null %}
-                            <form method="post" action="{{ path('app_attendance_check_out_show', {'id': attendance.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                            <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id, 'redirectRoute': 'app_attendance_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
 				<button class="btn btn-primary">{% trans %}Check out{% endtrans %}</button>
                             </form>
