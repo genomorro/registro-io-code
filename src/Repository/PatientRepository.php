@@ -46,4 +46,17 @@ class PatientRepository extends ServiceEntityRepository
 		    ->getQuery()
 		    ->getResult();
     }
+
+    /**
+     * @param string $name
+     * @return Patient[]
+     */
+    public function findByName(string $name): array
+    {
+        return $this->createQueryBuilder('p')
+		    ->andWhere('LOWER(p.name) LIKE LOWER(:name)')
+		    ->setParameter('name', '%' . str_replace(' ', '%', $name) . '%')
+		    ->getQuery()
+		    ->getResult();
+    }
 }

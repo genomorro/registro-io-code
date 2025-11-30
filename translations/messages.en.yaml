@@ -108,6 +108,8 @@
 ### check_out.html.twig
 'Check Out List': 'Check Out List'
 'Check Out by Tag': 'Check Out by Tag'
+### name.html.twig
+'Search by Name': 'Search by Name'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Edit Visitor'

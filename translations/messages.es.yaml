@@ -108,6 +108,8 @@
 ### check_out.html.twig
 'Check Out List': 'Lista de registro de salida'
 'Check Out by Tag': 'Registro de salida por gafete'
+### name.html.twig
+'Search by Name': 'Buscar por nombre'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Editar visitante'

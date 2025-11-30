@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class SearchType extends AbstractType
+class SearchFileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

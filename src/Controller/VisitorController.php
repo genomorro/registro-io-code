@@ -119,6 +119,9 @@ final class VisitorController extends AbstractController
             case 'app_search_check_index':
                 $routeParameters['tag'] = $request->query->get('tag');
                 break;
+            case 'app_search_name_index':
+                $routeParameters['name'] = $request->query->get('name');
+                break;
         }
 
         return $this->redirectToRoute($redirectRoute, $routeParameters);

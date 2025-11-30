@@ -49,4 +49,17 @@ class VisitorRepository extends ServiceEntityRepository
 		    ->getOneOrNullResult()
         ;
     }
+
+    /**
+     * @param string $name
+     * @return Visitor[]
+     */
+    public function findByName(string $name): array
+    {
+        return $this->createQueryBuilder('v')
+		    ->andWhere('LOWER(v.name) LIKE LOWER(:name)')
+		    ->setParameter('name', '%' . str_replace(' ', '%', $name) . '%')
+		    ->getQuery()
+		    ->getResult();
+    }
 }
