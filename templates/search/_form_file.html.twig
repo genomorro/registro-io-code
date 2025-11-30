@@ -1,0 +1,26 @@
+{{ form_start(formFile) }}
+    <div class="form-group">
+	{{ form_label(formFile.file) }}
+	<div class="row">
+	    <div class="col-md-6">
+		<small>{{ form_help(formFile.file) }}</small>
+		{{ form_widget(formFile.file) }}
+		<span class="text-danger">
+		    {{ form_errors(formFile.file) }}
+		    {% for label, messages in app.flashes %}
+			{% for message in messages %}
+			    <div class="alert alert-{{ label }}">
+				{{ message|trans }}
+			    </div>
+			{% endfor %}
+		    {% endfor %}
+		</span>
+	    </div>
+	</div>
+    </div>
+
+    <div class="d-grid gap-2 d-md-block">
+	<button type="submit" value="Search" class="btn btn-primary">{% trans %}Search{% endtrans %}</button>
+	<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
+    </div>
+{{ form_end(formFile) }}
