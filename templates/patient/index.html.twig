@@ -36,7 +36,7 @@
 			{% endif %}
 			<td>{{ patient.file }}</td>
 			<td>{{ patient.name|title }}</td>
-			<td>{{ patient.disability ? 'Yes' : 'No' }}</td>
+			<td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
 			<td>
 			    {% if todays_attendance %}
 				{{ todays_attendance.checkInAt|date('H:i:s') }}
