@@ -6,6 +6,7 @@ use App\Entity\Patient;
 use App\Entity\Visitor;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -45,16 +46,53 @@ class VisitorType extends AbstractType
                     new LessThanOrEqual(9999),
                 ],
             ])
-            ->add('destination', null, [
+            ->add('destination', ChoiceType::class, [
 		'label' => 'Destination',
+		'choices' => [
+		    'Consulta Externa' => 'Consulta Externa',
+		    'CIENI' => 'CIENI',
+		    'Unidad de Urgencias Respiratorias' => 'Unidad de Urgencias Respiratorias',
+		    'Servicio Clínico 1' => 'Servicio Clínico 1',
+		    'Servicio Clínico 2' => 'Servicio Clínico 2',
+		    'Servicio Clínico 3' => 'Servicio Clínico 3',
+		    'Servicio Clínico 4' => 'Servicio Clínico 4',
+		    'Servicio Clínico 5' => 'Servicio Clínico 5',
+		    'Hospital de día' => 'Hospital de día',
+		    'Unidad de Terapia Intermedia' => 'Unidad de Terapia Intermedia',
+		    'Nefrología' => 'Nefrología',
+		    'Oncología' => 'Oncología',
+		    'Broncoscopia Intervencionista' => 'Broncoscopia Intervencionista',
+		    'Broncoscopia' => 'Broncoscopia',
+		    'Servicio Clínico 7' => 'Servicio Clínico 7',
+		    'Neumología Pediátrica Ambulatoria' => 'Neumología Pediátrica Ambulatoria',
+		    'Unidad de Terapia Intensiva Pediátrica' => 'Unidad de Terapia Intensiva Pediátrica',
+		    'Servicio Clínico 8' => 'Servicio Clínico 8',
+		    'Servicio Clínico 9' => 'Servicio Clínico 9',
+		    'Servicio Clínico 10 Postquirúrgicos' => 'Servicio Clínico 10 Postquirúrgicos',
+		    'Servicio Clínico 10 Recuperación' => 'Servicio Clínico 10 Recuperación',
+		],
+		'autocomplete' => true,
+		'constraints' => [
+                    new NotBlank(),
+                ],
 	    ])
-            ->add('relationship', null, [
+            ->add('relationship', ChoiceType::class, [
 		'label' => 'Relationship',
+		'choices' => [
+		    'Padre' => 'Padre',
+		    'Madre' => 'Madre',
+		    'Hijo (a)' => 'Hijo (a)',
+		    'Cónyuge' => 'Cónyuge',
+		    'Concubino (a)' => 'Concubino (a)',
+		    'Hermano (a)' => 'Hermano (a)',
+		    'Otro' => 'Otro',
+		],
+		'autocomplete' => true,
 	    ])
             ->add('patient', PatientAutocompleteField::class, [
-                'extra_options' => [
-                    'multiple' => true,
-                    'required' => false,
+		'extra_options' => [
+		    'multiple' => true,
+		    'required' => false,
                 ],
             ])
         ;
@@ -100,7 +138,7 @@ class VisitorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Visitor::class,
+	    'data_class' => Visitor::class,
         ]);
     }
 }

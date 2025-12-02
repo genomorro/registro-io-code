@@ -32,12 +32,12 @@ class AppointmentType extends AbstractType
             ->add('type', ChoiceType::class, [
 		'label' => 'Type',
                 'choices' => [
-		    'Apertura/Primera vez' => 'APERTURA/PRIMERA VEZ',
-		    'Estudios' => 'ESTUDIOS',
-		    'Preconsulta' => 'PRECONSULTA',
-		    'Primera vez y subsecuente' => 'PRIMERA VEZ Y SUBSECUENTE', 
-		    'Primera vez' => 'PRIMERA VEZ',
-		    'Subsecuente' => 'SUBSECUENTE',
+		    'Apertura/Primera vez' => 'Apertura/primera vez',
+		    'Estudios' => 'Estudios',
+		    'Preconsulta' => 'Preconsulta',
+		    'Primera vez y subsecuente' => 'Primera vez y subsecuente', 
+		    'Primera vez' => 'Primera vez',
+		    'Subsecuente' => 'Subsecuente',
                 ],
 		'autocomplete' => true,
                 'constraints' => [
