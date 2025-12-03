@@ -36,8 +36,19 @@ class VisitorType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('dni', null, [
+            ->add('dni', ChoiceType::class, [
 		'label' => 'DNI',
+		'choices' => [
+		    'INE' => 'INE',
+		    'Pasaporte' => 'Pasaporte',
+		    'Cédula profesional' => 'Cédula profesional',
+		    'INAPAM' => 'INAPAM',
+		    'Otro' => 'Otro',
+		],
+		'autocomplete' => true,
+		'constraints' => [
+                    new NotBlank(),
+                ],
 	    ])
             ->add('tag', null, [
 		'label' => 'Tag',
@@ -51,6 +62,8 @@ class VisitorType extends AbstractType
 		'choices' => [
 		    'Consulta Externa' => 'Consulta Externa',
 		    'CIENI' => 'CIENI',
+		    'Clínica del Asma' => 'Clínica del Asma',
+		    'Clínica de EPOC' => 'Clínica de EPOC',
 		    'Unidad de Urgencias Respiratorias' => 'Unidad de Urgencias Respiratorias',
 		    'Servicio Clínico 1' => 'Servicio Clínico 1',
 		    'Servicio Clínico 2' => 'Servicio Clínico 2',
