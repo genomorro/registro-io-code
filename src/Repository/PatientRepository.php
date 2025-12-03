@@ -56,6 +56,7 @@ class PatientRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
 		    ->andWhere('LOWER(p.name) LIKE LOWER(:name)')
 		    ->setParameter('name', '%' . str_replace(' ', '%', $name) . '%')
+		    ->orderBy('p.name', 'ASC')
 		    ->getQuery()
 		    ->getResult();
     }

@@ -59,6 +59,7 @@ class VisitorRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('v')
 		    ->andWhere('LOWER(v.name) LIKE LOWER(:name)')
 		    ->setParameter('name', '%' . str_replace(' ', '%', $name) . '%')
+		    ->orderBy('v.name', 'ASC')
 		    ->getQuery()
 		    ->getResult();
     }
