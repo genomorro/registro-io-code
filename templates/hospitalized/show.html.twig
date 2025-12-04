@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hospitalized{% endblock %}
+
+{% block body %}
+    <h1>Hospitalized</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hospitalized.id }}</td>
+            </tr>
+            <tr>
+                <th>Service</th>
+                <td>{{ hospitalized.service }}</td>
+            </tr>
+            <tr>
+                <th>Bed</th>
+                <td>{{ hospitalized.bed }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_hospitalized_index') }}">back to list</a>
+
+    <a href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">edit</a>
+
+    {{ include('hospitalized/_delete_form.html.twig') }}
+{% endblock %}

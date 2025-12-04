@@ -52,6 +52,9 @@ class Patient
     #[Groups(['patient_detail'])]
     private Collection $visitors;
 
+    #[ORM\OneToOne(mappedBy: 'patient', cascade: ['persist', 'remove'])]
+    private ?Hospitalized $hospitalized = null;
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
@@ -190,5 +193,22 @@ class Patient
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getHospitalized(): ?Hospitalized
+    {
+        return $this->hospitalized;
+    }
+
+    public function setHospitalized(Hospitalized $hospitalized): static
+    {
+        // set the owning side of the relation if necessary
+        if ($hospitalized->getPatient() !== $this) {
+            $hospitalized->setPatient($this);
+        }
+
+        $this->hospitalized = $hospitalized;
+
+        return $this;
     }
 }
