@@ -56,6 +56,9 @@ class Visitor
     #[Groups(['visitor_detail'])]
     private Collection $patient;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $evidence = null;
+
     public function __construct()
     {
         $this->patient = new ArrayCollection();
@@ -182,6 +185,18 @@ class Visitor
     public function removePatient(Patient $patient): static
     {
         $this->patient->removeElement($patient);
+
+        return $this;
+    }
+
+    public function getEvidence(): ?string
+    {
+        return $this->evidence;
+    }
+
+    public function setEvidence(?string $evidence): static
+    {
+        $this->evidence = $evidence;
 
         return $this;
     }

@@ -32,6 +32,9 @@ class Attendance
     #[Groups(['attendance_list', 'attendance_detail', 'patient_detail'])]
     private ?int $tag = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $evidence = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +84,18 @@ class Attendance
     public function setTag(int $tag): static
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    public function getEvidence(): ?string
+    {
+        return $this->evidence;
+    }
+
+    public function setEvidence(?string $evidence): static
+    {
+        $this->evidence = $evidence;
 
         return $this;
     }
