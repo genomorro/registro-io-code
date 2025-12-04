@@ -1,13 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Hospitalized{% endblock %}
+{% block title %}{% trans %}Edit Hospitalized{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Edit Hospitalized</h1>
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a></li>
+    </ol>
 
-    {{ include('hospitalized/_form.html.twig', {'button_label': 'Update'}) }}
+    <h1>{% trans %}Edit Hospitalized{% endtrans %}</h1>
+    <hr class="red">
+    
+    <div class="row">
+	{{ form_start(form) }}
+	    <div class="form-group">
+		{{ form_label(form.patient) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.patient) }}
+			<span class="text-danger">{{ form_errors(form.patient) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.service) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.service) }}
+			<span class="text-danger">{{ form_errors(form.service) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.bed) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.bed) }}
+			<span class="text-danger">{{ form_errors(form.bed) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div class="d-grid gap-2 d-md-block">
+		<button type="submit" value="Save" class="btn btn-primary">{% trans %}Update{% endtrans %}</button>
+		<a class="btn btn-link" href="{{ path('app_patient_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+	    </div>
+	{{ form_end(form) }}
+    </div>
 
-    <a href="{{ path('app_hospitalized_index') }}">back to list</a>
-
-    {{ include('hospitalized/_delete_form.html.twig') }}
+    <div class="row">
+	<div class="col-md-10"></div>
+	<div class="col-md-1">
+	    {{ include('hospitalized/_delete_form.html.twig') }}
+	</div>
+    </div>
 {% endblock %}

@@ -1,37 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hospitalized index{% endblock %}
+{% block title %}{% trans %}Hospitalized index{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Hospitalized index</h1>
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a></li>
+    </ol>
 
+    <h1>{% trans %}Hospitalized index{% endtrans %}</h1>
+    <hr class="red">
+    
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Service</th>
-                <th>Bed</th>
-                <th>actions</th>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>{% trans %}Id{% endtrans %}</th>
+		{% endif %}
+		<th>{% trans %}Patient{% endtrans %}</th>
+                <th>{% trans %}Service{% endtrans %}</th>
+                <th>{% trans %}Bed{% endtrans %}</th>
+                <th>{% trans %}actions{% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
         {% for hospitalized in hospitalizeds %}
             <tr>
-                <td>{{ hospitalized.id }}</td>
+		{%if is_granted('ROLE_SUPER_ADMIN') %}
+                    <td>{{ hospitalized.id }}</td>
+		{% endif %}
+                <td>{{ hospitalized.patient.name }}</td>
                 <td>{{ hospitalized.service }}</td>
                 <td>{{ hospitalized.bed }}</td>
                 <td>
-                    <a href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">show</a>
-                    <a href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">edit</a>
+                    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+		    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">{% trans %}no records found{% endtrans %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_hospitalized_new') }}">Create new</a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<a class="btn btn-primary" href="{{ path('app_hospitalized_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% endif %}
 {% endblock %}

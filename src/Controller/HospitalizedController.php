@@ -17,6 +17,8 @@ final class HospitalizedController extends AbstractController
     #[Route(name: 'app_hospitalized_index', methods: ['GET'])]
     public function index(HospitalizedRepository $hospitalizedRepository): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+	
         return $this->render('hospitalized/index.html.twig', [
             'hospitalizeds' => $hospitalizedRepository->findAll(),
         ]);
@@ -25,6 +27,8 @@ final class HospitalizedController extends AbstractController
     #[Route('/new', name: 'app_hospitalized_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	
         $hospitalized = new Hospitalized();
         $form = $this->createForm(HospitalizedType::class, $hospitalized);
         $form->handleRequest($request);
@@ -45,6 +49,8 @@ final class HospitalizedController extends AbstractController
     #[Route('/{id}', name: 'app_hospitalized_show', methods: ['GET'])]
     public function show(Hospitalized $hospitalized): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_USER');
+	
         return $this->render('hospitalized/show.html.twig', [
             'hospitalized' => $hospitalized,
         ]);
@@ -53,6 +59,8 @@ final class HospitalizedController extends AbstractController
     #[Route('/{id}/edit', name: 'app_hospitalized_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	
         $form = $this->createForm(HospitalizedType::class, $hospitalized);
         $form->handleRequest($request);
 
@@ -71,6 +79,8 @@ final class HospitalizedController extends AbstractController
     #[Route('/{id}', name: 'app_hospitalized_delete', methods: ['POST'])]
     public function delete(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager): Response
     {
+	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+	
         if ($this->isCsrfTokenValid('delete'.$hospitalized->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($hospitalized);
             $entityManager->flush();

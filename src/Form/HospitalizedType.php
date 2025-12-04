@@ -16,10 +16,7 @@ class HospitalizedType extends AbstractType
         $builder
             ->add('service')
             ->add('bed')
-            ->add('patient', EntityType::class, [
-                'class' => Patient::class,
-                'choice_label' => 'id',
-            ])
+            ->add('patient', PatientAutocompleteField::class)
         ;
     }
 

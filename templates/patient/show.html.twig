@@ -34,6 +34,16 @@
                     <th>{% trans %}Disability{% endtrans %}</th>
                     <td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
 		</tr>
+		{% if patient.hospitalized is not empty %}
+		    <tr>
+			<th>{% trans %}Service{% endtrans %}</th>
+			<td>{{ patient.hospitalized.service }}</td>
+		    </tr>
+		    <tr>
+			<th>{% trans %}Bed{% endtrans %}</th>
+			<td>{{ patient.hospitalized.bed }}</td>
+		    </tr>
+		{% endif %}
             </tbody>
 	</table>
     </div>

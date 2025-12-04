@@ -3,28 +3,55 @@
 {% block title %}Hospitalized{% endblock %}
 
 {% block body %}
-    <h1>Hospitalized</h1>
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item" aria-current="page"><a href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Hospitalized{% endtrans %}</h1>
 
     <table class="table">
         <tbody>
+	    {% if is_granted('ROLE_SUPER_ADMIN') %}
+		<tr>
+                    <th>{% trans %}Id{% endtrans %}</th>
+                    <td>{{ hospitalized.id }}</td>
+		</tr>
+	    {% endif %}
             <tr>
-                <th>Id</th>
-                <td>{{ hospitalized.id }}</td>
+                <th>{% trans %}File{% endtrans %}</th>
+                <td>{{ hospitalized.patient.file }}</td>
             </tr>
             <tr>
-                <th>Service</th>
+                <th>{% trans %}Patient{% endtrans %}</th>
+                <td>{{ hospitalized.patient.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Service{% endtrans %}</th>
                 <td>{{ hospitalized.service }}</td>
             </tr>
             <tr>
-                <th>Bed</th>
+                <th>{% trans %}Bed{% endtrans %}</th>
                 <td>{{ hospitalized.bed }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_hospitalized_index') }}">back to list</a>
+    <div class="d-grid gap-2 d-md-block">
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+	    <a class="btn btn-primary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
+	<a class="btn btn-link" href="{{ path('app_hospitalized_index') }}">{% trans %}Back to list{% endtrans %}</a>
+    </div>
 
-    <a href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">edit</a>
-
-    {{ include('hospitalized/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('hospitalized/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
 {% endblock %}

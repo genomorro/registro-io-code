@@ -1,11 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Hospitalized{% endblock %}
+{% block title %}{% trans %}New Hospitalized{% endtrans%}{% endblock %}
 
 {% block body %}
-    <h1>Create new Hospitalized</h1>
+    <h1>{% trans %}Create new Hospitalized{% endtrans %}</h1>
+    <hr class="red">
 
-    {{ include('hospitalized/_form.html.twig') }}
-
-    <a href="{{ path('app_hospitalized_index') }}">back to list</a>
+    <div class="row">
+	{{ form_start(form) }}
+	    <div class="form-group">
+		{{ form_label(form.patient) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.patient) }}
+			<span class="text-danger">{{ form_errors(form.patient) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.service) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.service) }}
+			<span class="text-danger">{{ form_errors(form.service) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.bed) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.bed) }}
+			<span class="text-danger">{{ form_errors(form.bed) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div class="d-grid gap-2 d-md-block">
+		<button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+		<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
+		<a class="btn btn-link" href="{{ path('app_patient_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+	    </div>
+	{{ form_end(form) }}
+    </div>
 {% endblock %}
