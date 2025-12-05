@@ -13,6 +13,7 @@
 ## menu.html.twig
 'Search': 'Buscar'
 'Patients': 'Pacientes'
+'Hospitalized': 'Hospitalizados'
 'Appointments': 'Citas'
 'Attendances': 'Asistencias'
 'Visitors': 'Visitantes'
@@ -76,6 +77,13 @@
 'Create new Attendance': 'Crear nueva asistencia'
 ### show.html.twig
 'Attendance': 'Asistencia'
+## hospitalized
+### edit.html.twig
+'Edit Hospitalized': 'Editar hospitalización'
+'Service': 'Servicio'
+'Bed': 'Cama'
+### index.html.twig
+'Hospitalized index': 'Índice de hospitalizados'
 ## patient
 ### edit.html.twig
 'File': 'Expediente'
@@ -110,6 +118,7 @@
 'Check Out by Tag': 'Registro de salida por gafete'
 ### name.html.twig
 'Search by Name': 'Buscar por nombre'
+'Patient not found for the given name.': 'No hay pacientes con el nombre proporcionado.'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Editar visitante'

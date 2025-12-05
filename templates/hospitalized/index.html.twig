@@ -18,6 +18,7 @@
 		{% if is_granted('ROLE_SUPER_ADMIN') %}
                     <th>{% trans %}Id{% endtrans %}</th>
 		{% endif %}
+		<th>{% trans %}File{% endtrans %}</th>
 		<th>{% trans %}Patient{% endtrans %}</th>
                 <th>{% trans %}Service{% endtrans %}</th>
                 <th>{% trans %}Bed{% endtrans %}</th>
@@ -30,6 +31,7 @@
 		{%if is_granted('ROLE_SUPER_ADMIN') %}
                     <td>{{ hospitalized.id }}</td>
 		{% endif %}
+                <td>{{ hospitalized.patient.file }}</td>
                 <td>{{ hospitalized.patient.name }}</td>
                 <td>{{ hospitalized.service }}</td>
                 <td>{{ hospitalized.bed }}</td>
