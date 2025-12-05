@@ -1,5 +1,6 @@
 framework:
     asset_mapper:
+        importmap_path: '%kernel.project_dir%/config/importmap.php'
         # The paths to make available to the asset mapper.
         paths:
             - assets/
