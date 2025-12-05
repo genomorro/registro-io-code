@@ -19,7 +19,7 @@ final class HospitalizedController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $datatable = $dataTableBuilder->createDataTable()
+        $datatable = $dataTableBuilder->createDataTable('hospitalized')
             ->setEntityClass(Hospitalized::class)
             ->add('id')
             ->add('patient.file', ['label' => 'File'])
