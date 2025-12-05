@@ -38,6 +38,9 @@
             "migrations/.gitignore"
         ]
     },
+    "pentiminax/ux-datatables": {
+        "version": "v0.12.3"
+    },
     "phpunit/phpunit": {
         "version": "12.4",
         "recipe": {

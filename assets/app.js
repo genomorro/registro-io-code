@@ -5,6 +5,8 @@
  * which should already be in your base.html.twig.
  */
 import './bootstrap.js';
+import 'jquery';
+import 'datatables.net';
 //import 'bootstrap/bootstrap.index.js';
 import './styles/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
