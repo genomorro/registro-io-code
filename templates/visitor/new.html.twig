@@ -105,8 +105,8 @@
 		</div>
 	    {{ form_end(form) }}
 	</div>
-	<div class="col-md-6 d-flex align-items-center">
-	    <video id="video" width="480" height="360" autoplay></video>
+	<div class="col-md-6 d-flex align-items-center justify-content-center">
+	    <video id="video" width="480" height="360" class="border" autoplay></video>
 	    <canvas id="canvas" style="display:none;"></canvas>
 	</div>
     </div>
@@ -120,6 +120,11 @@
 	 const form = document.querySelector('form');
 	 const evidenceField = document.getElementById('visitor_evidence');
 
+	 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+	     console.error('Browser API navigator.mediaDevices.getUserMedia not available');
+	     return;
+	 }
+
 	 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
 		  .then(function(stream) {
 		      video.srcObject = stream;
@@ -129,19 +134,28 @@
 		      console.log("An error occurred: " + err);
 		  });
 
-	 form.addEventListener('submit', function(event) {
-	     event.preventDefault();
+	 if (form) {
+	     form.addEventListener('submit', function(event) {
+		 event.preventDefault();
 
-	     const context = canvas.getContext('2d');
-	     canvas.width = 480; {# 640 - 480 #}
-	     canvas.height = 360; {# 480 - 360 #}
-	     context.drawImage(video, 0, 0, 480, 360);
+		 if (!video.srcObject) {
+		     console.error('Video stream not available');
+		     return;
+		 }
 
-	     const dataURL = canvas.toDataURL('image/png');
-	     evidenceField.value = dataURL;
+		 const context = canvas.getContext('2d');
+		 canvas.width = 270; {# 640 - 480 #}
+		 canvas.height = 203; {# 480 - 360 #}
+		 context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-	     form.submit();
-	 });
+		 const dataURL = canvas.toDataURL('image/png');
+		 evidenceField.value = dataURL;
+
+		 form.submit();
+	     });
+	 } else {
+	     console.error('Form not found');
+	 }
      });
     </script>
 {% endblock %}
