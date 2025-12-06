@@ -58,8 +58,8 @@
 	</div>
 
 	{% if attendance.evidence %}
-	    <div class="col-md-4 d-flex align-items-center">
-		<img width="100%" src="{{ attendance.evidence }}" alt="{{ attendance.checkInAt|date('Y-m-d H:i:s') }}">
+	    <div class="col-md-4 d-flex align-items-center justify-content-center">
+		<img class="border" width="100%" src="{{ attendance.evidence }}" alt="{{ attendance.checkInAt|date('Y-m-d H:i:s') }}">
 	    </div>
 	{% endif %}
     </div>
