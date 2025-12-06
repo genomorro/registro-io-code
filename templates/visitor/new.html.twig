@@ -105,4 +105,44 @@
 	{{ form_end(form) }}
     </div>
 
+    <div class="row">
+	<div class="col-md-6">
+	    <video id="video" width="100%" autoplay></video>
+	</div>
+	<div class="col-md-6">
+	    <canvas id="canvas" style="display:none;"></canvas>
+	</div>
+    </div>
+
+    <script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+	    const video = document.getElementById('video');
+	    const canvas = document.getElementById('canvas');
+	    const form = document.querySelector('form');
+	    const evidenceField = document.getElementById('visitor_evidence');
+
+	    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+		.then(function(stream) {
+		    video.srcObject = stream;
+		    video.play();
+		})
+		.catch(function(err) {
+		    console.log("An error occurred: " + err);
+		});
+
+	    form.addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		const context = canvas.getContext('2d');
+		canvas.width = video.videoWidth;
+		canvas.height = video.videoHeight;
+		context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+		const dataURL = canvas.toDataURL('image/png');
+		evidenceField.value = dataURL;
+
+		form.submit();
+	    });
+	});
+    </script>
 {% endblock %}
