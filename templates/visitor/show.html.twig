@@ -13,68 +13,78 @@
     <h1>{% trans %}Visitor{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="table-responsible">
-	<table class="table table-striped">
-            <tbody>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-		    <tr>
-			<th>{% trans %}Id{% endtrans %}</th>
-			<td>{{ visitor.id }}</td>
-		    </tr>
-		{% endif %}
-		<tr>
-                    <th>{% trans %}Name{% endtrans %}</th>
-                    <td>{{ visitor.name|title }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Phone{% endtrans %}</th>
-                    <td>{{ visitor.phone }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}DNI{% endtrans %}</th>
-                    <td>{{ visitor.dni }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Tag{% endtrans %}</th>
-                    <td>{{ visitor.tag }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Destination{% endtrans %}</th>
-                    <td>{{ visitor.destination }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Check in{% endtrans %}</th>
-                    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Check out{% endtrans %}</th>
-                    <td>
-			{% if visitor.CheckOutAt %}
-                            {{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
-			{% else %}
-                            <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_visitor_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
-				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
-				<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
-                            </form>
+    <div class="row">
+	<div class="col-md">
+	    <div class="table-responsible">
+		<table class="table table-striped">
+		    <tbody>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+			    <tr>
+				<th>{% trans %}Id{% endtrans %}</th>
+				<td>{{ visitor.id }}</td>
+			    </tr>
 			{% endif %}
-                    </td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Relationship{% endtrans %}</th>
-                    <td>{{ visitor.relationship }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Patients{% endtrans %}</th>
-                    <td>
-			<ul>
-			    {% for patient in visitor.patient %}
-				<li>{{ patient.name }} ({% trans %}File{% endtrans %}: {{ patient.file }})</li>
-			    {% endfor %}
-			</ul>
-                    </td>
-		</tr>
-            </tbody>
-	</table>
+			<tr>
+			    <th>{% trans %}Name{% endtrans %}</th>
+			    <td>{{ visitor.name|title }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Phone{% endtrans %}</th>
+			    <td>{{ visitor.phone }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}DNI{% endtrans %}</th>
+			    <td>{{ visitor.dni }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Tag{% endtrans %}</th>
+			    <td>{{ visitor.tag }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Destination{% endtrans %}</th>
+			    <td>{{ visitor.destination }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Check in{% endtrans %}</th>
+			    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Check out{% endtrans %}</th>
+			    <td>
+				{% if visitor.CheckOutAt %}
+				    {{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
+				{% else %}
+				    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_visitor_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+					<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
+					<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+				    </form>
+				{% endif %}
+			    </td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Relationship{% endtrans %}</th>
+			    <td>{{ visitor.relationship }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Patients{% endtrans %}</th>
+			    <td>
+				<ul>
+				    {% for patient in visitor.patient %}
+					<li>{{ patient.name }} ({% trans %}File{% endtrans %}: {{ patient.file }})</li>
+				    {% endfor %}
+				</ul>
+			    </td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	</div>
+
+	{% if visitor.evidence is not empty %}
+	    <div class="col-md-4 d-flex align-items-center">
+		<img width="100%" src="{{ visitor.evidence }}" alt="{{ visitor.checkInAt|date('Y-m-d H:i:s') }}">
+	    </div>
+	{% endif %}
     </div>
 
     <div class="d-grid gap-2 d-md-block">

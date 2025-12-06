@@ -6,6 +6,10 @@ main.page {
 margin-bottom: 1%;
 }
 
+video {
+    margin: 5% auto;
+}
+
 .ts-control {
     height: 39px;
     font-size: 18px !important;
