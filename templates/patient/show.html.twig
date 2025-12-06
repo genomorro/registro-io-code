@@ -92,43 +92,52 @@
     <hr class="red">
     {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
     {% if todays_attendance %}
-        <div class="table-responsible">
-	    <table class="table table-striped">
-		<tbody>
-		    <tr>
-			<th>{% trans %}Tag{% endtrans %}</th>
-			<td>{{ todays_attendance.tag }}</td>
-		    </tr>
-                    <tr>
-			<th>{% trans %}Check in{% endtrans %}</th>
-			<td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
-                    </tr>
-                    <tr>
-			<th>{% trans %}Check out{% endtrans %}</th>
-			<td>
-                            {% if todays_attendance.checkOutAt %}
-				{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
-                            {% else %}
-				<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');" style="display: inline-block;">
-				    <input type="hidden" name="redirect_route" value="app_patient_show">
-				    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">				    
-                                    <button class="btn btn-sm btn-secondary">{% trans %}Check out{% endtrans %}</button>
-				</form>
-                            {% endif %}
-			</td>
-                    </tr>
-		</tbody>
-            </table>
+	<div class="row">
+	    <div class="col-md d-flex align-items-center">
+		<div class="table-responsible d-flex">
+		    <table class="table table-striped">
+			<tbody>
+			    <tr>
+				<th>{% trans %}Tag{% endtrans %}</th>
+				<td>{{ todays_attendance.tag }}</td>
+			    </tr>
+			    <tr>
+				<th>{% trans %}Check in{% endtrans %}</th>
+				<td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
+			    </tr>
+			    <tr>
+				<th>{% trans %}Check out{% endtrans %}</th>
+				<td>
+				    {% if todays_attendance.checkOutAt %}
+					{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
+				    {% else %}
+					<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');" style="display: inline-block;">
+					    <input type="hidden" name="redirect_route" value="app_patient_show">
+					    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
+					    <button class="btn btn-sm btn-secondary">{% trans %}Check out{% endtrans %}</button>
+					</form>
+				    {% endif %}
+				</td>
+			    </tr>
+			</tbody>
+		    </table>
+		</div>
+	    </div>
+	    {% if todays_attendance.evidence %}
+		<div class="col-md-4 d-flex align-items-center">
+		    <img width="100%" src="{{ todays_attendance.evidence }}" alt="{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}">
+		</div>
+	    {% endif %}
 	</div>
     {% else %}
-        <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
-            <input type="hidden" name="redirect_route" value="app_patient_show">
-            <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
+	<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
+	    <input type="hidden" name="redirect_route" value="app_patient_show">
+	    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
 	    <div class="input-group mb-3" >
 		<input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height:34px" class="form-control form-control-sm"/>
 		<button type="submit" class="btn btn-sm btn-primary">{% trans %}Check in{% endtrans %}</button>
 	    </div>
-        </form>
+	</form>
     {% endif %}
     
     <hr>
