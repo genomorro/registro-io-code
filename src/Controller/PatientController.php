@@ -148,6 +148,28 @@ final class PatientController extends AbstractController
         $attendance->setCheckInAt(new \DateTimeImmutable());
         $attendance->setTag((int) $tag);
 
+	$evidenceData = $request->request->get('evidence');
+        if ($evidenceData) {
+            $data = explode(',', $evidenceData);
+            $imageData = base64_decode($data[1]);
+
+            $checkInAt = $attendance->getCheckInAt();
+            $year = $checkInAt->format('Y');
+            $month = $checkInAt->format('m');
+
+            $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/attendance/' . $year . '/' . $month;
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            $filename = $checkInAt->format('YmdHis') . '.png';
+            $filepath = $uploadDir . '/' . $filename;
+
+	    file_put_contents($filepath, $imageData);
+
+	    $attendance->setEvidence('/uploads/attendance/' . $year . '/' . $month . '/' . $filename);
+        }
+
         $entityManager->persist($attendance);
         $entityManager->flush();
 
