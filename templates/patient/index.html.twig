@@ -12,6 +12,11 @@
     <h1>{% trans %}Patient index{% endtrans %}</h1>
     <hr class="red">
 
+	<div class="col-md d-flex align-items-center justify-content-center">
+	    <video id="video" width="203" height="152" class="border mt-0" autoplay></video>
+	    <canvas id="canvas" style="display:none;"></canvas>
+	</div>
+
     <div class="table-responsible">
 	<table class="table table-hover">
             <thead>
@@ -43,6 +48,7 @@
 			    {% else %}
 				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
 				    <input type="hidden" name="redirect_route" value="app_patient_index">
+				    <input type="hidden" name="evidence" id="evidence">
 				    <div class="input-group mb-3">
 					<input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height: 34px" class="form-control form-control-sm"/>
 					<button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
@@ -87,4 +93,52 @@
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
     {% endif %}
+{% endblock %}
+
+{% block custom_javascripts %}
+    <script>
+     document.addEventListener('DOMContentLoaded', (event) => {
+	 const video = document.getElementById('video');
+	 const canvas = document.getElementById('canvas');
+	 const form = document.querySelector('form[action*="check-in"]');
+	 const evidenceField = document.getElementById('evidence');
+
+	 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+	     console.error('Browser API navigator.mediaDevices.getUserMedia not available');
+	     return;
+	 }
+
+	 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+		  .then(function(stream) {
+		      video.srcObject = stream;
+		      video.play();
+		  })
+		  .catch(function(err) {
+		      console.error("An error occurred: " + err);
+		  });
+
+	 if (form) {
+	     form.addEventListener('submit', function(event) {
+		 event.preventDefault();
+
+		 if (!video.srcObject) {
+		     console.error('Video stream not available');
+		     return;
+		 }
+
+		 const context = canvas.getContext('2d');
+		 canvas.width = 270; {# 640 - 480 #}
+		 canvas.height = 203; {# 480 - 360 #}
+		 context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+		 const dataURL = canvas.toDataURL('image/png');
+		 evidenceField.value = dataURL;
+
+		 form.submit();
+	     });
+	 } else {
+	     console.error('Form not found');
+	 }
+     });
+    </script>
 {% endblock %}
