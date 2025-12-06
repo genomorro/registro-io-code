@@ -73,6 +73,12 @@
 			</ul>
                     </td>
 		</tr>
+		{% if visitor.evidence %}
+		    <tr>
+			<th>{% trans %}Evidence{% endtrans %}</th>
+			<td><img src="{{ asset(visitor.evidence) }}" alt="Visitor Evidence" style="max-width: 200px; max-height: 200px;"></td>
+		    </tr>
+		{% endif %}
             </tbody>
 	</table>
     </div>
