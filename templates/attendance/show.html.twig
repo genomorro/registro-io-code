@@ -13,46 +13,57 @@
     <h1>{% trans %}Attendance{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="table-responsible">
-	<table class="table table-striped">
-            <tbody>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-		    <tr>
-			<th>{% trans %}Id{% endtrans %}</th>
-			<td>{{ attendance.id }}</td>
-		    </tr>
-		{% endif %}
-		<tr>
-                    <th>{% trans %}Tag{% endtrans %}</th>
-                    <td>{{ attendance.tag }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Check in{% endtrans %}</th>
-                    <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Check out{% endtrans %}</th>
-                    <td>
-			{{ attendance.checkOutAt ? attendance.checkOutAt|date('Y-m-d H:i:s') : '' }}
-			{% if attendance.checkoutAt is null %}
-                            <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id, 'redirectRoute': 'app_attendance_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
-				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
-				<button class="btn btn-primary">{% trans %}Check out{% endtrans %}</button>
-                            </form>
+    <div class="row">
+	<div class="col-md">
+	    <div class="table-responsible">
+		<table class="table table-striped">
+		    <tbody>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+			    <tr>
+				<th>{% trans %}Id{% endtrans %}</th>
+				<td>{{ attendance.id }}</td>
+			    </tr>
 			{% endif %}
-                    </td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Patient name{% endtrans %}</th>
-                    <td>{{ attendance.patient.name|title }}</td>
-		</tr>
-		<tr>
-                    <th>{% trans %}Patient file{% endtrans %}</th>
-                    <td>{{ attendance.patient.file }}</td>
-		</tr>
-            </tbody>
-	</table>
+			<tr>
+			    <th>{% trans %}Tag{% endtrans %}</th>
+			    <td>{{ attendance.tag }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Check in{% endtrans %}</th>
+			    <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Check out{% endtrans %}</th>
+			    <td>
+				{{ attendance.checkOutAt ? attendance.checkOutAt|date('Y-m-d H:i:s') : '' }}
+				{% if attendance.checkoutAt is null %}
+				    <form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id, 'redirectRoute': 'app_attendance_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+					<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
+					<button class="btn btn-primary">{% trans %}Check out{% endtrans %}</button>
+				    </form>
+				{% endif %}
+			    </td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Patient name{% endtrans %}</th>
+			    <td>{{ attendance.patient.name|title }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Patient file{% endtrans %}</th>
+			    <td>{{ attendance.patient.file }}</td>
+			</tr>
+		    </tbody>
+		</table>
+	    </div>
+	</div>
+
+	{% if attendance.evidence %}
+	    <div class="col-md-4 d-flex align-items-center">
+		<img width="100%" src="{{ attendance.evidence }}" alt="{{ attendance.checkInAt|date('Y-m-d H:i:s') }}">
+	    </div>
+	{% endif %}
     </div>
+
 
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}

@@ -14,49 +14,89 @@
     <hr class="red">
 
     <div class="row">
-	{{ form_start(form) }}
-	    <div class="form-group">
-		{{ form_label(form.patient) }}:
-		<div class="row">
-		    <div class="col-md-6">
-			{{ form_widget(form.patient) }}
-			<span class="text-danger">{{ form_errors(form.patient) }}</span>
+	<div class="col-md-6">
+	    {{ form_start(form) }}
+		<div class="form-group">
+		    {{ form_label(form.patient) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.patient) }}
+			    <span class="text-danger">{{ form_errors(form.patient) }}</span>
+			</div>
 		    </div>
 		</div>
-	    </div>
-	    <div class="form-group">
-		{{ form_label(form.tag) }}:
-		<div class="row">
-		    <div class="col-md-6">
-			{{ form_widget(form.tag) }}
-			<span class="text-danger">{{ form_errors(form.tag) }}</span>
+		<div class="form-group">
+		    {{ form_label(form.tag) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.tag) }}
+			    <span class="text-danger">{{ form_errors(form.tag) }}</span>
+			</div>
 		    </div>
 		</div>
-	    </div>
-	    <div class="form-group">
-		{{ form_label(form.checkInAt) }}:
-		<div class="row">
-		    <div class="col-md-6">
-			{{ form_widget(form.checkInAt) }}
-			<span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
+		<div class="form-group">
+		    {{ form_label(form.checkInAt) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.checkInAt) }}
+			    <span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
+			</div>
 		    </div>
 		</div>
-	    </div>
-	    <div class="form-group">
-		{{ form_label(form.checkOutAt) }}:
-		<div class="row">
-		    <div class="col-md-6">
-			{{ form_widget(form.checkOutAt) }}
-			<span class="text-danger">{{ form_errors(form.checkOutAt) }}</span>
+		<div class="form-group">
+		    {{ form_label(form.checkOutAt) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.checkOutAt) }}
+			    <span class="text-danger">{{ form_errors(form.checkOutAt) }}</span>
+			</div>
 		    </div>
 		</div>
-	    </div>
 
-	    <div class="d-grid gap-2 d-md-block">
-		<button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
-		<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
-		<a class="btn btn-link" href="{{ path('app_attendance_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
-	    </div>
-	{{ form_end(form) }}
+		<div class="d-grid gap-2 d-md-block">
+		    <button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+		    <button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
+		    <a class="btn btn-link" href="{{ path('app_attendance_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+		</div>
+	    {{ form_end(form) }}
+	</div>
+	<div class="col-md-6 d-flex align-items-center">
+	    <video id="video" width="480" height="360" autoplay></video>
+	    <canvas id="canvas" style="display:none;"></canvas>
+	</div>
     </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+    <script>
+     document.addEventListener('DOMContentLoaded', (event) => {
+	 const video = document.getElementById('video');
+	 const canvas = document.getElementById('canvas');
+	 const form = document.querySelector('form');
+	 const evidenceField = document.getElementById('attendance_evidence');
+
+	 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+		  .then(function(stream) {
+		      video.srcObject = stream;
+		      video.play();
+		  })
+		  .catch(function(err) {
+		      console.log("An error occurred: " + err);
+		  });
+
+	 form.addEventListener('submit', function(event) {
+	     event.preventDefault();
+
+	     const context = canvas.getContext('2d');
+	     canvas.width = 480; {# 640 - 480 #}
+	     canvas.height = 360; {# 480 - 360 #}
+	     context.drawImage(video, 0, 0, 480, 360);
+
+	     const dataURL = canvas.toDataURL('image/png');
+	     evidenceField.value = dataURL;
+
+	     form.submit();
+	 });
+     });
+    </script>
 {% endblock %}

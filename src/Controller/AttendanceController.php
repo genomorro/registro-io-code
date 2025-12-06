@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/attendance')]
 final class AttendanceController extends AbstractController
 {
-    #[Route(name: 'app_attendance_index', methods: ['GET'])]
+    #[Route(name: 'app_attendance_index', methods: ['GET', 'POST'])]
     public function index(AttendanceRepository $attendanceRepository, Request $request): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -41,7 +41,30 @@ final class AttendanceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($attendance);
+
+	    $evidenceData = $form->get('evidence')->getData();
+            if ($evidenceData) {
+                $data = explode(',', $evidenceData);
+                $imageData = base64_decode($data[1]);
+                
+                $checkInAt = $attendance->getCheckInAt();
+                $year = $checkInAt->format('Y');
+                $month = $checkInAt->format('m');
+                
+                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/attendance/' . $year . '/' . $month;
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                
+                $filename = $checkInAt->format('YmdHis') . '.png';
+                $filepath = $uploadDir . '/' . $filename;
+                
+                file_put_contents($filepath, $imageData);
+                
+                $attendance->setEvidence('/uploads/attendance/' . $year . '/' . $month . '/' . $filename);
+            }
+
+	    $entityManager->persist($attendance);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);

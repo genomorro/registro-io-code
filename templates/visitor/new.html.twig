@@ -106,7 +106,7 @@
 	    {{ form_end(form) }}
 	</div>
 	<div class="col-md-6 d-flex align-items-center">
-	    <video id="video" width="100%" autoplay></video>
+	    <video id="video" width="480" height="360" autoplay></video>
 	    <canvas id="canvas" style="display:none;"></canvas>
 	</div>
     </div>
@@ -133,9 +133,9 @@
 	     event.preventDefault();
 
 	     const context = canvas.getContext('2d');
-	     canvas.width = video.videoWidth; {# 640 #}
-	     canvas.height = video.videoHeight; {# 480 #}
-	     context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+	     canvas.width = 480; {# 640 - 480 #}
+	     canvas.height = 360; {# 480 - 360 #}
+	     context.drawImage(video, 0, 0, 480, 360);
 
 	     const dataURL = canvas.toDataURL('image/png');
 	     evidenceField.value = dataURL;
