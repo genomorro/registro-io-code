@@ -32,7 +32,7 @@
                     <td>{{ hospitalized.id }}</td>
 		{% endif %}
                 <td>{{ hospitalized.patient.file }}</td>
-                <td>{{ hospitalized.patient.name }}</td>
+                <td>{{ hospitalized.patient.name|title }}</td>
                 <td>{{ hospitalized.service }}</td>
                 <td>{{ hospitalized.bed }}</td>
                 <td>
