@@ -42,7 +42,7 @@
                     <td>{{ attendance.patient.name|title }}</td>
                     <td>{{ attendance.tag }}</td>
                     <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>
+                    <td class="d-flex flex-wrap">
 			{% if tag is defined %}
 			    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				<input type="hidden" name="redirect_route" value="app_search_check_index">
@@ -61,9 +61,13 @@
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% endif %}
-			<a class="btn btn-link" href="{{ path('app_patient_show', {'id': attendance.patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+			<div>
+			    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': attendance.patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+			</div>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
-			    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': attendance.patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    <div>
+				<a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': attendance.patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    </div>
 			{% endif %}
                     </td>
 		</tr>
@@ -97,7 +101,7 @@
                     <td>{{ visitor.name|title }}</td>
                     <td>{{ visitor.tag }}</td>
                     <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>
+                    <td class="d-flex flex-wrap">
 			{% if tag is defined %}
 			    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
@@ -114,9 +118,13 @@
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% endif %}
-			<a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a>
+			<div>
+			    <a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a>
+			</div>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
-			    <a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    <div>
+				<a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    </div>
 			{% endif %}
                     </td>
 		</tr>
