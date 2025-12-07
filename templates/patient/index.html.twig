@@ -11,77 +11,78 @@
 
     <h1>{% trans %}Patient index{% endtrans %}</h1>
     <hr class="red">
-
+    <div {{ stimulus_controller('webrtc') }}>
 	<div class="col-md d-flex align-items-center justify-content-center">
-	    <video id="video" width="203" height="152" class="border mt-0" autoplay></video>
-	    <canvas id="canvas" style="display:none;"></canvas>
+	    <video data-webrtc-target="video" width="203" height="152" class="border mt-0" autoplay></video>
+	    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
 	</div>
 
-    <div class="table-responsible">
-	<table class="table table-hover">
-            <thead>
-		<tr>
-		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
-		    {% endif %}
-                    <th>{% trans %}File{% endtrans %}</th>
-                    <th>{% trans %}Name{% endtrans %}</th>
-                    <th>{% trans %}Disability{% endtrans %}</th>
-                    <th>{% trans %}Check in{% endtrans %}</th>
-                    <th>{% trans %}Check out{% endtrans %}</th>
-                    <th>{% trans %}actions{% endtrans %}</th>
-		</tr>
-            </thead>
-            <tbody>
-		{% for patient in patients %}
-		    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+	<div class="table-responsible">
+	    <table class="table table-hover">
+		<thead>
 		    <tr>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
-			    <td>{{ patient.id }}</td>
+			    <th>{% trans %}Id{% endtrans %}</th>
 			{% endif %}
-			<td>{{ patient.file }}</td>
-			<td>{{ patient.name|title }}</td>
-			<td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
-			<td>
-			    {% if todays_attendance %}
-				{{ todays_attendance.checkInAt|date('H:i:s') }}
-			    {% else %}
-				<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
-				    <input type="hidden" name="redirect_route" value="app_patient_index">
-				    <input type="hidden" name="evidence" id="evidence">
-				    <div class="input-group mb-3">
-					<input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height: 34px" class="form-control form-control-sm"/>
-					<button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
-				    </div>				    
-				</form>
-			    {% endif %}
-			</td>
-			<td>
-			    {% if todays_attendance and todays_attendance.checkOutAt %}
-				{{ todays_attendance.checkOutAt|date('H:i:s') }}
-			    {% elseif todays_attendance %}
-				<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
-				    <input type="hidden" name="redirect_route" value="app_patient_index">
-				    <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
-				</form>
-			    {% else %}
-				<button type="button" class="btn btn-sm btn-secondary" disabled>{% trans %}Check out{% endtrans %}</button>
-			    {% endif %}
-			</td>
-			<td>
-			    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+			<th>{% trans %}File{% endtrans %}</th>
+			<th>{% trans %}Name{% endtrans %}</th>
+			<th>{% trans %}Disability{% endtrans %}</th>
+			<th>{% trans %}Check in{% endtrans %}</th>
+			<th>{% trans %}Check out{% endtrans %}</th>
+			<th>{% trans %}actions{% endtrans %}</th>
+		    </tr>
+		</thead>
+		<tbody>
+		    {% for patient in patients %}
+			{% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+			<tr>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
-				<a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				<td>{{ patient.id }}</td>
 			    {% endif %}
-			</td>
-		    </tr>
+			    <td>{{ patient.file }}</td>
+			    <td>{{ patient.name|title }}</td>
+			    <td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
+			    <td>
+				{% if todays_attendance %}
+				    {{ todays_attendance.checkInAt|date('H:i:s') }}
+				{% else %}
+				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+					<input type="hidden" name="redirect_route" value="app_patient_index">
+					<input type="hidden" name="evidence" data-webrtc-target="evidence">
+					<div class="input-group mb-3">
+					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height: 34px" class="form-control form-control-sm"/>
+					    <button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
+					</div>
+				    </form>
+				{% endif %}
+			    </td>
+			    <td>
+				{% if todays_attendance and todays_attendance.checkOutAt %}
+				    {{ todays_attendance.checkOutAt|date('H:i:s') }}
+				{% elseif todays_attendance %}
+				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+					<input type="hidden" name="redirect_route" value="app_patient_index">
+					<button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+				    </form>
+				{% else %}
+				    <button type="button" class="btn btn-sm btn-secondary" disabled>{% trans %}Check out{% endtrans %}</button>
+				{% endif %}
+			    </td>
+			    <td>
+				<a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+				{% if is_granted('ROLE_SUPER_ADMIN') %}
+				    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				{% endif %}
+			    </td>
+			</tr>
         {% else %}
-		    <tr>
-			<td colspan="7">{% trans %}no records found{% endtrans %}</td>
-		    </tr>
-		{% endfor %}
-            </tbody>
-	</table>
+			<tr>
+			    <td colspan="7">{% trans %}no records found{% endtrans %}</td>
+			</tr>
+		    {% endfor %}
+		</tbody>
+	    </table>
+	</div>
     </div>
 
     {% if patients.haveToPaginate == true %}
@@ -93,52 +94,4 @@
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
     {% endif %}
-{% endblock %}
-
-{% block custom_javascripts %}
-    <script>
-     document.addEventListener('DOMContentLoaded', (event) => {
-	 const video = document.getElementById('video');
-	 const canvas = document.getElementById('canvas');
-	 const form = document.querySelector('form[action*="check-in"]');
-	 const evidenceField = document.getElementById('evidence');
-
-	 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-	     console.error('Browser API navigator.mediaDevices.getUserMedia not available');
-	     return;
-	 }
-
-	 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-		  .then(function(stream) {
-		      video.srcObject = stream;
-		      video.play();
-		  })
-		  .catch(function(err) {
-		      console.error("An error occurred: " + err);
-		  });
-
-	 if (form) {
-	     form.addEventListener('submit', function(event) {
-		 event.preventDefault();
-
-		 if (!video.srcObject) {
-		     console.error('Video stream not available');
-		     return;
-		 }
-
-		 const context = canvas.getContext('2d');
-		 canvas.width = 270; {# 640 - 480 #}
-		 canvas.height = 203; {# 480 - 360 #}
-		 context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		 const dataURL = canvas.toDataURL('image/png');
-		 evidenceField.value = dataURL;
-
-		 form.submit();
-	     });
-	 } else {
-	     console.error('Form not found');
-	 }
-     });
-    </script>
 {% endblock %}

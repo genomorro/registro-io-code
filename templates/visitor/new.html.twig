@@ -13,9 +13,10 @@
     <h1>{% trans %}Create new Visitor{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="row">
+    <div class="row" {{ stimulus_controller('webrtc') }}>
 	<div class="col-md-6">
-	    {{ form_start(form) }}
+	    {{ form_start(form, {'attr': {'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
+		{{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
 		<div class="form-group">
 		    {{ form_label(form.name) }}:
 		    <div class="row">
@@ -106,56 +107,8 @@
 	    {{ form_end(form) }}
 	</div>
 	<div class="col-md-6 d-flex align-items-center justify-content-center">
-	    <video id="video" width="480" height="360" class="border" autoplay></video>
-	    <canvas id="canvas" style="display:none;"></canvas>
+	    <video data-webrtc-target="video" width="480" height="360" class="border" autoplay></video>
+	    <canvas data-webrtc-target="canvas" style="display:none;"></canvas>
 	</div>
     </div>
-{% endblock %}
-
-{% block custom_javascripts %}
-    <script>
-     document.addEventListener('DOMContentLoaded', (event) => {
-	 const video = document.getElementById('video');
-	 const canvas = document.getElementById('canvas');
-	 const form = document.querySelector('form');
-	 const evidenceField = document.getElementById('visitor_evidence');
-
-	 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-	     console.error('Browser API navigator.mediaDevices.getUserMedia not available');
-	     return;
-	 }
-
-	 navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-		  .then(function(stream) {
-		      video.srcObject = stream;
-		      video.play();
-		  })
-		  .catch(function(err) {
-		      console.log("An error occurred: " + err);
-		  });
-
-	 if (form) {
-	     form.addEventListener('submit', function(event) {
-		 event.preventDefault();
-
-		 if (!video.srcObject) {
-		     console.error('Video stream not available');
-		     return;
-		 }
-
-		 const context = canvas.getContext('2d');
-		 canvas.width = 270; {# 640 - 480 #}
-		 canvas.height = 203; {# 480 - 360 #}
-		 context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		 const dataURL = canvas.toDataURL('image/png');
-		 evidenceField.value = dataURL;
-
-		 form.submit();
-	     });
-	 } else {
-	     console.error('Form not found');
-	 }
-     });
-    </script>
 {% endblock %}

@@ -130,12 +130,12 @@
 	    {% endif %}
 	</div>
     {% else %}
-	<div class="row">
+	<div class="row" {{ stimulus_controller('webrtc') }}>
 	    <div class="col-md d-flex align-items-center justify-content-center">
-		<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');">
+		<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
 		    <input type="hidden" name="redirect_route" value="app_patient_show">
 		    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
-		    <input type="hidden" name="evidence" id="evidence">
+		    <input type="hidden" name="evidence" data-webrtc-target="evidence">
 		    <div class="input-group mb-3" >
 			<input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height:34px" class="form-control form-control-sm"/>
 			<button type="submit" class="btn btn-sm btn-primary">{% trans %}Check in{% endtrans %}</button>
@@ -143,8 +143,8 @@
 		</form>
 	    </div>
 	    <div class="col-md-6 d-flex align-items-center justify-content-center">
-		<video id="video" width="480" height="360" class="border" autoplay></video>
-		<canvas id="canvas" style="display:none;"></canvas>
+		<video data-webrtc-target="video" width="480" height="360" class="border" autoplay></video>
+		<canvas data-webrtc-target="canvas" style="display:none;"></canvas>
 	    </div>
 	</div>
     {% endif %}
