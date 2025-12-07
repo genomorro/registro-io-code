@@ -30,11 +30,11 @@ class VisitorType extends AbstractType
 		'label' => 'Phone number',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 10, 'max' => 10]),
-                    new Regex([
-                        'pattern' => '/^[0-9]+$/',
-                        'message' => 'Please enter a valid phone number.',
-                    ]),
+                    new Length(min: 10, max: 10),
+                    new Regex(
+                        pattern: '/^[0-9]+$/',
+                        message: 'Please enter a valid phone number.',
+                    ),
                 ],
             ])
             ->add('dni', ChoiceType::class, [
