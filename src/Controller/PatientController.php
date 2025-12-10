@@ -147,6 +147,9 @@ final class PatientController extends AbstractController
         $attendance->setPatient($patient);
         $attendance->setCheckInAt(new \DateTimeImmutable());
         $attendance->setTag((int) $tag);
+	
+        $entityManager->persist($attendance);
+        $entityManager->flush();
 
 	$evidenceData = $request->request->get('evidence');
         if ($evidenceData) {
@@ -162,16 +165,14 @@ final class PatientController extends AbstractController
                 mkdir($uploadDir, 0777, true);
             }
 
-            $filename = $checkInAt->format('YmdHis') . '.png';
+            $filename = $attendance->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
             $filepath = $uploadDir . '/' . $filename;
 
 	    file_put_contents($filepath, $imageData);
 
 	    $attendance->setEvidence('/uploads/attendance/' . $year . '/' . $month . '/' . $filename);
+            $entityManager->flush();
         }
-
-        $entityManager->persist($attendance);
-        $entityManager->flush();
 
         return $this->redirectToRoute($redirectRoute, $redirectParams);
     }

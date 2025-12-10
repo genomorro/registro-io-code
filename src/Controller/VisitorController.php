@@ -45,6 +45,9 @@ final class VisitorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $visitor->setCheckInAt(new \DateTimeImmutable());
 
+            $entityManager->persist($visitor);
+            $entityManager->flush();
+
             $evidenceData = $form->get('evidence')->getData();
             if ($evidenceData) {
                 $data = explode(',', $evidenceData);
@@ -59,16 +62,14 @@ final class VisitorController extends AbstractController
                     mkdir($uploadDir, 0777, true);
                 }
                 
-                $filename = $checkInAt->format('YmdHis') . '.png';
+                $filename = $visitor->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
                 $filepath = $uploadDir . '/' . $filename;
                 
                 file_put_contents($filepath, $imageData);
                 
                 $visitor->setEvidence('/uploads/visitor/' . $year . '/' . $month . '/' . $filename);
+		$entityManager->flush();
             }
-
-            $entityManager->persist($visitor);
-            $entityManager->flush();
 
             return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
         }

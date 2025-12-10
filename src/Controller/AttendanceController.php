@@ -42,6 +42,10 @@ final class AttendanceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+	    $entityManager->persist($attendance);
+            $entityManager->flush();
+
 	    $evidenceData = $form->get('evidence')->getData();
             if ($evidenceData) {
                 $data = explode(',', $evidenceData);
@@ -56,16 +60,14 @@ final class AttendanceController extends AbstractController
                     mkdir($uploadDir, 0777, true);
                 }
                 
-                $filename = $checkInAt->format('YmdHis') . '.png';
+                $filename = $attendance->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
                 $filepath = $uploadDir . '/' . $filename;
                 
                 file_put_contents($filepath, $imageData);
                 
                 $attendance->setEvidence('/uploads/attendance/' . $year . '/' . $month . '/' . $filename);
+		$entityManager->flush();
             }
-
-	    $entityManager->persist($attendance);
-            $entityManager->flush();
 
             return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
         }
