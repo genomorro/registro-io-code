@@ -29,7 +29,7 @@ export default class extends Controller {
         }
     }
 
-    capture(event) {
+    async capture(event) {
 	event.preventDefault();
 
 	if (!this.hasVideoTarget || !this.videoTarget.srcObject) {
@@ -57,6 +57,17 @@ export default class extends Controller {
         context.fillStyle = "rgba(255, 255, 255, 0.8)";
         context.fillText(timestamp, 10, this.canvasTarget.height - 10);
 
+        const logo = await this.loadLogo('/images/iner-logo.png');
+
+        const logoWidth = this.canvasTarget.width * 0.10; // 27
+        const logoHeight = (logo.height / logo.width) * logoWidth; //195/165 * 27 = 31.9
+        const x = this.canvasTarget.width - logoWidth - 10;
+        const y = this.canvasTarget.height - logoHeight - 161;
+
+        context.globalAlpha = 0.7;
+        context.drawImage(logo, x, y, logoWidth, logoHeight);
+        context.globalAlpha = 1;
+
 	const dataURL = this.canvasTarget.toDataURL('image/png');
 	evidenceField.value = dataURL;
 
@@ -66,5 +77,14 @@ export default class extends Controller {
         }
 
 	form.submit();
+    }
+
+    loadLogo(src) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+        });
     }
 }
