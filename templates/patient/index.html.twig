@@ -50,7 +50,7 @@
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<input type="hidden" name="evidence" data-webrtc-target="evidence">
 					<div class="input-group mb-3">
-					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height: 34px" class="form-control form-control-sm"/>
+					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height: 34px" class="form-control form-control-sm"/>
 					    <button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
 					</div>
 				    </form>
@@ -60,7 +60,7 @@
 				{% if todays_attendance and todays_attendance.checkOutAt %}
 				    {{ todays_attendance.checkOutAt|date('H:i:s') }}
 				{% elseif todays_attendance %}
-				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" style="display: inline-block;" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				    </form>

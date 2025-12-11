@@ -111,7 +111,7 @@
 				    {% if todays_attendance.checkOutAt %}
 					{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
 				    {% else %}
-					<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');" style="display: inline-block;">
+					<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					    <input type="hidden" name="redirect_route" value="app_patient_show">
 					    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
 					    <button class="btn btn-sm btn-secondary">{% trans %}Check out{% endtrans %}</button>
@@ -137,14 +137,14 @@
 		    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
 		    <input type="hidden" name="evidence" data-webrtc-target="evidence">
 		    <div class="input-group mb-3" >
-			<input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 80px; height:34px" class="form-control form-control-sm"/>
+			<input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height:34px" class="form-control form-control-sm"/>
 			<button type="submit" class="btn btn-sm btn-primary">{% trans %}Check in{% endtrans %}</button>
 		    </div>
 		</form>
 	    </div>
 	    <div class="col-md-6 d-flex align-items-center justify-content-center">
 		<video data-webrtc-target="video" width="480" height="360" class="border" autoplay></video>
-		<canvas data-webrtc-target="canvas" style="display:none;"></canvas>
+		<canvas data-webrtc-target="canvas" class="d-none"></canvas>
 	    </div>
 	</div>
     {% endif %}
