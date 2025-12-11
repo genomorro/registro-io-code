@@ -18,6 +18,9 @@ class SearchFileType extends AbstractType
         $builder
             ->add('file', FormSearchType::class, [
 		'label' => 'File',
+		'attr' => [
+		    'autofocus' => true,
+		],
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 6, max: 9),
