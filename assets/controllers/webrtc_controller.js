@@ -31,50 +31,46 @@ export default class extends Controller {
 
     async capture(event) {
 	event.preventDefault();
-
-	if (!this.hasVideoTarget || !this.videoTarget.srcObject) {
-	    console.error('Video stream not available');
-	    return;
-	}
-
 	const form = event.currentTarget;
-	const evidenceField = form.querySelector('input[name="evidence"], input[name$="[evidence]"]');
 
-	if (!evidenceField) {
-	    console.error('Evidence field not found in the form.');
-	    return;
+	if (this.hasVideoTarget && this.videoTarget.srcObject) {
+	    const evidenceField = form.querySelector('input[name="evidence"], input[name$="[evidence]"]');
+
+	    if (evidenceField) {
+		const context = this.canvasTarget.getContext('2d');
+		this.canvasTarget.width = 270;
+		this.canvasTarget.height = 203;
+		context.drawImage(this.videoTarget, 0, 0, this.canvasTarget.width, this.canvasTarget.height);
+
+		const now = new Date();
+		const timestamp = now.toLocaleString();
+
+		context.font = "10px Arial";
+		context.fillStyle = "rgba(255, 255, 255, 0.8)";
+		context.fillText(timestamp, 10, this.canvasTarget.height - 10);
+
+		const logo = await this.loadLogo('/images/iner-logo.png');
+
+		const logoWidth = this.canvasTarget.width * 0.10; // 27
+		const logoHeight = (logo.height / logo.width) * logoWidth; //195/165 * 27 = 31.9
+		const x = this.canvasTarget.width - logoWidth - 10;
+		const y = this.canvasTarget.height - logoHeight - 161;
+
+		context.globalAlpha = 0.7;
+		context.drawImage(logo, x, y, logoWidth, logoHeight);
+		context.globalAlpha = 1;
+
+		const dataURL = this.canvasTarget.toDataURL('image/png');
+		evidenceField.value = dataURL;
+	    } else {
+		console.error('Evidence field not found in the form.');
+	    }
 	}
-	
-	const context = this.canvasTarget.getContext('2d');
-	this.canvasTarget.width = 270;
-	this.canvasTarget.height = 203;
-	context.drawImage(this.videoTarget, 0, 0, this.canvasTarget.width, this.canvasTarget.height);
-
-	const now = new Date();
-        const timestamp = now.toLocaleString();
-
-        context.font = "10px Arial";
-        context.fillStyle = "rgba(255, 255, 255, 0.8)";
-        context.fillText(timestamp, 10, this.canvasTarget.height - 10);
-
-        const logo = await this.loadLogo('/images/iner-logo.png');
-
-        const logoWidth = this.canvasTarget.width * 0.10; // 27
-        const logoHeight = (logo.height / logo.width) * logoWidth; //195/165 * 27 = 31.9
-        const x = this.canvasTarget.width - logoWidth - 10;
-        const y = this.canvasTarget.height - logoHeight - 161;
-
-        context.globalAlpha = 0.7;
-        context.drawImage(logo, x, y, logoWidth, logoHeight);
-        context.globalAlpha = 1;
-
-	const dataURL = this.canvasTarget.toDataURL('image/png');
-	evidenceField.value = dataURL;
 
 	const confirmationMessage = form.dataset.confirmation;
-        if (confirmationMessage && !confirm(confirmationMessage)) {
-            return;
-        }
+	if (confirmationMessage && !confirm(confirmationMessage)) {
+	    return;
+	}
 
 	form.submit();
     }
