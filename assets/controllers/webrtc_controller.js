@@ -1,5 +1,6 @@
- import { Controller } from '@hotwired/stimulus';
+import { Controller } from '@hotwired/stimulus';
 
+/* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ["video", "canvas"];
     stream = null;
@@ -49,7 +50,7 @@ export default class extends Controller {
 		context.fillStyle = "rgba(255, 255, 255, 0.8)";
 		context.fillText(timestamp, 10, this.canvasTarget.height - 10);
 
-		const logo = await this.loadLogo('/images/iner-logo.png');
+		const logo = await this.loadLogo(this.logoUrl);
 
 		const logoWidth = this.canvasTarget.width * 0.10; // 27
 		const logoHeight = (logo.height / logo.width) * logoWidth; //195/165 * 27 = 31.9
@@ -82,5 +83,9 @@ export default class extends Controller {
             img.onerror = reject;
             img.src = src;
         });
+    }
+
+    get logoUrl() {
+	return this.data.get("logoUrl");
     }
 }

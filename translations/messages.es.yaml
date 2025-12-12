@@ -75,6 +75,7 @@
 ### new.html.twig
 'New Attendance': 'Nueva asistencia'
 'Create new Attendance': 'Crear nueva asistencia'
+'Your browser does not support the <video> tag': 'Tu navegador no soporta la etiqueta <video>'
 ### show.html.twig
 'Attendance': 'Asistencia'
 ## hospitalized

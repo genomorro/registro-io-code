@@ -75,6 +75,7 @@
 ### new.html.twig
 'New Attendance': 'New Attendance'
 'Create new Attendance': 'Create new Attendance'
+'Your browser does not support the <video> tag': 'Your browser does not support the <video> tag'
 ### show.html.twig
 'Attendance': 'Attendance'
 ## hospitalized

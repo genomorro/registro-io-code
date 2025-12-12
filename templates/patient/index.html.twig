@@ -11,9 +11,11 @@
 
     <h1>{% trans %}Patient index{% endtrans %}</h1>
     <hr class="red">
-    <div {{ stimulus_controller('webrtc') }}>
+    <div {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	<div class="col-md d-flex align-items-center justify-content-center">
-	    <video data-webrtc-target="video" width="203" height="152" class="border mt-0" autoplay></video>
+	    <video data-webrtc-target="video" width="203" height="152" class="border mt-0" poster="{{ asset('images/iner-logo.png') }}" autoplay>
+		<img src="{{ asset('images/iner-logo.png') }}" title="{% trans %}Your browser does not support the <video> tag{% endtrans %}">
+	    </video>
 	    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
 	</div>
 
