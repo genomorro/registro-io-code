@@ -114,7 +114,7 @@
 					<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					    <input type="hidden" name="redirect_route" value="app_patient_show">
 					    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
-					    <button class="btn btn-sm btn-secondary">{% trans %}Check out{% endtrans %}</button>
+					    <button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 					</form>
 				    {% endif %}
 				</td>

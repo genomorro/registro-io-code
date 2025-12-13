@@ -61,20 +61,24 @@
 				{% endif %}
 			    </td>
 			</tr>
-			<tr>
-			    <th>{% trans %}Relationship{% endtrans %}</th>
-			    <td>{{ visitor.relationship }}</td>
-			</tr>
-			<tr>
-			    <th>{% trans %}Patients{% endtrans %}</th>
-			    <td>
-				<ul>
-				    {% for patient in visitor.patient %}
-					<li>{{ patient.name }} ({% trans %}File{% endtrans %}: {{ patient.file }})</li>
-				    {% endfor %}
-				</ul>
-			    </td>
-			</tr>
+			{% if visitor.relationship %}
+			    <tr>
+				<th>{% trans %}Relationship{% endtrans %}</th>
+				<td>{{ visitor.relationship }}</td>
+			    </tr>
+			{% endif %}
+			{% if visitor.patient is not empty %}
+			    <tr>
+				<th>{% trans %}Patients{% endtrans %}</th>
+				<td>
+				    <ul>
+					{% for patient in visitor.patient %}
+					    <li>{{ patient.name }} ({% trans %}File{% endtrans %}: {{ patient.file }})</li>
+					{% endfor %}
+				    </ul>
+				</td>
+			    </tr>
+			{% endif %}
 		    </tbody>
 		</table>
 	    </div>
