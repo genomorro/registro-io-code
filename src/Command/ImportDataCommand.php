@@ -23,8 +23,11 @@ class ImportDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $command = $this->getApplication()->find('app:import-data:patient');
-        $command->run(new ArrayInput([]), $output);
+        $patientCommand = $this->getApplication()->find('app:import-data:patient');
+        $patientCommand->run(new ArrayInput([]), $output);
+
+        $hospitalizedCommand = $this->getApplication()->find('app:import-data:hospitalized');
+        $hospitalizedCommand->run(new ArrayInput([]), $output);
 
         $io->success('All data imported successfully.');
 

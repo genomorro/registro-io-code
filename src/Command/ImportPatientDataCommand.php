@@ -34,18 +34,22 @@ class ImportPatientDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $connectionParams = [
-            'dbname' => 'r3sp1ra770ri4x8025',
-            'user' => 'pbaconnectmsql',
-            'password' => 'Tduc$aupydl$5t',
-            'host' => '192.168.27.30',
+            'dbname' => getenv('REMOTE_DB_NAME'),
+            'user' => getenv('REMOTE_DB_USER'),
+            'password' => getenv('REMOTE_DB_PASSWORD'),
+            'host' => getenv('REMOTE_DB_HOST'),
             'driver' => 'pdo_mysql',
         ];
         
-        $conn = DriverManager::getConnection($connectionParams);
-
-        $sql = 'SELECT * FROM pacientes';
-        $stmt = $conn->executeQuery($sql);
-        $patientsData = $stmt->fetchAllAssociative();
+        try {
+            $conn = DriverManager::getConnection($connectionParams);
+            $sql = 'SELECT * FROM pacientes';
+            $stmt = $conn->executeQuery($sql);
+            $patientsData = $stmt->fetchAllAssociative();
+        } catch (\Exception $e) {
+            $io->error('Could not connect to the remote database: ' . $e->getMessage());
+            return Command::FAILURE;
+        }
 
         $this->entityManager->getConnection()->beginTransaction();
         
