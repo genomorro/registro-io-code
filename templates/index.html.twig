@@ -20,12 +20,15 @@
 		<h3>¡Bienvenido!</h3>
 		<p>Has entrado en el <i>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</i>. Para usar este sitio web debes tener en cuenta los siguientes elementos de navegación:</p>
 		<ul>
-		    <li><b>Menú principal</b>: Se encuentra en la parte superior, justo abajo del encabezado del sitio web. Sirve para encontrar las distintas secciones disponibles en el sistema. Es de color rojo y contiene hasta siete elementos, dependiendo de los permisos del usuario:
+		    <li><b>Menú principal</b>: Se encuentra en la parte superior, justo abajo del encabezado del sitio web. Sirve para encontrar las distintas secciones disponibles en el sistema. Es de color rojo y contiene estos elementos:
 			<ul>
 			    <li>Enlace a la búsqueda</li>
-			    <li>Enlace a sección de <i>Pacientes</i></li>
-			    <li>Enlace a sección de <i>Citas</i></li>
-			    <li>Enlace a sección de <i>Asistencias</i></li>
+			    {% if is_granted('ROLE_ADMIN') %}
+				<li>Enlace a sección de <i>Pacientes</i></li>
+				<li>Enlace a sección de <i>Hospitalizados</i></li>
+				<li>Enlace a sección de <i>Citas</i></li>
+				<li>Enlace a sección de <i>Asistencias</i></li>
+			    {% endif %}
 			    <li>Enlace a sección de <i>Visitantes</i></li>
 			    <li>Cambiar idioma (<i class="bi bi-translate"></i>)</li>
 			    <li>Opciones de usuario (<i class="icon icon-user"></i>)</li>
@@ -52,12 +55,15 @@
 		<h3>Welcome!</h3>
 		<p>You have entered the <i>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</i>. To use this website, you should be aware of the following navigation elements:</p>
 		<ul>
-		    <li><b>Main Menu</b>: Located at the top, just below the website header. It is used to find the different sections available in the system. It is red and contains seven elements:
+		    <li><b>Main Menu</b>: Located at the top, just below the website header. It is used to find the different sections available in the system. It is red and contains these elements:
 			<ul>
 			    <li>Link to search</li>
-			    <li>Link to <i>Patients</i></li>
-			    <li>Link to <i>Appointments</i></li>
-			    <li>Link to <i>Attendance</i></li>
+			    {% if is_granted('ROLE_ADMIN') %}
+				<li>Link to <i>Patients</i></li>
+				<li>Link to <i>Hospitalizeds</i></li>
+				<li>Link to <i>Appointments</i></li>
+				<li>Link to <i>Attendance</i></li>
+			    {% endif %}
 			    <li>Link to <i>Visitors</i></li>
 			    <li>Change language (<i class="bi bi-translate"></i>)</li>
 			    <li>User options (<i class="icon icon-user"></i>)</li>
