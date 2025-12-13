@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment
@@ -12,36 +11,28 @@ class Appointment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $agenda = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $specialty = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $location = null;
 
     #[ORM\Column]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $date_at = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['appointment_list', 'appointment_detail', 'patient_detail'])]
     private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['appointment_detail'])]
     private ?Patient $patient = null;
 
     public function getId(): ?int

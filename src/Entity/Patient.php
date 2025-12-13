@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PatientRepository::class)]
 #[UniqueEntity(fields: ['file'], message: 'There is already a patient with this file')]
@@ -16,42 +15,38 @@ class Patient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['patient_list', 'patient_detail', 'appointment_detail', 'attendance_list', 'attendance_detail', 'visitor_list', 'visitor_detail'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 12)]
-    #[Groups(['patient_list', 'patient_detail', 'appointment_detail', 'attendance_list', 'attendance_detail', 'visitor_list', 'visitor_detail'])]
     private ?string $file = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['patient_list', 'patient_detail', 'appointment_detail', 'attendance_list', 'attendance_detail', 'visitor_list', 'visitor_detail'])]
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Groups(['patient_detail'])]
     private ?bool $disability = null;
 
     /**
      * @var Collection<int, Appointment>
      */
     #[ORM\OneToMany(targetEntity: Appointment::class, mappedBy: 'patient', orphanRemoval: true)]
-    #[Groups(['patient_detail'])]
     private Collection $appointments;
 
     /**
      * @var Collection<int, Attendance>
      */
     #[ORM\OneToMany(targetEntity: Attendance::class, mappedBy: 'patient', orphanRemoval: true)]
-    #[Groups(['patient_detail'])]
     private Collection $attendances;
 
     /**
      * @var Collection<int, Visitor>
      */
     #[ORM\ManyToMany(targetEntity: Visitor::class, mappedBy: 'patient')]
-    #[Groups(['patient_detail'])]
     private Collection $visitors;
 
+    /**
+     * @var Collection<int, Hospitalized>
+     */
     #[ORM\OneToOne(mappedBy: 'patient', cascade: ['persist', 'remove'])]
     private ?Hospitalized $hospitalized = null;
 

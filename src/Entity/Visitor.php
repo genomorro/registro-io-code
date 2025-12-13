@@ -6,7 +6,6 @@ use App\Repository\VisitorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
 class Visitor
@@ -14,46 +13,36 @@ class Visitor
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['visitor_detail'])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?string $dni = null;
 
     #[ORM\Column]
-    #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?int $tag = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['visitor_detail'])]
     private ?string $destination = null;
 
     #[ORM\Column]
-    #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $checkInAt = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['visitor_list', 'visitor_detail', 'patient_detail'])]
     private ?\DateTimeImmutable $checkOutAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['visitor_detail'])]
     private ?string $relationship = null;
 
     /**
      * @var Collection<int, Patient>
      */
     #[ORM\ManyToMany(targetEntity: Patient::class, inversedBy: 'visitors')]
-    #[Groups(['visitor_detail'])]
     private Collection $patient;
 
     #[ORM\Column(length: 255, nullable: true)]
