@@ -19,3 +19,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\ConnectionService:
+        arguments:
+            $dbName: '%env(REMOTE_DB_NAME)%'
+            $dbUser: '%env(REMOTE_DB_USER)%'
+            $dbPassword: '%env(REMOTE_DB_PASSWORD)%'
+            $dbHost: '%env(REMOTE_DB_HOST)%'
+            $dbDriver: 'pdo_mysql'

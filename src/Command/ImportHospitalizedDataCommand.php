@@ -4,53 +4,47 @@ namespace App\Command;
 
 use App\Entity\Hospitalized;
 use App\Repository\PatientRepository;
+use App\Service\ConnectionService;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Doctrine\DBAL\DriverManager;
 
 #[AsCommand(
-    name: 'app:import-data:hospitalized',
-    description: 'Imports hospitalized data from a remote MySQL database',
+name: 'app:import-data:hospitalized',
+description: 'Imports hospitalized data from a remote MySQL database',
 )]
 class ImportHospitalizedDataCommand extends Command
 {
-    private $entityManager;
-    private $patientRepository;
+    private EntityManagerInterface $entityManager;
+    private PatientRepository $patientRepository;
+    private ConnectionService $connectionService;
 
-    public function __construct(EntityManagerInterface $entityManager, PatientRepository $patientRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        PatientRepository $patientRepository,
+        ConnectionService $connectionService
+    ) {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->patientRepository = $patientRepository;
-    }
-
-    protected function configure(): void
-    {
+        $this->connectionService = $connectionService;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        $connectionParams = [
-            'dbname' => getenv('REMOTE_DB_NAME'),
-            'user' => getenv('REMOTE_DB_USER'),
-            'password' => getenv('REMOTE_DB_PASSWORD'),
-            'host' => getenv('REMOTE_DB_HOST'),
-            'driver' => 'pdo_mysql',
-        ];
-        
         try {
-            $conn = DriverManager::getConnection($connectionParams);
+            $conn = $this->connectionService->getConnection();
             $sql = 'SELECT * FROM pacienteshospitalizados';
             $stmt = $conn->executeQuery($sql);
             $hospitalizedData = $stmt->fetchAllAssociative();
-        } catch (\Exception $e) {
-            $io->error('Could not connect to the remote database: ' . $e->getMessage());
+        } catch (Exception $e) {
+            $io->error('Could not connect to the external database: ' . $e->getMessage());
             return Command::FAILURE;
         }
 
