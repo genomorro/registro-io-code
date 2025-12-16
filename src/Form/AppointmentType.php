@@ -31,6 +31,7 @@ class AppointmentType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
 		'label' => 'Type',
+		'placeholder' => 'Choose a type of appointment',
                 'choices' => [
 		    'Apertura/Primera vez' => 'Apertura/primera vez',
 		    'Estudios' => 'Estudios',
@@ -46,6 +47,7 @@ class AppointmentType extends AbstractType
             ])
 	    ->add('status', ChoiceType::class, [
 		'label' => 'Status',
+		'placeholder' => 'Choose a status',
 		'choices' => [
 		    'Agendada' => 'Agendada',
 		    'Cancelada' => 'Cancelada',

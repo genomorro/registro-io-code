@@ -39,6 +39,7 @@ class VisitorType extends AbstractType
             ])
             ->add('dni', ChoiceType::class, [
 		'label' => 'DNI',
+		'placeholder' => 'Choose a DNI',
 		'choices' => [
 		    'INE' => 'INE',
 		    'Pasaporte' => 'Pasaporte',
@@ -60,6 +61,7 @@ class VisitorType extends AbstractType
             ])
             ->add('destination', ChoiceType::class, [
 		'label' => 'Destination',
+		'placeholder' => 'Choose a destination',
 		'choices' => [
 		    'Consulta Externa' => 'Consulta Externa',
 		    'CIENI' => 'CIENI',
@@ -92,6 +94,7 @@ class VisitorType extends AbstractType
 	    ])
             ->add('relationship', ChoiceType::class, [
 		'label' => 'Relationship',
+		'placeholder' => 'Choose a relationship',
 		'choices' => [
 		    'Padre' => 'Padre',
 		    'Madre' => 'Madre',
