@@ -48,10 +48,17 @@ class ImportPatientDataCommand extends Command
             $this->entityManager->getConnection()->executeStatement('DELETE FROM patient');
 
             $maxId = 0;
+            $processedIds = [];
             foreach ($patientsData as $patientData) {
-                if ($patientData['idPac'] < 4) {
+                if ($patientData['idPac'] < 1) {
                     continue;
                 }
+
+                if (in_array($patientData['idPac'], $processedIds)) {
+                    $io->warning(sprintf('Duplicate patient ID %d found in source data, skipping.', $patientData['idPac']));
+                    continue;
+                }
+                $processedIds[] = $patientData['idPac'];
 
                 $patient = new Patient();
                 $this->entityManager->persist($patient);
@@ -60,12 +67,17 @@ class ImportPatientDataCommand extends Command
                 $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
                 $metadata->getReflectionProperty('id')->setValue($patient, $patientData['idPac']);
 
+                if (empty($patientData['numExpediente'])) {
+                    $io->warning(sprintf('Patient with ID %d has an empty file number (numExpediente), skipping.', $patientData['idPac']));
+                    $this->entityManager->detach($patient);
+                    continue;
+                }
                 $patient->setFile($patientData['numExpediente']);
                 
                 $name = ($patientData['nomPaciente'] ?? '') . ' ' . ($patientData['primerApellido'] ?? '') . ' ' . ($patientData['segundoApellido'] ?? '');
-                $patient->setName(str_replace(',', '', $name));
+                $patient->setName(ucwords(str_replace(',', '', $name)));
 
-                $disability = !in_array($patientData['tipoDificultad'], ['NINGuna', 'SE IGNORA']);
+                $disability = !in_array($patientData['tipoDificultad'], ['NINGUNA', 'SE IGNORA']);
                 $patient->setDisability($disability);
 
                 if ($patientData['idPac'] > $maxId) {

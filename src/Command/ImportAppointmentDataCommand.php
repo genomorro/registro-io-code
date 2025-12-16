@@ -40,7 +40,7 @@ class ImportAppointmentDataCommand extends Command
 
         try {
             $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM citamedica';
+            $sql = 'SELECT * FROM citasmedicas';
             $stmt = $conn->executeQuery($sql);
             $appointmentData = $stmt->fetchAllAssociative();
         } catch (Exception $e) {
@@ -67,11 +67,11 @@ class ImportAppointmentDataCommand extends Command
                     $metadata->getReflectionProperty('id')->setValue($appointment, $data['idCita']);
 
                     $appointment->setPatient($patient);
-                    $appointment->setAgenda(ucwords(strtolower($data['lugRealizacion'])));
-                    $appointment->setSpecialty(ucfirst(strtolower($data['especialidad'])));
-                    $appointment->setLocation(ucfirst(strtolower($data['ubicacion'])));
+                    $appointment->setAgenda(mb_convert_case($data['lugRealizacion'], MB_CASE_TITLE, 'UTF-8'));
+                    $appointment->setSpecialty(mb_convert_case($data['especialidad'], MB_CASE_TITLE, 'UTF-8'));
+                    $appointment->setLocation(mb_convert_case($data['ubicacion'], MB_CASE_TITLE, 'UTF-8'));
                     $appointment->setDateAt(new \DateTimeImmutable($data['fechaCita']));
-                    $appointment->setType(ucfirst(strtolower($data['tipoConsulta'])));
+                    $appointment->setType(mb_convert_case($data['tipoConsulta'], MB_CASE_TITLE, 'UTF-8'));
                     $appointment->setStatus($data['estatusCita']);
 
                     if ($data['idCita'] > $maxId) {
