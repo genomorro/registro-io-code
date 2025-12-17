@@ -42,7 +42,7 @@ class ImportHospitalizedDataCommand extends Command
             $conn = $this->connectionService->getConnection();
             $sql = 'SELECT * FROM pacienteshospitalizados';
             $stmt = $conn->executeQuery($sql);
-            $hospitalizedData = $stmt->fetchAllAssociative();
+            $hospitalizedData = $stmt->iterateAssociative();
         } catch (Exception $e) {
             $io->error('Could not connect to the external database: ' . $e->getMessage());
             return Command::FAILURE;

@@ -36,7 +36,7 @@ class ImportPatientDataCommand extends Command
             $conn = $this->connectionService->getConnection();
             $sql = 'SELECT * FROM pacientes';
             $stmt = $conn->executeQuery($sql);
-            $patientsData = $stmt->fetchAllAssociative();
+            $patientsData = $stmt->iterateAssociative();
         } catch (Exception $e) {
             $io->error('Could not connect to the external database: ' . $e->getMessage());
             return Command::FAILURE;

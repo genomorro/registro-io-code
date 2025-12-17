@@ -42,7 +42,7 @@ class ImportAppointmentDataCommand extends Command
             $conn = $this->connectionService->getConnection();
             $sql = 'SELECT * FROM citasmedicas';
             $stmt = $conn->executeQuery($sql);
-            $appointmentData = $stmt->fetchAllAssociative();
+            $appointmentData = $stmt->iterateAssociative();
         } catch (Exception $e) {
             $io->error('Could not connect to the external database: ' . $e->getMessage());
             return Command::FAILURE;
