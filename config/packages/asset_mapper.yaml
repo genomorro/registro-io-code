@@ -4,6 +4,8 @@ framework:
         paths:
             - assets/
         missing_import_mode: strict
+        precompress:
+          format: 'zstandard'
 
 when@prod:
     framework:
