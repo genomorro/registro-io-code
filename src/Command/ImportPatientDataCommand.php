@@ -87,7 +87,12 @@ class ImportPatientDataCommand extends Command
 
             $this->entityManager->flush();
 
-            $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "patient"', [$maxId]);
+            $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
+            if ($platform === 'sqlite') {
+                $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "patient"', [$maxId]);
+            } elseif ($platform === 'mysql') {
+                $this->entityManager->getConnection()->executeStatement('ALTER TABLE patient AUTO_INCREMENT = ?', [$maxId + 1]);
+            }
 
             $this->entityManager->getConnection()->commit();
 
