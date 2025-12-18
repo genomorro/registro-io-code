@@ -130,7 +130,7 @@
 	    {% endif %}
 	</div>
     {% else %}
-	<div class="row" {{ stimulus_controller('webrtc') }}>
+	<div class="row" {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	    <div class="col-md d-flex align-items-center justify-content-center">
 		<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
 		    <input type="hidden" name="redirect_route" value="app_patient_show">
