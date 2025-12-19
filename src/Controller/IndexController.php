@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class IndexController extends AbstractController
 {
@@ -30,10 +32,24 @@ class IndexController extends AbstractController
     #[Route('/about')]
     public function about (): Response
     {
-	$creator = 'Edgar Uriel Domínguez Espinoza';
-	$year = '2025';
+        $creator = 'Edgar Uriel Domínguez Espinoza';
+        $year = '2025';
 
-	return new Response("Created by ".$creator." (".$year.").");
+        $process = new Process(['php', '../bin/console', 'about']);
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $symfony_about = $process->getOutput();
+
+        return $this->render('about.html.twig', [
+            'creator' => $creator,
+            'year' => $year,
+            'symfony_about' => $symfony_about,
+        ]);
     }
 
     public function redirectToLocale(): RedirectResponse

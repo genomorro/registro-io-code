@@ -6,6 +6,10 @@
 'Patient not found': 'Paciente no encontrado'
 'Patient nor Visitor not found for the given tag.': 'Paciente ni Visitante encontrado para ese número de gafete.'
 # templates
+## about.html.twig
+'About': 'Acerca de'
+'Symfony Information': 'Información de Symfony'
+'Created by': 'Creado por'
 ## base.html.twig
 'Patient and visitor check-in and check-out system': 'Sistema de registro de entrada y salida de pacientes y visitantes'
 ## index.html.twig

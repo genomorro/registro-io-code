@@ -6,6 +6,10 @@
 'Patient not found': 'Patient not found'
 'Patient nor Visitor not found for the given tag.': 'Patient nor Visitor not found for the given tag.'
 # templates
+## about.html.twig
+'About': 'About'
+'Symfony Information': 'Symfony Information'
+'Created by': 'Created by'
 ## base.html.twig
 'Patient and visitor check-in and check-out system': 'Patient and visitor check-in and check-out system'
 ## index.html.twig
