@@ -9,7 +9,7 @@ use Symfony\Component\Scheduler\ScheduleProviderInterface;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Contracts\Cache\CacheInterface;
 
-#[AsSchedule]
+#[AsSchedule('import_data_provider')]
 class Schedule implements ScheduleProviderInterface
 {
     public function __construct(
@@ -27,7 +27,7 @@ class Schedule implements ScheduleProviderInterface
         // see https://symfony.com/doc/current/scheduler.html#attaching-recurring-messages-to-a-schedule
 	    ->add(
 		RecurringMessage::every("15 minutes", new RunCommandMessage('app:import-data:hospitalized')),
-		RecurringMessage::every("8 hours", new RunCommandMessage('app:import-data'))
+		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data'))
 	    )
 	    ->add(
 		RecurringMessage::every("first Sunday of next month", new RunCommandMessage('app:compress-image'))
