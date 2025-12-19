@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
 name: 'app:import-data:appointment',
-description: 'Imports appointment data from an external database.',
+description: 'Imports appointment data from a remote MySQL database.',
 )]
 class ImportAppointmentDataCommand extends Command
 {

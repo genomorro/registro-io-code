@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
 name: 'app:import-data:hospitalized',
-description: 'Imports hospitalized data from a remote MySQL database',
+description: 'Imports hospitalized data from a remote MySQL database.',
 )]
 class ImportHospitalizedDataCommand extends Command
 {

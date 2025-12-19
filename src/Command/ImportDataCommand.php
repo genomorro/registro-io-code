@@ -11,7 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
 name: 'app:import-data',
-description: 'Imports data from remote databases',
+description: 'Imports data from remote databases.',
 )]
 class ImportDataCommand extends Command
 {
