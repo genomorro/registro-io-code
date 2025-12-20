@@ -103,6 +103,8 @@
 ### show.html.twig
 "Today's Attendance": "Today's Attendance"
 'Are you sure you want to check in?': 'Are you sure you want to check in?'
+'Is the patient accompanied?': 'Is the patient accompanied?'
+'Register visitor': 'Register visitor'
 "Today's Appointments": "Today's Appointments"
 'No appointments for today.': 'No appointments for today.'
 'Other Appointments': 'Other Appointments'

@@ -44,6 +44,7 @@ class VisitorType extends AbstractType
 		    'INE' => 'INE',
 		    'Pasaporte' => 'Pasaporte',
 		    'Cédula profesional' => 'Cédula profesional',
+		    'Licencia de conducir' => 'Licencia de conducir',
 		    'INAPAM' => 'INAPAM',
 		    'Otro' => 'Otro',
 		],

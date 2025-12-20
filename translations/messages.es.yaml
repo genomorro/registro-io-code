@@ -103,6 +103,8 @@
 ### show.html.twig
 "Today's Attendance": 'Asistencia de hoy'
 'Are you sure you want to check in?': '¿Está seguro que desea registrar la entrada?'
+'Is the patient accompanied?': '¿Está el paciente acompañado?'
+'Register visitor': 'Registrar visitante'
 "Today's Appointments": 'Citas agendadas para hoy'
 'No appointments for today.': 'No hay citas agendadas para hoy.'
 'Other Appointments': 'Otras citas'
