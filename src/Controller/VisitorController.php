@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Patient;
 use App\Entity\Visitor;
 use App\Form\VisitorType;
 use App\Repository\VisitorRepository;
@@ -39,6 +40,13 @@ final class VisitorController extends AbstractController
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $visitor = new Visitor();
+        $patientId = $request->query->get('patientId');
+        if ($patientId) {
+            $patient = $entityManager->getRepository(Patient::class)->find($patientId);
+            if ($patient) {
+                $visitor->addPatient($patient);
+            }
+        }
         $form = $this->createForm(VisitorType::class, $visitor);
         $form->handleRequest($request);
 
