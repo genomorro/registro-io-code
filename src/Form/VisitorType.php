@@ -97,6 +97,7 @@ class VisitorType extends AbstractType
 		'label' => 'Relationship',
 		'placeholder' => 'Choose a relationship',
 		'choices' => [
+		    'Paciente' => 'Paciente',
 		    'Padre' => 'Padre',
 		    'Madre' => 'Madre',
 		    'Hijo (a)' => 'Hijo (a)',
@@ -106,6 +107,8 @@ class VisitorType extends AbstractType
 		    'Otro' => 'Otro',
 		],
 		'autocomplete' => true,
+		'required' => false,
+		
 	    ])
             ->add('patient', PatientAutocompleteField::class, [
 		'extra_options' => [
@@ -126,11 +129,6 @@ class VisitorType extends AbstractType
 		    'label' => 'Check in',
                     'widget' => 'single_text',
                     'data' => new \DateTimeImmutable(),
-                ]);
-                $form->add('checkOutAt', DateTimeType::class, [
-		    'label' => 'Check out',
-                    'widget' => 'single_text',
-                    'required' => false,
                 ]);
             } else {
                 // Existing visitor
