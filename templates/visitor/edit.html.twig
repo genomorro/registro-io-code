@@ -14,104 +14,111 @@
     <hr class="red">
 
     <div class="row">
-	{{ form_start(form) }}
-	    <div class="row">
-		{{ form_start(form) }}
-		    <div class="form-group">
-			{{ form_label(form.name) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.name) }}
-				<span class="text-danger">{{ form_errors(form.name) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.phone) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.phone) }}
-				<span class="text-danger">{{ form_errors(form.phone) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.dni) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.dni) }}
-				<span class="text-danger">{{ form_errors(form.dni) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.tag) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.tag) }}
-				<span class="text-danger">{{ form_errors(form.tag) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.destination) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.destination) }}
-				<span class="text-danger">{{ form_errors(form.destination) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.patient) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.patient) }}
-				<span class="text-danger">{{ form_errors(form.patient) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.relationship) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.relationship) }}
-				<span class="text-danger">{{ form_errors(form.relationship) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.checkInAt) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.checkInAt) }}
-				<span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
-			    </div>
-			</div>
-		    </div>
-		    <div class="form-group">
-			{{ form_label(form.checkOutAt) }}:
-			<div class="row">
-			    <div class="col-md-6">
-				{{ form_widget(form.checkOutAt) }}
-				<span class="text-danger">{{ form_errors(form.checkOutAt) }}</span>
-			    </div>
-			</div>
-		    </div>
-
-		    <div class="d-grid gap-2 d-md-block">
-			<button type="submit" value="Update" class="btn btn-primary">{% trans %}Update{% endtrans %}</button>
-			<a class="btn btn-link" href="{{ path('app_visitor_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
-		    </div>		    
-		{{ form_end(form) }}
-	    </div>
-	    
-	    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	{{ form_start(form, {'attr': {'data-controller': 'visitor-form'}}) }}
+	    <div class="form-group">
+		{{ form_label(form.name) }}:
 		<div class="row">
-		    <div class="col-md-10"></div>
-		    <div class="col-md-1">
-			{{ include('visitor/_delete_form.html.twig') }}
+		    <div class="col-md-6">
+			{{ form_widget(form.name) }}
+			<span class="text-danger">{{ form_errors(form.name) }}</span>
 		    </div>
 		</div>
-	    {% endif %}
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.phone) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.phone) }}
+			<span class="text-danger">{{ form_errors(form.phone) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.dni) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.dni, {'attr': {'data-visitor-form-target': 'dniField', 'data-action': 'change->visitor-form#toggleDniOther'}}) }}
+			<span class="text-danger">{{ form_errors(form.dni) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group" data-visitor-form-target="dniOtherField">
+		{{ form_label(form.dni_other) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.dni_other) }}
+			<span class="text-danger">{{ form_errors(form.dni_other) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.tag) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.tag) }}
+			<span class="text-danger">{{ form_errors(form.tag) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.destination) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.destination) }}
+			<span class="text-danger">{{ form_errors(form.destination) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.patient) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.patient) }}
+			<span class="text-danger">{{ form_errors(form.patient) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.relationship) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.relationship) }}
+			<span class="text-danger">{{ form_errors(form.relationship) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.checkInAt) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.checkInAt) }}
+			<span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.checkOutAt) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.checkOutAt) }}
+			<span class="text-danger">{{ form_errors(form.checkOutAt) }}</span>
+		    </div>
+		</div>
+	    </div>
+
+	    <div class="d-grid gap-2 d-md-block">
+		<button type="submit" value="Update" class="btn btn-primary">{% trans %}Update{% endtrans %}</button>
+		<a class="btn btn-link" href="{{ path('app_visitor_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+	    </div>
+	{{ form_end(form) }}
+    </div>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('visitor/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
 {% endblock %}

@@ -113,6 +113,12 @@ final class VisitorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dni = $form->get('dni')->getData();
+            if ($dni === 'Otro') {
+                $dniOther = $form->get('dni_other')->getData();
+                $visitor->setDni($dniOther);
+            }
+	    
             $entityManager->flush();
 
             return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
