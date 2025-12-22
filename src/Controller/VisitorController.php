@@ -58,6 +58,7 @@ final class VisitorController extends AbstractController
             }
 
             $visitor->setCheckInAt(new \DateTimeImmutable());
+            $visitor->setCheckInUser($this->getUser());
 
             $entityManager->persist($visitor);
             $entityManager->flush();
@@ -150,6 +151,7 @@ final class VisitorController extends AbstractController
 
         if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $visitor->setCheckOutAt(new \DateTimeImmutable());
+            $visitor->setCheckOutUser($this->getUser());
             $entityManager->flush();
         }
 
