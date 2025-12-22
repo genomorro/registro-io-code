@@ -58,6 +58,7 @@ final class VisitorController extends AbstractController
             }
 
             $visitor->setCheckInAt(new \DateTimeImmutable());
+            $visitor->setCheckInUser($this->getUser());
 
             $entityManager->persist($visitor);
             $entityManager->flush();
@@ -109,10 +110,16 @@ final class VisitorController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
+        $originalCheckOutAt = $visitor->getCheckOutAt();
         $form = $this->createForm(VisitorType::class, $visitor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newCheckOutAt = $visitor->getCheckOutAt();
+            if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
+                $visitor->setCheckOutUser($this->getUser());
+            }
+
             $dni = $form->get('dni')->getData();
             if ($dni === 'Otro') {
                 $dniOther = $form->get('dni_other')->getData();
@@ -150,6 +157,7 @@ final class VisitorController extends AbstractController
 
         if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $visitor->setCheckOutAt(new \DateTimeImmutable());
+            $visitor->setCheckOutUser($this->getUser());
             $entityManager->flush();
         }
 
