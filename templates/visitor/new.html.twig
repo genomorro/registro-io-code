@@ -15,7 +15,7 @@
 
     <div class="row" {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	<div class="col-md-6">
-	    {{ form_start(form, {'attr': {'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
+	    {{ form_start(form, {'attr': {'data-controller': 'visitor-form', 'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
 		{{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
 		<div class="form-group">
 		    {{ form_label(form.name) }}:
@@ -39,8 +39,17 @@
 		    {{ form_label(form.dni) }}:
 		    <div class="row">
 			<div class="col-md">
-			    {{ form_widget(form.dni) }}
+			    {{ form_widget(form.dni, {'attr': {'data-visitor-form-target': 'dniField', 'data-action': 'change->visitor-form#toggleDniOther'}}) }}
 			    <span class="text-danger">{{ form_errors(form.dni) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group" data-visitor-form-target="dniOtherField">
+		    {{ form_label(form.dni_other) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.dni_other) }}
+			    <span class="text-danger">{{ form_errors(form.dni_other) }}</span>
 			</div>
 		    </div>
 		</div>

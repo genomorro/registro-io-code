@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -53,6 +54,11 @@ class VisitorType extends AbstractType
                     new NotBlank(),
                 ],
 	    ])
+            ->add('dni_other', TextType::class, [
+                'label' => 'Other DNI',
+                'mapped' => false,
+                'required' => false,
+            ])
             ->add('tag', null, [
 		'label' => 'Tag',
                 'constraints' => [
@@ -108,7 +114,6 @@ class VisitorType extends AbstractType
 		],
 		'autocomplete' => true,
 		'required' => false,
-		
 	    ])
             ->add('patient', PatientAutocompleteField::class, [
 		'extra_options' => [

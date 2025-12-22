@@ -51,6 +51,12 @@ final class VisitorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dni = $form->get('dni')->getData();
+            if ($dni === 'Otro') {
+                $dniOther = $form->get('dni_other')->getData();
+                $visitor->setDni($dniOther);
+            }
+
             $visitor->setCheckInAt(new \DateTimeImmutable());
 
             $entityManager->persist($visitor);
