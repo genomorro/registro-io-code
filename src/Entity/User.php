@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +37,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    /**
+     * @var Collection<int, Attendance>
+     */
+    #[ORM\OneToMany(targetEntity: Attendance::class, mappedBy: 'checkInUser')]
+    private Collection $attendancesCheckIn;
+
+    /**
+     * @var Collection<int, Attendance>
+     */
+    #[ORM\OneToMany(targetEntity: Attendance::class, mappedBy: 'checkOutUser')]
+    private Collection $attendancesCheckOut;
+
+    /**
+     * @var Collection<int, Visitor>
+     */
+    #[ORM\OneToMany(targetEntity: Visitor::class, mappedBy: 'checkInUser')]
+    private Collection $visitorsCheckIn;
+
+    /**
+     * @var Collection<int, Visitor>
+     */
+    #[ORM\OneToMany(targetEntity: Visitor::class, mappedBy: 'checkOutUser')]
+    private Collection $visitorsCheckOut;
+
+    public function __construct()
+    {
+        $this->attendancesCheckIn = new ArrayCollection();
+        $this->attendancesCheckOut = new ArrayCollection();
+        $this->visitorsCheckIn = new ArrayCollection();
+        $this->visitorsCheckOut = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +159,126 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Attendance>
+     */
+    public function getAttendancesCheckIn(): Collection
+    {
+        return $this->attendancesCheckIn;
+    }
+
+    public function addAttendancesCheckIn(Attendance $attendancesCheckIn): static
+    {
+        if (!$this->attendancesCheckIn->contains($attendancesCheckIn)) {
+            $this->attendancesCheckIn->add($attendancesCheckIn);
+            $attendancesCheckIn->setCheckInUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttendancesCheckIn(Attendance $attendancesCheckIn): static
+    {
+        if ($this->attendancesCheckIn->removeElement($attendancesCheckIn)) {
+            // set the owning side to null (unless already changed)
+            if ($attendancesCheckIn->getCheckInUser() === $this) {
+                $attendancesCheckIn->setCheckInUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Attendance>
+     */
+    public function getAttendancesCheckOut(): Collection
+    {
+        return $this->attendancesCheckOut;
+    }
+
+    public function addAttendancesCheckOut(Attendance $attendancesCheckOut): static
+    {
+        if (!$this->attendancesCheckOut->contains($attendancesCheckOut)) {
+            $this->attendancesCheckOut->add($attendancesCheckOut);
+            $attendancesCheckOut->setCheckOutUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttendancesCheckOut(Attendance $attendancesCheckOut): static
+    {
+        if ($this->attendancesCheckOut->removeElement($attendancesCheckOut)) {
+            // set the owning side to null (unless already changed)
+            if ($attendancesCheckOut->getCheckOutUser() === $this) {
+                $attendancesCheckOut->setCheckOutUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Visitor>
+     */
+    public function getVisitorsCheckIn(): Collection
+    {
+        return $this->visitorsCheckIn;
+    }
+
+    public function addVisitorsCheckIn(Visitor $visitorsCheckIn): static
+    {
+        if (!$this->visitorsCheckIn->contains($visitorsCheckIn)) {
+            $this->visitorsCheckIn->add($visitorsCheckIn);
+            $visitorsCheckIn->setCheckInUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitorsCheckIn(Visitor $visitorsCheckIn): static
+    {
+        if ($this->visitorsCheckIn->removeElement($visitorsCheckIn)) {
+            // set the owning side to null (unless already changed)
+            if ($visitorsCheckIn->getCheckInUser() === $this) {
+                $visitorsCheckIn->setCheckInUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Visitor>
+     */
+    public function getVisitorsCheckOut(): Collection
+    {
+        return $this->visitorsCheckOut;
+    }
+
+    public function addVisitorsCheckOut(Visitor $visitorsCheckOut): static
+    {
+        if (!$this->visitorsCheckOut->contains($visitorsCheckOut)) {
+            $this->visitorsCheckOut->add($visitorsCheckOut);
+            $visitorsCheckOut->setCheckOutUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitorsCheckOut(Visitor $visitorsCheckOut): static
+    {
+        if ($this->visitorsCheckOut->removeElement($visitorsCheckOut)) {
+            // set the owning side to null (unless already changed)
+            if ($visitorsCheckOut->getCheckOutUser() === $this) {
+                $visitorsCheckOut->setCheckOutUser(null);
+            }
+        }
 
         return $this;
     }

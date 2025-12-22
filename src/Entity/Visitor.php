@@ -39,14 +39,21 @@ class Visitor
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $relationship = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $evidence = null;
+
     /**
      * @var Collection<int, Patient>
      */
     #[ORM\ManyToMany(targetEntity: Patient::class, inversedBy: 'visitors')]
     private Collection $patient;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $evidence = null;
+    #[ORM\ManyToOne(inversedBy: 'visitorsCheckIn')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $checkInUser = null;
+
+    #[ORM\ManyToOne(inversedBy: 'visitorsCheckOut')]
+    private ?User $checkOutUser = null;
 
     public function __construct()
     {
@@ -154,6 +161,18 @@ class Visitor
         return $this;
     }
 
+    public function getEvidence(): ?string
+    {
+        return $this->evidence;
+    }
+
+    public function setEvidence(?string $evidence): static
+    {
+        $this->evidence = $evidence;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Patient>
      */
@@ -178,14 +197,26 @@ class Visitor
         return $this;
     }
 
-    public function getEvidence(): ?string
+    public function getCheckInUser(): ?User
     {
-        return $this->evidence;
+        return $this->checkInUser;
     }
 
-    public function setEvidence(?string $evidence): static
+    public function setCheckInUser(?User $checkInUser): static
     {
-        $this->evidence = $evidence;
+        $this->checkInUser = $checkInUser;
+
+        return $this;
+    }
+
+    public function getCheckOutUser(): ?User
+    {
+        return $this->checkOutUser;
+    }
+
+    public function setCheckOutUser(?User $checkOutUser): static
+    {
+        $this->checkOutUser = $checkOutUser;
 
         return $this;
     }
