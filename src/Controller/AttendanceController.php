@@ -42,6 +42,7 @@ final class AttendanceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+	    $attendance->setCheckInUser($this->getUser());
 
 	    $entityManager->persist($attendance);
             $entityManager->flush();
@@ -93,10 +94,16 @@ final class AttendanceController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
+	$originalCheckOutAt = $attendance->getCheckOutAt();
         $form = $this->createForm(AttendanceType::class, $attendance);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+	    $newCheckOutAt = $attendance->getCheckOutAt();
+	    if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
+		$attendance->setCheckOutUser($this->getUser());
+	    }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
@@ -128,6 +135,7 @@ final class AttendanceController extends AbstractController
 
         if ($this->isCsrfTokenValid('checkout'.$attendance->getId(), $request->getPayload()->getString('_token'))) {
             $attendance->setCheckOutAt(new \DateTimeImmutable());
+	    $attendance->setCheckOutUser($this->getUser());
             $entityManager->flush();
         }
 

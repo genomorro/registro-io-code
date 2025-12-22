@@ -146,6 +146,7 @@ final class PatientController extends AbstractController
         $attendance = new Attendance();
         $attendance->setPatient($patient);
         $attendance->setCheckInAt(new \DateTimeImmutable());
+	$attendance->setCheckInUser($this->getUser());
         $attendance->setTag((int) $tag);
 	
         $entityManager->persist($attendance);
@@ -185,6 +186,7 @@ final class PatientController extends AbstractController
         $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
         if ($attendance) {
             $attendance->setCheckOutAt(new \DateTimeImmutable());
+	    $attendance->setCheckOutUser($this->getUser());
             $entityManager->flush();
         }
 
