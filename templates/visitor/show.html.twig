@@ -48,6 +48,12 @@
 			    <th>{% trans %}Check in{% endtrans %}</th>
 			    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <tr>
+				<th>{% trans %}User who checked in{% endtrans %}</th>
+				<td>{{ visitor.checkInUser.username }}</td>
+			    </tr>
+			{% endif %}
 			<tr>
 			    <th>{% trans %}Check out{% endtrans %}</th>
 			    <td>
@@ -61,6 +67,12 @@
 				{% endif %}
 			    </td>
 			</tr>
+			{% if is_granted('ROLE_ADMIN') and visitor.checkOutAt is not null %}
+			    <tr>
+				<th>{% trans %}User who checked out{% endtrans %}</th>
+				<td>{{ visitor.checkOutUser.username }}</td>
+			    </tr>
+			{% endif %}
 			{% if visitor.relationship %}
 			    <tr>
 				<th>{% trans %}Relationship{% endtrans %}</th>

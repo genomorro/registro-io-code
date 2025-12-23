@@ -82,6 +82,8 @@
 'Your browser does not support the <video> tag': 'Tu navegador no soporta la etiqueta <video>'
 ### show.html.twig
 'Attendance': 'Asistencia'
+'User who checked in': 'Usuario que hizo el registro de entrada'
+'User who checked out': 'Usuario que hizo el registro de salida'
 ## hospitalized
 ### edit.html.twig
 'Edit Hospitalized': 'Editar hospitalización'

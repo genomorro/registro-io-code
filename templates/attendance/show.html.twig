@@ -32,6 +32,12 @@
 			    <th>{% trans %}Check in{% endtrans %}</th>
 			    <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <tr>
+				<th>{% trans %}User who checked in{% endtrans %}</th>
+				<td>{{ attendance.checkInUser.username }}</td>
+			    </tr>
+			{% endif %}
 			<tr>
 			    <th>{% trans %}Check out{% endtrans %}</th>
 			    <td>
@@ -44,6 +50,12 @@
 				{% endif %}
 			    </td>
 			</tr>
+			{% if is_granted('ROLE_ADMIN') and attendance.checkOutAt is not null %}
+			    <tr>
+				<th>{% trans %}User who checked out{% endtrans %}</th>
+				<td>{{ attendance.checkOutUser.username }}</td>
+			    </tr>
+			{% endif %}
 			<tr>
 			    <th>{% trans %}Patient name{% endtrans %}</th>
 			    <td>{{ attendance.patient.name|title }}</td>

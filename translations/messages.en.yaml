@@ -82,6 +82,8 @@
 'Your browser does not support the <video> tag': 'Your browser does not support the <video> tag'
 ### show.html.twig
 'Attendance': 'Attendance'
+'User who checked in': 'User who checked in'
+'User who checked out': 'User who checked out'
 ## hospitalized
 ### edit.html.twig
 'Edit Hospitalized': 'Edit Hospitalized'
