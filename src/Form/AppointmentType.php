@@ -40,6 +40,12 @@ class AppointmentType extends AbstractType
 		    'Primera vez' => 'Primera vez',
 		    'Subsecuente' => 'Subsecuente',
                 ],
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
+		],
 		'autocomplete' => true,
                 'constraints' => [
                     new NotBlank(),
@@ -51,6 +57,12 @@ class AppointmentType extends AbstractType
 		'choices' => [
 		    'Agendada' => 'Agendada',
 		    'Cancelada' => 'Cancelada',
+		],
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
 		],
 		'autocomplete' => true,
 		'constraints' => [

@@ -27,6 +27,12 @@ class PatientAutocompleteField extends AbstractType
 	    },
             'searchable_fields' => ['file', 'name'],
             'extra_options' => [],
+	    'tom_select_options' => [
+		'plugins' => [
+		    'remove_button' => true,
+		    'clear_button' => false,
+		],
+	    ],
         ]);
 
         $resolver->setDefault('multiple', static function (Options $options) {

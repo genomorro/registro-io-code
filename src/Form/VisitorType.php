@@ -49,6 +49,12 @@ class VisitorType extends AbstractType
 		    'INAPAM' => 'INAPAM',
 		    'Otro' => 'Otro',
 		],
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
+		],
 		'autocomplete' => true,
 		'constraints' => [
                     new NotBlank(),
@@ -94,6 +100,12 @@ class VisitorType extends AbstractType
 		    'Servicio Clínico 10 Postquirúrgicos' => 'Servicio Clínico 10 Postquirúrgicos',
 		    'Servicio Clínico 10 Recuperación' => 'Servicio Clínico 10 Recuperación',
 		],
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
+		],
 		'autocomplete' => true,
 		'constraints' => [
                     new NotBlank(),
@@ -111,6 +123,12 @@ class VisitorType extends AbstractType
 		    'Concubino (a)' => 'Concubino (a)',
 		    'Hermano (a)' => 'Hermano (a)',
 		    'Otro' => 'Otro',
+		],
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
 		],
 		'autocomplete' => true,
 		'required' => false,
