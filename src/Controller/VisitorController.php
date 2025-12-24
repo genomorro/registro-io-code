@@ -125,7 +125,7 @@ final class VisitorController extends AbstractController
                 $dniOther = $form->get('dni_other')->getData();
                 $visitor->setDni($dniOther);
             }
-	    
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
