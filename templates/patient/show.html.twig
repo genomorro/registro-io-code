@@ -90,7 +90,7 @@
     
     <h2>{% trans %}Today's Attendance{% endtrans %}</h2>
     <hr class="red">
-    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+    {% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|last %}
     {% if todays_attendance %}
 	<div class="row">
 	    <div class="col-md d-flex align-items-center">
@@ -105,26 +105,29 @@
 				<th>{% trans %}Check in{% endtrans %}</th>
 				<td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
 			    </tr>
-			    <tr>
-				<th>{% trans %}Check out{% endtrans %}</th>
-				<td>
-				    {% if todays_attendance.checkOutAt %}
-					{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
-				    {% else %}
+			    {% if todays_attendance.checkOutAt %}
+				<tr>
+				    <th>{% trans %}Check out{% endtrans %}</th>
+				    <td>{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}</td>
+				</tr>
+			    {% else %}
+				<tr>
+				    <th>{% trans %}Check out{% endtrans %}</th>
+				    <td>
 					<form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					    <input type="hidden" name="redirect_route" value="app_patient_show">
 					    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
 					    <button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 					</form>
-				    {% endif %}
-				</td>
-			    </tr>
-			    <tr>
-				<th>{% trans %}Is the patient accompanied?{% endtrans %}</th>
-				<td>
-				    <a class="btn btn-sm btn-primary" href="{{ path('app_visitor_new', {'patientId': patient.id}) }}">{% trans %}Register visitor{% endtrans %}</a>
-				</td>
-			    </tr>
+				    </td>
+				</tr>
+				<tr>
+				    <th>{% trans %}Is the patient accompanied?{% endtrans %}</th>
+				    <td>
+					<a class="btn btn-sm btn-primary" href="{{ path('app_visitor_new', {'patientId': patient.id}) }}">{% trans %}Register visitor{% endtrans %}</a>
+				    </td>
+				</tr>
+			    {% endif %}
 			</tbody>
 		    </table>
 		</div>
@@ -156,7 +159,7 @@
     {% endif %}
     
     <hr>
-
+    
     <h2>{% trans %}Other Appointments{% endtrans %}</h2>
     <hr class="red">
     {% if other_appointments.nbResults > 0 %}
