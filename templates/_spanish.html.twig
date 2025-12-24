@@ -1,0 +1,34 @@
+<h3>¡Bienvenido!</h3>
+<p>Has entrado en el <i>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</i>. Para usar este sitio web debes tener en cuenta los siguientes elementos de navegación:</p>
+<ul>
+    <li><b>Menú principal</b>: Se encuentra en la parte superior, justo abajo del encabezado del sitio web. Sirve para encontrar las distintas secciones disponibles en el sistema. Es de color rojo y contiene estos elementos:
+	<ul>
+	    <li>Enlace a la búsqueda</li>
+	    {% if is_granted('ROLE_ADMIN') %}
+		<li>Enlace a sección de <i>Pacientes</i></li>
+		<li>Enlace a sección de <i>Hospitalizados</i></li>
+		<li>Enlace a sección de <i>Citas</i></li>
+		<li>Enlace a sección de <i>Asistencias</i></li>
+		<li>Enlace a sección de <i>Usuarios</i></li>
+	    {% endif %}
+	    <li>Enlace a sección de <i>Visitantes</i></li>
+	    <li>Cambiar idioma (<i class="bi bi-translate"></i>)</li>
+	    <li>Opciones de usuario (<i class="icon icon-user"></i>)</li>
+	</ul>
+    </li>
+    <li><b>Menú de ruta de exploración</b>: Es el primer elemento de contenido que se observa en el sitio web. Permite conocer la ruta de su ubicación en directorios y subdirectorios, además puede permitirle una navegación más rápida. Tiene el siguiente aspecto:
+	<ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="#"><i class="icon icon-home"></i></a></li>
+	    <li class="breadcrumb-item"><a href="#">{% trans %}Begin{% endtrans %}</a></li>
+	    <li class="breadcrumb-item active" aria-current="page"><a href="#">{% trans %}Patients{% endtrans %}</a></li>
+	</ol>
+	El ícono de Home (<i class="icon icon-home"></i>) siempre será un enlace al sitio principal del Gobierno de México, los otros elementos corresponden a enlaces a páginas de este sitio web, el último elemento, siempre en <b>negritas</b>, es la página donde se ubica actualmente.
+    </li>
+</ul>
+<hr>
+<h3>{% trans %}Sign in{% endtrans %}</h3>
+<p>Para iniciar sesión, debe ir al <i>botón {% trans %}Sign in{% endtrans %} (<i class="bi bi-box-arrow-in-right"></i>)</i> e ingresar sus credenciales.</p>
+<p>Una vez que ha iniciado sesión el botón {% trans %}Sign in{% endtrans %} será sustituido por el <i>botón {% trans %}Log out{% endtrans %}(<i class="bi bi-box-arrow-left"></i>)</i>.</p>
+<p>Si usted no tiene un usuario para este sitio web, deberá solicitarlo a su superior en el área de trabajo correspondiente.</p>
+<h3>{% trans %}Language{% endtrans %}</h3>
+<p>Es posible cambiar el idioma de este sitio web, presione el <i>botón de idioma (<i class="bi bi-translate"></i>)</i> y seleccione su preferencia. Actualmente está disponible el idioma inglés y español.</p>

@@ -18,7 +18,7 @@ class IndexController extends AbstractController
         return $this->render('index.html.twig');
     }
 
-    #[Route('/php')]
+    #[Route('/php', name: 'app_php')]
     public function php(): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -29,7 +29,7 @@ class IndexController extends AbstractController
         return new Response($info);
     }
 
-    #[Route('/about')]
+    #[Route('/about', name: 'app_about')]
     public function about (): Response
     {
         $creator = 'Edgar Uriel Domínguez Espinoza';
