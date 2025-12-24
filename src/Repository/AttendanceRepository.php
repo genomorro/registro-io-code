@@ -17,7 +17,7 @@ class AttendanceRepository extends ServiceEntityRepository
         parent::__construct($registry, Attendance::class);
     }
 
-    public function findOneByPatientAndDate(Patient $patient, \DateTimeInterface $date): ?Attendance
+    public function findLatestByPatientAndDate(Patient $patient, \DateTimeInterface $date): ?Attendance
     {
         $startOfDay = (clone $date)->setTime(0, 0, 0);
         $endOfDay = (clone $date)->setTime(23, 59, 59);
@@ -29,6 +29,8 @@ class AttendanceRepository extends ServiceEntityRepository
 		    ->setParameter('patient', $patient)
 		    ->setParameter('startOfDay', $startOfDay)
 		    ->setParameter('endOfDay', $endOfDay)
+		    ->orderBy('a.checkInAt', 'DESC')
+		    ->setMaxResults(1)
 		    ->getQuery()
 		    ->getOneOrNullResult()
         ;

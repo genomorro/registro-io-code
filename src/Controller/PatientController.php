@@ -60,22 +60,25 @@ final class PatientController extends AbstractController
 
     #[Route('/{id}', name: 'app_patient_show', methods: ['GET'])]
     public function show(
-	Patient $patient,
-	AppointmentRepository $appointmentRepository,
-	Request $request,
-	VisitorRepository $visitorRepository
+        Patient $patient,
+        AppointmentRepository $appointmentRepository,
+        AttendanceRepository $attendanceRepository,
+        Request $request,
+        VisitorRepository $visitorRepository
     ): Response {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $todaysAttendance = $attendanceRepository->findLatestByPatientAndDate($patient, new \DateTime());
 
         $todaysAppointmentsQB = $appointmentRepository->createTodaysAppointmentsByPatientQueryBuilder($patient);
         $otherAppointmentsQB = $appointmentRepository->createOtherAppointmentsByPatientQueryBuilder($patient);
         $todaysVisitorsQB = $visitorRepository->createTodaysVisitorsByPatientQueryBuilder($patient);
-	
+
         $todaysAppointmentsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($todaysAppointmentsQB);
         $todaysAppointments = new \Pagerfanta\Pagerfanta($todaysAppointmentsAdapter);
         $todaysAppointments->setMaxPerPage(20);
         $todaysAppointments->setCurrentPage($request->query->getInt('page_today_appointments', 1));
-	
+
         $otherAppointmentsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($otherAppointmentsQB);
         $otherAppointments = new \Pagerfanta\Pagerfanta($otherAppointmentsAdapter);
         $otherAppointments->setMaxPerPage(20);
@@ -85,9 +88,10 @@ final class PatientController extends AbstractController
         $todaysVisitors = new \Pagerfanta\Pagerfanta($todaysVisitorsAdapter);
         $todaysVisitors->setMaxPerPage(20);
         $todaysVisitors->setCurrentPage($request->query->getInt('page_today_visitors', 1));
-	
+
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,
+            'todays_attendance' => $todaysAttendance,
             'todays_appointments' => $todaysAppointments,
             'other_appointments' => $otherAppointments,
             'todays_visitors' => $todaysVisitors,
@@ -183,7 +187,7 @@ final class PatientController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
-        $attendance = $attendanceRepository->findOneByPatientAndDate($patient, new \DateTime());
+        $attendance = $attendanceRepository->findLatestByPatientAndDate($patient, new \DateTime());
         if ($attendance) {
             $attendance->setCheckOutAt(new \DateTimeImmutable());
 	    $attendance->setCheckOutUser($this->getUser());
