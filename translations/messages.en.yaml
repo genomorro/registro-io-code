@@ -146,6 +146,7 @@ license:
 'Phone number': 'Phone number'
 'DNI': 'DNI'
 'Destination': 'Destination'
+'Hospitalización': 'Hospitalization'
 'Relationship': 'Relationship'
 ### index.html.twig
 'Visitor index': 'Visitor index'

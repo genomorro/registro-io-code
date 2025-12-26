@@ -146,6 +146,7 @@ license:
 'Phone number': 'Número de teléfono'
 'DNI': 'Identificación'
 'Destination': 'Destino'
+'Hospitalización': 'Hospitalización'
 'Relationship': 'Parentesco'
 ### index.html.twig
 'Visitor index': 'Índice de visitantes'
