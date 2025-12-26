@@ -4,9 +4,22 @@
 
 {% block body %}
     <h1>{% trans %}About{% endtrans %}</h1>
+    <h2>{%  trans %}License{% endtrans %}</h2>
+    <p>This software is part of <a href="https://gitlab.com/genomorro/registro-io">Registro de I/O INER</a></p>
 
-    <h2>{% trans %}Symfony Information{% endtrans %}</h2>
-    <pre>{{ symfony_about }}</pre>
+    <p>Copyright (C) 2025, Edgar Uriel Domínguez Espinoza</p>
 
+    <p><a href="https://gitlab.com/genomorro/registro-io">Registro de I/O INER</a> is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p>
+
+    <p><a href="https://gitlab.com/genomorro/registro-io">Registro de I/O INER</a> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+
+    <p>You should have received a copy of the GNU General Public License along with <a href="https://gitlab.com/genomorro/registro-io">Registro de I/O INER</a>; if not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a> or write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA</p>
+    
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<h2>{% trans %}Symfony Information{% endtrans %}</h2>
+	<pre>{{ symfony_about }}</pre>
+	
+	{{ phpinfo|raw }}
+    {% endif %}
     <p class="text-white">{% trans %}Created by{% endtrans %} {{ creator }} ({{ year }}).</p>
 {% endblock %}

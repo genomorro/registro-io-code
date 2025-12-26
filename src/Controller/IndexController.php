@@ -18,20 +18,19 @@ class IndexController extends AbstractController
         return $this->render('index.html.twig');
     }
 
-    #[Route('/php', name: 'app_php')]
-    public function php(): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
-        ob_start();
-        phpinfo();
-        $info = ob_get_clean();
-
-        return new Response($info);
-    }
-
     #[Route('/about', name: 'app_about')]
     public function about (): Response
     {
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_clean();
+        $phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
+        $phpinfo = str_replace(
+            '<table',
+            '<table class="table table-striped table-bordered table-sm"',
+            $phpinfo
+        );
+
         $creator = 'Edgar Uriel Domínguez Espinoza';
         $year = '2025';
 
@@ -46,9 +45,10 @@ class IndexController extends AbstractController
         $symfony_about = $process->getOutput();
 
         return $this->render('about.html.twig', [
+	    'phpinfo' => $phpinfo,
+            'symfony_about' => $symfony_about,
             'creator' => $creator,
             'year' => $year,
-            'symfony_about' => $symfony_about,
         ]);
     }
 
