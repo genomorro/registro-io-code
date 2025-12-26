@@ -46,8 +46,9 @@ class IndexController extends AbstractController
 
         return $this->render('about.html.twig', [
 	    'phpinfo' => $phpinfo,
-            'symfony_about' => $symfony_about,
+	    'version' => $_ENV['VERSION'],
             'creator' => $creator,
+            'symfony_about' => $symfony_about,
             'year' => $year,
         ]);
     }
