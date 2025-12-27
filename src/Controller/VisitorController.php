@@ -51,12 +51,6 @@ final class VisitorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dni = $form->get('dni')->getData();
-            if ($dni === 'Otro') {
-                $dniOther = $form->get('dni_other')->getData();
-                $visitor->setDni($dniOther);
-            }
-
             $visitor->setCheckInAt(new \DateTimeImmutable());
             $visitor->setCheckInUser($this->getUser());
 
@@ -118,12 +112,6 @@ final class VisitorController extends AbstractController
             $newCheckOutAt = $visitor->getCheckOutAt();
             if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
                 $visitor->setCheckOutUser($this->getUser());
-            }
-
-            $dni = $form->get('dni')->getData();
-            if ($dni === 'Otro') {
-                $dniOther = $form->get('dni_other')->getData();
-                $visitor->setDni($dniOther);
             }
 
             $entityManager->flush();

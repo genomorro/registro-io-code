@@ -23,6 +23,26 @@ class VisitorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $visitor = $options['data'] ?? null;
+        $dniData = null;
+        $dniOtherData = null;
+
+        $dniChoices = [
+            'INE' => 'INE',
+            'Pasaporte' => 'Pasaporte',
+            'Cédula profesional' => 'Cédula profesional',
+            'Licencia de conducir' => 'Licencia de conducir',
+            'INAPAM' => 'INAPAM',
+            'Otro' => 'Otro',
+        ];
+
+        if ($visitor && !in_array($visitor->getDni(), $dniChoices)) {
+            $dniData = 'Otro';
+            $dniOtherData = $visitor->getDni();
+        } elseif ($visitor) {
+            $dniData = $visitor->getDni();
+        }
+
         $builder
             ->add('name', null, [
 		'label' => 'Name',
@@ -41,14 +61,9 @@ class VisitorType extends AbstractType
             ->add('dni', ChoiceType::class, [
 		'label' => 'DNI',
 		'placeholder' => 'Choose a DNI',
-		'choices' => [
-		    'INE' => 'INE',
-		    'Pasaporte' => 'Pasaporte',
-		    'Cédula profesional' => 'Cédula profesional',
-		    'Licencia de conducir' => 'Licencia de conducir',
-		    'INAPAM' => 'INAPAM',
-		    'Otro' => 'Otro',
-		],
+		'choices' => $dniChoices,
+		'mapped' => false,
+		'data' => $dniData,
 		'tom_select_options' => [
 		    'plugins' => [
 			'remove_button' => true,
@@ -64,6 +79,7 @@ class VisitorType extends AbstractType
                 'label' => 'Other DNI',
                 'mapped' => false,
                 'required' => false,
+                'data' => $dniOtherData,
             ])
             ->add('tag', null, [
 		'label' => 'Tag',
@@ -173,6 +189,19 @@ class VisitorType extends AbstractType
                 }
 
                 $form->add('checkOutAt', DateTimeType::class, $checkOutOptions);
+            }
+        });
+
+	$builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+            $visitor = $event->getData();
+
+            $dni = $form->get('dni')->getData();
+            if ($dni === 'Otro') {
+                $dniOther = $form->get('dni_other')->getData();
+                $visitor->setDni($dniOther);
+            } else {
+                $visitor->setDni($dni);
             }
         });
     }
