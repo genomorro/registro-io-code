@@ -36,7 +36,7 @@ class VisitorType extends AbstractType
             'Otro' => 'Otro',
         ];
 
-        if ($visitor && !in_array($visitor->getDni(), $dniChoices)) {
+        if ($visitor && $visitor->getDni() !== null && !in_array($visitor->getDni(), $dniChoices)) {
             $dniData = 'Otro';
             $dniOtherData = $visitor->getDni();
         } elseif ($visitor) {
