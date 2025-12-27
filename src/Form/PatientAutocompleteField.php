@@ -6,18 +6,25 @@ use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
 use Symfony\UX\Autocomplete\Form\BaseEntityAutocompleteType;
 
 #[AsEntityAutocompleteField]
 class PatientAutocompleteField extends AbstractType
 {
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'Patient',
             'class' => Patient::class,
-            'placeholder' => 'Search by name or by file',
             'choice_label' => function(Patient $patient)
 	    {
 		return sprintf(
@@ -28,6 +35,7 @@ class PatientAutocompleteField extends AbstractType
             'searchable_fields' => ['file', 'name'],
             'extra_options' => [],
 	    'tom_select_options' => [
+                'placeholder' => $this->translator->trans('Search by name or by file'),
 		'plugins' => [
 		    'remove_button' => true,
 		    'clear_button' => false,
