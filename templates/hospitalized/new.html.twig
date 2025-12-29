@@ -3,6 +3,13 @@
 {% block title %}{% trans %}New Hospitalized{% endtrans%}{% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_hospitalized_index') }}">{% trans %}Patient{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_hospitalized_new') }}">{% trans %}New Hospitalized{% endtrans %}</a></li>
+    </ol>
+
     <h1>{% trans %}Create new Hospitalized{% endtrans %}</h1>
     <hr class="red">
 

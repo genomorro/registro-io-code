@@ -4,7 +4,7 @@
 
 {% block body %}
     <ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_attendance_index') }}">{% trans %}Attendance{% endtrans %}</a></li>
 	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_attendance_show', {'id': attendance.id}) }}">{% trans %}Show{% endtrans %}</a></li>
