@@ -54,8 +54,10 @@ export default class extends Controller {
             
             this.startStream(this.cameraSelectTarget.value);
 
-            // Show the flip button only if there are multiple cameras
-            this.flipButtonTarget.classList.toggle('d-none', videoDevices.length <= 1);
+            // Show controls only if there are multiple cameras
+            const hasMultipleCameras = videoDevices.length > 1;
+            this.flipButtonTarget.classList.toggle('d-none', !hasMultipleCameras);
+            this.cameraSelectTarget.classList.toggle('d-none', !hasMultipleCameras);
         } else {
             console.error('No video devices found.');
         }

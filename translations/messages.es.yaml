@@ -92,6 +92,7 @@ license:
 'New Attendance': 'Nueva asistencia'
 'Create new Attendance': 'Crear nueva asistencia'
 'Your browser does not support the <video> tag': 'Tu navegador no soporta la etiqueta <video>'
+'Flip Camera': 'Cambiar cámara'
 ### show.html.twig
 'Attendance': 'Asistencia'
 'User who checked in': 'Usuario que hizo el registro de entrada'
