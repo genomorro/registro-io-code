@@ -2,31 +2,100 @@ import { Controller } from '@hotwired/stimulus';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ["video", "canvas"];
+    static targets = ["video", "canvas", "cameraSelect", "flipButton"];
     stream = null;
 
     connect() {
-	if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-	    console.error('Browser API navigator.mediaDevices.getUserMedia not available');
-	    return;
-	}
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            console.error('Browser API navigator.mediaDevices.getUserMedia not available');
+            return;
+        }
 
-	navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-	    .then(stream => {
-		this.stream = stream;
-		if (this.hasVideoTarget) {
-		    this.videoTarget.srcObject = stream;
-		    this.videoTarget.play();
-		}
-	    })
-	    .catch(err => {
-		console.log("An error occurred: " + err);
-	    });
+        // First, get permission. This will trigger the browser's permission prompt.
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(stream => {
+                // Immediately stop the tracks of this initial stream.
+                // Its only purpose was to get the user's permission.
+                stream.getTracks().forEach(track => track.stop());
+                
+                // Now that we have permission, we can get a complete list of devices.
+                this.getCameras();
+            })
+            .catch(err => {
+                console.error("An error occurred while requesting camera permissions: " + err);
+                // Optionally, display an error message to the user in the UI.
+            });
     }
 
     disconnect() {
         if (this.stream) {
             this.stream.getTracks().forEach(track => track.stop());
+        }
+    }
+
+    async getCameras() {
+        this.cameraSelectTarget.innerHTML = '';
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+        if (videoDevices.length > 0) {
+            videoDevices.forEach(device => {
+                const option = document.createElement('option');
+                option.value = device.deviceId;
+                option.text = device.label || `Camera ${this.cameraSelectTarget.length + 1}`;
+                this.cameraSelectTarget.appendChild(option);
+            });
+
+            // Prefer the rear camera by default on mobile
+            const rearCamera = videoDevices.find(device => device.label.toLowerCase().includes('back') || device.label.toLowerCase().includes('rear'));
+            if (rearCamera) {
+                this.cameraSelectTarget.value = rearCamera.deviceId;
+            }
+            
+            this.startStream(this.cameraSelectTarget.value);
+
+            // Show the flip button only if there are multiple cameras
+            this.flipButtonTarget.classList.toggle('d-none', videoDevices.length <= 1);
+        } else {
+            console.error('No video devices found.');
+        }
+    }
+
+    startStream(deviceId) {
+        if (this.stream) {
+            this.stream.getTracks().forEach(track => track.stop());
+        }
+
+        const constraints = {
+            video: {
+                deviceId: deviceId ? { exact: deviceId } : undefined,
+            },
+            audio: false
+        };
+
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+                this.stream = stream;
+                if (this.hasVideoTarget) {
+                    this.videoTarget.srcObject = stream;
+                    this.videoTarget.play();
+                }
+            })
+            .catch(err => {
+                console.log("An error occurred while starting the stream: " + err);
+            });
+    }
+
+    switchCamera() {
+        this.startStream(this.cameraSelectTarget.value);
+    }
+
+    flipCamera() {
+        const select = this.cameraSelectTarget;
+        if (select.options.length > 1) {
+            const newIndex = (select.selectedIndex + 1) % select.options.length;
+            select.value = select.options[newIndex].value;
+            this.switchCamera();
         }
     }
 
