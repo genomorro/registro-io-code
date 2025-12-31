@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Edit Stakeholder{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholder{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">{% trans %}Edit{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Edit Stakeholder{% endtrans %}</h1>
+    <hr class="red">
+
+    <div class="row">
+    {{ include('stakeholder/_form.html.twig', {'button_label': '{% trans %}Update{% endtrans %}'}) }}
+
+	<a href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
+    </div></div>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('stakeholder/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
+{% endblock %}

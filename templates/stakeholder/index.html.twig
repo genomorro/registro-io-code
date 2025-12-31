@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Stakeholder index{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholder{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Stakeholder index{% endtrans %}</h1>
+    <hr class="red">
+
+    <div class="table-responsible">
+	<table class="table table-hover">
+            <thead>
+		<tr>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<th>{% trans %}Id{% endtrans %}</th>
+		    {% endif %}
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}DNI{% endtrans %}</th>
+                    <th>{% trans %}Tag{% endtrans %}</th>
+                    <th>{% trans %}Subject{% endtrans %}</th>
+                    <th>{% trans %}Destination{% endtrans %}</th>
+                    <th>{% trans %}Check in{% endtrans %}</th>
+                    <th>{% trans %}Check out{% endtrans %}</th>
+                    <th>{% trans %}actions{% endtrans %}</th>
+		</tr>
+            </thead>
+            <tbody>
+		{% for stakeholder in stakeholders %}
+		    <tr>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+			    <td>{{ stakeholder.id }}</td>
+			{% endif %}
+			<td>{{ stakeholder.name|title }}</td>
+			<td>{{ stakeholder.dni }}</td>
+			<td>{{ stakeholder.tag }}</td>
+			<td>{{ stakeholder.subject }}</td>
+			<td>{{ stakeholder.destination }}</td>
+			<td>{{ stakeholder.checkInAt ? stakeholder.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			<td>{{ stakeholder.checkOutAt ? stakeholder.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
+			<td>
+			    <a href="{{ path('app_stakeholder_show', {'id': stakeholder.id}) }}">show</a>
+			    <a href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">edit</a>
+			</td>
+		    </tr>
+{% else %}
+		    <tr>
+			<td colspan="11">{% trans %}no records found{% endtrans %}</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('app_stakeholder_new') }}">{% trans %}Create new{% endtrans %}</a>
+{% endblock %}
