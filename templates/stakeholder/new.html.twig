@@ -15,17 +15,84 @@
 
     <div class="row">
 	<div class="col-md-6">
-	    {{ include('stakeholder/_form.html.twig') }}
-	    
-	    <button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
-	    <a href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
-	</div></div>
+	    {{ form_start(form, {'attr': {'data-controller': 'dni-form'}}) }}
+		<div class="form-group">
+		    {{ form_label(form.name) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.name) }}
+			    <span class="text-danger">{{ form_errors(form.name) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group">
+		    {{ form_label(form.dni) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.dni, {'attr': {'data-dni-form-target': 'dniField', 'data-action': 'change->dni-form#toggleDniOther'}}) }}
+			    <span class="text-danger">{{ form_errors(form.dni) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group d-none" data-dni-form-target="dniOtherField">
+		    {{ form_label(form.dni_other) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.dni_other) }}
+			    <span class="text-danger">{{ form_errors(form.dni_other) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group">
+		    {{ form_label(form.tag) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.tag) }}
+			    <span class="text-danger">{{ form_errors(form.tag) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group">
+		    {{ form_label(form.subject) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.subject) }}
+			    <span class="text-danger">{{ form_errors(form.subject) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group">
+		    {{ form_label(form.destination) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.destination) }}
+			    <span class="text-danger">{{ form_errors(form.destination) }}</span>
+			</div>
+		    </div>
+		</div>
+		<div class="form-group">
+		    {{ form_label(form.checkInAt) }}:
+		    <div class="row">
+			<div class="col-md">
+			    {{ form_widget(form.checkInAt) }}
+			    <span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
+			</div>
+		    </div>
+		</div>
+
+		<div class="d-grid gap-2 d-md-block">
+		    <button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+		    <button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
+		    <a class="btn btn-link" href="{{ path('app_stakeholder_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+		</div>
+	    {{ form_end(form) }}
+	</div>
 	<div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
 	    <video data-webrtc-target="video" width="480" height="360" class="border" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
-            <div class="my-2">
-                <select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
-                <button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
-            </div>
+	    <div class="my-2">
+		<select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
+		<button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
+	    </div>
 	    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
 	</div>
     </div>

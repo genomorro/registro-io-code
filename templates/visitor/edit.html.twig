@@ -14,7 +14,7 @@
     <hr class="red">
 
     <div class="row">
-	{{ form_start(form, {'attr': {'data-controller': 'visitor-form'}}) }}
+	{{ form_start(form, {'attr': {'data-controller': 'dni-form'}}) }}
 	    <div class="form-group">
 		{{ form_label(form.name) }}:
 		<div class="row">
@@ -37,12 +37,12 @@
 		{{ form_label(form.dni) }}:
 		<div class="row">
 		    <div class="col-md-6">
-			{{ form_widget(form.dni, {'attr': {'data-visitor-form-target': 'dniField', 'data-action': 'change->visitor-form#toggleDniOther'}}) }}
+			{{ form_widget(form.dni, {'attr': {'data-dni-form-target': 'dniField', 'data-action': 'change->dni-form#toggleDniOther'}}) }}
 			<span class="text-danger">{{ form_errors(form.dni) }}</span>
 		    </div>
 		</div>
 	    </div>
-	    <div class="form-group" data-visitor-form-target="dniOtherField">
+	    <div class="form-group" data-dni-form-target="dniOtherField">
 		{{ form_label(form.dni_other) }}:
 		<div class="row">
 		    <div class="col-md-6">

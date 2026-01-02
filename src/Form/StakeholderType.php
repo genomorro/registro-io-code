@@ -6,20 +6,63 @@ use App\Entity\Stakeholder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class StakeholderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $stakeholder = $options['data'] ?? null;
+        $dniData = null;
+        $dniOtherData = null;
+
+        $dniChoices = [
+            'INE' => 'INE',
+            'Pasaporte' => 'Pasaporte',
+            'Cédula profesional' => 'Cédula profesional',
+            'Licencia de conducir' => 'Licencia de conducir',
+            'INAPAM' => 'INAPAM',
+            'Otro' => 'Otro',
+        ];
+
+        if ($stakeholder && $stakeholder->getDni() !== null && !in_array($stakeholder->getDni(), $dniChoices)) {
+            $dniData = 'Otro';
+            $dniOtherData = $stakeholder->getDni();
+        } elseif ($stakeholder) {
+            $dniData = $stakeholder->getDni();
+        }
+
         $builder
             ->add('name')
-            ->add('dni', null, [
+            ->add('dni', ChoiceType::class, [
 		'label' => 'DNI',
+		'placeholder' => 'Choose a DNI',
+		'choices' => $dniChoices,
+		'mapped' => false,
+		'data' => $dniData,
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
+		],
+		'autocomplete' => true,
+		'constraints' => [
+                    new NotBlank(),
+                ],
 	    ])
+            ->add('dni_other', TextType::class, [
+                'label' => 'Other DNI',
+                'mapped' => false,
+                'required' => false,
+                'data' => $dniOtherData,
+            ])
             ->add('tag')
             ->add('subject', ChoiceType::class, [
 		'placeholder' => 'Choose a subject',
@@ -53,6 +96,8 @@ class StakeholderType extends AbstractType
 		],
 		'autocomplete' => true,
 	    ])
+	    ->add('evidence', HiddenType::class)
+	    ->add('sign', HiddenType::class)
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -84,6 +129,19 @@ class StakeholderType extends AbstractType
                 }
 
                 $form->add('checkOutAt', DateTimeType::class, $checkOutOptions);
+            }
+        });
+
+	$builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+            $stakeholder = $event->getData();
+
+            $dni = $form->get('dni')->getData();
+            if ($dni === 'Otro') {
+                $dniOther = $form->get('dni_other')->getData();
+                $stakeholder->setDni($dniOther);
+            } else {
+                $stakeholder->setDni($dni);
             }
         });
     }
