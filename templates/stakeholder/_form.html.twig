@@ -1,5 +1,80 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(form, {'attr': {'data-controller': 'dni-form'}}) }}
+    <div class="form-group">
+        {{ form_label(form.name) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.name) }}
+                <span class="text-danger">{{ form_errors(form.name) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.dni) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.dni, {'attr': {'data-dni-form-target': 'dniField', 'data-action': 'change->dni-form#toggleDniOther'}}) }}
+                <span class="text-danger">{{ form_errors(form.dni) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group d-none" data-dni-form-target="dniOtherField">
+        {{ form_label(form.dni_other) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.dni_other) }}
+                <span class="text-danger">{{ form_errors(form.dni_other) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.tag) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.tag) }}
+                <span class="text-danger">{{ form_errors(form.tag) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.subject) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.subject) }}
+                <span class="text-danger">{{ form_errors(form.subject) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.destination) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.destination) }}
+                <span class="text-danger">{{ form_errors(form.destination) }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.checkInAt) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.checkInAt) }}
+                <span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
+            </div>
+        </div>
+    </div>
+    {% if form.checkOutAt is defined %}
+    <div class="form-group">
+        {{ form_label(form.checkOutAt) }}:
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_widget(form.checkOutAt) }}
+                <span class="text-danger">{{ form_errors(form.checkOutAt) }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="d-grid gap-2 d-md-block">
-	<button class="btn btn-primary">{{ button_label|default('Save')|trans }}</button>
+        <button class="btn btn-primary">{{ button_label|default('Save')|trans }}</button>
+        <a class="btn btn-link" href="{{ path('app_stakeholder_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+    </div>
 {{ form_end(form) }}
