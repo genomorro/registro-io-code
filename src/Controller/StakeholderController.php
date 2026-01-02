@@ -36,6 +36,28 @@ final class StakeholderController extends AbstractController
             $entityManager->persist($stakeholder);
             $entityManager->flush();
 
+            $evidenceData = $form->get('evidence')->getData();
+            if ($evidenceData) {
+                list($type, $data) = explode(';', $evidenceData);
+                list(, $data)      = explode(',', $data);
+                $data = base64_decode($data);
+
+                $year = date('Y');
+                $month = date('m');
+                $directory = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
+
+                if (!is_dir($directory)) {
+                    mkdir($directory, 0777, true);
+                }
+
+                $filename = uniqid() . '.png';
+                $filepath = $directory . '/' . $filename;
+                file_put_contents($filepath, $data);
+
+                $stakeholder->setEvidence('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+                $entityManager->flush();
+            }
+
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
         }
 

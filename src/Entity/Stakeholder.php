@@ -28,14 +28,14 @@ class Stakeholder
     #[ORM\Column(length: 255)]
     private ?string $destination = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $evidence = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $checkInAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $checkOutAt = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $evidence = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sign = null;

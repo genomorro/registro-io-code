@@ -7,26 +7,15 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholder{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">{% trans %}Edit{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page">{% trans %}Edit{% endtrans %}</li>
     </ol>
 
     <h1>{% trans %}Edit Stakeholder{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="row">
-	<div class="col-md-6"
-	     {{ include('stakeholder/_form.html.twig', {'button_label': 'Update'|trans}) }}
-
-	    <a href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
-	</div></div>
-    </div>
+    {{ include('stakeholder/_form.html.twig', {'form': form, 'button_label': 'Update'|trans}) }}
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-	<div class="row">
-	    <div class="col-md-10"></div>
-	    <div class="col-md-1">
-		{{ include('stakeholder/_delete_form.html.twig') }}
-	    </div>
-	</div>
+        {{ include('stakeholder/_delete_form.html.twig') }}
     {% endif %}
 {% endblock %}

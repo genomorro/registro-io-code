@@ -1,4 +1,12 @@
-{{ form_start(form, {'attr': {'data-controller': 'dni-form'}}) }}
+{% set form_attr = {'data-controller': 'dni-form'} %}
+{% if webrtc is defined and webrtc %}
+    {% set form_attr = form_attr|merge({'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}) %}
+{% endif %}
+
+{{ form_start(form, {'attr': form_attr}) }}
+    {% if webrtc is defined and webrtc %}
+        {{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
+    {% endif %}
     <div class="form-group">
         {{ form_label(form.name) }}:
         <div class="row">
