@@ -50,7 +50,16 @@
 			</tr>
 			<tr>
 			    <th>{% trans %}Check out{% endtrans %}</th>
-			    <td>{{ stakeholder.checkOutAt ? stakeholder.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
+			    <td>
+				{% if stakeholder.CheckOutAt %}
+				    {{ stakeholder.CheckOutAt|date('Y-m-d H:i:s') }}
+				{% else %}
+				    <form method="post" action="{{ path('app_stakeholder_check_out', {'id': stakeholder.id, 'redirect_route': 'app_stakeholder_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+					<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ stakeholder.id) }}">
+					<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+				    </form>
+				{% endif %}
+			    </td>
 			</tr>
 		    </tbody>
 		</table>

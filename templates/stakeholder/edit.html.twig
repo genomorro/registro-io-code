@@ -14,10 +14,12 @@
     <hr class="red">
 
     <div class="row">
-    {{ include('stakeholder/_form.html.twig', {'button_label': '{% trans %}Update{% endtrans %}'}) }}
+	<div class="col-md-6"
+	     {{ include('stakeholder/_form.html.twig', {'button_label': 'Update'|trans}) }}
 
-	<a href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
-    </div></div>
+	    <a href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
+	</div></div>
+    </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<div class="row">

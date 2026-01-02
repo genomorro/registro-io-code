@@ -30,6 +30,9 @@ final class StakeholderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $stakeholder->setCheckInAt(new \DateTimeImmutable());
+            /* $stakeholder->setCheckInUser($this->getUser()); */
+
             $entityManager->persist($stakeholder);
             $entityManager->flush();
 
@@ -53,10 +56,16 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/edit', name: 'app_stakeholder_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
+        $originalCheckOutAt = $stakeholder->getCheckOutAt();
         $form = $this->createForm(StakeholderType::class, $stakeholder);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newCheckOutAt = $stakeholder->getCheckOutAt();
+            /* if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
+	     *     $stakeholder->setCheckOutUser($this->getUser());
+	     * } */
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
@@ -77,5 +86,28 @@ final class StakeholderController extends AbstractController
         }
 
         return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/check-out', name: 'app_stakeholder_check_out', methods: ['POST'])]
+    public function checkOut(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
+    {
+	/* $this->denyAccessUnlessGranted('ROLE_USER'); */
+
+        if ($this->isCsrfTokenValid('checkout'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
+            $stakeholder->setCheckOutAt(new \DateTimeImmutable());
+            /* $stakeholder->setCheckOutUser($this->getUser()); */
+            $entityManager->flush();
+        }
+
+        $redirectRoute = $request->query->get('redirect_route', 'app_stakeholder_index');
+        $routeParameters = [];
+
+        switch ($redirectRoute) {
+            case 'app_stakeholder_show':
+                $routeParameters['id'] = $stakeholder->getId();
+                break;
+        }
+
+        return $this->redirectToRoute($redirectRoute, $routeParameters);
     }
 }
