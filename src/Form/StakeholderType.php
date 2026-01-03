@@ -96,7 +96,9 @@ class StakeholderType extends AbstractType
 		],
 		'autocomplete' => true,
 	    ])
-	    ->add('evidence', HiddenType::class)
+	    ->add('evidence', HiddenType::class, [
+		'mapped' => false,
+	    ])
 	    ->add('sign', HiddenType::class)
         ;
 

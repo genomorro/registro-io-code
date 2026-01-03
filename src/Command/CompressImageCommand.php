@@ -27,7 +27,7 @@ class CompressImageCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $uploadsPath = $this->projectDir . '/public/uploads';
-        $entityTypes = ['visitor', 'attendance'];
+        $entityTypes = ['visitor', 'attendance', 'stakeholder'];
         $currentDate = new \DateTime();
 
         foreach ($entityTypes as $type) {

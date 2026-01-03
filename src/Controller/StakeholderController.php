@@ -31,10 +31,33 @@ final class StakeholderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $stakeholder->setCheckInAt(new \DateTimeImmutable());
-            /* $stakeholder->setCheckInUser($this->getUser()); */
+            $stakeholder->setCheckInUser($this->getUser());
 
             $entityManager->persist($stakeholder);
             $entityManager->flush();
+
+            $evidenceData = $form->get('evidence')->getData();
+            if ($evidenceData) {
+                $data = explode(',', $evidenceData);
+                $imageData = base64_decode($data[1]);
+
+                $checkInAt = $stakeholder->getCheckInAt();
+                $year = $checkInAt->format('Y');
+                $month = $checkInAt->format('m');
+
+                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+
+                $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
+                $filepath = $uploadDir . '/' . $filename;
+
+                file_put_contents($filepath, $imageData);
+
+                $stakeholder->setEvidence('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+		$entityManager->flush();
+            }
 
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
         }
