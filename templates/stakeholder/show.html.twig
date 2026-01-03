@@ -65,6 +65,12 @@
 		</table>
 	    </div>
 	</div>
+
+	{% if stakeholder.evidence %}
+	    <div class="col-md-4 d-flex align-items-center justify-content-center">
+		<img class="border" width="100%" src="{{ stakeholder.evidence }}" alt="{{ stakeholder.checkInAt|date('Y-m-d H:i:s') }}">
+	    </div>
+	{% endif %}
     </div>
 
     <div class="d-grid gap-2 d-md-block">

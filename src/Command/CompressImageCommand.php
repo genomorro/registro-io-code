@@ -10,8 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 
 #[AsCommand(
-    name: 'app:compress-image',
-    description: 'Compresses images in the uploads directory.',
+name: 'app:compress-image',
+description: 'Compresses images in the uploads directory.',
 )]
 class CompressImageCommand extends Command
 {
@@ -27,7 +27,7 @@ class CompressImageCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $uploadsPath = $this->projectDir . '/public/uploads';
-        $entityTypes = ['visitor', 'attendance'];
+        $entityTypes = ['attendance', 'stakeholder', 'visitor'];
         $currentDate = new \DateTime();
 
         foreach ($entityTypes as $type) {
