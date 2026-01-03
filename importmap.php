@@ -22,6 +22,9 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    'signature_pad' => [
+        'version' => '4.2.0',
+    ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],

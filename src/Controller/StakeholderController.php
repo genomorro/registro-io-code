@@ -36,28 +36,41 @@ final class StakeholderController extends AbstractController
             $entityManager->persist($stakeholder);
             $entityManager->flush();
 
+            $checkInAt = $stakeholder->getCheckInAt();
+            $year = $checkInAt->format('Y');
+            $month = $checkInAt->format('m');
+            $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
             $evidenceData = $form->get('evidence')->getData();
             if ($evidenceData) {
                 $data = explode(',', $evidenceData);
                 $imageData = base64_decode($data[1]);
-                
-                $checkInAt = $stakeholder->getCheckInAt();
-                $year = $checkInAt->format('Y');
-                $month = $checkInAt->format('m');
-                
-                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
-                
+
                 $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
                 $filepath = $uploadDir . '/' . $filename;
                 
                 file_put_contents($filepath, $imageData);
                 
                 $stakeholder->setEvidence('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
-		$entityManager->flush();
             }
+
+            $signData = $form->get('sign')->getData();
+            if ($signData) {
+                $data = explode(',', $signData);
+                $imageData = base64_decode($data[1]);
+                
+                $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.svg';
+                $filepath = $uploadDir . '/' . $filename;
+                
+                file_put_contents($filepath, $imageData);
+                
+                $stakeholder->setSign('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+            }
+
+	    $entityManager->flush();
 
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
         }

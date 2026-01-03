@@ -13,10 +13,11 @@
     <h1>{% trans %}Create new Stakeholder{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="row" {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
+    <div class="row" {{ stimulus_controller('webrtc') }} {{ stimulus_controller('signature-pad') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	<div class="col-md-6">
-	    {{ form_start(form, {'attr': {'data-controller': 'dni-form', 'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
+	    {{ form_start(form, {'attr': {'data-controller': 'dni-form', 'data-webrtc-target': 'form', 'data-signature-pad-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
 		{{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
+		{{ form_widget(form.sign, {'attr': {'data-signature-pad-target': 'sign'}}) }}
 		<div class="form-group">
 		    {{ form_label(form.name) }}:
 		    <div class="row">
@@ -89,6 +90,11 @@
 	    {{ form_end(form) }}
 	</div>
 	<div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
+	    <canvas data-signature-pad-target="canvas" width="480" height="200" class="border mt-3"></canvas>
+	    <div class="my-2">
+		<button type="button" data-signature-pad-target="clearButton" class="btn btn-xs btn-danger">{% trans %}Clear Signature{% endtrans %}</button>
+	    </div>
+
 	    <video data-webrtc-target="video" width="480" height="360" class="border" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
 	    <div class="my-2">
 		<select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
