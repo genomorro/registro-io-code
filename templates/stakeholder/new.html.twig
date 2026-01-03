@@ -88,7 +88,12 @@
 		</div>
 	    {{ form_end(form) }}
 	</div>
-	<div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
+	<div class="col-md-6 d-flex align-items-center justify-content-center flex-column" data-controller="signature">
+	    <canvas data-signature-target="canvas" data-action="mousedown->signature#startPainting touchstart->signature#startPainting" width="480" height="200" style="background-color: #eaeaea;" class="border mt-3"></canvas>
+	    <div class="my-2">
+		<button data-action="click->signature#clear" type="button" class="btn btn-xs btn-danger">{% trans %}Clear Signature{% endtrans %}</button>
+	    </div>
+
 	    <video data-webrtc-target="video" width="480" height="360" class="border" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
 	    <div class="my-2">
 		<select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
