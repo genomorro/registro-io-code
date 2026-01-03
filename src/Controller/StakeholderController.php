@@ -47,7 +47,7 @@ final class StakeholderController extends AbstractController
                 
                 $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
                 if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
+                    mkdir($uploadDir, 0755, true);
                 }
                 
                 $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
@@ -56,6 +56,29 @@ final class StakeholderController extends AbstractController
                 file_put_contents($filepath, $imageData);
                 
                 $stakeholder->setEvidence('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+		$entityManager->flush();
+            }
+
+            $signData = $form->get('sign')->getData();
+            if ($signData) {
+                $data = explode(',', $signData);
+                $imageData = base64_decode($data[1]);
+
+                $checkInAt = $stakeholder->getCheckInAt();
+                $year = $checkInAt->format('Y');
+                $month = $checkInAt->format('m');
+
+                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+
+                $filename = $stakeholder->getId() . '-sign-' . $checkInAt->format('YmdHis') . '.png';
+                $filepath = $uploadDir . '/' . $filename;
+
+                file_put_contents($filepath, $imageData);
+
+                $stakeholder->setSign('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
 		$entityManager->flush();
             }
 
