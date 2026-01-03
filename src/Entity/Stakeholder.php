@@ -40,6 +40,13 @@ class Stakeholder
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sign = null;
 
+    #[ORM\ManyToOne(inversedBy: 'stakeholdersCheckIn')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $checkInUser = null;
+
+    #[ORM\ManyToOne(inversedBy: 'stakeholdersCheckOut')]
+    private ?User $checkOutUser = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +156,30 @@ class Stakeholder
     public function setSign(?string $sign): static
     {
         $this->sign = $sign;
+
+        return $this;
+    }
+
+    public function getCheckInUser(): ?User
+    {
+        return $this->checkInUser;
+    }
+
+    public function setCheckInUser(?User $checkInUser): static
+    {
+        $this->checkInUser = $checkInUser;
+
+        return $this;
+    }
+
+    public function getCheckOutUser(): ?User
+    {
+        return $this->checkOutUser;
+    }
+
+    public function setCheckOutUser(?User $checkOutUser): static
+    {
+        $this->checkOutUser = $checkOutUser;
 
         return $this;
     }

@@ -31,7 +31,7 @@ final class StakeholderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $stakeholder->setCheckInAt(new \DateTimeImmutable());
-            /* $stakeholder->setCheckInUser($this->getUser()); */
+            $stakeholder->setCheckInUser($this->getUser());
 
             $entityManager->persist($stakeholder);
             $entityManager->flush();
@@ -85,9 +85,9 @@ final class StakeholderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $newCheckOutAt = $stakeholder->getCheckOutAt();
-            /* if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
-	     *     $stakeholder->setCheckOutUser($this->getUser());
-	     * } */
+            if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
+		$stakeholder->setCheckOutUser($this->getUser());
+	    }
 
             $entityManager->flush();
 
@@ -118,7 +118,7 @@ final class StakeholderController extends AbstractController
 
         if ($this->isCsrfTokenValid('checkout'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
             $stakeholder->setCheckOutAt(new \DateTimeImmutable());
-            /* $stakeholder->setCheckOutUser($this->getUser()); */
+            $stakeholder->setCheckOutUser($this->getUser());
             $entityManager->flush();
         }
 

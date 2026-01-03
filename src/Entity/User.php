@@ -62,12 +62,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Visitor::class, mappedBy: 'checkOutUser')]
     private Collection $visitorsCheckOut;
 
+    /**
+     * @var Collection<int, Stakeholder>
+     */
+    #[ORM\OneToMany(targetEntity: Stakeholder::class, mappedBy: 'checkInUser')]
+    private Collection $stakeholdersCheckIn;
+
+    /**
+     * @var Collection<int, Stakeholder>
+     */
+    #[ORM\OneToMany(targetEntity: Stakeholder::class, mappedBy: 'checkOutUser')]
+    private Collection $stakeholdersCheckOut;
+
     public function __construct()
     {
         $this->attendancesCheckIn = new ArrayCollection();
         $this->attendancesCheckOut = new ArrayCollection();
         $this->visitorsCheckIn = new ArrayCollection();
         $this->visitorsCheckOut = new ArrayCollection();
+        $this->stakeholdersCheckIn = new ArrayCollection();
+        $this->stakeholdersCheckOut = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -277,6 +291,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($visitorsCheckOut->getCheckOutUser() === $this) {
                 $visitorsCheckOut->setCheckOutUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stakeholder>
+     */
+    public function getStakeholdersCheckIn(): Collection
+    {
+        return $this->stakeholdersCheckIn;
+    }
+
+    public function addStakeholdersCheckIn(Stakeholder $stakeholdersCheckIn): static
+    {
+        if (!$this->stakeholdersCheckIn->contains($stakeholdersCheckIn)) {
+            $this->stakeholdersCheckIn->add($stakeholdersCheckIn);
+            $stakeholdersCheckIn->setCheckInUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStakeholdersCheckIn(Stakeholder $stakeholdersCheckIn): static
+    {
+        if ($this->stakeholdersCheckIn->removeElement($stakeholdersCheckIn)) {
+            // set the owning side to null (unless already changed)
+            if ($stakeholdersCheckIn->getCheckInUser() === $this) {
+                $stakeholdersCheckIn->setCheckInUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stakeholder>
+     */
+    public function getStakeholdersCheckOut(): Collection
+    {
+        return $this->stakeholdersCheckOut;
+    }
+
+    public function addStakeholdersCheckOut(Stakeholder $stakeholdersCheckOut): static
+    {
+        if (!$this->stakeholdersCheckOut->contains($stakeholdersCheckOut)) {
+            $this->stakeholdersCheckOut->add($stakeholdersCheckOut);
+            $stakeholdersCheckOut->setCheckOutUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStakeholdersCheckOut(Stakeholder $stakeholdersCheckOut): static
+    {
+        if ($this->stakeholdersCheckOut->removeElement($stakeholdersCheckOut)) {
+            // set the owning side to null (unless already changed)
+            if ($stakeholdersCheckOut->getCheckOutUser() === $this) {
+                $stakeholdersCheckOut->setCheckOutUser(null);
             }
         }
 
