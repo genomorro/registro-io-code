@@ -31,7 +31,7 @@ final class StakeholderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $stakeholder->setCheckInAt(new \DateTimeImmutable());
-            /* $stakeholder->setCheckInUser($this->getUser()); */
+            $stakeholder->setCheckInUser($this->getUser());
 
             $entityManager->persist($stakeholder);
             $entityManager->flush();
@@ -85,9 +85,9 @@ final class StakeholderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $newCheckOutAt = $stakeholder->getCheckOutAt();
-            /* if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
-	     *     $stakeholder->setCheckOutUser($this->getUser());
-	     * } */
+            if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
+	     $stakeholder->setCheckOutUser($this->getUser());
+	     }
 
             $entityManager->flush();
 
@@ -114,11 +114,11 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_stakeholder_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
-	/* $this->denyAccessUnlessGranted('ROLE_USER'); */
+	$this->denyAccessUnlessGranted('ROLE_USER');
 
         if ($this->isCsrfTokenValid('checkout'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
             $stakeholder->setCheckOutAt(new \DateTimeImmutable());
-            /* $stakeholder->setCheckOutUser($this->getUser()); */
+            $stakeholder->setCheckOutUser($this->getUser());
             $entityManager->flush();
         }
 
