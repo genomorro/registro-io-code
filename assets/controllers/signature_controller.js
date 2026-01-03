@@ -6,6 +6,11 @@ export default class extends Controller {
     connect() {
         this.ctx = this.canvasTarget.getContext("2d");
         this.painting = false;
+
+        this.ctx.lineWidth = 1;
+        this.ctx.lineCap = "round";
+        this.ctx.strokeStyle = "blue";
+
         this.setupEventListeners();
     }
 
@@ -18,47 +23,40 @@ export default class extends Controller {
         // Touch events
         this.canvasTarget.addEventListener("touchstart", this.startPosition.bind(this));
         this.canvasTarget.addEventListener("touchend", this.finishedPosition.bind(this));
-        this.canvasTarget.addEventListener("touchmove", this.draw.bind(this));
+        this.canvasTarget.addEventListener("touchmove", this.draw.bind(this), { passive: false });
 
         // Clear button
         this.clearButtonTarget.addEventListener("click", this.clearCanvas.bind(this));
     }
 
+    getCoordinates(e) {
+        const rect = this.canvasTarget.getBoundingClientRect();
+        const touch = e.touches ? e.touches[0] : null;
+        return {
+            x: (touch || e).clientX - rect.left,
+            y: (touch || e).clientY - rect.top,
+        };
+    }
+
     startPosition(e) {
         e.preventDefault();
         this.painting = true;
-        this.draw(e);
+        const { x, y } = this.getCoordinates(e);
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
     }
 
     finishedPosition() {
         this.painting = false;
-        this.ctx.beginPath();
     }
 
     draw(e) {
         if (!this.painting) return;
-
         e.preventDefault();
 
-        this.ctx.lineWidth = 1;
-        this.ctx.lineCap = "round";
-        this.ctx.strokeStyle = "blue";
-
-        let rect = this.canvasTarget.getBoundingClientRect();
-        let x, y;
-
-        if (e.touches) {
-            x = e.touches[0].clientX - rect.left;
-            y = e.touches[0].clientY - rect.top;
-        } else {
-            x = e.clientX - rect.left;
-            y = e.clientY - rect.top;
-        }
-
+        const { x, y } = this.getCoordinates(e);
         this.ctx.lineTo(x, y);
         this.ctx.stroke();
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
     }
 
     clearCanvas() {
