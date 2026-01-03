@@ -37,40 +37,20 @@ final class StakeholderController extends AbstractController
             $entityManager->flush();
 
             $checkInAt = $stakeholder->getCheckInAt();
-            $year = $checkInAt->format('Y');
-            $month = $checkInAt->format('m');
-            $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
 
             $evidenceData = $form->get('evidence')->getData();
             if ($evidenceData) {
-                $data = explode(',', $evidenceData);
-                $imageData = base64_decode($data[1]);
-
-                $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
-                $filepath = $uploadDir . '/' . $filename;
-                
-                file_put_contents($filepath, $imageData);
-                
-                $stakeholder->setEvidence('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+                $evidencePath = $this->saveBase64Image($evidenceData, 'png', $stakeholder->getId(), $checkInAt);
+                $stakeholder->setEvidence($evidencePath);
             }
 
             $signData = $form->get('sign')->getData();
             if ($signData) {
-                $data = explode(',', $signData);
-                $imageData = base64_decode($data[1]);
-                
-                $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.svg';
-                $filepath = $uploadDir . '/' . $filename;
-                
-                file_put_contents($filepath, $imageData);
-                
-                $stakeholder->setSign('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+                $signPath = $this->saveBase64Image($signData, 'svg', $stakeholder->getId(), $checkInAt);
+                $stakeholder->setSign($signPath);
             }
 
-	    $entityManager->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -99,8 +79,8 @@ final class StakeholderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $newCheckOutAt = $stakeholder->getCheckOutAt();
             if ($originalCheckOutAt === null && $newCheckOutAt !== null) {
-		$stakeholder->setCheckOutUser($this->getUser());
-	    }
+                $stakeholder->setCheckOutUser($this->getUser());
+            }
 
             $entityManager->flush();
 
@@ -127,7 +107,7 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_stakeholder_check_out', methods: ['POST'])]
     public function checkOut(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
-	/* $this->denyAccessUnlessGranted('ROLE_USER'); */
+        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
 
         if ($this->isCsrfTokenValid('checkout'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
             $stakeholder->setCheckOutAt(new \DateTimeImmutable());
@@ -145,5 +125,26 @@ final class StakeholderController extends AbstractController
         }
 
         return $this->redirectToRoute($redirectRoute, $routeParameters);
+    }
+
+    private function saveBase64Image(string $base64Data, string $extension, int $id, \DateTimeImmutable $dateTime): string
+    {
+        $data = explode(',', $base64Data);
+        $imageData = base64_decode($data[1]);
+
+        $year = $dateTime->format('Y');
+        $month = $dateTime->format('m');
+
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $filename = $id . '-' . $dateTime->format('YmdHis') . '.' . $extension;
+        $filepath = $uploadDir . '/' . $filename;
+
+        file_put_contents($filepath, $imageData);
+
+        return '/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename;
     }
 }
