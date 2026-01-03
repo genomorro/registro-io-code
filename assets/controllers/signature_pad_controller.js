@@ -8,12 +8,16 @@ export default class extends Controller {
 
     connect() {
         this.context = this.canvasTarget.getContext('2d');
+        this.context.lineWidth = 2;
+        this.context.strokeStyle = 'black';
+        this.context.lineCap = 'round';
+
         this.canvasTarget.addEventListener('mousedown', this.startDrawing.bind(this));
         this.canvasTarget.addEventListener('mouseup', this.stopDrawing.bind(this));
         this.canvasTarget.addEventListener('mousemove', this.draw.bind(this));
-        this.canvasTarget.addEventListener('touchstart', this.startDrawing.bind(this), { passive: true });
-        this.canvasTarget.addEventListener('touchend', this.stopDrawing.bind(this), { passive: true });
-        this.canvasTarget.addEventListener('touchmove', this.draw.bind(this), { passive: true });
+        this.canvasTarget.addEventListener('touchstart', this.startDrawing.bind(this), { passive: false });
+        this.canvasTarget.addEventListener('touchend', this.stopDrawing.bind(this), { passive: false });
+        this.canvasTarget.addEventListener('touchmove', this.draw.bind(this), { passive: false });
     }
 
     startDrawing(event) {
