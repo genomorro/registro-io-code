@@ -48,6 +48,12 @@
 			    <th>{% trans %}Check in{% endtrans %}</th>
 			    <td>{{ stakeholder.checkInAt ? stakeholder.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <tr>
+				<th>{% trans %}User who checked in{% endtrans %}</th>
+				<td>{{ stakeholder.checkInUser.username }}</td>
+			    </tr>
+			{% endif %}
 			<tr>
 			    <th>{% trans %}Check out{% endtrans %}</th>
 			    <td>
@@ -61,6 +67,12 @@
 				{% endif %}
 			    </td>
 			</tr>
+			{% if is_granted('ROLE_ADMIN') and stakeholder.checkOutAt is not null %}
+			    <tr>
+				<th>{% trans %}User who checked out{% endtrans %}</th>
+				<td>{{ stakeholder.checkOutUser.username }}</td>
+			    </tr>
+			{% endif %}
 		    </tbody>
 		</table>
 	    </div>
