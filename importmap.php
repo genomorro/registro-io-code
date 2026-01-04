@@ -61,7 +61,6 @@ return [
         'type' => 'css',
     ],
     'canvas2svg' => [
-        'url' => 'https://cdn.jsdelivr.net/npm/canvas2svg@1.0.16/dist/canvas2svg.js',
         'version' => '1.0.16',
     ],
 ];
