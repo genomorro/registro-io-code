@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import C2S from 'canvas2svg';
 
 export default class extends Controller {
-    static targets = ["canvas", "sign"];
+    static targets = ["canvas", "sign", "checkInAt"];
 
     connect() {
         this.canvas = this.canvasTarget;
@@ -86,8 +86,63 @@ export default class extends Controller {
         this.initializeContexts();
     }
 
-    save() {
+    async save() {
+        const logoUrl = this.element.dataset.webrtcLogoUrl;
+        const checkInValue = this.checkInAtTarget.value;
+
+        // Convert logo to Data URL to embed it in the SVG
+        const logoDataUrl = await this._imageToDataURL(logoUrl);
+
+        const addWatermarks = (ctx, logoSrc) => {
+            return new Promise((resolve) => {
+                const logo = new Image();
+                logo.src = logoSrc;
+                logo.onload = () => {
+                    ctx.font = '12px Arial';
+                    ctx.fillStyle = 'black';
+                    
+                    // Date watermark
+                    ctx.fillText(checkInValue, 5, this.canvas.height - 5);
+
+                    // Logo watermark
+                    const logoWidth = 50;
+                    const logoHeight = (logo.height / logo.width) * logoWidth;
+                    ctx.drawImage(logo, this.canvas.width - logoWidth - 5, 5, logoWidth, logoHeight);
+                    
+                    resolve();
+                };
+                logo.onerror = () => {
+                    console.warn('Could not load logo for watermark.');
+                    resolve();
+                };
+            });
+        };
+
+        await Promise.all([
+            addWatermarks(this.visibleCtx, logoUrl), // Use original URL for visible canvas
+            addWatermarks(this.svgCtx, logoDataUrl)      // Use Data URL for SVG context
+        ]);
+        
         const svg = this.svgCtx.getSerializedSvg();
         this.signTarget.value = 'data:image/svg+xml;base64,' + btoa(svg);
+    }
+
+    _imageToDataURL(url) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.height = img.naturalHeight;
+                canvas.width = img.naturalWidth;
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL('image/png'));
+            };
+            img.onerror = () => {
+                reject(new Error('Failed to load image for Data URL conversion.'));
+            };
+            img.src = url;
+        });
     }
 }
