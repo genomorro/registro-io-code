@@ -30,14 +30,16 @@ final class StakeholderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $stakeholder->setCheckInAt(new \DateTimeImmutable());
             $stakeholder->setCheckInUser($this->getUser());
 
             $entityManager->persist($stakeholder);
             $entityManager->flush();
 
-            $this->handleImageUpload($form, 'evidence', $stakeholder, $entityManager);
-            $this->handleImageUpload($form, 'sign', $stakeholder, $entityManager);
+            $checkInAt = $form->get('checkInAt')->getData();
+            if ($checkInAt) {
+                $this->handleImageUpload($form, 'evidence', $stakeholder, $entityManager, $checkInAt);
+                $this->handleImageUpload($form, 'sign', $stakeholder, $entityManager, $checkInAt);
+            }
 
             $entityManager->flush();
 
@@ -58,14 +60,13 @@ final class StakeholderController extends AbstractController
         ]);
     }
 
-    private function handleImageUpload($form, string $fieldName, Stakeholder $stakeholder, EntityManagerInterface $entityManager): void
+    private function handleImageUpload($form, string $fieldName, Stakeholder $stakeholder, EntityManagerInterface $entityManager, \DateTimeImmutable $checkInAt): void
     {
         $imageData = $form->get($fieldName)->getData();
         if ($imageData) {
             $data = explode(',', $imageData);
             $decodedImage = base64_decode($data[1]);
 
-            $checkInAt = $stakeholder->getCheckInAt();
             $year = $checkInAt->format('Y');
             $month = $checkInAt->format('m');
 
