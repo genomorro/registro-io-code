@@ -36,9 +36,10 @@ final class StakeholderController extends AbstractController
             $entityManager->flush();
 
             $checkInAt = $form->get('checkInAt')->getData();
-            if ($checkInAt) {
-                $this->handleImageUpload($form, 'evidence', $stakeholder, $entityManager, $checkInAt);
-                $this->handleImageUpload($form, 'sign', $stakeholder, $entityManager, $checkInAt);
+            if ($checkInAt instanceof \DateTime) {
+                $checkInAtImmutable = \DateTimeImmutable::createFromMutable($checkInAt);
+                $this->handleImageUpload($form, 'evidence', $stakeholder, $entityManager, $checkInAtImmutable);
+                $this->handleImageUpload($form, 'sign', $stakeholder, $entityManager, $checkInAtImmutable);
             }
 
             $entityManager->flush();
