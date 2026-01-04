@@ -78,7 +78,7 @@ final class StakeholderController extends AbstractController
                 '%d-%s.%s',
                 $stakeholder->getId(),
                 $checkInAt->format('YmdHis'),
-                $fieldName === 'sign' ? 'png' : 'png'
+                $fieldName === 'sign' ? 'svg' : 'png'
             );
             $filepath = $uploadDir . '/' . $filename;
 

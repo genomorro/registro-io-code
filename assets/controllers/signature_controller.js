@@ -1,20 +1,23 @@
 import { Controller } from '@hotwired/stimulus';
+import C2S from 'canvas2svg';
 
 export default class extends Controller {
     static targets = ["canvas", "sign"];
 
     connect() {
         this.canvas = this.canvasTarget;
-        this.ctx = this.canvas.getContext('2d');
+        this.initializeContext();
         this.painting = false;
         
+        this.boundDraw = this.draw.bind(this);
+        this.boundStopPainting = this.stopPainting.bind(this);
+    }
+
+    initializeContext() {
+        this.ctx = new C2S(this.canvas.width, this.canvas.height);
         this.ctx.lineWidth = 2;
         this.ctx.lineCap = 'round';
         this.ctx.strokeStyle = 'blue';
-
-        // Bind methods to ensure 'this' refers to the controller
-        this.boundDraw = this.draw.bind(this);
-        this.boundStopPainting = this.stopPainting.bind(this);
     }
 
     startPainting(e) {
@@ -66,10 +69,13 @@ export default class extends Controller {
     }
     
     clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const context = this.canvas.getContext('2d');
+        context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.initializeContext();
     }
 
     save() {
-        this.signTarget.value = this.canvas.toDataURL('image/png');
+        const svg = this.ctx.getSerializedSvg();
+        this.signTarget.value = 'data:image/svg+xml;base64,' + btoa(svg);
     }
 }
