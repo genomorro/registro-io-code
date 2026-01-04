@@ -90,10 +90,13 @@ export default class extends Controller {
         const logoUrl = this.element.dataset.webrtcLogoUrl;
         const checkInValue = this.checkInAtTarget.value;
 
-        const addWatermarks = (ctx) => {
+        // Convert logo to Data URL to embed it in the SVG
+        const logoDataUrl = await this._imageToDataURL(logoUrl);
+
+        const addWatermarks = (ctx, logoSrc) => {
             return new Promise((resolve) => {
                 const logo = new Image();
-                logo.src = logoUrl;
+                logo.src = logoSrc;
                 logo.onload = () => {
                     ctx.font = '12px Arial';
                     ctx.fillStyle = 'black';
@@ -115,9 +118,31 @@ export default class extends Controller {
             });
         };
 
-        await Promise.all([addWatermarks(this.visibleCtx), addWatermarks(this.svgCtx)]);
+        await Promise.all([
+            addWatermarks(this.visibleCtx, logoUrl), // Use original URL for visible canvas
+            addWatermarks(this.svgCtx, logoDataUrl)      // Use Data URL for SVG context
+        ]);
 
         const svg = this.svgCtx.getSerializedSvg();
         this.signTarget.value = 'data:image/svg+xml;base64,' + btoa(svg);
+    }
+
+    _imageToDataURL(url) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.height = img.naturalHeight;
+                canvas.width = img.naturalWidth;
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL('image/png'));
+            };
+            img.onerror = () => {
+                reject(new Error('Failed to load image for Data URL conversion.'));
+            };
+            img.src = url;
+        });
     }
 }
