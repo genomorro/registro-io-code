@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 import C2S from 'canvas2svg';
 
 export default class extends Controller {
-    static targets = ["canvas", "sign"];
+    static targets = ["canvas", "sign", "checkInAt"];
 
     connect() {
         this.canvas = this.canvasTarget;
@@ -86,7 +86,37 @@ export default class extends Controller {
         this.initializeContexts();
     }
 
-    save() {
+    async save() {
+        const logoUrl = this.element.dataset.webrtcLogoUrl;
+        const checkInValue = this.checkInAtTarget.value;
+
+        const addWatermarks = (ctx) => {
+            return new Promise((resolve) => {
+                const logo = new Image();
+                logo.src = logoUrl;
+                logo.onload = () => {
+                    ctx.font = '12px Arial';
+                    ctx.fillStyle = 'black';
+
+                    // Date watermark
+                    ctx.fillText(checkInValue, 5, this.canvas.height - 5);
+
+                    // Logo watermark
+                    const logoWidth = 50;
+                    const logoHeight = (logo.height / logo.width) * logoWidth;
+                    ctx.drawImage(logo, this.canvas.width - logoWidth - 5, 5, logoWidth, logoHeight);
+
+                    resolve();
+                };
+                logo.onerror = () => {
+                    console.warn('Could not load logo for watermark.');
+                    resolve();
+                };
+            });
+        };
+
+        await Promise.all([addWatermarks(this.visibleCtx), addWatermarks(this.svgCtx)]);
+
         const svg = this.svgCtx.getSerializedSvg();
         this.signTarget.value = 'data:image/svg+xml;base64,' + btoa(svg);
     }

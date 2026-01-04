@@ -3,6 +3,7 @@ import { Controller } from '@hotwired/stimulus';
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ["video", "canvas", "cameraSelect", "flipButton"];
+    static outlets = ["signature"];
     stream = null;
 
     connect() {
@@ -104,6 +105,10 @@ export default class extends Controller {
     async capture(event) {
 	event.preventDefault();
 	const form = event.currentTarget;
+
+	if (this.hasSignatureOutlet) {
+	    await this.signatureOutlet.save();
+	}
 
 	if (this.hasVideoTarget && this.videoTarget.srcObject) {
 	    const evidenceField = form.querySelector('input[name="evidence"], input[name$="[evidence]"]');

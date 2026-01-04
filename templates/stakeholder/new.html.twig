@@ -13,9 +13,9 @@
     <h1>{% trans %}Create new Stakeholder{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="row" {{ stimulus_controller('webrtc signature') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
+    <div class="row" {{ stimulus_controller('webrtc signature') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}" data-webrtc-signature-outlet=".signature">
 	<div class="col-md-6">
-	    {{ form_start(form, {'attr': {'data-controller': 'dni-form', 'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture submit->signature#save'}}) }}
+	    {{ form_start(form, {'attr': {'data-controller': 'dni-form', 'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
 		{{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
 		{{ form_widget(form.sign, {'attr': {'data-signature-target': 'sign'}}) }}
 		<div class="form-group">
@@ -76,7 +76,7 @@
 		    {{ form_label(form.checkInAt) }}:
 		    <div class="row">
 			<div class="col-md">
-			    {{ form_widget(form.checkInAt) }}
+			    {{ form_widget(form.checkInAt, {'attr': {'data-signature-target': 'checkInAt'}}) }}
 			    <span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
 			</div>
 		    </div>
