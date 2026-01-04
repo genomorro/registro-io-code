@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ["canvas"];
+    static targets = ["canvas", "sign"];
 
     connect() {
         this.canvas = this.canvasTarget;
@@ -67,5 +67,9 @@ export default class extends Controller {
     
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    save() {
+        this.signTarget.value = this.canvas.toDataURL('image/png');
     }
 }
