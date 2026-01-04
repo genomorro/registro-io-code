@@ -5,6 +5,7 @@ export default class extends Controller {
     static targets = ["video", "canvas", "cameraSelect", "flipButton"];
     static outlets = ["signature"];
     stream = null;
+    isSubmitting = false;
 
     connect() {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -103,6 +104,11 @@ export default class extends Controller {
     }
 
     async capture(event) {
+        if (this.isSubmitting) {
+            return;
+        }
+        this.isSubmitting = true;
+
 	event.preventDefault();
 	const form = event.currentTarget;
 
