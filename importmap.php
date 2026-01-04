@@ -60,4 +60,7 @@ return [
         'version' => '5.3.8',
         'type' => 'css',
     ],
+    'canvas2svg' => [
+        'version' => '1.0.16',
+    ],
 ];

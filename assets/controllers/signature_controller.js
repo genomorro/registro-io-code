@@ -1,20 +1,28 @@
 import { Controller } from '@hotwired/stimulus';
+import C2S from 'canvas2svg';
 
 export default class extends Controller {
-    static targets = ["canvas"];
+    static targets = ["canvas", "sign"];
 
     connect() {
         this.canvas = this.canvasTarget;
-        this.ctx = this.canvas.getContext('2d');
+        this.initializeContexts();
         this.painting = false;
         
-        this.ctx.lineWidth = 2;
-        this.ctx.lineCap = 'round';
-        this.ctx.strokeStyle = 'blue';
-
-        // Bind methods to ensure 'this' refers to the controller
         this.boundDraw = this.draw.bind(this);
         this.boundStopPainting = this.stopPainting.bind(this);
+    }
+
+    initializeContexts() {
+        this.visibleCtx = this.canvas.getContext('2d');
+        this.svgCtx = new C2S(this.canvas.width, this.canvas.height);
+
+        const contexts = [this.visibleCtx, this.svgCtx];
+        contexts.forEach(ctx => {
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'blue';
+        });
     }
 
     startPainting(e) {
@@ -32,7 +40,8 @@ export default class extends Controller {
 
     stopPainting() {
         this.painting = false;
-        this.ctx.beginPath();
+        this.visibleCtx.beginPath();
+        this.svgCtx.beginPath();
 
         document.removeEventListener('mousemove', this.boundDraw);
         document.removeEventListener('mouseup', this.boundStopPainting);
@@ -59,13 +68,26 @@ export default class extends Controller {
         
         const [x, y] = this.getCoordinates(e);
         
-        this.ctx.lineTo(x, y);
-        this.ctx.stroke();
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
+        this.visibleCtx.lineTo(x, y);
+        this.svgCtx.lineTo(x, y);
+        
+        this.visibleCtx.stroke();
+        this.svgCtx.stroke();
+        
+        this.visibleCtx.beginPath();
+        this.svgCtx.beginPath();
+        
+        this.visibleCtx.moveTo(x, y);
+        this.svgCtx.moveTo(x, y);
     }
     
     clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.visibleCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.initializeContexts();
+    }
+
+    save() {
+        const svg = this.svgCtx.getSerializedSvg();
+        this.signTarget.value = 'data:image/svg+xml;base64,' + btoa(svg);
     }
 }

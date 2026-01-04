@@ -30,34 +30,19 @@ final class StakeholderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $stakeholder->setCheckInAt(new \DateTimeImmutable());
             $stakeholder->setCheckInUser($this->getUser());
 
             $entityManager->persist($stakeholder);
             $entityManager->flush();
 
-            $evidenceData = $form->get('evidence')->getData();
-            if ($evidenceData) {
-                $data = explode(',', $evidenceData);
-                $imageData = base64_decode($data[1]);
-                
-                $checkInAt = $stakeholder->getCheckInAt();
-                $year = $checkInAt->format('Y');
-                $month = $checkInAt->format('m');
-                
-                $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
-                
-                $filename = $stakeholder->getId() . '-' . $checkInAt->format('YmdHis') . '.png';
-                $filepath = $uploadDir . '/' . $filename;
-                
-                file_put_contents($filepath, $imageData);
-                
-                $stakeholder->setEvidence('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
-		$entityManager->flush();
+            $checkInAt = $form->get('checkInAt')->getData();
+            if ($checkInAt instanceof \DateTime) {
+                $checkInAtImmutable = \DateTimeImmutable::createFromMutable($checkInAt);
+                $this->handleImageUpload($form, 'evidence', $stakeholder, $entityManager, $checkInAtImmutable);
+                $this->handleImageUpload($form, 'sign', $stakeholder, $entityManager, $checkInAtImmutable);
             }
+
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -74,6 +59,36 @@ final class StakeholderController extends AbstractController
         return $this->render('stakeholder/show.html.twig', [
             'stakeholder' => $stakeholder,
         ]);
+    }
+
+    private function handleImageUpload($form, string $fieldName, Stakeholder $stakeholder, EntityManagerInterface $entityManager, \DateTimeImmutable $checkInAt): void
+    {
+        $imageData = $form->get($fieldName)->getData();
+        if ($imageData) {
+            $data = explode(',', $imageData);
+            $decodedImage = base64_decode($data[1]);
+            
+            $year = $checkInAt->format('Y');
+            $month = $checkInAt->format('m');
+            
+            $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/stakeholder/' . $year . '/' . $month;
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+            
+            $filename = sprintf(
+                '%d-%s.%s',
+                $stakeholder->getId(),
+                $checkInAt->format('YmdHis'),
+                $fieldName === 'sign' ? 'svg' : 'png'
+            );
+            $filepath = $uploadDir . '/' . $filename;
+            
+            file_put_contents($filepath, $decodedImage);
+            
+            $setter = 'set' . ucfirst($fieldName);
+            $stakeholder->$setter('/uploads/stakeholder/' . $year . '/' . $month . '/' . $filename);
+        }
     }
 
     #[Route('/{id}/edit', name: 'app_stakeholder_edit', methods: ['GET', 'POST'])]
