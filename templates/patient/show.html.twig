@@ -13,7 +13,7 @@
     <h1>{% trans %}Patient{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="table-responsible">
+    <div class="table-responsive">
 	<table class="table table-striped">
             <tbody>
 		{% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -51,7 +51,7 @@
     <h2>{% trans %}Today's Appointments{% endtrans %}</h2>
     <hr class="red">
     {% if todays_appointments.nbResults > 0 %}
-        <div class="table-responsible">
+        <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -91,7 +91,7 @@
     {% if todays_attendance %}
         <div class="row">
             <div class="col-md d-flex align-items-center">
-                <div class="table-responsible d-flex">
+                <div class="table-responsive d-flex">
                     <table class="table table-striped">
                         <tbody>
                             <tr>
@@ -164,7 +164,7 @@
     <h2>{% trans %}Other Appointments{% endtrans %}</h2>
     <hr class="red">
     {% if other_appointments.nbResults > 0 %}
-        <div class="table-responsible">
+        <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -202,7 +202,7 @@
     <h2>{% trans %}Today's Visitors{% endtrans %}</h2>
     <hr class="red">
     {% if todays_visitors.nbResults > 0 %}
-        <div class="table-responsible">
+        <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>

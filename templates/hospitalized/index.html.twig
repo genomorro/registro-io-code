@@ -11,44 +11,46 @@
 
     <h1>{% trans %}Hospitalized index{% endtrans %}</h1>
     <hr class="red">
-    
-    <table class="table">
-        <thead>
-            <tr>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <th>{% trans %}Id{% endtrans %}</th>
-		{% endif %}
-		<th>{% trans %}File{% endtrans %}</th>
-		<th>{% trans %}Patient{% endtrans %}</th>
-                <th>{% trans %}Service{% endtrans %}</th>
-                <th>{% trans %}Bed{% endtrans %}</th>
-                <th>{% trans %}actions{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for hospitalized in hospitalizeds %}
-            <tr>
-		{%if is_granted('ROLE_SUPER_ADMIN') %}
-                    <td>{{ hospitalized.id }}</td>
-		{% endif %}
-                <td>{{ hospitalized.patient.file }}</td>
-                <td>{{ hospitalized.patient.name|title }}</td>
-                <td>{{ hospitalized.service }}</td>
-                <td>{{ hospitalized.bed }}</td>
-                <td>
-                    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+
+    <div clas="table-responsive">
+	<table class="table table-hover">
+            <thead>
+		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			<th>{% trans %}Id{% endtrans %}</th>
 		    {% endif %}
-                </td>
-            </tr>
+		    <th>{% trans %}File{% endtrans %}</th>
+		    <th>{% trans %}Patient{% endtrans %}</th>
+                    <th>{% trans %}Service{% endtrans %}</th>
+                    <th>{% trans %}Bed{% endtrans %}</th>
+                    <th>{% trans %}actions{% endtrans %}</th>
+		</tr>
+            </thead>
+            <tbody>
+		{% for hospitalized in hospitalizeds %}
+		    <tr>
+			{%if is_granted('ROLE_SUPER_ADMIN') %}
+			    <td>{{ hospitalized.id }}</td>
+			{% endif %}
+			<td>{{ hospitalized.patient.file }}</td>
+			<td>{{ hospitalized.patient.name|title }}</td>
+			<td>{{ hospitalized.service }}</td>
+			<td>{{ hospitalized.bed }}</td>
+			<td>
+			    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    {% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
+			</td>
+		    </tr>
         {% else %}
-            <tr>
-                <td colspan="4">{% trans %}no records found{% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		    <tr>
+			<td colspan="4">{% trans %}no records found{% endtrans %}</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a class="btn btn-primary" href="{{ path('app_hospitalized_new') }}">{% trans %}Create new{% endtrans %}</a>
