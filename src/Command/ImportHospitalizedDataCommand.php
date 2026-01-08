@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Hospitalized;
+use App\Repository\HospitalizedRepository;
 use App\Repository\PatientRepository;
 use App\Service\ConnectionService;
 use Doctrine\DBAL\Exception;
@@ -21,16 +22,19 @@ class ImportHospitalizedDataCommand extends Command
 {
     private EntityManagerInterface $entityManager;
     private PatientRepository $patientRepository;
+    private HospitalizedRepository $hospitalizedRepository;
     private ConnectionService $connectionService;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         PatientRepository $patientRepository,
+        HospitalizedRepository $hospitalizedRepository,
         ConnectionService $connectionService
     ) {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->patientRepository = $patientRepository;
+        $this->hospitalizedRepository = $hospitalizedRepository;
         $this->connectionService = $connectionService;
     }
 
@@ -57,10 +61,21 @@ class ImportHospitalizedDataCommand extends Command
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
             $maxId = 0;
+            $processedPatientIds = [];
             foreach ($hospitalizedData as $data) {
-                $patient = $this->patientRepository->find($data['idPaciente']);
+                $patientId = $data['idPaciente'];
+                if (in_array($patientId, $processedPatientIds)) {
+                    continue;
+                }
+
+                $patient = $this->patientRepository->find($patientId);
 
                 if ($patient) {
+                    $existingHospitalized = $this->hospitalizedRepository->findOneByPatient($patient);
+                    if ($existingHospitalized) {
+                        continue;
+                    }
+                    $processedPatientIds[] = $patientId;
                     $hospitalized = new Hospitalized();
                     $this->entityManager->persist($hospitalized);
 

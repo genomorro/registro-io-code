@@ -16,6 +16,20 @@ class HospitalizedRepository extends ServiceEntityRepository
         parent::__construct($registry, Hospitalized::class);
     }
 
+    /**
+     * @param Patient $patient
+     * @return Hospitalized|null
+     */
+    public function findOneByPatient(Patient $patient): ?Hospitalized
+    {
+        return $this->createQueryBuilder('h')
+            ->andWhere('h.patient = :patient')
+            ->setParameter('patient', $patient)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     //    /**
     //     * @return Hospitalized[] Returns an array of Hospitalized objects
     //     */
