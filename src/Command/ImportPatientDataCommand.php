@@ -75,7 +75,7 @@ class ImportPatientDataCommand extends Command
                 $patient->setFile($patientData['numExpediente']);
                 
                 $name = ($patientData['nomPaciente'] ?? '') . ' ' . ($patientData['primerApellido'] ?? '') . ' ' . ($patientData['segundoApellido'] ?? '');
-                $patient->setName(ucwords(str_replace(',', '', $name)));
+                $patient->setName(mb_convert_case(str_replace(',', '', $name), MB_CASE_TITLE, 'UTF-8'));
 
                 $disability = !in_array($patientData['tipoDificultad'], ['NINGUNA', 'SE IGNORA']);
                 $patient->setDisability($disability);

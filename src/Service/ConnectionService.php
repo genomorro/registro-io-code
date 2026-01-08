@@ -26,6 +26,7 @@ class ConnectionService
             'password' => $dbPassword,
             'host' => $dbHost,
             'driver' => $dbDriver,
+            'charset' => 'utf8mb4',
         ];
 
         $this->connection = DriverManager::getConnection($connectionParams);
