@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sistema en Mantenimiento{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 text-center">
+                <div class="card">
+                    <div class="card-header bg-warning text-white">
+                        <h1 class="card-title">Sitio en Mantenimiento</h1>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">
+                            Actualmente estamos realizando tareas de mantenimiento que requieren acceso exclusivo a la base de datos.
+                        </p>
+                        <p>
+                            Por favor, intente acceder nuevamente en unos minutos.
+                        </p>
+                        <p>
+                            Disculpe las molestias.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
