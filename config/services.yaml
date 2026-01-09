@@ -27,6 +27,26 @@ services:
         arguments:
             $projectDir: '%kernel.project_dir%'
 
+    App\Command\ImportDataCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Command\ImportPatientDataCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Command\ImportHospitalizedDataCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Command\ImportAppointmentDataCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\EventSubscriber\MaintenanceSubscriber:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
     App\Service\ConnectionService:
         arguments:
             $dbName: '%env(REMOTE_DB_NAME)%'

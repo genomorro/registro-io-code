@@ -9,101 +9,121 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-name: 'app:import-data:patient',
-description: 'Imports patient data from a remote MySQL database.',
+    name: 'app:import-data:patient',
+    description: 'Imports patient data from a remote MySQL database.',
 )]
 class ImportPatientDataCommand extends Command
 {
     private EntityManagerInterface $entityManager;
     private ConnectionService $connectionService;
+    private string $projectDir;
 
-    public function __construct(EntityManagerInterface $entityManager, ConnectionService $connectionService)
+    public function __construct(EntityManagerInterface $entityManager, ConnectionService $connectionService, string $projectDir)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->connectionService = $connectionService;
+        $this->projectDir = $projectDir;
+    }
+
+    protected function configure()
+    {
+        $this->addOption('no-maintenance', null, InputOption::VALUE_NONE, 'Do not manage the maintenance lock file.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $lockFilePath = $this->projectDir . '/var/maintenance.lock';
+        $manageMaintenance = !$input->getOption('no-maintenance');
 
-        try {
-            $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM pacientes';
-            $stmt = $conn->executeQuery($sql);
-            $patientsData = $stmt->iterateAssociative();
-        } catch (Exception $e) {
-            $io->error('Could not connect to the external database: ' . $e->getMessage());
-            return Command::FAILURE;
+        if ($manageMaintenance) {
+            touch($lockFilePath);
         }
 
-        $this->entityManager->getConnection()->beginTransaction();
-        
         try {
-            $this->entityManager->getConnection()->executeStatement('DELETE FROM patient');
-
-            $maxId = 0;
-            $processedIds = [];
-            foreach ($patientsData as $patientData) {
-                if ($patientData['idPac'] < 1) {
-                    continue;
-                }
-
-                if (in_array($patientData['idPac'], $processedIds)) {
-                    $io->warning(sprintf('Duplicate patient ID %d found in source data, skipping.', $patientData['idPac']));
-                    continue;
-                }
-                $processedIds[] = $patientData['idPac'];
-
-                $patient = new Patient();
-                $this->entityManager->persist($patient);
-
-                $metadata = $this->entityManager->getClassMetaData(Patient::class);
-                $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
-                $metadata->getReflectionProperty('id')->setValue($patient, $patientData['idPac']);
-
-                if (empty($patientData['numExpediente'])) {
-                    $io->warning(sprintf('Patient with ID %d has an empty file number (numExpediente), skipping.', $patientData['idPac']));
-                    $this->entityManager->detach($patient);
-                    continue;
-                }
-                $patient->setFile($patientData['numExpediente']);
-                
-                $name = ($patientData['nomPaciente'] ?? '') . ' ' . ($patientData['primerApellido'] ?? '') . ' ' . ($patientData['segundoApellido'] ?? '');
-                $patient->setName(ucwords(str_replace(',', '', $name)));
-
-                $disability = !in_array($patientData['tipoDificultad'], ['NINGUNA', 'SE IGNORA']);
-                $patient->setDisability($disability);
-
-                if ($patientData['idPac'] > $maxId) {
-                    $maxId = $patientData['idPac'];
-                }
+            try {
+                $conn = $this->connectionService->getConnection();
+                $sql = 'SELECT * FROM pacientes';
+                $stmt = $conn->executeQuery($sql);
+                $patientsData = $stmt->iterateAssociative();
+            } catch (Exception $e) {
+                $io->error('Could not connect to the external database: ' . $e->getMessage());
+                return Command::FAILURE;
             }
 
-            $this->entityManager->flush();
+            $this->entityManager->getConnection()->beginTransaction();
 
-            $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
-            if ($platform === 'sqlite') {
-                $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "patient"', [$maxId]);
-            } elseif ($platform === 'mysql') {
-                $this->entityManager->getConnection()->executeStatement('ALTER TABLE patient AUTO_INCREMENT = ?', [$maxId + 1]);
+            try {
+                $this->entityManager->getConnection()->executeStatement('DELETE FROM patient');
+
+                $maxId = 0;
+                $processedIds = [];
+                foreach ($patientsData as $patientData) {
+                    if ($patientData['idPac'] < 1) {
+                        continue;
+                    }
+
+                    if (in_array($patientData['idPac'], $processedIds)) {
+                        $io->warning(sprintf('Duplicate patient ID %d found in source data, skipping.', $patientData['idPac']));
+                        continue;
+                    }
+                    $processedIds[] = $patientData['idPac'];
+
+                    $patient = new Patient();
+                    $this->entityManager->persist($patient);
+
+                    $metadata = $this->entityManager->getClassMetaData(Patient::class);
+                    $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+                    $metadata->getReflectionProperty('id')->setValue($patient, $patientData['idPac']);
+
+                    if (empty($patientData['numExpediente'])) {
+                        $io->warning(sprintf('Patient with ID %d has an empty file number (numExpediente), skipping.', $patientData['idPac']));
+                        $this->entityManager->detach($patient);
+                        continue;
+                    }
+                    $patient->setFile($patientData['numExpediente']);
+
+                    $name = ($patientData['nomPaciente'] ?? '') . ' ' . ($patientData['primerApellido'] ?? '') . ' ' . ($patientData['segundoApellido'] ?? '');
+                    $patient->setName(ucwords(str_replace(',', '', $name)));
+
+                    $disability = !in_array($patientData['tipoDificultad'], ['NINGUNA', 'SE IGNORA']);
+                    $patient->setDisability($disability);
+
+                    if ($patientData['idPac'] > $maxId) {
+                        $maxId = $patientData['idPac'];
+                    }
+                }
+
+                $this->entityManager->flush();
+
+                $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
+                if ($platform === 'sqlite') {
+                    $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "patient"', [$maxId]);
+                } elseif ($platform === 'mysql') {
+                    $this->entityManager->getConnection()->executeStatement('ALTER TABLE patient AUTO_INCREMENT = ?', [$maxId + 1]);
+                }
+
+                $this->entityManager->getConnection()->commit();
+
+                $io->success('Patient data imported successfully.');
+
+            } catch (\Exception $e) {
+                $this->entityManager->getConnection()->rollBack();
+                $io->error('An error occurred during data import: ' . $e->getMessage());
+                return Command::FAILURE;
             }
 
-            $this->entityManager->getConnection()->commit();
-
-            $io->success('Patient data imported successfully.');
-
-        } catch (\Exception $e) {
-            $this->entityManager->getConnection()->rollBack();
-            $io->error('An error occurred during data import: ' . $e->getMessage());
-            return Command::FAILURE;
+            return Command::SUCCESS;
+        } finally {
+            if ($manageMaintenance && file_exists($lockFilePath)) {
+                unlink($lockFilePath);
+            }
         }
-
-        return Command::SUCCESS;
     }
 }
