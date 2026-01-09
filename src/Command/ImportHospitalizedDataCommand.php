@@ -10,12 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-name: 'app:import-data:hospitalized',
-description: 'Imports hospitalized data from a remote MySQL database.',
+    name: 'app:import-data:hospitalized',
+    description: 'Imports hospitalized data from a remote MySQL database.',
 )]
 class ImportHospitalizedDataCommand extends Command
 {
@@ -23,78 +24,99 @@ class ImportHospitalizedDataCommand extends Command
     private PatientRepository $patientRepository;
     private ConnectionService $connectionService;
 
+    private string $projectDir;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         PatientRepository $patientRepository,
-        ConnectionService $connectionService
+        ConnectionService $connectionService,
+        string $projectDir
     ) {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->patientRepository = $patientRepository;
         $this->connectionService = $connectionService;
+        $this->projectDir = $projectDir;
+    }
+
+    protected function configure()
+    {
+        $this->addOption('no-maintenance', null, InputOption::VALUE_NONE, 'Do not manage the maintenance lock file.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $lockFilePath = $this->projectDir . '/var/maintenance.lock';
+        $manageMaintenance = !$input->getOption('no-maintenance');
 
-        try {
-            $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM pacienteshospitalizados';
-            $stmt = $conn->executeQuery($sql);
-            $hospitalizedData = $stmt->iterateAssociative();
-        } catch (Exception $e) {
-            $io->error('Could not connect to the external database: ' . $e->getMessage());
-            return Command::FAILURE;
+        if ($manageMaintenance) {
+            touch($lockFilePath);
         }
 
-        $this->entityManager->getConnection()->beginTransaction();
-        
         try {
-            $this->entityManager->getConnection()->executeStatement('DELETE FROM hospitalized');
+            try {
+                $conn = $this->connectionService->getConnection();
+                $sql = 'SELECT * FROM pacienteshospitalizados';
+                $stmt = $conn->executeQuery($sql);
+                $hospitalizedData = $stmt->iterateAssociative();
+            } catch (Exception $e) {
+                $io->error('Could not connect to the external database: ' . $e->getMessage());
+                return Command::FAILURE;
+            }
 
-            $metadata = $this->entityManager->getClassMetaData(Hospitalized::class);
-            $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+            $this->entityManager->getConnection()->beginTransaction();
 
-            $maxId = 0;
-            foreach ($hospitalizedData as $data) {
-                $patient = $this->patientRepository->find($data['idPaciente']);
+            try {
+                $this->entityManager->getConnection()->executeStatement('DELETE FROM hospitalized');
 
-                if ($patient) {
-                    $hospitalized = new Hospitalized();
-                    $this->entityManager->persist($hospitalized);
+                $metadata = $this->entityManager->getClassMetaData(Hospitalized::class);
+                $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
-                    $metadata->getReflectionProperty('id')->setValue($hospitalized, $data['idHospital']);
+                $maxId = 0;
+                foreach ($hospitalizedData as $data) {
+                    $patient = $this->patientRepository->find($data['idPaciente']);
 
-                    $hospitalized->setService($data['servicioHosp']);
-                    $hospitalized->setBed($data['camaHosp']);
-                    $hospitalized->setPatient($patient);
+                    if ($patient) {
+                        $hospitalized = new Hospitalized();
+                        $this->entityManager->persist($hospitalized);
 
-                    if ($data['idHospital'] > $maxId) {
-                        $maxId = $data['idHospital'];
+                        $metadata->getReflectionProperty('id')->setValue($hospitalized, $data['idHospital']);
+
+                        $hospitalized->setService($data['servicioHosp']);
+                        $hospitalized->setBed($data['camaHosp']);
+                        $hospitalized->setPatient($patient);
+
+                        if ($data['idHospital'] > $maxId) {
+                            $maxId = $data['idHospital'];
+                        }
                     }
                 }
+
+                $this->entityManager->flush();
+
+                $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
+                if ($platform === 'sqlite') {
+                    $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "hospitalized"', [$maxId]);
+                } elseif ($platform === 'mysql') {
+                    $this->entityManager->getConnection()->executeStatement('ALTER TABLE hospitalized AUTO_INCREMENT = ?', [$maxId + 1]);
+                }
+
+                $this->entityManager->getConnection()->commit();
+
+                $io->success('Hospitalized data imported successfully.');
+
+            } catch (\Exception $e) {
+                $this->entityManager->getConnection()->rollBack();
+                $io->error('An error occurred during data import: ' . $e->getMessage());
+                return Command::FAILURE;
             }
 
-            $this->entityManager->flush();
-
-            $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
-            if ($platform === 'sqlite') {
-                $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "hospitalized"', [$maxId]);
-            } elseif ($platform === 'mysql') {
-                $this->entityManager->getConnection()->executeStatement('ALTER TABLE hospitalized AUTO_INCREMENT = ?', [$maxId + 1]);
+            return Command::SUCCESS;
+        } finally {
+            if ($manageMaintenance && file_exists($lockFilePath)) {
+                unlink($lockFilePath);
             }
-
-            $this->entityManager->getConnection()->commit();
-
-            $io->success('Hospitalized data imported successfully.');
-
-        } catch (\Exception $e) {
-            $this->entityManager->getConnection()->rollBack();
-            $io->error('An error occurred during data import: ' . $e->getMessage());
-            return Command::FAILURE;
         }
-
-        return Command::SUCCESS;
     }
 }

@@ -18,3 +18,5 @@
 /public/uploads/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+server.log

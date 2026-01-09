@@ -15,21 +15,38 @@ description: 'Imports data from remote databases.',
 )]
 class ImportDataCommand extends Command
 {
+    private string $projectDir;
+
+    public function __construct(string $projectDir)
+    {
+        parent::__construct();
+        $this->projectDir = $projectDir;
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $lockFilePath = $this->projectDir . '/var/maintenance.lock';
 
-        $patientCommand = $this->getApplication()->find('app:import-data:patient');
-        $patientCommand->run(new ArrayInput([]), $output);
+        touch($lockFilePath);
 
-        $hospitalizedCommand = $this->getApplication()->find('app:import-data:hospitalized');
-        $hospitalizedCommand->run(new ArrayInput([]), $output);
+        try {
+            $patientCommand = $this->getApplication()->find('app:import-data:patient');
+            $patientCommand->run(new ArrayInput(['--no-maintenance' => true]), $output);
 
-        $appointmentCommand = $this->getApplication()->find('app:import-data:appointment');
-        $appointmentCommand->run(new ArrayInput([]), $output);
+            $hospitalizedCommand = $this->getApplication()->find('app:import-data:hospitalized');
+            $hospitalizedCommand->run(new ArrayInput(['--no-maintenance' => true]), $output);
 
-        $io->success('All data imported successfully.');
+            $appointmentCommand = $this->getApplication()->find('app:import-data:appointment');
+            $appointmentCommand->run(new ArrayInput(['--no-maintenance' => true]), $output);
 
-        return Command::SUCCESS;
+            $io->success('All data imported successfully.');
+
+            return Command::SUCCESS;
+        } finally {
+            if (file_exists($lockFilePath)) {
+                unlink($lockFilePath);
+            }
+        }
     }
 }
