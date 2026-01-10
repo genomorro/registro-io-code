@@ -19,6 +19,8 @@ export default class extends Controller {
 
         const contexts = [this.visibleCtx, this.svgCtx];
         contexts.forEach(ctx => {
+            ctx.fillStyle = '#98989A';
+            ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#611232';
