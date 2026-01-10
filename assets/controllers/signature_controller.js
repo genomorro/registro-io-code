@@ -19,6 +19,8 @@ export default class extends Controller {
 
         const contexts = [this.visibleCtx, this.svgCtx];
         contexts.forEach(ctx => {
+	    ctx.fillStyle = '#98989A';
+            ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#611232';
@@ -98,7 +100,7 @@ export default class extends Controller {
                 const logo = new Image();
                 logo.src = logoSrc;
                 logo.onload = () => {
-                    ctx.font = '12px Arial';
+                    ctx.font = '10px Arial';
                     ctx.fillStyle = 'black';
                     
                     // Date watermark
