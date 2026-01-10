@@ -19,7 +19,7 @@ export default class extends Controller {
 
         const contexts = [this.visibleCtx, this.svgCtx];
         contexts.forEach(ctx => {
-	    ctx.fillStyle = '#98989A';
+            ctx.fillStyle = '#98989A';
             ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
@@ -107,9 +107,11 @@ export default class extends Controller {
                     ctx.fillText(checkInValue, 5, this.canvas.height - 5);
 
                     // Logo watermark
-                    const logoWidth = 50;
+                    const logoWidth = this.canvas.width * 0.10;
                     const logoHeight = (logo.height / logo.width) * logoWidth;
-                    ctx.drawImage(logo, this.canvas.width - logoWidth - 5, 5, logoWidth, logoHeight);
+                    const x = this.canvas.width - logoWidth - 150;
+                    const y = this.canvas.height - logoHeight - 109.55;
+                    ctx.drawImage(logo, x, y, logoWidth, logoHeight);
                     
                     resolve();
                 };
