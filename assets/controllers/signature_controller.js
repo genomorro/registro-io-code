@@ -21,7 +21,7 @@ export default class extends Controller {
         contexts.forEach(ctx => {
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
-            ctx.strokeStyle = 'blue';
+            ctx.strokeStyle = '#611232';
         });
     }
 

@@ -131,8 +131,9 @@
             </div>
             {% if todays_attendance.evidence %}
                 <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img class="border" width="100%" src="{{ todays_attendance.evidence }}" alt="{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}">
+                    <img class="border img-fluid w-100" src="{{ todays_attendance.evidence }}" alt="{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}">
                 </div>
+		<hr>
             {% endif %}
         </div>
     {% endif %}
