@@ -109,7 +109,9 @@ export default class extends Controller {
                     // Logo watermark
                     const logoWidth = 50;
                     const logoHeight = (logo.height / logo.width) * logoWidth;
-                    ctx.drawImage(logo, this.canvas.width - logoWidth - 5, 5, logoWidth, logoHeight);
+                    const x = this.canvas.width - logoWidth - 5;
+                    const y = 5;
+                    ctx.drawImage(logo, x, y, logoWidth, logoHeight);
                     
                     resolve();
                 };
