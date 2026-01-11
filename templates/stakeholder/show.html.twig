@@ -109,7 +109,7 @@
 
     </div>
 
-    <div class="d-grid gap-2 d-md-block">
+    <div class="d-grid gap-2 d-md-block mt-3">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
 	    <a class="btn btn-primary" href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}

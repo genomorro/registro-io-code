@@ -13,7 +13,7 @@
     <hr class="red">
     <div {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	<div class="col-md d-flex align-items-center justify-content-center flex-column">
-	    <video data-webrtc-target="video" width="203" height="152" class="border mt-0 img-fluid" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
+	    <video id="" data-webrtc-target="video" class="border mt-0 img-fluid w-25" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
             <div class="my-2">
                 <select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
                 <button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>

@@ -13,94 +13,98 @@
     <h1>{% trans %}Create new Stakeholder{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="row signature" {{ stimulus_controller('webrtc signature') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}" data-webrtc-signature-outlet=".signature">
+    <div class="signature" {{ stimulus_controller('webrtc signature') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}" data-webrtc-signature-outlet=".signature">
 	{{ form_start(form, {'attr': {'data-controller': 'dni-form', 'data-webrtc-target': 'form', 'data-action': 'submit->webrtc#capture'}}) }}
-	    <div class="col-md-6">
-		{{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
-		{{ form_widget(form.sign, {'attr': {'data-signature-target': 'sign'}}) }}
-		<div class="form-group">
-		    {{ form_label(form.name) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.name) }}
-			    <span class="text-danger">{{ form_errors(form.name) }}</span>
+	    <div class="row">
+		<div class="col-md-6">
+		    {{ form_widget(form.evidence, {'attr': {'data-webrtc-target': 'evidence'}}) }}
+		    {{ form_widget(form.sign, {'attr': {'data-signature-target': 'sign'}}) }}
+		    <div class="form-group">
+			{{ form_label(form.name) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.name) }}
+				<span class="text-danger">{{ form_errors(form.name) }}</span>
+			    </div>
+			</div>
+		    </div>
+		    <div class="form-group">
+			{{ form_label(form.dni) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.dni, {'attr': {'data-dni-form-target': 'dniField', 'data-action': 'change->dni-form#toggleDniOther'}}) }}
+				<span class="text-danger">{{ form_errors(form.dni) }}</span>
+			    </div>
+			</div>
+		    </div>
+		    <div class="form-group d-none" data-dni-form-target="dniOtherField">
+			{{ form_label(form.dni_other) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.dni_other) }}
+				<span class="text-danger">{{ form_errors(form.dni_other) }}</span>
+			    </div>
+			</div>
+		    </div>
+		    <div class="form-group">
+			{{ form_label(form.tag) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.tag) }}
+				<span class="text-danger">{{ form_errors(form.tag) }}</span>
+			    </div>
+			</div>
+		    </div>
+		    <div class="form-group">
+			{{ form_label(form.subject) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.subject) }}
+				<span class="text-danger">{{ form_errors(form.subject) }}</span>
+			    </div>
+			</div>
+		    </div>
+		    <div class="form-group">
+			{{ form_label(form.destination) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.destination) }}
+				<span class="text-danger">{{ form_errors(form.destination) }}</span>
+			    </div>
+			</div>
+		    </div>
+		    <div class="form-group">
+			{{ form_label(form.checkInAt) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.checkInAt, {'attr': {'data-signature-target': 'checkInAt'}}) }}
+				<span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
+			    </div>
 			</div>
 		    </div>
 		</div>
-		<div class="form-group">
-		    {{ form_label(form.dni) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.dni, {'attr': {'data-dni-form-target': 'dniField', 'data-action': 'change->dni-form#toggleDniOther'}}) }}
-			    <span class="text-danger">{{ form_errors(form.dni) }}</span>
-			</div>
+
+		<div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
+		    <canvas data-signature-target="canvas" data-action="mousedown->signature#startPainting touchstart->signature#startPainting" class="border mt-3 img-fluid"></canvas>
+		    <div class="my-2">
+			<button data-action="click->signature#clear" type="button" class="btn btn-xs btn-danger">{% trans %}Clear Signature{% endtrans %}</button>
 		    </div>
-		</div>
-		<div class="form-group d-none" data-dni-form-target="dniOtherField">
-		    {{ form_label(form.dni_other) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.dni_other) }}
-			    <span class="text-danger">{{ form_errors(form.dni_other) }}</span>
-			</div>
+
+		    <video data-webrtc-target="video" class="border img-fluid w-50" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
+		    <div class="my-2">
+			<select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
+			<button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
 		    </div>
-		</div>
-		<div class="form-group">
-		    {{ form_label(form.tag) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.tag) }}
-			    <span class="text-danger">{{ form_errors(form.tag) }}</span>
-			</div>
-		    </div>
-		</div>
-		<div class="form-group">
-		    {{ form_label(form.subject) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.subject) }}
-			    <span class="text-danger">{{ form_errors(form.subject) }}</span>
-			</div>
-		    </div>
-		</div>
-		<div class="form-group">
-		    {{ form_label(form.destination) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.destination) }}
-			    <span class="text-danger">{{ form_errors(form.destination) }}</span>
-			</div>
-		    </div>
-		</div>
-		<div class="form-group">
-		    {{ form_label(form.checkInAt) }}:
-		    <div class="row">
-			<div class="col-md">
-			    {{ form_widget(form.checkInAt, {'attr': {'data-signature-target': 'checkInAt'}}) }}
-			    <span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
-			</div>
-		    </div>
+		    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
 		</div>
 	    </div>
 
-	    <div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
-		<canvas data-signature-target="canvas" data-action="mousedown->signature#startPainting touchstart->signature#startPainting" class="border mt-3 img-fluid"></canvas>
-		<div class="my-2">
-		    <button data-action="click->signature#clear" type="button" class="btn btn-xs btn-danger">{% trans %}Clear Signature{% endtrans %}</button>
+	    <div class="row">
+		<div class="d-grid gap-2 d-md-block">
+		    <button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+		    <button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
+		    <a class="btn btn-link" href="{{ path('app_stakeholder_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
 		</div>
-
-		<video data-webrtc-target="video" width="480" height="360" class="border img-fluid" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
-		<div class="my-2">
-		    <select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
-		    <button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
-		</div>
-		<canvas data-webrtc-target="canvas" class="d-none"></canvas>
-	    </div>
-
-	    <div class="d-grid gap-2 d-md-block">
-		<button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
-		<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
-		<a class="btn btn-link" href="{{ path('app_stakeholder_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
 	    </div>
 	{{ form_end(form) }}
     </div>
