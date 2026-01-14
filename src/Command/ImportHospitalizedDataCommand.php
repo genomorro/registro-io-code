@@ -158,7 +158,7 @@ class ImportHospitalizedDataCommand extends Command
     {
         try {
             $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM pacienteshospitalizados';
+            $sql = 'SELECT * FROM pacientesHospitalizados';
             $stmt = $conn->executeQuery($sql);
             $hospitalizedData = $stmt->iterateAssociative();
         } catch (Exception $e) {

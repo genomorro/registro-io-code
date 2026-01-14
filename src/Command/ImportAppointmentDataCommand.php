@@ -162,7 +162,7 @@ class ImportAppointmentDataCommand extends Command
     {
         try {
             $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM citasmedicas';
+            $sql = 'SELECT * FROM citasMedicas';
             $stmt = $conn->executeQuery($sql);
             $appointmentData = $stmt->iterateAssociative();
         } catch (Exception $e) {

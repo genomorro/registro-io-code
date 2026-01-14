@@ -157,7 +157,7 @@ class ImportPatientDataCommand extends Command
     {
         try {
             $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM pacientes';
+            $sql = 'SELECT * FROM Pacientes';
             $stmt = $conn->executeQuery($sql);
             $patientsData = $stmt->iterateAssociative();
         } catch (Exception $e) {
