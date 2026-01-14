@@ -6,6 +6,7 @@ use App\Entity\Hospitalized;
 use App\Form\HospitalizedType;
 use App\Repository\HospitalizedRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,23 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HospitalizedController extends AbstractController
 {
     #[Route(name: 'app_hospitalized_index', methods: ['GET'])]
-    public function index(HospitalizedRepository $hospitalizedRepository): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
-	
+    public function index(
+        HospitalizedRepository $hospitalizedRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $query = $hospitalizedRepository->paginateHospitalized();
+
+        $hospitalizeds = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('hospitalized/index.html.twig', [
-            'hospitalizeds' => $hospitalizedRepository->findAll(),
+            'hospitalizeds' => $hospitalizeds,
         ]);
     }
 
