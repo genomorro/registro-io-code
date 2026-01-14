@@ -26,9 +26,9 @@ class Schedule implements ScheduleProviderInterface
         // add your own tasks here
         // see https://symfony.com/doc/current/scheduler.html#attaching-recurring-messages-to-a-schedule
 	    ->add(
-		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data:appointment')),
-		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data:patient')),
-		RecurringMessage::every("15 minutes", new RunCommandMessage('app:import-data:hospitalized'))
+		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data:appointment -u')),
+		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data:patient -u')),
+		RecurringMessage::every("15 minutes", new RunCommandMessage('app:import-data:hospitalized -u'))
 	    )
 	    ->add(
 		RecurringMessage::every("first Sunday of next month", new RunCommandMessage('app:compress-image'))
