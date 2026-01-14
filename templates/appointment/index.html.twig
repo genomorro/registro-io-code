@@ -12,18 +12,33 @@
     <h1>{% trans %}Appointment index{% endtrans %}</h1>
     <hr class="red">
 
+    <div class="row">
+	<div class="col count d-flex justify-content-start">
+	    Registros totales: {{ appointments.getTotalItemCount }}
+	</div>
+
+	<div class="col d-flex justify-content-end">
+	    <form method="get" action="{{ path('app_appointment_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by Name, Agenda or Date{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-outline-success" type="submit">{% trans %}Search{% endtrans %}</button>
+		</div>
+	    </form>
+	</div>
+    </div>
+
     <div class="table-responsive">
 	<table class="table table-hover">
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(appointments, 'Id'|trans, 'a.id') }}</th>
 		    {% endif %}
-		    <th>{% trans %}Patient{% endtrans %}</th>
-                    <th>{% trans %}Agenda{% endtrans %}</th>
+		    <th scope="col">{{ knp_pagination_sortable(appointments, 'Patient'|trans, 'p.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Agenda'|trans, 'a.agenda') }}</th>
                     <th>{% trans %}Specialty{% endtrans %}</th>
                     <th>{% trans %}Location{% endtrans %}</th>
-                    <th>{% trans %}Date at{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Date at'|trans, 'a.dateAt') }}</th>
                     <th>{% trans %}Type{% endtrans %}</th>
                     <th>{% trans %}Status{% endtrans %}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
@@ -58,11 +73,9 @@
 	</table>
     </div>
 
-    {% if appointments.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(appointments, { prev_message: '<', next_message: '>'}) }}
-	</div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(appointments) }}
+    </div>
     
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_appointment_new') }}">{% trans %}Create new{% endtrans %}</a>

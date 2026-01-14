@@ -6,6 +6,7 @@ use App\Entity\Appointment;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,20 +16,24 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AppointmentController extends AbstractController
 {
     #[Route(name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository, Request $request): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+    public function index(
+        AppointmentRepository $appointmentRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $queryBuilder = $appointmentRepository->createQueryBuilder('a')
-					      ->orderBy('a.date_at', 'ASC');
+        $filter = $request->query->get('filter');
+        $query = $appointmentRepository->paginateAppointment($filter);
 
-        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
-        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
-        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+        $appointments = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('appointment/index.html.twig', [
-            'appointments' => $pagerfanta,
+            'appointments' => $appointments,
         ]);
     }
 

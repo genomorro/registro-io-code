@@ -10,6 +10,7 @@ use App\Repository\AttendanceRepository;
 use App\Repository\PatientRepository;
 use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,19 +21,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class PatientController extends AbstractController
 {
     #[Route(name: 'app_patient_index', methods: ['GET'])]
-    public function index(PatientRepository $patientRepository, Request $request): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+    public function index(
+        PatientRepository $patientRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $queryBuilder = $patientRepository->findWithAppointmentsAndAttendanceTodayQueryBuilder();
+        $filter = $request->query->get('filter');
+        $query = $patientRepository->paginatePatient($filter);
 
-        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
-        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
-        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+        $patients = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('patient/index.html.twig', [
-            'patients' => $pagerfanta,
+            'patients' => $patients,
         ]);
     }
 

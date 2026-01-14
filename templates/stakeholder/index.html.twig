@@ -12,16 +12,31 @@
     <h1>{% trans %}Stakeholder index{% endtrans %}</h1>
     <hr class="red">
 
+    <div class="row">
+	<div class="col count d-flex justify-content-start">
+	    Registros totales: {{ stakeholders.getTotalItemCount }}
+	</div>
+
+	<div class="col d-flex justify-content-end">
+	    <form method="get" action="{{ path('app_stakeholder_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by Name or Tag{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-outline-success" type="submit">{% trans %}Search{% endtrans %}</button>
+		</div>
+	    </form>
+	</div>
+    </div>
+
     <div class="table-responsive">
 	<table class="table table-hover">
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(stakeholders, 'Id'|trans, 's.id') }}</th>
 		    {% endif %}
-                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Name'|trans, 's.name') }}</th>
                     <th>{% trans %}DNI{% endtrans %}</th>
-                    <th>{% trans %}Tag{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Tag'|trans, 's.tag') }}</th>
                     <th>{% trans %}Subject{% endtrans %}</th>
                     <th>{% trans %}Destination{% endtrans %}</th>
                     <th>{% trans %}Check in{% endtrans %}</th>
@@ -63,6 +78,10 @@
 		{% endfor %}
             </tbody>
 	</table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(stakeholders) }}
     </div>
 
     <a class="btn btn-primary" href="{{ path('app_stakeholder_new') }}">{% trans %}Create new{% endtrans %}</a>

@@ -6,6 +6,7 @@ use App\Entity\Stakeholder;
 use App\Form\StakeholderType;
 use App\Repository\StakeholderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,22 @@ use Symfony\Component\Routing\Attribute\Route;
 final class StakeholderController extends AbstractController
 {
     #[Route(name: 'app_stakeholder_index', methods: ['GET'])]
-    public function index(StakeholderRepository $stakeholderRepository): Response
-    {
+    public function index(
+        StakeholderRepository $stakeholderRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $filter = $request->query->get('filter');
+        $query = $stakeholderRepository->paginateStakeholder($filter);
+
+        $stakeholders = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('stakeholder/index.html.twig', [
-            'stakeholders' => $stakeholderRepository->findAll(),
+            'stakeholders' => $stakeholders,
         ]);
     }
 

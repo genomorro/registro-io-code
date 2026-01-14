@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Appointment;
 use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -48,5 +49,23 @@ class AppointmentRepository extends ServiceEntityRepository
 		    ->setParameter('patient', $patient)
 		    ->setParameter('tomorrow', $tomorrow)
 		    ->orderBy('a.date_at', 'ASC');
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginateAppointment(string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('a')
+            ->join('a.patient', 'p')
+            ->addSelect('p')
+            ->orderBy('a.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('p.name LIKE :filter OR a.agenda LIKE :filter OR a.dateAt LIKE :filter')
+                ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
     }
 }
