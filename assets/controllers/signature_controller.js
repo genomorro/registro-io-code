@@ -23,7 +23,7 @@ export default class extends Controller {
             ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
-            ctx.strokeStyle = '#611232';
+            ctx.strokeStyle = '#fff';
         });
     }
 
