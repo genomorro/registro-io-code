@@ -23,7 +23,8 @@ final class HospitalizedController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $query = $hospitalizedRepository->paginateHospitalized();
+        $filter = $request->query->get('filter');
+        $query = $hospitalizedRepository->paginateHospitalized($filter);
 
         $hospitalizeds = $paginator->paginate(
             $query,

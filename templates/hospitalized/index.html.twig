@@ -11,8 +11,20 @@
 
     <h1>{% trans %}Hospitalized index{% endtrans %}</h1>
     <hr class="red">
-    <div class="count">
-	{{ hospitalizeds.getTotalItemCount }}
+
+    <div class="row">
+	<div class="col count d-flex justify-content-start">
+	    Registros totales: {{ hospitalizeds.getTotalItemCount }}
+	</div>
+
+	<div class="col d-flex justify-content-end">
+	    <form method="get" action="{{ path('app_hospitalized_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by File or Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-outline-success" type="submit">{% trans %}Search{% endtrans %}</button>
+		</div>
+	    </form>
+	</div>
     </div>
     
     <div class="table-responsive">
@@ -20,12 +32,12 @@
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Id'|trans, 'h.id') }}</th>
 		    {% endif %}
-		    <th>{% trans %}File{% endtrans %}</th>
-		    <th>{% trans %}Patient{% endtrans %}</th>
-                    <th>{% trans %}Service{% endtrans %}</th>
-                    <th>{% trans %}Bed{% endtrans %}</th>
+		    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'File'|trans, 'p.file') }}</th>
+		    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Patient'|trans, 'p.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Service'|trans, 'h.service') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Bed'|trans, 'h.bed') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
