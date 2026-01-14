@@ -17,12 +17,12 @@
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Id'|trans, 'h.id') }}</th>
 		    {% endif %}
-		    <th>{% trans %}File{% endtrans %}</th>
-		    <th>{% trans %}Patient{% endtrans %}</th>
-                    <th>{% trans %}Service{% endtrans %}</th>
-                    <th>{% trans %}Bed{% endtrans %}</th>
+		    <th scope="col">{% trans %}File{% endtrans %}</th>
+		    <th scope="col">{% trans %}Patient{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Service'|trans, 'h.service') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Bed'|trans, 'h.bed') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
