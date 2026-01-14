@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Stakeholder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,4 +41,20 @@ class StakeholderRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+     * @return Query
+     */
+    public function paginateStakeholder(string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('s')
+            ->orderBy('s.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('s.name LIKE :filter OR s.tag LIKE :filter')
+                ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
+    }
 }

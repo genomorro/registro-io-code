@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -59,5 +60,21 @@ class PatientRepository extends ServiceEntityRepository
 		    ->orderBy('p.name', 'ASC')
 		    ->getQuery()
 		    ->getResult();
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginatePatient(string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('p.file LIKE :filter OR p.name LIKE :filter')
+                ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
     }
 }

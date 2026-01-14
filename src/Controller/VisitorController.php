@@ -7,6 +7,7 @@ use App\Entity\Visitor;
 use App\Form\VisitorType;
 use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,21 +17,24 @@ use Symfony\Component\Routing\Attribute\Route;
 final class VisitorController extends AbstractController
 {
     #[Route(name: 'app_visitor_index', methods: ['GET'])]
-    public function index(VisitorRepository $visitorRepository, Request $request): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+    public function index(
+        VisitorRepository $visitorRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-	$queryBuilder = $visitorRepository->createQueryBuilder('v')
-					  ->orderBy('v.checkInAt', 'ASC')
-					  ->orderBy('v.name', 'ASC');
+        $filter = $request->query->get('filter');
+        $query = $visitorRepository->paginateVisitor($filter);
 
-	$adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
-	$pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
-	$pagerfanta->setMaxPerPage(20);
-	$pagerfanta->setCurrentPage($request->query->getInt('page', 1));
-	
+        $visitors = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('visitor/index.html.twig', [
-            'visitors' => $pagerfanta,
+            'visitors' => $visitors,
         ]);
     }
 
