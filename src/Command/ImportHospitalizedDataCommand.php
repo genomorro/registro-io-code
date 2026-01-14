@@ -40,7 +40,7 @@ class ImportHospitalizedDataCommand extends Command
 
         try {
             $conn = $this->connectionService->getConnection();
-            $sql = 'SELECT * FROM pacienteshospitalizados';
+            $sql = 'SELECT * FROM pacientesHospitalizados';
             $stmt = $conn->executeQuery($sql);
             $hospitalizedData = $stmt->iterateAssociative();
         } catch (Exception $e) {
@@ -57,10 +57,17 @@ class ImportHospitalizedDataCommand extends Command
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
             $maxId = 0;
+            $processedPatientIds = [];
             foreach ($hospitalizedData as $data) {
-                $patient = $this->patientRepository->find($data['idPaciente']);
+                $patientId = $data['idPaciente'];
+                if (in_array($patientId, $processedPatientIds)) {
+                    continue;
+                }
+
+                $patient = $this->patientRepository->find($patientId);
 
                 if ($patient) {
+                    $processedPatientIds[] = $patientId;
                     $hospitalized = new Hospitalized();
                     $this->entityManager->persist($hospitalized);
 

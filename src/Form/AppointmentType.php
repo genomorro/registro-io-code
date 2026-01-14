@@ -39,6 +39,7 @@ class AppointmentType extends AbstractType
 		    'Primera vez y subsecuente' => 'Primera vez y subsecuente', 
 		    'Primera vez' => 'Primera vez',
 		    'Subsecuente' => 'Subsecuente',
+		    'Terapia de infusión' => 'Terapia de infusión',
                 ],
 		'tom_select_options' => [
 		    'plugins' => [
