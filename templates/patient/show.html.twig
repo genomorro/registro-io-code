@@ -86,82 +86,84 @@
         <p>{% trans %}No appointments for today.{% endtrans %}</p>
     {% endif %}
     
-    <h2>{% trans %}Today's Attendance{% endtrans %}</h2>
-    <hr class="red">
-    {% if todays_attendance %}
-        <div class="row">
-            <div class="col-md d-flex align-items-center">
-                <div class="table-responsive d-flex">
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <th>{% trans %}Tag{% endtrans %}</th>
-                                <td>{{ todays_attendance.tag }}</td>
-                            </tr>
-                            <tr>
-                                <th>{% trans %}Check in{% endtrans %}</th>
-                                <td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
-                            </tr>
-                            {% if todays_attendance.checkOutAt %}
-                                <tr>
-                                    <th>{% trans %}Check out{% endtrans %}</th>
-                                    <td>{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <th>{% trans %}Check out{% endtrans %}</th>
-                                    <td>
-                                        <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
-                                            <input type="hidden" name="redirect_route" value="app_patient_show">
-                                            <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
-                                            <button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>{% trans %}Is the patient accompanied?{% endtrans %}</th>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href="{{ path('app_visitor_new', {'patientId': patient.id}) }}">{% trans %}Register visitor{% endtrans %}</a>
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            {% if todays_attendance.evidence %}
-                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                    <img class="border img-fluid w-100" src="{{ todays_attendance.evidence }}" alt="{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}">
-                </div>
-		<hr>
-            {% endif %}
-        </div>
-    {% endif %}
-
-    {% if todays_attendance is null or todays_attendance.checkOutAt is not null %}
-        <div class="row" {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
-            <div class="col-md d-flex align-items-center justify-content-center">
-                <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
-                    <input type="hidden" name="redirect_route" value="app_patient_show">
-                    <input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
-                    <input type="hidden" name="evidence" data-webrtc-target="evidence">
-                    <div class="input-group mb-3" >
-                        <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height:34px" class="form-control form-control-sm"/>
-                        <button type="submit" class="btn btn-sm btn-primary">{% trans %}Check in{% endtrans %}</button>
+    {% if patient.hospitalized is empty %}
+	<h2>{% trans %}Today's Attendance{% endtrans %}</h2>
+	<hr class="red">
+	{% if todays_attendance %}
+            <div class="row">
+		<div class="col-md d-flex align-items-center">
+                    <div class="table-responsive d-flex">
+			<table class="table table-striped">
+                            <tbody>
+				<tr>
+                                    <th>{% trans %}Tag{% endtrans %}</th>
+                                    <td>{{ todays_attendance.tag }}</td>
+				</tr>
+				<tr>
+                                    <th>{% trans %}Check in{% endtrans %}</th>
+                                    <td>{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}</td>
+				</tr>
+				{% if todays_attendance.checkOutAt %}
+                                    <tr>
+					<th>{% trans %}Check out{% endtrans %}</th>
+					<td>{{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}</td>
+                                    </tr>
+				{% else %}
+                                    <tr>
+					<th>{% trans %}Check out{% endtrans %}</th>
+					<td>
+                                            <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+						<input type="hidden" name="redirect_route" value="app_patient_show">
+						<input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
+						<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+                                            </form>
+					</td>
+                                    </tr>
+                                    <tr>
+					<th>{% trans %}Is the patient accompanied?{% endtrans %}</th>
+					<td>
+                                            <a class="btn btn-sm btn-primary" href="{{ path('app_visitor_new', {'patientId': patient.id}) }}">{% trans %}Register visitor{% endtrans %}</a>
+					</td>
+                                    </tr>
+				{% endif %}
+                            </tbody>
+			</table>
                     </div>
-                </form>
+		</div>
+		{% if todays_attendance.evidence %}
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+			<img class="border img-fluid w-100" src="{{ todays_attendance.evidence }}" alt="{{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}">
+                    </div>
+		    <hr>
+		{% endif %}
             </div>
-            <div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
-                <video data-webrtc-target="video" class="border w-50" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
-                <div class="my-2">
-                    <select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
-                    <button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
-                </div>
-                <canvas data-webrtc-target="canvas" class="d-none"></canvas>
-            </div>
-        </div>
-    {% endif %}
+	{% endif %}
 
+	{% if todays_attendance is null or todays_attendance.checkOutAt is not null %}
+            <div class="row" {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
+		<div class="col-md d-flex align-items-center justify-content-center">
+                    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+			<input type="hidden" name="redirect_route" value="app_patient_show">
+			<input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
+			<input type="hidden" name="evidence" data-webrtc-target="evidence">
+			<div class="input-group mb-3" >
+                            <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height:34px" class="form-control form-control-sm"/>
+                            <button type="submit" class="btn btn-sm btn-primary">{% trans %}Check in{% endtrans %}</button>
+			</div>
+                    </form>
+		</div>
+		<div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
+                    <video data-webrtc-target="video" class="border w-50" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
+                    <div class="my-2">
+			<select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
+			<button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
+                    </div>
+                    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
+		</div>
+            </div>
+	{% endif %}
+    {% endif %}
+    
     <h2>{% trans %}Other Appointments{% endtrans %}</h2>
     <hr class="red">
     {% if other_appointments.nbResults > 0 %}
