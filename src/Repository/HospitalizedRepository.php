@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Hospitalized;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,15 +19,29 @@ class HospitalizedRepository extends ServiceEntityRepository
 
     /**
      * @param Patient $patient
+     *
      * @return Hospitalized|null
      */
     public function findOneByPatient(Patient $patient): ?Hospitalized
     {
         return $this->createQueryBuilder('h')
-		    ->andWhere('h.patient = :patient')
-		    ->setParameter('patient', $patient)
-		    ->getQuery()
-		    ->getOneOrNullResult()
+            ->andWhere('h.patient = :patient')
+            ->setParameter('patient', $patient)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginateHospitalized(): Query
+    {
+        return $this->createQueryBuilder('h')
+            ->join('h.patient', 'p')
+            ->addSelect('p')
+            ->orderBy('h.id', 'ASC')
+            ->getQuery()
         ;
     }
 }
