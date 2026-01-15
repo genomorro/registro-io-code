@@ -47,14 +47,15 @@
 			<th scope="col">{{ knp_pagination_sortable(patients, 'File'|trans, 'p.file') }}</th>
 			<th scope="col">{{ knp_pagination_sortable(patients, 'Name'|trans, 'p.name') }}</th>
 			<th>{% trans %}Disability{% endtrans %}</th>
-			<th>{% trans %}Check in{% endtrans %}</th>
-			<th>{% trans %}Check out{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Check in'|trans, 'att.checkInAt') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Check out'|trans, 'att.checkOutAt') }}</th>
 			<th>{% trans %}actions{% endtrans %}</th>
 		    </tr>
 		</thead>
 		<tbody>
-		    {% for patient in patients %}
-			{% set todays_attendance = patient.attendances|filter(a => a.checkInAt|date('Y-m-d') == "now"|date('Y-m-d'))|first %}
+		    {% for data in patients %}
+			{% set patient = data[0] %}
+			{% set todays_attendance = data[1] %}
 			<tr>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
 				<td>{{ patient.id }}</td>

@@ -49,13 +49,21 @@ class PatientRepository extends ServiceEntityRepository
      */
     public function paginatePatient(string $filter = null): Query
     {
+        $today = new \DateTime('today midnight');
+        $tomorrow = new \DateTime('tomorrow midnight');
+
         $query = $this->createQueryBuilder('p')
+            ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
+            ->addSelect('att')
             ->orderBy('p.id', 'ASC');
 
         if ($filter) {
             $query->andWhere('p.file LIKE :filter OR p.name LIKE :filter')
                 ->setParameter('filter', '%' . $filter . '%');
         }
+
+	$query->setParameter('today', $today)
+	      ->setParameter('tomorrow', $tomorrow);
 
         return $query->getQuery();
     }
