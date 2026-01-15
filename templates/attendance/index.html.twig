@@ -12,17 +12,32 @@
     <h1>{% trans %}Attendance index{% endtrans %}</h1>
     <hr class="red">
 
+    <div class="row">
+	<div class="col count d-flex justify-content-start">
+	    Registros totales: {{ attendances.getTotalItemCount }}
+	</div>
+
+	<div class="col d-flex justify-content-end">
+	    <form method="get" action="{{ path('app_attendance_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by Name or Tag{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">{% trans %}Search{% endtrans %}</button>
+		</div>
+	    </form>
+	</div>
+    </div>
+
     <div class="table-responsive">
 	<table class="table table-hover">
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(attendances, 'Id'|trans, 'a.id') }}</th>
 		    {% endif %}
-                    <th>{% trans %}Patient{% endtrans %}</th>
-                    <th>{% trans %}Tag{% endtrans %}</th>
-                    <th>{% trans %}Check in{% endtrans %}</th>
-                    <th>{% trans %}Check out{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(attendances, 'Patient'|trans, 'p.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(attendances, 'Tag'|trans, 'a.tag') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(attendances, 'Check in'|trans, 'a.checkInAt') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(attendances, 'Check out'|trans, 'a.checkOutAt') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -61,11 +76,9 @@
 	</table>
     </div>
 
-    {% if attendances.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(attendances, { prev_message: '<', next_message: '>'}) }}
-	</div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(attendances) }}
+    </div>
 
 	<a  class="btn btn-primary" href="{{ path('app_attendance_new') }}">{% trans %}Create new{% endtrans %}</a>
 {% endblock %}
