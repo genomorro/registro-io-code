@@ -62,7 +62,7 @@ class AppointmentRepository extends ServiceEntityRepository
 		      ->orderBy('a.id', 'ASC');
 
         if ($filter) {
-            $query->andWhere('p.name LIKE :filter OR a.agenda LIKE :filter OR a.dateAt LIKE :filter')
+            $query->andWhere('p.name LIKE :filter OR a.agenda LIKE :filter OR a.date_at LIKE :filter')
                   ->setParameter('filter', '%' . $filter . '%');
         }
 
