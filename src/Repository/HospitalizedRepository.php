@@ -38,13 +38,13 @@ class HospitalizedRepository extends ServiceEntityRepository
     public function paginateHospitalized(string $filter = null): Query
     {
         $query = $this->createQueryBuilder('h')
-            ->join('h.patient', 'p')
-            ->addSelect('p')
-            ->orderBy('h.id', 'ASC');
+		      ->join('h.patient', 'p')
+		      ->addSelect('p')
+		      ->orderBy('h.id', 'ASC');
 
         if ($filter) {
             $query->andWhere('p.file LIKE :filter OR p.name LIKE :filter')
-                ->setParameter('filter', '%' . $filter . '%');
+                  ->setParameter('filter', '%' . $filter . '%');
         }
 
         return $query->getQuery();
