@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Patient;
 use App\Entity\Visitor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -62,5 +63,21 @@ class VisitorRepository extends ServiceEntityRepository
 		    ->orderBy('v.name', 'ASC')
 		    ->getQuery()
 		    ->getResult();
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginateVisitor(string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('v')
+		      ->orderBy('v.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('v.name LIKE :filter OR v.tag LIKE :filter')
+                  ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
     }
 }

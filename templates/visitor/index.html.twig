@@ -12,21 +12,36 @@
     <h1>{% trans %}Visitor index{% endtrans %}</h1>
     <hr class="red">
 
+    <div class="row">
+	<div class="col count d-flex justify-content-start">
+	    Registros totales: {{ visitors.getTotalItemCount }}
+	</div>
+
+	<div class="col d-flex justify-content-end">
+	    <form method="get" action="{{ path('app_visitor_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by Name or Tag{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">{% trans %}Search{% endtrans %}</button>
+		</div>
+	    </form>
+	</div>
+    </div>
+
     <div class="table-responsive">
 	<table class="table table-hover">
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(visitors, 'Id'|trans, 'v.id') }}</th>
 		    {% endif %}
-                    <th>{% trans %}Name{% endtrans %}</th>
-                    <th>{% trans %}Phone{% endtrans %}</th>
-                    <th>{% trans %}DNI{% endtrans %}</th>
-                    <th>{% trans %}Tag{% endtrans %}</th>
-                    <th>{% trans %}Destination{% endtrans %}</th>
-                    <th>{% trans %}Check in{% endtrans %}</th>
-                    <th>{% trans %}Check out{% endtrans %}</th>
-                    <th>{% trans %}Relationship{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Name'|trans, 'v.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Phone'|trans, 'v.phone') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'DNI'|trans, 'v.dni') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Tag'|trans, 'v.tag') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Destination'|trans, 'v.destination') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Check in'|trans, 'v.checkInAt') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Check out'|trans, 'v.checkOutAt') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Relationship'|trans, 'v.relationship') }}</th>
                     <th>{% trans %}Patients{% endtrans %}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
@@ -71,11 +86,9 @@
 	</table>
     </div>
 
-    {% if visitors.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(visitors, { prev_message: '<', next_message: '>'}) }}
-	</div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(visitors) }}
+    </div>
 
     <a class="btn btn-primary" href="{{ path('app_visitor_new') }}">{% trans %}Create new{% endtrans %}</a>
 {% endblock %}
