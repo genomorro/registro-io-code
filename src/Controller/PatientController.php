@@ -34,7 +34,8 @@ final class PatientController extends AbstractController
         $patients = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            10
+            10,
+            ['distinct' => false]
         );
 
         return $this->render('patient/index.html.twig', [
