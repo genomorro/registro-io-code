@@ -77,24 +77,15 @@ final class PatientController extends AbstractController
 
         $todaysAttendance = $attendanceRepository->findLatestByPatientAndDate($patient, new \DateTime());
 
-        $todaysAppointmentsQB = $appointmentRepository->createTodaysAppointmentsByPatientQueryBuilder($patient);
-        $otherAppointmentsQB = $appointmentRepository->createOtherAppointmentsByPatientQueryBuilder($patient);
-        $todaysVisitorsQB = $visitorRepository->createTodaysVisitorsByPatientQueryBuilder($patient);
-
-        $todaysAppointmentsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($todaysAppointmentsQB);
-        $todaysAppointments = new \Pagerfanta\Pagerfanta($todaysAppointmentsAdapter);
-        $todaysAppointments->setMaxPerPage(20);
-        $todaysAppointments->setCurrentPage($request->query->getInt('page_today_appointments', 1));
-
-        $otherAppointmentsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($otherAppointmentsQB);
-        $otherAppointments = new \Pagerfanta\Pagerfanta($otherAppointmentsAdapter);
-        $otherAppointments->setMaxPerPage(20);
-        $otherAppointments->setCurrentPage($request->query->getInt('page_other_appointments', 1));
-
-        $todaysVisitorsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($todaysVisitorsQB);
-        $todaysVisitors = new \Pagerfanta\Pagerfanta($todaysVisitorsAdapter);
-        $todaysVisitors->setMaxPerPage(20);
-        $todaysVisitors->setCurrentPage($request->query->getInt('page_today_visitors', 1));
+        $todaysAppointments = $appointmentRepository->createTodaysAppointmentsByPatientQueryBuilder($patient)
+            ->getQuery()
+            ->getResult();
+        $otherAppointments = $appointmentRepository->createOtherAppointmentsByPatientQueryBuilder($patient)
+            ->getQuery()
+            ->getResult();
+        $todaysVisitors = $visitorRepository->createTodaysVisitorsByPatientQueryBuilder($patient)
+            ->getQuery()
+            ->getResult();
 
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,

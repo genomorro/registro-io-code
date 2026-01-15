@@ -50,7 +50,7 @@
 
     <h2>{% trans %}Today's Appointments{% endtrans %}</h2>
     <hr class="red">
-    {% if todays_appointments.nbResults > 0 %}
+    {% if todays_appointments|length > 0 %}
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -77,11 +77,6 @@
                 </tbody>
             </table>
         </div>
-	{% if todays_appointments.nbResults > 20 %}
-            <div class="navigation">
-		{{ pagerfanta(todays_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_today_appointments', prev_message: '<', next_message: '>'}) }}
-            </div>
-	{% endif %}
     {% else %}
         <p>{% trans %}No appointments for today.{% endtrans %}</p>
     {% endif %}
@@ -166,7 +161,7 @@
     
     <h2>{% trans %}Other Appointments{% endtrans %}</h2>
     <hr class="red">
-    {% if other_appointments.nbResults > 0 %}
+    {% if other_appointments|length > 0 %}
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -193,18 +188,13 @@
                 </tbody>
             </table>
         </div>
-	{% if other_appointments.haveToPaginate == true %}
-            <div class="navigation">
-		{{ pagerfanta(other_appointments, 'twitter_bootstrap5', {'pageParameter': 'page_other_appointments', prev_message: '<', next_message: '>'}) }}
-            </div>
-	{% endif %}
     {% else %}
         <p>{% trans %}No other appointments.{% endtrans %}</p>
     {% endif %}
 
     <h2>{% trans %}Today's Visitors{% endtrans %}</h2>
     <hr class="red">
-    {% if todays_visitors.nbResults > 0 %}
+    {% if todays_visitors|length > 0 %}
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -225,11 +215,6 @@
                 </tbody>
             </table>
         </div>
-	{% if todays_visitors.haveToPaginate == true %}
-            <div class="navigation">
-		{{ pagerfanta(todays_visitors, 'twitter_bootstrap5', {'pageParameter': 'page_today_visitors', prev_message: '<', next_message: '>'}) }}
-            </div>
-	{% endif %}
     {% else %}
         <p>{% trans %}No visitors for today.{% endtrans %}</p>
     {% endif %}
