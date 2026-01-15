@@ -11,6 +11,7 @@
 
     <h1>{% trans %}Patient index{% endtrans %}</h1>
     <hr class="red">
+
     <div {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	<div class="col-md d-flex align-items-center justify-content-center flex-column">
 	    <video id="" data-webrtc-target="video" class="border mt-0 img-fluid w-25" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
@@ -21,18 +22,33 @@
 	    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
 	</div>
 
+	<div class="row">
+	    <div class="col count d-flex justify-content-start">
+		Registros totales: {{ patients.getTotalItemCount }}
+	    </div>
+
+	    <div class="col d-flex justify-content-end">
+		<form method="get" action="{{ path('app_patient_index') }}">
+		    <div class="input-group mb-3">
+			<input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by File or Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+			<button class="btn btn-sm btn-info" type="submit">{% trans %}Search{% endtrans %}</button>
+		    </div>
+		</form>
+	    </div>
+	</div>
+
 	<div class="table-responsive">
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
-			    <th>{% trans %}Id{% endtrans %}</th>
+			    <th scope="col">{{ knp_pagination_sortable(patients, 'Id'|trans, 'p.id') }}</th>
 			{% endif %}
-			<th>{% trans %}File{% endtrans %}</th>
-			<th>{% trans %}Name{% endtrans %}</th>
-			<th>{% trans %}Disability{% endtrans %}</th>
-			<th>{% trans %}Check in{% endtrans %}</th>
-			<th>{% trans %}Check out{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'File'|trans, 'p.file') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Name'|trans, 'p.name') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Disability'|trans, 'p.disability') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Check in'|trans, 'att.checkInAt') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Check out'|trans, 'att.checkOutAt') }}</th>
 			<th>{% trans %}actions{% endtrans %}</th>
 		    </tr>
 		</thead>
@@ -89,11 +105,9 @@
 	</div>
     </div>
 
-    {% if patients.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(patients, { prev_message: '<', next_message: '>'}) }}
-	</div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(patients) }}
+    </div>
     
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
