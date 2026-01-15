@@ -33,6 +33,7 @@ license:
 'Appointments': 'Appointments'
 'Attendances': 'Attendances'
 'Visitors': 'Visitors'
+'Stakeholders': 'Stakeholders'
 'Language': 'Language'
 'es_MX': 'Español'
 'es': 'Español'
@@ -67,6 +68,7 @@ license:
 'Back to list': 'Back to list'
 'Begin': 'Begin'
 ### index.html.twig
+'Search by Name, Agenda or Date': 'Search by Name, Agenda or Date'
 'Id': 'Id'
 'actions': 'actions'
 'Appointment index': 'Appointment index'
@@ -95,6 +97,7 @@ license:
 'Check out': 'Check out'
 ### index.html.twig
 'Attendance index': 'Attendance index'
+'Search by Name or Tag': 'Search by Name or Tag'
 'Are you sure you want to check out?': 'Are you sure you want to check out?'
 ### new.html.twig
 'New Attendance': 'New Attendance'
@@ -112,6 +115,7 @@ license:
 'Bed': 'Bed'
 ### index.html.twig
 'Hospitalized index': 'Hospitalized index'
+'Search by File or Name': 'Search by File or Name'
 ## patient
 ### edit.html.twig
 'File': 'File'
@@ -208,6 +212,7 @@ license:
 ## user
 ### index.html.twig
 'User index': 'User index'
+'Search by Name or Username': 'Search by Name or Username'
 'Username': 'Username'
 'Roles': 'Roles'
 ### edit.html.twig

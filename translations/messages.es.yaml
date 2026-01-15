@@ -33,6 +33,7 @@ license:
 'Appointments': 'Citas'
 'Attendances': 'Asistencias'
 'Visitors': 'Visitantes'
+'Stakeholders': 'Involucrados'
 'Language': 'Idioma'
 'es_MX': 'Español'
 'es': 'Español'
@@ -67,6 +68,7 @@ license:
 'Back to list': 'Volver a la lista'
 'Begin': 'Inicio'
 ### index.html.twig
+'Search by Name, Agenda or Date': 'Buscar por nombre, agenda o fecha'
 'Id': 'Id'
 'actions': 'acciones'
 'Appointment index': 'Índice de citas'
@@ -95,6 +97,7 @@ license:
 'Check out': 'Hora de salida'
 ### index.html.twig
 'Attendance index': 'Índice de asistencia'
+'Search by Name or Tag': 'Buscar por nombre o gafete'
 'Are you sure you want to check out?': '¿Está seguro que desea registrar la salida?'
 ### new.html.twig
 'New Attendance': 'Nueva asistencia'
@@ -112,6 +115,7 @@ license:
 'Bed': 'Cama'
 ### index.html.twig
 'Hospitalized index': 'Índice de hospitalizados'
+'Search by File or Name': 'Buscar por expediente o nombre'
 ## patient
 ### edit.html.twig
 'File': 'Expediente'
@@ -208,6 +212,7 @@ license:
 ## user
 ### index.html.twig
 'User index': 'Índice de usuarios'
+'Search by Name or Username': 'Buscar por nombre o nombre de usuario'
 'Username': 'Nombre de usuario'
 'Roles': 'Permisos'
 ### edit.html.twig
