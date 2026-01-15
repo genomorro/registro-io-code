@@ -12,14 +12,29 @@
     <h1>{% trans %}User index{% endtrans %}</h1>
     <hr class="red">
 
+    <div class="row">
+	<div class="col count d-flex justify-content-start">
+	    Registros totales: {{ users.getTotalItemCount }}
+	</div>
+
+	<div class="col d-flex justify-content-end">
+	    <form method="get" action="{{ path('app_user_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by Name or Username{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">{% trans %}Search{% endtrans %}</button>
+		</div>
+	    </form>
+	</div>
+    </div>
+
     <div class="table-responsive">
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
-                    <th>{% trans %}Name{% endtrans %}</th>
-                    <th>{% trans %}Username{% endtrans %}</th>
-                    <th>{% trans %}Roles{% endtrans %}</th>
+                    <th scope="col">{{ knp_pagination_sortable(users, 'Id'|trans, 'u.id') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(users, 'Name'|trans, 'u.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(users, 'Username'|trans, 'u.username') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(users, 'Roles'|trans, 'u.roles') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -40,7 +55,6 @@
 			</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_user_show', {'id': user.id}) }}">{% trans %}Show{% endtrans %}</a>
-
 			    {% if not is_granted('ROLE_SUPER_ADMIN') and ('ROLE_SUPER_ADMIN' in user.roles) %}
 				<p></p>
 			    {% else %}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,4 +33,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * @return Query
+     */
+    public function paginateUser(string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('u')
+		      ->orderBy('u.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('u.username LIKE :filter OR u.name LIKE :filter')
+                  ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
+    }    
 }
