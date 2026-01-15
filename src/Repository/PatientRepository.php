@@ -18,24 +18,6 @@ class PatientRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function findWithAppointmentsAndAttendanceTodayQueryBuilder(): \Doctrine\ORM\QueryBuilder
-    {
-        $today = new \DateTime('today midnight');
-        $tomorrow = new \DateTime('tomorrow midnight');
-
-        return $this->createQueryBuilder('p')
-		    ->select('p', 'a', 'att')
-		    ->innerJoin('p.appointments', 'a', 'WITH', 'a.date_at >= :today AND a.date_at < :tomorrow')
-		    ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
-		    ->orderBy('a.date_at', 'ASC')
-		    ->orderBy('att.checkInAt', 'ASC')
-		    ->setParameter('today', $today)
-		    ->setParameter('tomorrow', $tomorrow);
-    }
-
-    /**
      * @param string $file
      * @return Patient[]
      */
