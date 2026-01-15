@@ -1534,14 +1534,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     generate_final_classes?: bool, // Default: true
  *     generate_final_entities?: bool, // Default: false
  * }
- * @psalm-type BabdevPagerfantaConfig = array{
- *     default_view?: scalar|null, // Default: "default"
- *     default_twig_template?: scalar|null, // Default: "@BabDevPagerfanta/default.html.twig"
- *     exceptions_strategy?: array{
- *         out_of_range_page?: "to_http_not_found"|"custom", // Default: "to_http_not_found"
- *         not_valid_current_page?: "to_http_not_found"|"custom", // Default: "to_http_not_found"
- *     },
- * }
  * @psalm-type KnpPaginatorConfig = array{
  *     default_options?: array{
  *         sort_field_name?: scalar|null, // Default: "sort"
@@ -1577,7 +1569,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
- *     babdev_pagerfanta?: BabdevPagerfantaConfig,
  *     knp_paginator?: KnpPaginatorConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
@@ -1595,7 +1586,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
- *         babdev_pagerfanta?: BabdevPagerfantaConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *     },
  *     "when@prod"?: array{
@@ -1611,7 +1601,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
- *         babdev_pagerfanta?: BabdevPagerfantaConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *     },
  *     "when@test"?: array{
@@ -1628,7 +1617,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
- *         babdev_pagerfanta?: BabdevPagerfantaConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
