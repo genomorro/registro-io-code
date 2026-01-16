@@ -32,7 +32,7 @@ class IndexController extends AbstractController
         );
 
         $creator = 'Edgar Uriel Domínguez Espinoza';
-        $year = '2025-2026';
+        $year = "2025-".date("Y");
 
         $process = new Process(['php', '../bin/console', 'about']);
         $process->run();
