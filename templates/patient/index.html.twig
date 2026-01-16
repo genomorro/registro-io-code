@@ -64,21 +64,21 @@
 			    <td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
 			    <td>
 				{% if todays_attendance %}
-				    {{ todays_attendance.checkInAt|date('H:i:s') }}
+				    {{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}
 				{% else %}
-				    <div class="col-12 col-md-8">
-					<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
-					    <input type="hidden" name="redirect_route" value="app_patient_index">
-					    <input type="hidden" name="evidence" data-webrtc-target="evidence">
-					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required class="form-control"/>
-					    <button type="submit" class="btn btn-sm btn-success w-100">{% trans %}Check in{% endtrans %}</button>
-					</form>
-				    </div>
+				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+					<input type="hidden" name="redirect_route" value="app_patient_index">
+					<input type="hidden" name="evidence" data-webrtc-target="evidence">
+					<div class="input-group">
+					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required class="form-control input-sm w-50"/>
+					    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check"></i></button>
+					</div>
+				    </form>
 				{% endif %}
 			    </td>
 			    <td>
 				{% if todays_attendance and todays_attendance.checkOutAt %}
-				    {{ todays_attendance.checkOutAt|date('H:i:s') }}
+				    {{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
 				{% elseif todays_attendance %}
 				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
