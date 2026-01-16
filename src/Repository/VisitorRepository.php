@@ -19,9 +19,9 @@ class VisitorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return Visitor[]
      */
-    public function createTodaysVisitorsByPatientQueryBuilder(Patient $patient): \Doctrine\ORM\QueryBuilder
+    public function findTodaysVisitorsByPatient(Patient $patient): array
     {
         $todayStart = new \DateTime('today');
         $todayEnd = new \DateTime('tomorrow');
@@ -33,9 +33,11 @@ class VisitorRepository extends ServiceEntityRepository
 		    ->andWhere('v.checkInAt < :todayEnd')
 		    ->orderBy('v.checkInAt', 'ASC')
 		    ->setParameter('patientId', $patient->getId())
-		    ->setParameter('todayStart', $todayStart)
+		    ->setParameter('todayStart', 'todayStart')
 		    ->setParameter('todayEnd', $todayEnd)
 		    ->orderBy('v.checkInAt', 'DESC')
+            ->getQuery()
+            ->getResult();
 	;
     }
 

@@ -19,9 +19,9 @@ class AppointmentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return Appointment[]
      */
-    public function createTodaysAppointmentsByPatientQueryBuilder(Patient $patient): \Doctrine\ORM\QueryBuilder
+    public function findTodaysAppointmentsByPatient(Patient $patient): array
     {
         $todayStart = new \DateTime('today midnight');
         $todayEnd = new \DateTime('tomorrow midnight');
@@ -33,13 +33,15 @@ class AppointmentRepository extends ServiceEntityRepository
 		    ->setParameter('patient', $patient)
 		    ->setParameter('todayStart', $todayStart)
 		    ->setParameter('todayEnd', $todayEnd)
-		    ->orderBy('a.date_at', 'ASC');
+		    ->orderBy('a.date_at', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return Appointment[]
      */
-    public function createOtherAppointmentsByPatientQueryBuilder(Patient $patient): \Doctrine\ORM\QueryBuilder
+    public function findOtherAppointmentsByPatient(Patient $patient): array
     {
         $tomorrow = new \DateTime('tomorrow midnight');
 
@@ -48,7 +50,9 @@ class AppointmentRepository extends ServiceEntityRepository
 		    ->andWhere('a.date_at >= :tomorrow')
 		    ->setParameter('patient', $patient)
 		    ->setParameter('tomorrow', $tomorrow)
-		    ->orderBy('a.date_at', 'ASC');
+		    ->orderBy('a.date_at', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
