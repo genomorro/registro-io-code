@@ -85,7 +85,7 @@
 				<td>
 				    <ul>
 					{% for patient in visitor.patient %}
-					    <li class="text-wrap">{{ patient.name }}, {% trans %}File{% endtrans %}: {{ patient.file }}</li>
+					    <li class="text-wrap">{{ patient.name }}, {% trans %}File{% endtrans %}: <a class="link-underline-light" href="{{ path('app_patient_show', {'id': patient.id}) }}">{{ patient.file }}</a></li>
 					{% endfor %}
 				    </ul>
 				</td>
