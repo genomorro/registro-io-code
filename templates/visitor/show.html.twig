@@ -26,7 +26,7 @@
 			{% endif %}
 			<tr>
 			    <th>{% trans %}Name{% endtrans %}</th>
-			    <td>{{ visitor.name|title }}</td>
+			    <td class="text-wrap">{{ visitor.name|title }}</td>
 			</tr>
 			<tr>
 			    <th>{% trans %}Phone{% endtrans %}</th>
@@ -50,7 +50,7 @@
 			</tr>
 			{% if is_granted('ROLE_ADMIN') %}
 			    <tr>
-				<th>{% trans %}User who checked in{% endtrans %}</th>
+				<th class="text-wrap">{% trans %}User who checked in{% endtrans %}</th>
 				<td>{{ visitor.checkInUser.username }}</td>
 			    </tr>
 			{% endif %}
@@ -69,7 +69,7 @@
 			</tr>
 			{% if is_granted('ROLE_ADMIN') and visitor.checkOutAt is not null %}
 			    <tr>
-				<th>{% trans %}User who checked out{% endtrans %}</th>
+				<th class="text-wrap">{% trans %}User who checked out{% endtrans %}</th>
 				<td>{{ visitor.checkOutUser.username }}</td>
 			    </tr>
 			{% endif %}
@@ -85,7 +85,7 @@
 				<td>
 				    <ul>
 					{% for patient in visitor.patient %}
-					    <li>{{ patient.name }} ({% trans %}File{% endtrans %}: {{ patient.file }})</li>
+					    <li class="text-wrap">{{ patient.name }}, {% trans %}File{% endtrans %}: {{ patient.file }}</li>
 					{% endfor %}
 				    </ul>
 				</td>

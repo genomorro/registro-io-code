@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
                     <th>{% trans %}Name{% endtrans %}</th>
-                    <td>{{ patient.name|title }}</td>
+                    <td class="text-wrap">{{ patient.name|title }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Disability{% endtrans %}</th>
@@ -207,7 +207,11 @@
                 <tbody>
                     {% for visitor in todays_visitors %}
                         <tr>
-                            <td>{{ visitor.name }}</td>
+                            <td>
+				<a class="link-underline-light" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">
+				    {{ visitor.name }}
+				</a>
+			    </td>
                             <td>{{ visitor.dni }}</td>
                             <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                         </tr>

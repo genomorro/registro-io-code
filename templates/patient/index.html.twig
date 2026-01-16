@@ -66,14 +66,14 @@
 				{% if todays_attendance %}
 				    {{ todays_attendance.checkInAt|date('H:i:s') }}
 				{% else %}
-				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
-					<input type="hidden" name="redirect_route" value="app_patient_index">
-					<input type="hidden" name="evidence" data-webrtc-target="evidence">
-					<div class="input-group mb-3">
-					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height: 34px" class="form-control form-control-sm"/>
-					    <button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
-					</div>
-				    </form>
+				    <div class="col-12 col-md-8">
+					<form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+					    <input type="hidden" name="redirect_route" value="app_patient_index">
+					    <input type="hidden" name="evidence" data-webrtc-target="evidence">
+					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required class="form-control"/>
+					    <button type="submit" class="btn btn-sm btn-success w-100">{% trans %}Check in{% endtrans %}</button>
+					</form>
+				    </div>
 				{% endif %}
 			    </td>
 			    <td>

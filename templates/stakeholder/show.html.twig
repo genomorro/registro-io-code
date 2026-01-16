@@ -26,7 +26,7 @@
 			{% endif %}
 			<tr>
 			    <th>{% trans %}Name{% endtrans %}</th>
-			    <td>{{ stakeholder.name|title }}</td>
+			    <td class="text-wrap">{{ stakeholder.name|title }}</td>
 			</tr>
 			<tr>
 			    <th>{% trans %}DNI{% endtrans %}</th>
@@ -38,11 +38,11 @@
 			</tr>
 			<tr>
 			    <th>{% trans %}Subject{% endtrans %}</th>
-			    <td>{{ stakeholder.subject }}</td>
+			    <td class="text-wrap">{{ stakeholder.subject }}</td>
 			</tr>
 			<tr>
 			    <th>{% trans %}Destination{% endtrans %}</th>
-			    <td>{{ stakeholder.destination }}</td>
+			    <td class="text-wrap">{{ stakeholder.destination }}</td>
 			</tr>
 			<tr>
 			    <th>{% trans %}Check in{% endtrans %}</th>
@@ -50,7 +50,7 @@
 			</tr>
 			{% if is_granted('ROLE_ADMIN') %}
 			    <tr>
-				<th>{% trans %}User who checked in{% endtrans %}</th>
+				<th class="text-wrap">{% trans %}User who checked in{% endtrans %}</th>
 				<td>{{ stakeholder.checkInUser.username }}</td>
 			    </tr>
 			{% endif %}
@@ -69,7 +69,7 @@
 			</tr>
 			{% if is_granted('ROLE_ADMIN') and stakeholder.checkOutAt is not null %}
 			    <tr>
-				<th>{% trans %}User who checked out{% endtrans %}</th>
+				<th class="text-wrap">{% trans %}User who checked out{% endtrans %}</th>
 				<td>{{ stakeholder.checkOutUser.username }}</td>
 			    </tr>
 			{% endif %}
