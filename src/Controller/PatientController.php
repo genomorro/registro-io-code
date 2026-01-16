@@ -77,15 +77,9 @@ final class PatientController extends AbstractController
 
         $todaysAttendance = $attendanceRepository->findLatestByPatientAndDate($patient, new \DateTime());
 
-        $todaysAppointments = $appointmentRepository->createTodaysAppointmentsByPatientQueryBuilder($patient)
-						    ->getQuery()
-						    ->getResult();
-        $otherAppointments = $appointmentRepository->createOtherAppointmentsByPatientQueryBuilder($patient)
-						   ->getQuery()
-						   ->getResult();
-        $todaysVisitors = $visitorRepository->createTodaysVisitorsByPatientQueryBuilder($patient)
-					    ->getQuery()
-					    ->getResult();
+        $todaysAppointments = $appointmentRepository->findTodaysAppointmentsByPatient($patient);
+        $otherAppointments = $appointmentRepository->findOtherAppointmentsByPatient($patient);
+        $todaysVisitors = $visitorRepository->findTodaysVisitorsByPatient($patient);
 
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,

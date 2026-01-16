@@ -28,8 +28,7 @@ class HospitalizedRepository extends ServiceEntityRepository
             ->andWhere('h.patient = :patient')
             ->setParameter('patient', $patient)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
     /**

@@ -33,8 +33,7 @@ class AttendanceRepository extends ServiceEntityRepository
 		    ->orderBy('a.checkInAt', 'DESC')
 		    ->setMaxResults(1)
 		    ->getQuery()
-		    ->getOneOrNullResult()
-        ;
+		    ->getOneOrNullResult();
     }
 
     public function findPatientByTag(int $tag): ?Patient
