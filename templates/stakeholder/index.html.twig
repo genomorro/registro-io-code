@@ -13,7 +13,7 @@
     <hr class="red">
 
     <div class="row">
-	<div class="col-12 col-md-6 count d-flex justify-content-start">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
 	    <form class="w-100" method="get" action="{{ path('app_stakeholder_index') }}">
 		<div class="input-group mb-3">
 		    <input type="text" name="filter" class="form-control w-75" style="height: 32px;" placeholder="{% trans %}Search by Name or Tag{% endtrans %}" value="{{ app.request.query.get('filter') }}">

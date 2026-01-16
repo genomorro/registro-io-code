@@ -13,17 +13,17 @@
     <hr class="red">
 
     <div class="row">
-	<div class="col count d-flex justify-content-start">
-	    Registros totales: {{ users.getTotalItemCount }}
-	</div>
-
-	<div class="col d-flex justify-content-end">
-	    <form method="get" action="{{ path('app_user_index') }}">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
+	    <form class="w-100" method="get" action="{{ path('app_user_index') }}">
 		<div class="input-group mb-3">
 		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by Name or Username{% endtrans %}" value="{{ app.request.query.get('filter') }}">
 		    <button class="btn btn-sm btn-info" type="submit">{% trans %}Search{% endtrans %}</button>
 		</div>
 	    </form>
+	</div>
+
+	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+	    Registros totales: {{ users.getTotalItemCount }}
 	</div>
     </div>
 
