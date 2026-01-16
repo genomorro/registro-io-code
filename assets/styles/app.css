@@ -18,3 +18,7 @@ video {
 .ts-dropdown {
     font-size: 18px !important;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	background-color: #611232 !important;
+}
