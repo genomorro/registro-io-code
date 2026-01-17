@@ -24,7 +24,7 @@
 		{% endif %}
 		<tr>
                     <th>{% trans %}File{% endtrans %}</th>
-                    <td>{{ hospitalized.patient.file }}</td>
+                    <td><a class="link-underline-light" href="{{ path('app_patient_show', {'id': hospitalized.patient.id}) }}">{{ hospitalized.patient.file }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Patient{% endtrans %}</th>

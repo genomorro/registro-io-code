@@ -16,8 +16,10 @@
 	<div class="col-12 col-md-6 d-flex justify-content-start">
 	    <form class="w-100" method="get" action="{{ path('app_hospitalized_index') }}">
 		<div class="input-group mb-3">
-		    <input type="text" name="filter" class="form-control w-75" style="height: 32px" placeholder="{% trans %}Search by File or Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
-		    <button class="btn btn-sm btn-info" type="submit">{% trans %}Search{% endtrans %}</button>
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by File or Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">
+			<span class="icon-search" aria-hidden="true"></span>
+		    </button>
 		</div>
 	    </form>
 	</div>
