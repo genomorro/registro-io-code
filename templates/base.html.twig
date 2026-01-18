@@ -19,7 +19,9 @@
     </head>
     <body>
 	<main class="page">
-	    {{ include('menu.html.twig') }}
+	    {% block menu %}
+		{{ include('menu.html.twig') }}
+	    {% endblock %}
 	    <div class="container-md">
 		{% block body %}		    
 		{% endblock %}

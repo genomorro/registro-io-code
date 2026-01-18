@@ -1556,6 +1556,16 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     convert_exception?: bool, // Default: false
  *     remove_first_page_param?: bool, // Default: false
  * }
+ * @psalm-type KnpMenuConfig = array{
+ *     providers?: array{
+ *         builder_alias?: bool, // Default: true
+ *     },
+ *     twig?: array{
+ *         template?: scalar|null, // Default: "@KnpMenu/menu.html.twig"
+ *     },
+ *     templating?: bool, // Default: false
+ *     default_renderer?: scalar|null, // Default: "twig"
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1570,6 +1580,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
  *     knp_paginator?: KnpPaginatorConfig,
+ *     knp_menu?: KnpMenuConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1587,6 +1598,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
  *         knp_paginator?: KnpPaginatorConfig,
+ *         knp_menu?: KnpMenuConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1602,6 +1614,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
+ *         knp_menu?: KnpMenuConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1618,6 +1631,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
+ *         knp_menu?: KnpMenuConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
