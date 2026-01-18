@@ -37,9 +37,7 @@
 			<th scope="col">{{ knp_pagination_sortable(stakeholders, 'Id'|trans, 's.id') }}</th>
 		    {% endif %}
                     <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Name'|trans, 's.name') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(stakeholders, 'DNI'|trans, 's.dni') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Tag'|trans, 's.tag') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Subject'|trans, 's.subject') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Destination'|trans, 's.destination') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Check in'|trans, 's.checkInAt') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(stakeholders, 'Check out'|trans, 's.checkOutAt') }}</th>
@@ -53,9 +51,7 @@
 			    <td>{{ stakeholder.id }}</td>
 			{% endif %}
 			<td>{{ stakeholder.name|title }}</td>
-			<td>{{ stakeholder.dni }}</td>
 			<td>{{ stakeholder.tag }}</td>
-			<td>{{ stakeholder.subject }}</td>
 			<td>{{ stakeholder.destination }}</td>
 			<td>{{ stakeholder.checkInAt ? stakeholder.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>

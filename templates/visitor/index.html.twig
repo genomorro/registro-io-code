@@ -37,13 +37,10 @@
 			<th scope="col">{{ knp_pagination_sortable(visitors, 'Id'|trans, 'v.id') }}</th>
 		    {% endif %}
                     <th scope="col">{{ knp_pagination_sortable(visitors, 'Name'|trans, 'v.name') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Phone'|trans, 'v.phone') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(visitors, 'DNI'|trans, 'v.dni') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(visitors, 'Tag'|trans, 'v.tag') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(visitors, 'Destination'|trans, 'v.destination') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(visitors, 'Check in'|trans, 'v.checkInAt') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(visitors, 'Check out'|trans, 'v.checkOutAt') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(visitors, 'Relationship'|trans, 'v.relationship') }}</th>
                     <th>{% trans %}Patients{% endtrans %}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
@@ -55,8 +52,6 @@
 			    <td>{{ visitor.id }}</td>
 			{% endif %}
 			<td>{{ visitor.name|title }}</td>
-			<td>{{ visitor.phone }}</td>
-			<td>{{ visitor.dni }}</td>
 			<td>{{ visitor.tag }}</td>
 			<td>{{ visitor.destination }}</td>
 			<td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -70,7 +65,6 @@
 				</form>
 			    {% endif %}
 			</td>
-			<td>{{ visitor.relationship }}</td>
 			<td>{{ visitor.patient|map(p => p.name)|join(', ') }}</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a>

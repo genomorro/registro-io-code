@@ -38,7 +38,6 @@
 		    {% endif %}
 		    <th scope="col">{{ knp_pagination_sortable(appointments, 'Patient'|trans, 'p.name') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(appointments, 'Agenda'|trans, 'a.agenda') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Specialty'|trans, 'a.specialty') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(appointments, 'Location'|trans, 'a.location') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(appointments, 'Date at'|trans, 'a.date_at') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(appointments, 'Type'|trans, 'a.type') }}</th>
@@ -54,7 +53,6 @@
 			{% endif %}
 			<td>{{ appointment.patient.name|title }}</td>
 			<td>{{ appointment.agenda }}</td>
-			<td>{{ appointment.specialty }}</td>
 			<td>{{ appointment.location }}</td>
 			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>{{ appointment.type }}</td>
