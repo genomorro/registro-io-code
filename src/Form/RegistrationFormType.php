@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,8 +51,33 @@ class RegistrationFormType extends AbstractType
 		'label' => 'User roles',
 		'autocomplete' => true,
 		'choices'  => $choices,
-		'multiple' => true,
+		'multiple' => false,
 		'required' => true,
+	    ));
+
+	$builder->get('roles')
+	    ->addModelTransformer(new CallbackTransformer(
+		function ($rolesAsArray): string {
+		    if (!is_array($rolesAsArray)) {
+			return 'ROLE_USER';
+		    }
+		    if (in_array('ROLE_SUPER_ADMIN', $rolesAsArray)) {
+			return 'ROLE_SUPER_ADMIN';
+		    }
+		    if (in_array('ROLE_ADMIN', $rolesAsArray)) {
+			return 'ROLE_ADMIN';
+		    }
+		    return 'ROLE_USER';
+		},
+		function ($roleAsString): array {
+		    if ($roleAsString === 'ROLE_SUPER_ADMIN') {
+			return ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+		    }
+		    if ($roleAsString === 'ROLE_ADMIN') {
+			return ['ROLE_USER', 'ROLE_ADMIN'];
+		    }
+		    return ['ROLE_USER'];
+		}
 	    ));
         /* ->add('agreeTerms', CheckboxType::class, [
 	 *     'mapped' => false,
