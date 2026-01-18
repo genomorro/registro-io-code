@@ -6,6 +6,8 @@ use App\Entity\Patient;
 use App\Repository\PatientRepository;
 use App\Service\ConnectionService;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
+use Doctrine\DBAL\TransactionIsolationLevel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -51,10 +53,17 @@ class ImportPatientDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $update = $input->getOption('update');
 
-        if ($update) {
-            return $this->executeUpdate($io);
-        } else {
-            return $this->executeTruncate($io);
+        try {
+            if ($update) {
+                return $this->executeUpdate($io);
+            } else {
+                return $this->executeTruncate($io);
+            }
+        } finally {
+            $connection = $this->connectionService->getConnection();
+            if ($connection) {
+                $connection->close();
+            }
         }
     }
 
@@ -70,7 +79,17 @@ class ImportPatientDataCommand extends Command
             return Command::FAILURE;
         }
 
-        $this->entityManager->getConnection()->beginTransaction();
+        $localConn = $this->entityManager->getConnection();
+        $platform = $localConn->getDatabasePlatform();
+
+        if ($platform instanceof SqlitePlatform) {
+            $localConn->executeStatement('PRAGMA busy_timeout = 5000');
+            $localConn->executeStatement('PRAGMA journal_mode = WAL');
+        } else {
+            $localConn->setTransactionIsolation(TransactionIsolationLevel::SERIALIZABLE);
+        }
+
+        $localConn->beginTransaction();
 
         try {
             $localPatients = $this->patientRepository->findAll();
@@ -134,10 +153,9 @@ class ImportPatientDataCommand extends Command
 
             $this->entityManager->flush();
 
-            $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
-            if ($platform === 'sqlite') {
+            if ($platform instanceof SqlitePlatform) {
                 $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "patient"', [$maxId]);
-            } elseif ($platform === 'mysql') {
+            } else {
                 $this->entityManager->getConnection()->executeStatement('ALTER TABLE patient AUTO_INCREMENT = ?', [$maxId + 1]);
             }
 
@@ -165,7 +183,17 @@ class ImportPatientDataCommand extends Command
             return Command::FAILURE;
         }
 
-        $this->entityManager->getConnection()->beginTransaction();
+        $localConn = $this->entityManager->getConnection();
+        $platform = $localConn->getDatabasePlatform();
+
+        if ($platform instanceof SqlitePlatform) {
+            $localConn->executeStatement('PRAGMA busy_timeout = 5000');
+            $localConn->executeStatement('PRAGMA journal_mode = WAL');
+        } else {
+            $localConn->setTransactionIsolation(TransactionIsolationLevel::SERIALIZABLE);
+        }
+
+        $localConn->beginTransaction();
 
         try {
             $this->entityManager->getConnection()->executeStatement('DELETE FROM patient');
@@ -210,10 +238,9 @@ class ImportPatientDataCommand extends Command
 
             $this->entityManager->flush();
 
-            $platform = $this->entityManager->getConnection()->getDatabasePlatform()->getName();
-            if ($platform === 'sqlite') {
+            if ($platform instanceof SqlitePlatform) {
                 $this->entityManager->getConnection()->executeStatement('UPDATE sqlite_sequence SET seq = ? WHERE name = "patient"', [$maxId]);
-            } elseif ($platform === 'mysql') {
+            } else {
                 $this->entityManager->getConnection()->executeStatement('ALTER TABLE patient AUTO_INCREMENT = ?', [$maxId + 1]);
             }
 
