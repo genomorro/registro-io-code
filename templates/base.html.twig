@@ -9,12 +9,12 @@
 		{% trans %}Patient and visitor check-in and check-out system{% endtrans %}
 	    {% endblock %}
 	</title>
-        {% block stylesheets %}
-        {% endblock %}
 	{% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
 	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
 	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
+        {% endblock %}
+        {% block stylesheets %}
         {% endblock %}
     </head>
     <body>
