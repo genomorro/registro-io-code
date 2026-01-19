@@ -4,6 +4,9 @@
 
 {% block stylesheets %}
     <style>
+     * {
+	 box-sizing: border-box;
+     }
      .spoiler { 
 	 color: white; 
 	 background-color: white;
@@ -63,8 +66,10 @@
 	<hr class="red">
 
 	<pre>{{ symfony_about }}</pre>
-	
-	{{ phpinfo|raw }}
+
+	<div class="table-responsive">
+	    {{ phpinfo|raw }}
+	</div>
     {% endif %}
     <p class="spoiler">{% trans %}Created by{% endtrans %} {{ creator }} ({{ year }}).</p>
 {% endblock %}
