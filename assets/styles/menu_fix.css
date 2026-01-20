@@ -1,0 +1,22 @@
+/* Fix for potential conflicts with Gob.mx framework */
+
+/* Ensure the application navbar collapse behaves correctly */
+.navbar-collapse.collapse:not(.show) {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-md .navbar-collapse.collapse {
+        display: flex !important;
+    }
+}
+
+/* Ensure the toggler is always visible when it should be */
+.navbar-toggler {
+    z-index: 1050;
+}
+
+/* Correcting potential overlap or spacing issues */
+main nav.navbar {
+    z-index: 1031 !important; /* Slightly above standard fixed-top (1030) */
+}
