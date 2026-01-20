@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-light sub-navbar fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top justify-content-center">
     <div class="container w-100">
 	<button
 	    type="button"
@@ -12,48 +12,51 @@
 	    <span class="navbar-toggler-icon"></span>
 	</button>
 
-	<a class="navbar-brand sub-navbar" href="https://www.gob.mx/salud/iner">INER</a>
+	<a class="navbar-brand d-flex w-auto me-auto" href="https://www.gob.mx/salud/iner">INER</a>
 	
-	<div class="collapse navbar-collapse" id="subNavBarDropdown">
-	    <ul class="navbar-nav">
+	<div class="collapse navbar-collapse w-100" id="subNavBarDropdown">
+	    <ul class="navbar-nav navbar-nav-scroll w-100 justify-content-center">
 		{# Begin: main options #}
 		<li class="nav-item">
-		    <a class="nav-link subnav-link" href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a>
+		    <a class="nav-link" href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a>
 		</li>
 		<li class="nav-item">
-		    <a class="nav-link subnav-link" href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a>
+		    <a class="nav-link" href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a>
 		</li>
 		{% if is_granted("ROLE_ADMIN") %}
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_patient_index') }}">{% trans %}Patients{% endtrans %}</a>
+			<a class="nav-link" href="{{ path('app_patient_index') }}">{% trans %}Patients{% endtrans %}</a>
 		    </li>
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a>
+			<a class="nav-link" href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a>
 		    </li>
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_appointment_index') }}">{% trans %}Appointments{% endtrans %}</a>
+			<a class="nav-link" href="{{ path('app_appointment_index') }}">{% trans %}Appointments{% endtrans %}</a>
 		    </li>
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_attendance_index') }}">{% trans %}Attendances{% endtrans %}</a>
+			<a class="nav-link" href="{{ path('app_attendance_index') }}">{% trans %}Attendances{% endtrans %}</a>
 		    </li>
 		{% endif %}
 		<li class="nav-item">
-		    <a class="nav-link subnav-link" href="{{ path('app_visitor_index') }}">{% trans %}Visitors{% endtrans %}</a>
+		    <a class="nav-link" href="{{ path('app_visitor_index') }}">{% trans %}Visitors{% endtrans %}</a>
 		</li>
 		<li class="nav-item">
-		    <a class="nav-link subnav-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholders{% endtrans %}</a>
+		    <a class="nav-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholders{% endtrans %}</a>
 		</li>
 		{% if is_granted('ROLE_ADMIN') %}
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_user_index') }}">{% trans %}Users{% endtrans %}</a>
+			<a class="nav-link" href="{{ path('app_user_index') }}">{% trans %}Users{% endtrans %}</a>
 		    </li>
 		{% endif %}
+	    </ul>
+	    <hr>
+	    <ul class="navbar-nav ms-auto w-100 justify-content-end">
 		{# End: main options #}
 		{# Begin: Language switcher #}
 		{% for locale in app.enabled_locales %}
 		    {% if locale != app.locale %}
 			<li class="nav-item">
-			    <a class="nav-link subnav-link" href="{{ path(app.current_route, app.current_route_parameters|merge({_locale: locale})) }}">
+			    <a class="nav-link" href="{{ path(app.current_route, app.current_route_parameters|merge({_locale: locale})) }}">
 				<i class="bi bi-translate"></i><b class="text-uppercase">{{ locale }}</b>
 			    </a>
 			</li>
@@ -63,14 +66,14 @@
 		{# Begin: user submenu #}
 		{% if app.user %}
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}"><i class="icon-user"></i> ({{ app.user.username }})</a>
+			<a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}"><i class="icon-user"></i> ({{ app.user.username }})</a>
 		    </li>
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-left"></i></a>
+			<a class="nav-link" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-left"></i></a>
 		    </li>
 		{% else %}
 		    <li class="nav-item">
-			<a class="nav-link subnav-link" href="{{ path('app_login') }}"><i class="bi bi-box-arrow-in-right"></i></a>
+			<a class="nav-link" href="{{ path('app_login') }}"><i class="bi bi-box-arrow-in-right"></i></a>
 		    </li>
 		{% endif %}
 		{# End: user submenu #}
@@ -80,8 +83,14 @@
 </nav>
 {% block stylesheets %}
     <style>
-     .sub-navbar {
+     main nav.navbar, main a.navbar-brand {
+	 background: #3a0b1e !important;
 	 margin-right: 25rem !important;
+	 margin-top: 42px !important;
+	 margin-bottom: -1%;
+     }
+     .navbar-nav-scroll {
+	 --bs-scroll-height: 150px;
      }
     </style>
 {% endblock %}
