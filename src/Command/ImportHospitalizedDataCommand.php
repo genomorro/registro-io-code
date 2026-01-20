@@ -104,6 +104,7 @@ class ImportHospitalizedDataCommand extends Command
 
             $maxId = 0;
             $processedIds = [];
+            $processedPatientIds = [];
 
             // Disable SQL logger to prevent memory leaks
             $this->entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -119,10 +120,27 @@ class ImportHospitalizedDataCommand extends Command
                 }
                 $processedIds[] = $data['idHospital'];
 
+                if (in_array($data['idPaciente'], $processedPatientIds)) {
+                    $io->warning(sprintf('Patient with ID %d is already processed in this import, skipping hospitalized ID %d.', $data['idPaciente'], $data['idHospital']));
+                    continue;
+                }
+                $processedPatientIds[] = $data['idPaciente'];
+
                 $patient = $this->patientRepository->find($data['idPaciente']);
                 if (!$patient) {
                     $io->warning(sprintf('Patient with ID %d not found for hospitalized ID %d, skipping.', $data['idPaciente'], $data['idHospital']));
                     continue;
+                }
+
+                // Check if patient is already hospitalized with a different ID
+                $existingHospitalized = $patient->getHospitalized();
+                if ($existingHospitalized && $existingHospitalized->getId() !== (int)$data['idHospital']) {
+                    $this->entityManager->remove($existingHospitalized);
+                    if (isset($localHospitalizedMap[$existingHospitalized->getId()])) {
+                        unset($localHospitalizedMap[$existingHospitalized->getId()]);
+                    }
+                    // Flush to release the UNIQUE constraint on patient_id
+                    $this->entityManager->flush();
                 }
 
                 if (isset($localHospitalizedMap[$data['idHospital']])) {
@@ -203,7 +221,13 @@ class ImportHospitalizedDataCommand extends Command
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
             $maxId = 0;
+            $processedPatientIds = [];
             foreach ($hospitalizedData as $data) {
+                if (in_array($data['idPaciente'], $processedPatientIds)) {
+                    continue;
+                }
+                $processedPatientIds[] = $data['idPaciente'];
+
                 $patient = $this->patientRepository->find($data['idPaciente']);
 
                 if ($patient) {
