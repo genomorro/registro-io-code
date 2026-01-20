@@ -1,9 +1,10 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top justify-content-center" data-controller="menu-fix">
+<nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top justify-content-center">
     <div class="container w-100">
 	<button
 	    type="button"
 	    class="navbar-toggler"
-	    data-action="click->menu-fix#toggle"
+	    data-bs-toggle="collapse"
+	    data-bs-target="#subNavBarDropdown"
 	    aria-controls="subNavBarDropdown"
 	    aria-expanded="false"
 	    aria-label="Toggle navigation"
@@ -12,8 +13,8 @@
 	</button>
 
 	<a class="navbar-brand d-flex w-auto me-auto" href="https://www.gob.mx/salud/iner">INER</a>
-	
-	<div class="collapse navbar-collapse w-100" id="subNavBarDropdown" data-menu-fix-target="collapse">
+
+	<div class="collapse navbar-collapse w-100" id="subNavBarDropdown">
 	    <ul class="navbar-nav navbar-nav-scroll w-100 justify-content-center">
 		{# Begin: main options #}
 		<li class="nav-item">

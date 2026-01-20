@@ -1,0 +1,511 @@
+  border-collapse: collapse;
+.collapse:not(.show) {
+.collapsing.collapse-horizontal {
+  .collapsing.collapse-horizontal {
+  --bs-nav-link-padding-x: 1rem;
+  --bs-nav-link-padding-y: 0.5rem;
+  --bs-nav-link-color: var(--bs-link-color);
+  --bs-nav-link-hover-color: var(--bs-link-hover-color);
+  --bs-nav-link-disabled-color: var(--bs-secondary-color);
+.nav-link {
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  color: var(--bs-nav-link-color);
+  .nav-link {
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--bs-nav-link-hover-color);
+.nav-link:focus-visible {
+.nav-link.disabled,
+.nav-link:disabled {
+  color: var(--bs-nav-link-disabled-color);
+.nav-tabs .nav-link {
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+.nav-pills .nav-link {
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+.nav-underline .nav-link {
+.nav-underline .nav-link:focus,
+.nav-underline .nav-link:hover {
+.nav-underline .nav-link.active,
+.nav-underline .show > .nav-link {
+.nav-fill .nav-item,
+.nav-fill > .nav-link {
+.nav-justified .nav-item,
+.nav-justified > .nav-link {
+.nav-fill .nav-item .nav-link,
+.nav-justified .nav-item .nav-link {
+.navbar {
+  --bs-navbar-padding-x: 0;
+  --bs-navbar-padding-y: 0.5rem;
+  --bs-navbar-color: rgba(var(--bs-emphasis-color-rgb), 0.65);
+  --bs-navbar-hover-color: rgba(var(--bs-emphasis-color-rgb), 0.8);
+  --bs-navbar-disabled-color: rgba(var(--bs-emphasis-color-rgb), 0.3);
+  --bs-navbar-active-color: rgba(var(--bs-emphasis-color-rgb), 1);
+  --bs-navbar-brand-padding-y: 0.3125rem;
+  --bs-navbar-brand-margin-end: 1rem;
+  --bs-navbar-brand-font-size: 1.25rem;
+  --bs-navbar-brand-color: rgba(var(--bs-emphasis-color-rgb), 1);
+  --bs-navbar-brand-hover-color: rgba(var(--bs-emphasis-color-rgb), 1);
+  --bs-navbar-nav-link-padding-x: 0.5rem;
+  --bs-navbar-toggler-padding-y: 0.25rem;
+  --bs-navbar-toggler-padding-x: 0.75rem;
+  --bs-navbar-toggler-font-size: 1.25rem;
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --bs-navbar-toggler-border-color: rgba(var(--bs-emphasis-color-rgb), 0.15);
+  --bs-navbar-toggler-border-radius: var(--bs-border-radius);
+  --bs-navbar-toggler-focus-width: 0.25rem;
+  --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
+  padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+.navbar > .container,
+.navbar > .container-fluid,
+.navbar > .container-lg,
+.navbar > .container-md,
+.navbar > .container-sm,
+.navbar > .container-xl,
+.navbar > .container-xxl {
+.navbar-brand {
+  padding-top: var(--bs-navbar-brand-padding-y);
+  padding-bottom: var(--bs-navbar-brand-padding-y);
+  margin-right: var(--bs-navbar-brand-margin-end);
+  font-size: var(--bs-navbar-brand-font-size);
+  color: var(--bs-navbar-brand-color);
+.navbar-brand:focus,
+.navbar-brand:hover {
+  color: var(--bs-navbar-brand-hover-color);
+.navbar-nav {
+  --bs-nav-link-padding-x: 0;
+  --bs-nav-link-padding-y: 0.5rem;
+  --bs-nav-link-color: var(--bs-navbar-color);
+  --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
+  --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+  color: var(--bs-navbar-active-color);
+.navbar-nav .dropdown-menu {
+.navbar-text {
+  color: var(--bs-navbar-color);
+.navbar-text a,
+.navbar-text a:focus,
+.navbar-text a:hover {
+  color: var(--bs-navbar-active-color);
+.navbar-collapse {
+.navbar-toggler {
+  padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+  font-size: var(--bs-navbar-toggler-font-size);
+  color: var(--bs-navbar-color);
+  border: var(--bs-border-width) solid var(--bs-navbar-toggler-border-color);
+  border-radius: var(--bs-navbar-toggler-border-radius);
+  transition: var(--bs-navbar-toggler-transition);
+  .navbar-toggler {
+.navbar-toggler:hover {
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width);
+.navbar-toggler-icon {
+  background-image: var(--bs-navbar-toggler-icon-bg);
+.navbar-nav-scroll {
+  .navbar-expand-sm {
+  .navbar-expand-sm .navbar-nav {
+  .navbar-expand-sm .navbar-nav .dropdown-menu {
+  .navbar-expand-sm .navbar-nav .nav-link {
+    padding-right: var(--bs-navbar-nav-link-padding-x);
+    padding-left: var(--bs-navbar-nav-link-padding-x);
+  .navbar-expand-sm .navbar-nav-scroll {
+  .navbar-expand-sm .navbar-collapse {
+  .navbar-expand-sm .navbar-toggler {
+  .navbar-expand-sm .offcanvas {
+  .navbar-expand-sm .offcanvas .offcanvas-header {
+  .navbar-expand-sm .offcanvas .offcanvas-body {
+  .navbar-expand-md {
+  .navbar-expand-md .navbar-nav {
+  .navbar-expand-md .navbar-nav .dropdown-menu {
+  .navbar-expand-md .navbar-nav .nav-link {
+    padding-right: var(--bs-navbar-nav-link-padding-x);
+    padding-left: var(--bs-navbar-nav-link-padding-x);
+  .navbar-expand-md .navbar-nav-scroll {
+  .navbar-expand-md .navbar-collapse {
+  .navbar-expand-md .navbar-toggler {
+  .navbar-expand-md .offcanvas {
+  .navbar-expand-md .offcanvas .offcanvas-header {
+  .navbar-expand-md .offcanvas .offcanvas-body {
+  .navbar-expand-lg {
+  .navbar-expand-lg .navbar-nav {
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: var(--bs-navbar-nav-link-padding-x);
+    padding-left: var(--bs-navbar-nav-link-padding-x);
+  .navbar-expand-lg .navbar-nav-scroll {
+  .navbar-expand-lg .navbar-collapse {
+  .navbar-expand-lg .navbar-toggler {
+  .navbar-expand-lg .offcanvas {
+  .navbar-expand-lg .offcanvas .offcanvas-header {
+  .navbar-expand-lg .offcanvas .offcanvas-body {
+  .navbar-expand-xl {
+  .navbar-expand-xl .navbar-nav {
+  .navbar-expand-xl .navbar-nav .dropdown-menu {
+  .navbar-expand-xl .navbar-nav .nav-link {
+    padding-right: var(--bs-navbar-nav-link-padding-x);
+    padding-left: var(--bs-navbar-nav-link-padding-x);
+  .navbar-expand-xl .navbar-nav-scroll {
+  .navbar-expand-xl .navbar-collapse {
+  .navbar-expand-xl .navbar-toggler {
+  .navbar-expand-xl .offcanvas {
+  .navbar-expand-xl .offcanvas .offcanvas-header {
+  .navbar-expand-xl .offcanvas .offcanvas-body {
+  .navbar-expand-xxl {
+  .navbar-expand-xxl .navbar-nav {
+  .navbar-expand-xxl .navbar-nav .dropdown-menu {
+  .navbar-expand-xxl .navbar-nav .nav-link {
+    padding-right: var(--bs-navbar-nav-link-padding-x);
+    padding-left: var(--bs-navbar-nav-link-padding-x);
+  .navbar-expand-xxl .navbar-nav-scroll {
+  .navbar-expand-xxl .navbar-collapse {
+  .navbar-expand-xxl .navbar-toggler {
+  .navbar-expand-xxl .offcanvas {
+  .navbar-expand-xxl .offcanvas .offcanvas-header {
+  .navbar-expand-xxl .offcanvas .offcanvas-body {
+.navbar-expand {
+.navbar-expand .navbar-nav {
+.navbar-expand .navbar-nav .dropdown-menu {
+.navbar-expand .navbar-nav .nav-link {
+  padding-right: var(--bs-navbar-nav-link-padding-x);
+  padding-left: var(--bs-navbar-nav-link-padding-x);
+.navbar-expand .navbar-nav-scroll {
+.navbar-expand .navbar-collapse {
+.navbar-expand .navbar-toggler {
+.navbar-expand .offcanvas {
+.navbar-expand .offcanvas .offcanvas-header {
+.navbar-expand .offcanvas .offcanvas-body {
+.navbar-dark,
+.navbar[data-bs-theme="dark"] {
+  --bs-navbar-color: rgba(255, 255, 255, 0.55);
+  --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
+  --bs-navbar-disabled-color: rgba(255, 255, 255, 0.25);
+  --bs-navbar-active-color: #fff;
+  --bs-navbar-brand-color: #fff;
+  --bs-navbar-brand-hover-color: #fff;
+  --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.1);
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+[data-bs-theme="dark"] .navbar-toggler-icon {
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+.card-header-tabs .nav-link.active {
+.accordion-button:not(.collapsed) {
+.accordion-button:not(.collapsed)::after {
+.accordion-item:last-of-type > .accordion-header .accordion-button.collapsed {
+.accordion-item:last-of-type > .accordion-collapse {
+  .accordion-button.collapsed {
+.accordion-flush > .accordion-item > .accordion-collapse {
+  border-collapse: separate;
+  border-collapse: separate;
+.collapse,
+  .collapse,
+.navbar {
+.navbar-toggler-button {
+.sub-navbar-toggler-button {
+.navbar a {
+a.navbar-brand {
+.navbar-expand-md .navbar-nav {
+.navbar-expand-md .navbar-nav .nav-link {
+.navbar-expand-lg .navbar-nav .nav-link {
+.navbar-dark .navbar-nav .nav-link:hover {
+.navbar-dark .navbar-toggler {
+nav.navbar.navbar-expand-md.navbar-dark.bg-light.navbar-inverse.sub-navbar.navbar-fixed-top
+  a.navbar-brand.sub-navbar {
+.navbar-dark .navbar-brand {
+.navbar-dark .navbar-nav .nav-link:hover {
+.navbar-dark .navbar-nav .subnav-link:hover {
+.navbar-fixed-bottom .navbar-collapse,
+.navbar-fixed-top .navbar-collapse,
+.subnav-link {
+.navbar-brand {
+.sub-navbar {
+.navbar-toggler-icon {
+  background-image: var(--bs-navbar-toggler-icon-bg);
+  .sub-navbar {
+  .navbar-brand {
+  .navbar-collapse {
+  .sub-navbar {
+  .navbar-collapse {
+  .navbar-dark .navbar-toggler {
+  .container > .navbar-header,
+  .navbar-collapse {
+  .navbar-expand-md .navbar-nav {
+  .navbar-brand {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar-dark .navbar-toggler {
+  .navbar {
+  .navbar-brand {
+  .navbar-dark .navbar-toggler {
+  .navbar-expand-md .navbar-nav {
+  .navbar-dark .navbar-toggler {
+.navbar {
+.navbar-brand {
+.navbar-dark .navbar-toggler {
+.navbar-expand-md .navbar-nav {
+.navbar,
+.navbar-inverse .navbar-toggle {
+.navbar-inverse .navbar-nav > li > a:focus,
+.navbar-inverse .navbar-nav > li > a:hover {
+.navbar-inverse .navbar-toggle:focus,
+.navbar-inverse .navbar-toggle:hover {
+.navbar-inverse .navbar-toggle:focus .icon-bar,
+.navbar-inverse .navbar-toggle:hover .icon-bar {
+.navbar-brand > img {
+.sub-navbar {
+.sub-navbar .navbar-collapse {
+  .navbar-fixed-bottom .navbar-collapse,
+  .navbar-fixed-top .navbar-collapse {
+.container-fluid > .navbar-collapse,
+.container-fluid > .navbar-header,
+.container-lg > .navbar-collapse,
+.container-lg > .navbar-header,
+.container-md > .navbar-collapse,
+.container-md > .navbar-header,
+.container-sm > .navbar-collapse,
+.container-sm > .navbar-header,
+.container-xl > .navbar-collapse,
+.container-xl > .navbar-header,
+.container-xxl > .navbar-collapse,
+.container-xxl > .navbar-header,
+.container > .navbar-collapse,
+.container > .navbar-header {
+.navbar-static-top {
+.navbar-fixed-bottom,
+.navbar-fixed-top {
+.navbar-fixed-top {
+.navbar-fixed-bottom {
+.navbar-brand:focus,
+.navbar-brand:hover {
+.navbar-brand > img {
+.navbar-toggle {
+.navbar-toggle:focus {
+.navbar-toggle .icon-bar {
+.navbar-toggle .icon-bar + .icon-bar {
+.navbar-nav > li > a {
+  .navbar-nav .open .dropdown-menu {
+  .navbar-nav .open .dropdown-menu .dropdown-header,
+  .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-nav .open .dropdown-menu > li > a:focus,
+  .navbar-nav .open .dropdown-menu > li > a:hover {
+  .navbar-form .form-group {
+  .navbar-form .form-group:last-child {
+.navbar-nav > li > .dropdown-menu {
+.navbar-nav > li > .dropdown-menu > a:hover {
+.navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {
+.navbar-btn {
+.btn-group-sm > .navbar-btn.btn,
+.navbar-btn.btn-sm {
+.btn-group-xs > .navbar-btn.btn,
+.navbar-btn.btn-xs {
+.navbar-text {
+.navbar-default {
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover {
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-text {
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a:hover {
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {
+.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > .disabled > a:focus,
+.navbar-default .navbar-nav > .disabled > a:hover {
+.navbar-default .navbar-toggle {
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+.navbar-default .navbar-toggle .icon-bar {
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover {
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus,
+  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover {
+.navbar-default .navbar-link {
+.navbar-default .navbar-link:hover {
+.navbar-default .btn-link {
+.navbar-default .btn-link:focus,
+.navbar-default .btn-link:hover {
+.navbar-default .btn-link[disabled]:focus,
+.navbar-default .btn-link[disabled]:hover,
+fieldset[disabled] .navbar-default .btn-link:focus,
+fieldset[disabled] .navbar-default .btn-link:hover {
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-text {
+.navbar-inverse {
+.navbar-inverse .navbar-brand:focus,
+.navbar-inverse .navbar-brand:hover {
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:focus,
+.navbar-inverse .navbar-nav > .active > a:hover {
+.navbar-inverse .navbar-nav > .disabled > a,
+.navbar-inverse .navbar-nav > .disabled > a:focus,
+.navbar-inverse .navbar-nav > .disabled > a:hover {
+.navbar-inverse .navbar-toggle .icon-bar {
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:focus,
+.navbar-inverse .navbar-nav > .open > a:hover {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
+  .navbar-inverse .navbar-nav .open .dropdown-menu .divider {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:focus,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:hover {
+.navbar-inverse .navbar-link {
+.navbar-inverse .navbar-link:hover {
+.navbar-inverse .btn-link {
+.navbar-inverse .btn-link:focus,
+.navbar-inverse .btn-link:hover {
+.navbar-inverse .btn-link[disabled]:focus,
+.navbar-inverse .btn-link[disabled]:hover,
+fieldset[disabled] .navbar-inverse .btn-link:focus,
+fieldset[disabled] .navbar-inverse .btn-link:hover {
+.navbar-toggler {
+.nav-tabs .nav-link.active,
+.nav-tabs .show > .nav-link {
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+.nav-link.active:hover {
+.nav-tabs .nav-link.active,
+.nav-tabs .show > .nav-link:hover {
+.nav-tabs .nav-link {
+.nav-tabs .nav-link:hover {
+.nav-tabs .nav-link:hover {
+.accordion-button:not(.collapsed) {
+.accordion-button:not(.collapsed)::after {
+.accordion-item:last-of-type > .accordion-header .accordion-button.collapsed {
+.accordion-item:last-of-type > .accordion-collapse {
+  .accordion-button.collapsed {
+.accordion-flush > .accordion-item > .accordion-collapse {
+.ficha-collapse dl {
+.ficha-collapse dl.last {
+.ficha-collapse dl dd,
+.ficha-collapse dl dt {
+.ficha-collapse dl dt {
+.ficha-collapse dl dd {
+.ficha-collapse dl.dl-vertical {
+.ficha-collapse dl.dl-vertical dt {
+.ficha-collapse dl.dl-vertical dd,
+.ficha-collapse dl.dl-vertical dt {
+.ficha-collapse dl.dl-vertical b {
+.ficha-collapse .panel-heading {
+.ficha-collapse .panel-heading::after {
+.ficha-collapse .panel-heading .h4,
+.ficha-collapse .panel-heading h4 {
+.ficha-collapse .panel-title a {
+.ficha-collapse .panel-body {
+.collpase-button.collapsed:after {
+  .ficha-collapse dl dt {
+  .ficha-collapse dl dd {
+  border-collapse: collapse;
+  border-collapse: collapse;
+  border-collapse: collapse;
+  border-collapse: collapse;
+.bi-arrows-collapse::before {
+.sub-navbar.demo {
+#example_ul_subnavbar {
+#navbar-brand-demo {
+#navbarNavDropdown-demo {
+.navbar-fixed-bottom .navbar-collapse,
+.navbar-fixed-top .navbar-collapse,
+  border-collapse: collapse;
+  .navbar {
+    border-collapse: collapse !important;
+.navbar-toggle,
+.ficha-collapse .panel-heading:after,
+.navbar-collapse:after,
+.navbar-header:after,
+.navbar:after,
+.collapse {
+.collapse.in {
+tr.collapse.in {
+tbody.collapse.in {
+.navbar-fixed-bottom .dropdown .caret {
+.navbar-fixed-bottom .dropdown .dropdown-menu {
+  border-collapse: separate;
+  border-collapse: separate;
+.navbar-collapse:after,
+.navbar-collapse:before,
+.navbar-header:after,
+.navbar-header:before,
+.navbar:after,
+.navbar:before,
+.navbar-collapse.in {
+.navbar-form {
+.panel > .panel-collapse > .list-group,
+.panel > .panel-collapse > .table,
+.panel > .panel-collapse > .list-group .list-group-item {
+  > .panel-collapse
+.panel > .panel-collapse > .list-group:last-child .list-group-item:last-child {
+  + .panel-collapse
+.panel > .panel-collapse > .table caption,
+.panel-group .panel-heading + .panel-collapse > .list-group,
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+.panel-group .panel-footer + .panel-collapse .panel-body {
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
+.panel-default > .panel-footer + .panel-collapse > .panel-body {
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+.panel-primary > .panel-footer + .panel-collapse > .panel-body {
+.panel-success > .panel-heading + .panel-collapse > .panel-body {
+.panel-success > .panel-footer + .panel-collapse > .panel-body {
+.panel-info > .panel-heading + .panel-collapse > .panel-body {
+.panel-info > .panel-footer + .panel-collapse > .panel-body {
+.panel-warning > .panel-heading + .panel-collapse > .panel-body {
+.panel-warning > .panel-footer + .panel-collapse > .panel-body {
+.panel-danger > .panel-heading + .panel-collapse > .panel-body {
+.panel-danger > .panel-footer + .panel-collapse > .panel-body {
+.navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+.ficha-collapse dl {
+.ficha-collapse dl.last {
+.ficha-collapse dl dd,
+.ficha-collapse dl dt {
+.ficha-collapse dl dt {
+.ficha-collapse dl dd {
+.ficha-collapse dl.dl-vertical {
+.ficha-collapse dl.dl-vertical dt {
+.ficha-collapse dl.dl-vertical dd,
+.ficha-collapse dl.dl-vertical dt {
+.ficha-collapse dl.dl-vertical b {
+.ficha-collapse .panel-heading {
+.ficha-collapse .panel-heading:after,
+.ficha-collapse .panel-heading:before {
+.ficha-collapse .panel-heading .h4,
+.ficha-collapse .panel-heading h4 {
+.ficha-collapse .panel-title a {
+.ficha-collapse .panel-body {
+.collpase-button.collapsed:after,
+.collpase-button.collapsed:after {
+  .ficha-collapse dl dt {
+  .ficha-collapse dl dd {
+  border-collapse: collapse;
+  border-collapse: collapse;
+.bi-arrows-collapse::before {
