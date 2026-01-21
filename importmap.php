@@ -63,6 +63,16 @@ return [
     'jquery' => [
         'version' => '3.7.1',
     ],
+    '@eonasdan/tempus-dominus' => [
+        'version' => '6.9.4',
+    ],
+    '@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css' => [
+        'version' => '6.9.4',
+        'type' => 'css',
+    ],
+    '@eonasdan/tempus-dominus/dist/plugins/customDateFormat.js' => [
+        'version' => '6.9.4',
+    ],
     'canvas2svg' => [
         'version' => '1.0.16',
     ],

@@ -88,7 +88,7 @@ var scriptsCDNPath = 'https://framework-gb.cdn.gob.mx/gm/v3/assets/js/vendor/';
     setTimeout(function () {
       // Carga de main
       var main = document.createElement('script');
-      main.type = 'text/javascript';
+      main.type = 'module';
       // Use local main.js if it exists in assets/styles/
       // In Symfony AssetMapper, this will be mapped to /assets/styles/main.js
       main.src = '/assets/styles/main.js';

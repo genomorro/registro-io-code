@@ -76,7 +76,7 @@
 		    <div class="form-group">
 			{{ form_label(form.checkInAt) }}:
 			<div class="row">
-			    <div class="col-md">
+			    <div class="col-md" data-controller="datetime-picker">
 				{{ form_widget(form.checkInAt, {'attr': {'data-signature-target': 'checkInAt'}}) }}
 				<span class="text-danger">{{ form_errors(form.checkInAt) }}</span>
 			    </div>

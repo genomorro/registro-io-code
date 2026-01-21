@@ -11,9 +11,11 @@ import './styles/menu_fix.css';
 
 import $ from 'jquery';
 import * as bootstrap from 'bootstrap';
+import * as tempusDominus from '@eonasdan/tempus-dominus';
 
 window.jQuery = window.$ = $;
 window.bootstrap = bootstrap;
+window.tempusDominus = tempusDominus;
 
 // To ensure UX-Autocomplete (TomSelect) works correctly with Bootstrap 5
 // and to avoid conflicts with multiple Bootstrap instances.

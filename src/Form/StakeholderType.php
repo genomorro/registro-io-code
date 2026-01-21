@@ -110,6 +110,9 @@ class StakeholderType extends AbstractType
 		    'label' => 'Check in',
                     'widget' => 'single_text',
                     'data' => new \DateTimeImmutable(),
+                    'html5' => false,
+                    'format' => 'yyyy-MM-dd HH:mm',
+                    'attr' => ['autocomplete' => 'off'],
                 ]);
             } else {
                 // Existing stakeholder
