@@ -9,4 +9,13 @@ import './styles/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/menu_fix.css';
 
+import $ from 'jquery';
+import * as bootstrap from 'bootstrap';
+
+window.jQuery = window.$ = $;
+window.bootstrap = bootstrap;
+
+// To ensure UX-Autocomplete (TomSelect) works correctly with Bootstrap 5
+// and to avoid conflicts with multiple Bootstrap instances.
+
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

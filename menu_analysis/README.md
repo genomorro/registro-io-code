@@ -11,6 +11,8 @@
 - `menu_styles_raw.css`: Relevant CSS rules found in `main.css`.
 
 ## Applied Fix
-1. **Stimulus Controller**: Created `assets/controllers/menu_fix_controller.js` to manually handle the navbar toggle using the Bootstrap API. This avoids the conflict between multiple Bootstrap versions by opting out of the automatic `data-bs-toggle` behavior.
-2. **Template Update**: Modified `templates/menu.html.twig` to use `data-action="click->menu-fix#toggle"` and removed `data-bs-toggle="collapse"`.
-3. **CSS Fixes**: Created `assets/styles/menu_fix.css` to ensure the application navbar has the correct z-index and display properties, overriding any interference from the Gob.mx framework.
+1. **Removed Bootstrap CDN**: Modified `assets/styles/gobmx.js` to stop loading the Bootstrap and jQuery CDNs. Instead, the application uses versions managed by Symfony AssetMapper.
+2. **Global Exposure**: Updated `assets/app.js` to expose jQuery and Bootstrap to the `window` object. This ensures that framework scripts (like `main.js`) that expect global dependencies continue to function.
+3. **Transition to Local Assets**: Updated `templates/base.html.twig` to use local copies of the Gob.mx framework files instead of remote CDN links.
+4. **Stimulus Controller**: Maintained the `menu_fix_controller.js` as a robust backup to handle navbar toggles manually, ensuring reliability even if other framework scripts interfere with the DOM.
+5. **UX-Autocomplete Support**: By consolidating into a single Bootstrap instance, conflicts with `UX-Autocomplete` (TomSelect) are resolved.

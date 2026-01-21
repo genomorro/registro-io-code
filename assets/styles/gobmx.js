@@ -65,10 +65,10 @@ var scriptsCDNPath = 'https://framework-gb.cdn.gob.mx/gm/v3/assets/js/vendor/';
 
   if (!window.jQuery) {
     // Cargar de jQuery
-    var jq = document.createElement('script');
-    jq.type = 'text/javascript';
-    jq.src = scriptsMain + 'jquery.js';
-    document.getElementsByTagName('head')[0].appendChild(jq);
+    // var jq = document.createElement('script');
+    // jq.type = 'text/javascript';
+    // jq.src = scriptsMain + 'jquery.js';
+    // document.getElementsByTagName('head')[0].appendChild(jq);
 
   }
   // Espera a que jquery sea cargadp
@@ -79,17 +79,19 @@ var scriptsCDNPath = 'https://framework-gb.cdn.gob.mx/gm/v3/assets/js/vendor/';
     document.getElementsByTagName('head')[0].appendChild(jq);
     // Carga de bootstrap
     //carga archivo con js necesarios para bootstrap , incluyendo bootstrap.min.js
-    var allScripts = document.createElement('script');
-    allScripts.type = 'text/javascript';
-    allScripts.src = scriptsCDNPath + 'bootstrap.bundle.js';
-    document.getElementsByTagName('body')[0].appendChild(allScripts);
+    // var allScripts = document.createElement('script');
+    // allScripts.type = 'text/javascript';
+    // allScripts.src = scriptsCDNPath + 'bootstrap.bundle.js';
+    // document.getElementsByTagName('body')[0].appendChild(allScripts);
 
     // Espera a que bootstrap sea cargado
     setTimeout(function () {
       // Carga de main
       var main = document.createElement('script');
       main.type = 'text/javascript';
-      main.src = scriptsMain + 'main.js';
+      // Use local main.js if it exists in assets/styles/
+      // In Symfony AssetMapper, this will be mapped to /assets/styles/main.js
+      main.src = '/assets/styles/main.js';
       document.getElementsByTagName('body')[0].appendChild(main);
 
       var floating = document.createElement('script');

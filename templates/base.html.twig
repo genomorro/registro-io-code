@@ -12,7 +12,7 @@
 	{% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
 	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
-	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
+	    <link href="{{ asset('styles/main.css') }}" rel="stylesheet">
         {% endblock %}
         {% block stylesheets %}
         {% endblock %}
@@ -25,7 +25,7 @@
 		{% endblock %}
 	    </div>
 	</main>
-	<script src="https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js"></script>
+	<script src="{{ asset('styles/gobmx.js') }}"></script>
 	{% block custom_javascripts %}
 	{% endblock %}
     </body>
