@@ -15,7 +15,7 @@ main nav.navbar, main a.navbar-brand {
     background: #3a0b1e !important;
     margin-right: 25rem !important;
     margin-top: 42px !important;
-    margin-bottom: -1%;
+    margin-bottom: 2%; o/* -1% if a.navbar-brand is not empty */
 }
 .navbar-nav-scroll {
     --bs-scroll-height: 200px;

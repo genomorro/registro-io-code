@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top justify-content-center" data-controller="menu-fix">
+<nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top" data-controller="menu-fix">
     <div class="container w-100">
 	<button
 	    type="button"
@@ -11,7 +11,7 @@
 	    <span class="navbar-toggler-icon"></span>
 	</button>
 
-	<a class="navbar-brand d-flex w-auto me-auto" href="https://www.gob.mx/salud/iner">INER</a>
+	<a class="navbar-brand d-flex w-auto me-auto" href="https://www.gob.mx/salud/iner"></a>
 	
 	<div class="collapse navbar-collapse w-100" id="subNavBarDropdown" data-menu-fix-target="collapse">
 	    <ul class="navbar-nav navbar-nav-scroll w-100 justify-content-center">
@@ -80,16 +80,3 @@
 	</div>
     </div>
 </nav>
-{% block stylesheets %}
-    <style>
-     main nav.navbar, main a.navbar-brand {
-	 background: #3a0b1e !important;
-	 margin-right: 25rem !important;
-	 margin-top: 42px !important;
-	 margin-bottom: -1%;
-     }
-     .navbar-nav-scroll {
-	 --bs-scroll-height: 150px;
-     }
-    </style>
-{% endblock %}
