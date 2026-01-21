@@ -1,0 +1,22 @@
+/* Fix for potential conflicts with Gob.mx framework */
+
+/* Ensure the application navbar collapse behaves correctly */
+.navbar-collapse.collapse:not(.show) {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-md .navbar-collapse.collapse {
+        display: flex !important;
+    }
+}
+
+main nav.navbar, main a.navbar-brand {
+    background: #3a0b1e !important;
+    margin-right: 25rem !important;
+    margin-top: 42px !important;
+    margin-bottom: -1%;
+}
+.navbar-nav-scroll {
+    --bs-scroll-height: 200px;
+}
