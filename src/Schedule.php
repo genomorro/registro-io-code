@@ -28,7 +28,7 @@ class Schedule implements ScheduleProviderInterface
 	    ->add(
 		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data:appointment -u')),
 		RecurringMessage::cron('0 */8 * * *', new RunCommandMessage('app:import-data:patient -u')),
-		RecurringMessage::every("15 minutes", new RunCommandMessage('app:import-data:hospitalized -u'))
+		RecurringMessage::every("15 minutes", new RunCommandMessage('app:import-data:hospitalized'))
 	    )
 	    ->add(
 		RecurringMessage::every("first Sunday of next month", new RunCommandMessage('app:compress-image'))
