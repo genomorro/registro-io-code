@@ -2,6 +2,38 @@
 
 {% block title %}{% trans %}Stakeholder index{% endtrans %}{% endblock %}
 
+{% block menu %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #611232 !important;">
+    <div class="container justify-content-center">
+	<button
+	    type="button"
+	    class="navbar-toggler"
+	    data-bs-toggle="collapse"
+	    data-bs-target="#subNavBarDropdown"
+	    aria-controls="subNavBarDropdown"
+	    aria-expanded="false"
+	    aria-label="Toggle navigation"
+	>
+	    <span class="navbar-toggler-icon"></span>
+	</button>
+
+	<a class="navbar-brand sub-navbar" href="https://www.gob.mx/salud/iner"></a>
+
+	<div class="collapse navbar-collapse" id="subNavBarDropdown">
+	    {{ knp_menu_render('main', {'currentClass': 'active', 'ancestorClass': 'active', 'allow_safe_labels': true}) }}
+	</div>
+    </div>
+</nav>
+<style>
+    .navbar-dark .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link:hover {
+        color: #fff !important;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
     <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
