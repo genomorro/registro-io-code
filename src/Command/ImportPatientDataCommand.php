@@ -100,6 +100,7 @@ class ImportPatientDataCommand extends Command
 
             $maxId = 0;
             $processedIds = [];
+            $processedFiles = [];
 
             // Disable SQL logger to prevent memory leaks
             $this->entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -114,6 +115,26 @@ class ImportPatientDataCommand extends Command
                     continue;
                 }
                 $processedIds[] = $patientData['idPac'];
+
+                if (isset($patientData['numExpediente']) && in_array($patientData['numExpediente'], $processedFiles)) {
+                    $io->warning(sprintf('Patient with file number %s is already processed, skipping patient ID %d.', $patientData['numExpediente'], $patientData['idPac']));
+                    continue;
+                }
+                if (isset($patientData['numExpediente'])) {
+                    $processedFiles[] = $patientData['numExpediente'];
+                }
+
+                // Check if file number is already used by another patient ID locally
+                if (isset($patientData['numExpediente'])) {
+                    $existingPatientByFile = $this->patientRepository->findOneBy(['file' => $patientData['numExpediente']]);
+                    if ($existingPatientByFile && $existingPatientByFile->getId() !== (int)$patientData['idPac']) {
+                        $this->entityManager->remove($existingPatientByFile);
+                        if (isset($localPatientsMap[$existingPatientByFile->getId()])) {
+                            unset($localPatientsMap[$existingPatientByFile->getId()]);
+                        }
+                        $this->entityManager->flush();
+                    }
+                }
 
                 if (isset($localPatientsMap[$patientData['idPac']])) {
                     // Update existing patient
@@ -200,6 +221,7 @@ class ImportPatientDataCommand extends Command
 
             $maxId = 0;
             $processedIds = [];
+            $processedFiles = [];
             foreach ($patientsData as $patientData) {
                 if ($patientData['idPac'] < 1) {
                     continue;
@@ -210,6 +232,14 @@ class ImportPatientDataCommand extends Command
                     continue;
                 }
                 $processedIds[] = $patientData['idPac'];
+
+                if (isset($patientData['numExpediente']) && in_array($patientData['numExpediente'], $processedFiles)) {
+                    $io->warning(sprintf('Patient with file number %s is already processed, skipping patient ID %d.', $patientData['numExpediente'], $patientData['idPac']));
+                    continue;
+                }
+                if (isset($patientData['numExpediente'])) {
+                    $processedFiles[] = $patientData['numExpediente'];
+                }
 
                 $patient = new Patient();
                 $this->entityManager->persist($patient);

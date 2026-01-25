@@ -207,7 +207,18 @@ class ImportAppointmentDataCommand extends Command
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
             $maxId = 0;
+            $processedIds = [];
             foreach ($appointmentData as $data) {
+                if ($data['idCita'] < 1) {
+                    continue;
+                }
+
+                if (in_array($data['idCita'], $processedIds)) {
+                    $io->warning(sprintf('Duplicate appointment ID %d found in source data, skipping.', $data['idCita']));
+                    continue;
+                }
+                $processedIds[] = $data['idCita'];
+
                 $patient = $this->patientRepository->find($data['idPac']);
 
                 if ($patient) {
