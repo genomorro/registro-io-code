@@ -60,6 +60,9 @@ return [
         'version' => '5.3.8',
         'type' => 'css',
     ],
+    'bootstrap/dist/js/bootstrap.bundle.min.js' => [
+        'version' => '5.3.8',
+    ],
     'canvas2svg' => [
         'version' => '1.0.16',
     ],
