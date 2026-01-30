@@ -6,6 +6,7 @@ use App\Entity\Attendance;
 use App\Form\AttendanceType;
 use App\Repository\AttendanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,19 +16,24 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AttendanceController extends AbstractController
 {
     #[Route(name: 'app_attendance_index', methods: ['GET', 'POST'])]
-    public function index(AttendanceRepository $attendanceRepository, Request $request): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+    public function index(
+        AttendanceRepository $attendanceRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-	$queryBuilder = $attendanceRepository->findAllWithPatient();
+        $filter = $request->query->get('filter');
+        $query = $attendanceRepository->paginateAttendance($filter);
 
-        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
-        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
-        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+        $attendances = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('attendance/index.html.twig', [
-            'attendances' => $pagerfanta,
+            'attendances' => $attendances,
         ]);
     }
 

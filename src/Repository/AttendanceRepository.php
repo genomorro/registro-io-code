@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Attendance;
 use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,19 +33,7 @@ class AttendanceRepository extends ServiceEntityRepository
 		    ->orderBy('a.checkInAt', 'DESC')
 		    ->setMaxResults(1)
 		    ->getQuery()
-		    ->getOneOrNullResult()
-        ;
-    }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function findAllWithPatient(): \Doctrine\ORM\QueryBuilder
-    {
-        return $this->createQueryBuilder('a')
-		    ->select('a', 'p')
-		    ->leftJoin('a.patient', 'p')
-		    ->orderBy('a.checkInAt', 'ASC');
+		    ->getOneOrNullResult();
     }
 
     public function findPatientByTag(int $tag): ?Patient
@@ -63,5 +52,23 @@ class AttendanceRepository extends ServiceEntityRepository
         }
 
         return null;
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginateAttendance(string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('a')
+		      ->join('a.patient', 'p')
+		      ->addSelect('p')
+		      ->orderBy('a.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('p.name LIKE :filter OR a.tag LIKE :filter')
+                  ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
     }
 }

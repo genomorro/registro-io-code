@@ -12,20 +12,36 @@
     <h1>{% trans %}Appointment index{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="table-responsible">
+    <div class="row">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
+	    <form class="w-100" method="get" action="{{ path('app_appointment_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by Name, Agenda or Date{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">
+			<span class="icon-search" aria-hidden="true"></span>
+		    </button>
+		</div>
+	    </form>
+	</div>
+
+	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+	    Registros totales: {{ appointments.getTotalItemCount }}
+	</div>
+    </div>
+
+    <div class="table-responsive">
 	<table class="table table-hover">
             <thead>
 		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<th>{% trans %}Id{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(appointments, 'Id'|trans, 'a.id') }}</th>
 		    {% endif %}
-		    <th>{% trans %}Patient{% endtrans %}</th>
-                    <th>{% trans %}Agenda{% endtrans %}</th>
-                    <th>{% trans %}Specialty{% endtrans %}</th>
-                    <th>{% trans %}Location{% endtrans %}</th>
-                    <th>{% trans %}Date at{% endtrans %}</th>
-                    <th>{% trans %}Type{% endtrans %}</th>
-                    <th>{% trans %}Status{% endtrans %}</th>
+		    <th scope="col">{{ knp_pagination_sortable(appointments, 'Patient'|trans, 'p.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Agenda'|trans, 'a.agenda') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Location'|trans, 'a.location') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Date at'|trans, 'a.date_at') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Type'|trans, 'a.type') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(appointments, 'Status'|trans, 'a.status') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -37,7 +53,6 @@
 			{% endif %}
 			<td>{{ appointment.patient.name|title }}</td>
 			<td>{{ appointment.agenda }}</td>
-			<td>{{ appointment.specialty }}</td>
 			<td>{{ appointment.location }}</td>
 			<td>{{ appointment.dateAt ? appointment.dateAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>{{ appointment.type }}</td>
@@ -51,18 +66,16 @@
 		    </tr>
 {% else %}
 		    <tr>
-			<td colspan="5">{% trans %}no records found{% endtrans %}</td>
+			<td colspan="9">{% trans %}no records found{% endtrans %}</td>
 		    </tr>
 		{% endfor %}
             </tbody>
 	</table>
     </div>
 
-    {% if appointments.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(appointments, { prev_message: '<', next_message: '>'}) }}
-	</div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(appointments) }}
+    </div>
     
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_appointment_new') }}">{% trans %}Create new{% endtrans %}</a>

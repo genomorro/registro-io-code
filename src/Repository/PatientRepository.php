@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,24 +15,6 @@ class PatientRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Patient::class);
-    }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function findWithAppointmentsAndAttendanceTodayQueryBuilder(): \Doctrine\ORM\QueryBuilder
-    {
-        $today = new \DateTime('today midnight');
-        $tomorrow = new \DateTime('tomorrow midnight');
-
-        return $this->createQueryBuilder('p')
-		    ->select('p', 'a', 'att')
-		    ->innerJoin('p.appointments', 'a', 'WITH', 'a.date_at >= :today AND a.date_at < :tomorrow')
-		    ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
-		    ->orderBy('a.date_at', 'ASC')
-		    ->orderBy('att.checkInAt', 'ASC')
-		    ->setParameter('today', $today)
-		    ->setParameter('tomorrow', $tomorrow);
     }
 
     /**
@@ -59,5 +42,29 @@ class PatientRepository extends ServiceEntityRepository
 		    ->orderBy('p.name', 'ASC')
 		    ->getQuery()
 		    ->getResult();
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginatePatient(string $filter = null): Query
+    {
+        $today = new \DateTime('today midnight');
+        $tomorrow = new \DateTime('tomorrow midnight');
+
+        $query = $this->createQueryBuilder('p')
+		      ->leftJoin('p.attendances', 'att', 'WITH', 'att.checkInAt >= :today AND att.checkInAt < :tomorrow')
+		      ->addSelect('att')
+		      ->orderBy('p.id', 'ASC');
+
+        if ($filter) {
+            $query->andWhere('p.file LIKE :filter OR p.name LIKE :filter')
+                  ->setParameter('filter', '%' . $filter . '%');
+        }
+
+	$query->setParameter('today', $today)
+	      ->setParameter('tomorrow', $tomorrow);
+
+        return $query->getQuery();
     }
 }

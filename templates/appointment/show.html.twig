@@ -13,7 +13,7 @@
     <h1>{% trans %}Appointment{% endtrans %}</h1>
     <hr class="red">
 
-    <div class="table-responsible">
+    <div class="table-responsive">
 	<table class="table table-striped">
             <tbody>
 		{% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -24,15 +24,15 @@
 		{% endif %}
 		<tr>
                     <th>{% trans %}Agenda{% endtrans %}</th>
-                    <td>{{ appointment.agenda }}</td>
+                    <td class="text-wrap">{{ appointment.agenda }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Specialty{% endtrans %}</th>
-                    <td>{{ appointment.specialty }}</td>
+                    <td class="text-wrap">{{ appointment.specialty }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Location{% endtrans %}</th>
-                    <td>{{ appointment.location }}</td>
+                    <td class="text-wrap">{{ appointment.location }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Date at{% endtrans %}</th>
@@ -48,7 +48,7 @@
 		</tr>
 		<tr>
                     <th>{% trans %}Patient name{% endtrans %}</th>
-                    <td>{{ appointment.patient.name|title }}</td>
+                    <td class="text-wrap">{{ appointment.patient.name|title }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Patient file{% endtrans %}</th>

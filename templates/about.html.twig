@@ -4,6 +4,9 @@
 
 {% block stylesheets %}
     <style>
+     * {
+	 box-sizing: border-box;
+     }
      .spoiler { 
 	 color: white; 
 	 background-color: white;
@@ -16,6 +19,12 @@
 {% endblock %}
 
 {% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_about') }}">{% trans %}About{% endtrans %}</a></li>
+    </ol>
+    
     <h1>{% trans %}About{% endtrans %}</h1>
     <hr class="red">
 
@@ -57,8 +66,10 @@
 	<hr class="red">
 
 	<pre>{{ symfony_about }}</pre>
-	
-	{{ phpinfo|raw }}
+
+	<div class="table-responsive">
+	    {{ phpinfo|raw }}
+	</div>
     {% endif %}
     <p class="spoiler">{% trans %}Created by{% endtrans %} {{ creator }} ({{ year }}).</p>
 {% endblock %}

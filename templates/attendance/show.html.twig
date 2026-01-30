@@ -15,7 +15,7 @@
 
     <div class="row">
 	<div class="col-md">
-	    <div class="table-responsible">
+	    <div class="table-responsive">
 		<table class="table table-striped">
 		    <tbody>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -34,7 +34,7 @@
 			</tr>
 			{% if is_granted('ROLE_ADMIN') %}
 			    <tr>
-				<th>{% trans %}User who checked in{% endtrans %}</th>
+				<th class="text-wrap">{% trans %}User who checked in{% endtrans %}</th>
 				<td>{{ attendance.checkInUser.username }}</td>
 			    </tr>
 			{% endif %}
@@ -52,12 +52,12 @@
 			</tr>
 			{% if is_granted('ROLE_ADMIN') and attendance.checkOutAt is not null %}
 			    <tr>
-				<th>{% trans %}User who checked out{% endtrans %}</th>
+				<th class="text-wrap">{% trans %}User who checked out{% endtrans %}</th>
 				<td>{{ attendance.checkOutUser.username }}</td>
 			    </tr>
 			{% endif %}
 			<tr>
-			    <th>{% trans %}Patient name{% endtrans %}</th>
+			    <th class="text-wrap">{% trans %}Patient name{% endtrans %}</th>
 			    <td>{{ attendance.patient.name|title }}</td>
 			</tr>
 			<tr>
@@ -71,7 +71,7 @@
 
 	{% if attendance.evidence %}
 	    <div class="col-md-4 d-flex align-items-center justify-content-center">
-		<img class="border" width="100%" src="{{ attendance.evidence }}" alt="{{ attendance.checkInAt|date('Y-m-d H:i:s') }}">
+		<img class="border img-fluid w-100" src="{{ attendance.evidence }}" alt="{{ attendance.checkInAt|date('Y-m-d H:i:s') }}">
 	    </div>
 	{% endif %}
     </div>

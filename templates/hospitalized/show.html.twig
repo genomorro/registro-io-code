@@ -13,32 +13,34 @@
     <h1>{% trans %}Hospitalized{% endtrans %}</h1>
     <hr class="red">
 
-    <table class="table">
-        <tbody>
-	    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <div class="table-responsive">
+	<table class="table table-striped">
+            <tbody>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		    <tr>
+			<th>{% trans %}Id{% endtrans %}</th>
+			<td>{{ hospitalized.id }}</td>
+		    </tr>
+		{% endif %}
 		<tr>
-                    <th>{% trans %}Id{% endtrans %}</th>
-                    <td>{{ hospitalized.id }}</td>
+                    <th>{% trans %}File{% endtrans %}</th>
+                    <td><a class="link-underline-light" href="{{ path('app_patient_show', {'id': hospitalized.patient.id}) }}">{{ hospitalized.patient.file }}</td>
 		</tr>
-	    {% endif %}
-            <tr>
-                <th>{% trans %}File{% endtrans %}</th>
-                <td>{{ hospitalized.patient.file }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Patient{% endtrans %}</th>
-                <td>{{ hospitalized.patient.name|title }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Service{% endtrans %}</th>
-                <td>{{ hospitalized.service }}</td>
-            </tr>
-            <tr>
-                <th>{% trans %}Bed{% endtrans %}</th>
-                <td>{{ hospitalized.bed }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<tr>
+                    <th>{% trans %}Patient{% endtrans %}</th>
+                    <td class="text-wrap">{{ hospitalized.patient.name|title }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Service{% endtrans %}</th>
+                    <td>{{ hospitalized.service }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Bed{% endtrans %}</th>
+                    <td>{{ hospitalized.bed }}</td>
+		</tr>
+            </tbody>
+	</table>
+    </div>
 
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}

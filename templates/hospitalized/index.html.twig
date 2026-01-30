@@ -11,44 +11,67 @@
 
     <h1>{% trans %}Hospitalized index{% endtrans %}</h1>
     <hr class="red">
+
+    <div class="row">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
+	    <form class="w-100" method="get" action="{{ path('app_hospitalized_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by File or Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">
+			<span class="icon-search" aria-hidden="true"></span>
+		    </button>
+		</div>
+	    </form>
+	</div>
+
+	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+	    Registros totales: {{ hospitalizeds.getTotalItemCount }}
+	</div>
+    </div>
     
-    <table class="table">
-        <thead>
-            <tr>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <th>{% trans %}Id{% endtrans %}</th>
-		{% endif %}
-		<th>{% trans %}File{% endtrans %}</th>
-		<th>{% trans %}Patient{% endtrans %}</th>
-                <th>{% trans %}Service{% endtrans %}</th>
-                <th>{% trans %}Bed{% endtrans %}</th>
-                <th>{% trans %}actions{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for hospitalized in hospitalizeds %}
-            <tr>
-		{%if is_granted('ROLE_SUPER_ADMIN') %}
-                    <td>{{ hospitalized.id }}</td>
-		{% endif %}
-                <td>{{ hospitalized.patient.file }}</td>
-                <td>{{ hospitalized.patient.name|title }}</td>
-                <td>{{ hospitalized.service }}</td>
-                <td>{{ hospitalized.bed }}</td>
-                <td>
-                    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+    <div class="table-responsive">
+	<table class="table table-hover">
+            <thead>
+		<tr>
 		    {% if is_granted('ROLE_SUPER_ADMIN') %}
-			<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			<th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Id'|trans, 'h.id') }}</th>
 		    {% endif %}
-                </td>
-            </tr>
+		    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'File'|trans, 'p.file') }}</th>
+		    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Patient'|trans, 'p.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Service'|trans, 'h.service') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(hospitalizeds, 'Bed'|trans, 'h.bed') }}</th>
+                    <th>{% trans %}actions{% endtrans %}</th>
+		</tr>
+            </thead>
+            <tbody>
+		{% for hospitalized in hospitalizeds %}
+		    <tr>
+			{%if is_granted('ROLE_SUPER_ADMIN') %}
+			    <td>{{ hospitalized.id }}</td>
+			{% endif %}
+			<td>{{ hospitalized.patient.file }}</td>
+			<td>{{ hospitalized.patient.name|title }}</td>
+			<td>{{ hospitalized.service }}</td>
+			<td>{{ hospitalized.bed }}</td>
+			<td>
+			    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    {% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
+			</td>
+		    </tr>
         {% else %}
-            <tr>
-                <td colspan="4">{% trans %}no records found{% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		    <tr>
+			<td colspan="6">{% trans %}no records found{% endtrans %}</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(hospitalizeds) }}
+    </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a class="btn btn-primary" href="{{ path('app_hospitalized_new') }}">{% trans %}Create new{% endtrans %}</a>

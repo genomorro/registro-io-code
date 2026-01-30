@@ -10,8 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 
 #[AsCommand(
-    name: 'app:compress-image',
-    description: 'Compresses images in the uploads directory.',
+name: 'app:compress-image',
+description: 'Compresses images in the uploads directory.',
 )]
 class CompressImageCommand extends Command
 {
@@ -27,7 +27,7 @@ class CompressImageCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $uploadsPath = $this->projectDir . '/public/uploads';
-        $entityTypes = ['visitor', 'attendance'];
+        $entityTypes = ['attendance', 'stakeholder', 'visitor'];
         $currentDate = new \DateTime();
 
         foreach ($entityTypes as $type) {
@@ -84,13 +84,20 @@ class CompressImageCommand extends Command
     private function compressImagesInMonth(\SplFileInfo $monthDir, SymfonyStyle $io)
     {
         $finder = new Finder();
-        $finder->files()->in($monthDir->getRealPath())->name('*.png');
+        $finder->files()->in($monthDir->getRealPath())->name('/\.(png|svg)$/i')->notName('*.gz');
 
         foreach ($finder as $file) {
             $originalPath = $file->getRealPath();
             $compressedPath = $originalPath . '.gz';
             
+	    if (file_exists($compressedPath)) {
+		continue;
+	    }
+
             $io->text("Compressing image: $originalPath");
+
+	    $data = file_get_contents($originalPath);
+
             $gz = gzopen($compressedPath, 'w9');
             gzwrite($gz, file_get_contents($originalPath));
             gzclose($gz);

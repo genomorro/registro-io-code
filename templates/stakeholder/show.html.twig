@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Stakeholder{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholder{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_stakeholder_show', {'id': stakeholder.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Stakeholder{% endtrans %}</h1>
+    <hr class="red">
+
+    <div class="row">
+	<div class="col-md">
+	    <div class="table-responsive">
+		<table class="table table-striped">
+		    <tbody>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+			    <tr>
+				<th>{% trans %}Id{% endtrans %}</th>
+				<td>{{ stakeholder.id }}</td>
+			    </tr>
+			{% endif %}
+			<tr>
+			    <th>{% trans %}Name{% endtrans %}</th>
+			    <td class="text-wrap">{{ stakeholder.name|title }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}DNI{% endtrans %}</th>
+			    <td>{{ stakeholder.dni }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Tag{% endtrans %}</th>
+			    <td>{{ stakeholder.tag }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Subject{% endtrans %}</th>
+			    <td class="text-wrap">{{ stakeholder.subject }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Destination{% endtrans %}</th>
+			    <td class="text-wrap">{{ stakeholder.destination }}</td>
+			</tr>
+			<tr>
+			    <th>{% trans %}Check in{% endtrans %}</th>
+			    <td>{{ stakeholder.checkInAt ? stakeholder.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <tr>
+				<th class="text-wrap">{% trans %}User who checked in{% endtrans %}</th>
+				<td>{{ stakeholder.checkInUser.username }}</td>
+			    </tr>
+			{% endif %}
+			<tr>
+			    <th>{% trans %}Check out{% endtrans %}</th>
+			    <td>
+				{% if stakeholder.CheckOutAt %}
+				    {{ stakeholder.CheckOutAt|date('Y-m-d H:i:s') }}
+				{% else %}
+				    <form method="post" action="{{ path('app_stakeholder_check_out', {'id': stakeholder.id, 'redirect_route': 'app_stakeholder_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+					<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ stakeholder.id) }}">
+					<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+				    </form>
+				{% endif %}
+			    </td>
+			</tr>
+			{% if is_granted('ROLE_ADMIN') and stakeholder.checkOutAt is not null %}
+			    <tr>
+				<th class="text-wrap">{% trans %}User who checked out{% endtrans %}</th>
+				<td>{{ stakeholder.checkOutUser.username }}</td>
+			    </tr>
+			{% endif %}
+		    </tbody>
+		</table>
+	    </div>
+	</div>
+
+	{% if stakeholder.evidence and stakeholder.sign %}
+	    <div id="carousel" class="carousel slide carousel-fade col-md-4 d-flex align-items-center justify-content-center" data-bs-ride="carousel">
+		<div class="carousel-inner">
+		    <div class="carousel-item active">
+			<img src="{{ stakeholder.evidence }}" class="d-block w-100" alt="{{ stakeholder.checkInAt|date('Y-m-d H:i:s') }}">
+		    </div>
+		    <div class="carousel-item">
+			<img src="{{ stakeholder.sign }}" class="d-block w-100" alt="{{ stakeholder.checkInAt|date('Y-m-d H:i:s') }}">
+		    </div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		</button>
+	    </div>
+	{% elseif stakeholder.evidence %}
+	    <div class="col-md-4 d-flex align-items-center justify-content-center">
+		<img class="border img-fluid w-100" src="{{ stakeholder.evidence }}" alt="{{ stakeholder.checkInAt|date('Y-m-d H:i:s') }}">
+	    </div>
+	{% elseif stakeholder.sign %}
+	    <div class="col-md-4 d-flex align-items-center justify-content-center">
+		<img class="border img-fluid w-100" src="{{ stakeholder.sign }}" alt="{{ stakeholder.checkInAt|date('Y-m-d H:i:s') }}">
+	    </div>
+	{% endif %}
+
+    </div>
+
+    <div class="d-grid gap-2 d-md-block mt-3">
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+	    <a class="btn btn-primary" href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
+	<a class="btn btn-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
+    </div>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('stakeholder/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
+{% endblock %}

@@ -10,6 +10,7 @@ use App\Repository\AttendanceRepository;
 use App\Repository\PatientRepository;
 use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,19 +21,25 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class PatientController extends AbstractController
 {
     #[Route(name: 'app_patient_index', methods: ['GET'])]
-    public function index(PatientRepository $patientRepository, Request $request): Response
-    {
-	$this->denyAccessUnlessGranted('ROLE_USER');
+    public function index(
+        PatientRepository $patientRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $queryBuilder = $patientRepository->findWithAppointmentsAndAttendanceTodayQueryBuilder();
+        $filter = $request->query->get('filter');
+        $query = $patientRepository->paginatePatient($filter);
 
-        $adapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($queryBuilder);
-        $pagerfanta = new \Pagerfanta\Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(20);
-        $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
+        $patients = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10,
+            ['distinct' => false]
+        );
 
         return $this->render('patient/index.html.twig', [
-            'patients' => $pagerfanta,
+            'patients' => $patients,
         ]);
     }
 
@@ -70,24 +77,9 @@ final class PatientController extends AbstractController
 
         $todaysAttendance = $attendanceRepository->findLatestByPatientAndDate($patient, new \DateTime());
 
-        $todaysAppointmentsQB = $appointmentRepository->createTodaysAppointmentsByPatientQueryBuilder($patient);
-        $otherAppointmentsQB = $appointmentRepository->createOtherAppointmentsByPatientQueryBuilder($patient);
-        $todaysVisitorsQB = $visitorRepository->createTodaysVisitorsByPatientQueryBuilder($patient);
-
-        $todaysAppointmentsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($todaysAppointmentsQB);
-        $todaysAppointments = new \Pagerfanta\Pagerfanta($todaysAppointmentsAdapter);
-        $todaysAppointments->setMaxPerPage(20);
-        $todaysAppointments->setCurrentPage($request->query->getInt('page_today_appointments', 1));
-
-        $otherAppointmentsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($otherAppointmentsQB);
-        $otherAppointments = new \Pagerfanta\Pagerfanta($otherAppointmentsAdapter);
-        $otherAppointments->setMaxPerPage(20);
-        $otherAppointments->setCurrentPage($request->query->getInt('page_other_appointments', 1));
-
-        $todaysVisitorsAdapter = new \Pagerfanta\Doctrine\ORM\QueryAdapter($todaysVisitorsQB);
-        $todaysVisitors = new \Pagerfanta\Pagerfanta($todaysVisitorsAdapter);
-        $todaysVisitors->setMaxPerPage(20);
-        $todaysVisitors->setCurrentPage($request->query->getInt('page_today_visitors', 1));
+        $todaysAppointments = $appointmentRepository->findTodaysAppointmentsByPatient($patient);
+        $otherAppointments = $appointmentRepository->findOtherAppointmentsByPatient($patient);
+        $todaysVisitors = $visitorRepository->findTodaysVisitorsByPatient($patient);
 
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,

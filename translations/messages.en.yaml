@@ -33,6 +33,7 @@ license:
 'Appointments': 'Appointments'
 'Attendances': 'Attendances'
 'Visitors': 'Visitors'
+'Stakeholders': 'Stakeholders'
 'Language': 'Language'
 'es_MX': 'Español'
 'es': 'Español'
@@ -48,18 +49,26 @@ license:
 'Delete': 'Delete'
 ### edit.html.twig
 'Edit Appointment': 'Edit Appointment'
+'Choose a type of appointment': 'Choose a type of appointment'
 'Patient': 'Patient'
 'Search by name or by file': 'Search by name or by file'
 'Date at': 'Date at'
 'Agenda': 'Agenda'
 'Type': 'Type'
-'Estudio': 'Analysis'
-'Consulta': 'Appointment'
-'Procedimiento': 'Procedure'
+'Apertura/Primera vez': 'Opening/First Time'
+'Estudios': 'Analisys'
+'Preconsulta': 'Pre-consultation'
+'Primera vez y subsecuente': 'First and Subsequent Time'
+'Primera vez': 'Fisrt Time'
+'Subsecuente': 'Subsequent Time'
+'Agendada': 'Scheduled'
+'Cancelada': 'Cancelled'
+'Choose a status': 'Choose a status'
 'Update': 'Update'
 'Back to list': 'Back to list'
 'Begin': 'Begin'
 ### index.html.twig
+'Search by Name, Agenda or Date': 'Search by Name, Agenda or Date'
 'Id': 'Id'
 'actions': 'actions'
 'Appointment index': 'Appointment index'
@@ -71,6 +80,7 @@ license:
 'Specialty': 'Specialty'
 'Status': 'Status'
 ### new.html.twig
+'New': 'New'
 'New Appointment': 'New Appointment'
 'Create new Appointment': 'Create new Appointment'
 'Save': 'Save'
@@ -87,6 +97,7 @@ license:
 'Check out': 'Check out'
 ### index.html.twig
 'Attendance index': 'Attendance index'
+'Search by Name or Tag': 'Search by Name or Tag'
 'Are you sure you want to check out?': 'Are you sure you want to check out?'
 ### new.html.twig
 'New Attendance': 'New Attendance'
@@ -104,6 +115,7 @@ license:
 'Bed': 'Bed'
 ### index.html.twig
 'Hospitalized index': 'Hospitalized index'
+'Search by File or Name': 'Search by File or Name'
 ## patient
 ### edit.html.twig
 'File': 'File'
@@ -200,6 +212,7 @@ license:
 ## user
 ### index.html.twig
 'User index': 'User index'
+'Search by Name or Username': 'Search by Name or Username'
 'Username': 'Username'
 'Roles': 'Roles'
 ### edit.html.twig

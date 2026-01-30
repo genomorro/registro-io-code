@@ -11,9 +11,10 @@
 
     <h1>{% trans %}Patient index{% endtrans %}</h1>
     <hr class="red">
+
     <div {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 	<div class="col-md d-flex align-items-center justify-content-center flex-column">
-	    <video data-webrtc-target="video" width="203" height="152" class="border mt-0" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
+	    <video id="" data-webrtc-target="video" class="border mt-0 img-fluid w-25" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>
             <div class="my-2">
                 <select data-webrtc-target="cameraSelect" data-action="change->webrtc#switchCamera" class="form-select form-select-sm d-none d-inline-block w-auto"></select>
                 <button type="button" data-webrtc-target="flipButton" data-action="click->webrtc#flipCamera" class="btn btn-sm btn-secondary d-none">{% trans %}Flip Camera{% endtrans %}</button>
@@ -21,18 +22,35 @@
 	    <canvas data-webrtc-target="canvas" class="d-none"></canvas>
 	</div>
 
-	<div class="table-responsible">
+	<div class="row">
+	    <div class="col-12 col-md-6 d-flex justify-content-start">
+		<form class="w-100" method="get" action="{{ path('app_patient_index') }}">
+		    <div class="input-group mb-3">
+			<input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by File or Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+			<button class="btn btn-sm btn-info" type="submit">
+			    <span class="icon-search" aria-hidden="true"></span>
+			</button>
+		    </div>
+		</form>
+	    </div>
+
+	    <div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+		Registros totales: {{ patients.getTotalItemCount }}
+	    </div>
+	</div>
+
+	<div class="table-responsive">
 	    <table class="table table-hover">
 		<thead>
 		    <tr>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
-			    <th>{% trans %}Id{% endtrans %}</th>
+			    <th scope="col">{{ knp_pagination_sortable(patients, 'Id'|trans, 'p.id') }}</th>
 			{% endif %}
-			<th>{% trans %}File{% endtrans %}</th>
-			<th>{% trans %}Name{% endtrans %}</th>
-			<th>{% trans %}Disability{% endtrans %}</th>
-			<th>{% trans %}Check in{% endtrans %}</th>
-			<th>{% trans %}Check out{% endtrans %}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'File'|trans, 'p.file') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Name'|trans, 'p.name') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Disability'|trans, 'p.disability') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Check in'|trans, 'att.checkInAt') }}</th>
+			<th scope="col">{{ knp_pagination_sortable(patients, 'Check out'|trans, 'att.checkOutAt') }}</th>
 			<th>{% trans %}actions{% endtrans %}</th>
 		    </tr>
 		</thead>
@@ -48,21 +66,21 @@
 			    <td>{{ patient.disability ? 'Yes'|trans : 'No'|trans }}</td>
 			    <td>
 				{% if todays_attendance %}
-				    {{ todays_attendance.checkInAt|date('H:i:s') }}
+				    {{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}
 				{% else %}
 				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<input type="hidden" name="evidence" data-webrtc-target="evidence">
-					<div class="input-group mb-3">
-					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height: 34px" class="form-control form-control-sm"/>
-					    <button type="submit" class="btn btn-sm btn-success">{% trans %}Check in{% endtrans %}</button>
+					<div class="input-group">
+					    <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required class="form-control input-sm w-50"/>
+					    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check"></i></button>
 					</div>
 				    </form>
 				{% endif %}
 			    </td>
 			    <td>
 				{% if todays_attendance and todays_attendance.checkOutAt %}
-				    {{ todays_attendance.checkOutAt|date('H:i:s') }}
+				    {{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
 				{% elseif todays_attendance %}
 				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
@@ -89,11 +107,9 @@
 	</div>
     </div>
 
-    {% if patients.haveToPaginate == true %}
-	<div class="navigation">
-            {{ pagerfanta(patients, { prev_message: '<', next_message: '>'}) }}
-	</div>
-    {% endif %}
+    <div class="navigation">
+        {{ knp_pagination_render(patients) }}
+    </div>
     
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
