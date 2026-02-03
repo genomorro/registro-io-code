@@ -113,6 +113,9 @@
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
 	    <a class="btn btn-primary" href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
+	<a class="btn btn-secondary" href="{{ path('app_stakeholder_pdf', {'id': stakeholder.id}) }}" target="_blank">
+	    <i class="icon icon-file-pdf"></i> {% trans %}Export to PDF{% endtrans %}
+	</a>
 	<a class="btn btn-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>
 
