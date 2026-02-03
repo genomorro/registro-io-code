@@ -1556,6 +1556,9 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     convert_exception?: bool, // Default: false
  *     remove_first_page_param?: bool, // Default: false
  * }
+ * @psalm-type NucleosDompdfConfig = array{
+ *     defaults?: array<string, scalar|null>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1570,6 +1573,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     security?: SecurityConfig,
  *     monolog?: MonologConfig,
  *     knp_paginator?: KnpPaginatorConfig,
+ *     nucleos_dompdf?: NucleosDompdfConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1587,6 +1591,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
  *         knp_paginator?: KnpPaginatorConfig,
+ *         nucleos_dompdf?: NucleosDompdfConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1602,6 +1607,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
+ *         nucleos_dompdf?: NucleosDompdfConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1618,6 +1624,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         security?: SecurityConfig,
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
+ *         nucleos_dompdf?: NucleosDompdfConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

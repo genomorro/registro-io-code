@@ -7,6 +7,7 @@ use App\Form\StakeholderType;
 use App\Repository\StakeholderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Nucleos\DompdfBundle\Wrapper\DompdfWrapperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,6 +72,44 @@ final class StakeholderController extends AbstractController
     {
         return $this->render('stakeholder/show.html.twig', [
             'stakeholder' => $stakeholder,
+        ]);
+    }
+
+    #[Route('/{id}/pdf', name: 'app_stakeholder_pdf', methods: ['GET'])]
+    public function exportPdf(Stakeholder $stakeholder, DompdfWrapperInterface $wrapper): Response
+    {
+        $publicDir = $this->getParameter('kernel.project_dir') . '/public';
+
+        $evidenceBase64 = null;
+        if ($stakeholder->getEvidence()) {
+            $path = $publicDir . $stakeholder->getEvidence();
+            if (file_exists($path)) {
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $evidenceBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            }
+        }
+
+        $signBase64 = null;
+        if ($stakeholder->getSign()) {
+            $path = $publicDir . $stakeholder->getSign();
+            if (file_exists($path)) {
+                $data = file_get_contents($path);
+                $signBase64 = 'data:image/svg+xml;base64,' . base64_encode($data);
+            }
+        }
+
+        $html = $this->renderView('stakeholder/pdf.html.twig', [
+            'stakeholder' => $stakeholder,
+            'evidence_base64' => $evidenceBase64,
+            'sign_base64' => $signBase64,
+        ]);
+
+        $pdfContent = $wrapper->getPdf($html);
+
+        return new Response($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => sprintf('inline; filename="stakeholder-%d.pdf"', $stakeholder->getId()),
         ]);
     }
 
