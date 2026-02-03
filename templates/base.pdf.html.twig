@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="{{ app.locale }}">
+    <head>
+	<meta charset="UTF-8">
+	<title>
+	    {%  block title %}
+		{% trans %}Patient and visitor check-in and check-out system{% endtrans %}
+	    {%  endblock %}
+	</title>
+	{% block stylesheets %}
+	    <style>
+	     html {
+    		 margin: 0;
+	     }
+             body {
+		 font-family: noto-sans;
+		 font-size: 10px;
+		 color: #333;
+		 {% if background_base64 %}
+		 background-image: url("{{ background_base64 }}");
+		 background-repeat: no-repeat;
+		 background-position: center;
+		 background-size: cover;
+		 {% endif %}
+             }
+             h1 {
+		 color: #611232;
+		 border-bottom: 2px solid #611232;
+		 padding-bottom: 10px;
+             }
+             table {
+		 width: 100%;
+		 border-collapse: collapse;
+		 margin-bottom: 20px;
+             }
+             th, td {
+		 text-align: left;
+		 padding: 8px;
+		 border-bottom: 1px solid #ddd;
+             }
+             th {
+		 background-color: #f2f2f2;
+		 width: 30%;
+             }
+	     .row::after {
+		 content: "";
+		 clear: both;
+		 display: table;
+	     }
+             .image-container {
+		 width: 50%;
+		 float: left;
+		 margin-top: 20px;
+		 text-align: center;
+             }
+             .image-container img {
+		 max-width: 100%;
+		 height: auto;
+		 border: 1px solid #ccc;
+		 margin-bottom: 10px;
+             }
+             .label {
+		 font-weight: bold;
+		 display: block;
+		 margin-bottom: 5px;
+             }
+	     .container {
+		 margin: 100pt 20pt;
+	     }
+	    </style>
+	{% endblock %}
+    </head>
+    <body>
+	<main class="page">
+	    <div class="container">
+		{% block body %}		    
+		{% endblock %}
+	    </div>
+	</main>
+    </body>
+</html>
