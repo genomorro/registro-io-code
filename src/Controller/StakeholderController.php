@@ -78,7 +78,15 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/pdf', name: 'app_stakeholder_pdf', methods: ['GET'])]
     public function exportPdf(Stakeholder $stakeholder, DompdfWrapperInterface $wrapper): Response
     {
-        $publicDir = $this->getParameter('kernel.project_dir') . '/public';
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $publicDir = $projectDir . '/public';
+
+        $backgroundBase64 = null;
+        $backgroundPath = $projectDir . '/assets/images/fondo-2026.jpeg';
+        if (file_exists($backgroundPath)) {
+            $data = file_get_contents($backgroundPath);
+            $backgroundBase64 = 'data:image/jpeg;base64,' . base64_encode($data);
+        }
 
         $evidenceBase64 = null;
         if ($stakeholder->getEvidence()) {
@@ -103,6 +111,7 @@ final class StakeholderController extends AbstractController
             'stakeholder' => $stakeholder,
             'evidence_base64' => $evidenceBase64,
             'sign_base64' => $signBase64,
+            'background_base64' => $backgroundBase64,
         ]);
 
         $pdfContent = $wrapper->getPdf($html);
