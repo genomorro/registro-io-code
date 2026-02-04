@@ -3,55 +3,55 @@
 {% block title %}{% trans %}Stakeholder Details{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>{% trans %}Stakeholder Details{% endtrans %}</h1>
-    <table class="table table-striped">
-        <tbody>
-	    <tr>
-                <th>{% trans %}Id{% endtrans %}</th>
-                <td>{{ stakeholder.id }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}Name{% endtrans %}</th>
-                <td>{{ stakeholder.name|title }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}DNI{% endtrans %}</th>
-                <td>{{ stakeholder.dni }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}Tag{% endtrans %}</th>
-                <td>{{ stakeholder.tag }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}Subject{% endtrans %}</th>
-                <td>{{ stakeholder.subject }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}Destination{% endtrans %}</th>
-                <td>{{ stakeholder.destination }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}Check in{% endtrans %}</th>
-                <td>{{ stakeholder.checkInAt ? stakeholder.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-	    </tr>
-	    <tr>
-                <th>{% trans %}User who checked in{% endtrans %}</th>
-                <td>{{ stakeholder.checkInUser ? stakeholder.checkInUser.username : '' }}</td>
-	    </tr>
-	    {% if stakeholder.CheckOutAt %}
+    <div class="page">
+	<h1>{% trans %}Stakeholder Details{% endtrans %}</h1>
+	<table>
+            <tbody>
 		<tr>
-		    <th>{% trans %}Check out{% endtrans %}</th>
-		    <td>{{ stakeholder.checkOutAt ? stakeholder.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>{% trans %}Id{% endtrans %}</th>
+                    <td>{{ stakeholder.id }}</td>
 		</tr>
 		<tr>
-		    <th>{% trans %}User who checked out{% endtrans %}</th>
-		    <td>{{ stakeholder.checkOutUser ? stakeholder.checkOutUser.username : '' }}</td>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <td>{{ stakeholder.name|title }}</td>
 		</tr>
-	    {% endif %}
-        </tbody>
-    </table>
+		<tr>
+                    <th>{% trans %}DNI{% endtrans %}</th>
+                    <td>{{ stakeholder.dni }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Tag{% endtrans %}</th>
+                    <td>{{ stakeholder.tag }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Subject{% endtrans %}</th>
+                    <td>{{ stakeholder.subject }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Destination{% endtrans %}</th>
+                    <td>{{ stakeholder.destination }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Check in{% endtrans %}</th>
+                    <td>{{ stakeholder.checkInAt ? stakeholder.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}User who checked in{% endtrans %}</th>
+                    <td>{{ stakeholder.checkInUser ? stakeholder.checkInUser.username : '' }}</td>
+		</tr>
+		{% if stakeholder.CheckOutAt %}
+		    <tr>
+			<th>{% trans %}Check out{% endtrans %}</th>
+			<td>{{ stakeholder.checkOutAt ? stakeholder.checkOutAt|date('Y-m-d H:i:s') : '' }}</td>
+		    </tr>
+		    <tr>
+			<th>{% trans %}User who checked out{% endtrans %}</th>
+			<td>{{ stakeholder.checkOutUser ? stakeholder.checkOutUser.username : '' }}</td>
+		    </tr>
+		{% endif %}
+            </tbody>
+	</table>
 
-    <div class="row">
 	{% if evidence_base64 %}
             <div class="image-container">
 		<span class="label">{% trans %}Evidence{% endtrans %}</span>
