@@ -1,0 +1,177 @@
+[Wed Feb  4 18:43:25 2026] Failed to listen on localhost:8000 (reason: Address already in[Wed Feb  4 18:43:26 2026] [::1]:41774 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41774 [200]: GET /en/login
+[Wed Feb  4 18:43:27 2026] [::1]:41774 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41788 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41792 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41788 [200]: GET /assets/styles/app-_oa5kYc.css
+[Wed Feb  4 18:43:27 2026] [::1]:41800 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41792 [200]: GET /assets/vendor/bootstrap/dist/css/bootstrap.min-z0zQt-h.css
+[Wed Feb  4 18:43:27 2026] [::1]:41802 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41800 [200]: GET /assets/vendor/tom-select/dist/css/tom-select.bootstrap5-PmntfHB.css
+[Wed Feb  4 18:43:27 2026] [::1]:41806 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41788 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41802 [200]: GET /assets/app-W0M_6tu.js
+[Wed Feb  4 18:43:27 2026] [::1]:41822 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41806 [200]: GET /assets/stimulus_bootstrap-xCO4u8H.js
+[Wed Feb  4 18:43:27 2026] [::1]:41792 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41800 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41802 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41806 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41832 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41834 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41850 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41854 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41822 [200]: GET /_wdt/styles
+[Wed Feb  4 18:43:27 2026] [::1]:41822 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41856 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41832 [200]: GET /assets/vendor/bootstrap/dist/js/bootstrap.bundle.min-k8DF1Mq.js
+[Wed Feb  4 18:43:27 2026] [::1]:41834 [200]: GET /assets/@symfony/stimulus-bundle/loader-V1GtHuK.js
+[Wed Feb  4 18:43:27 2026] [::1]:41850 [200]: GET /assets/vendor/@hotwired/stimulus/stimulus.index-S4zNcea.js
+[Wed Feb  4 18:43:27 2026] [::1]:41854 [200]: GET /assets/@symfony/stimulus-bundle/controllers-hks1jG-.js
+[Wed Feb  4 18:43:27 2026] [::1]:41856 [200]: GET /assets/@symfony/ux-autocomplete/controller-KJfsNWz.js
+[Wed Feb  4 18:43:27 2026] [::1]:41872 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41832 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41834 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41850 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41854 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41856 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41886 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41900 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41902 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41906 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41872 [200]: GET /assets/@symfony/ux-turbo/turbo_controller-8wQNi2p.js
+[Wed Feb  4 18:43:27 2026] [::1]:41872 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41916 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41886 [200]: GET /assets/controllers/signature_controller-gQ7ewH6.js
+[Wed Feb  4 18:43:27 2026] [::1]:41886 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41900 [200]: GET /assets/controllers/hello_controller-VYgvytJ.js
+[Wed Feb  4 18:43:27 2026] [::1]:41900 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41930 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41902 [200]: GET /assets/controllers/dni_form_controller-NxQa-og.js
+[Wed Feb  4 18:43:27 2026] [::1]:41902 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41932 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41906 [200]: GET /assets/vendor/tom-select/tom-select.index-TPK6we8.js
+[Wed Feb  4 18:43:27 2026] [::1]:41916 [200]: GET /assets/vendor/@hotwired/turbo/turbo.index-pT15T6h.js
+[Wed Feb  4 18:43:27 2026] [::1]:41906 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41916 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41930 [200]: GET /assets/vendor/canvas2svg/canvas2svg.index-yCw1iq2.js
+[Wed Feb  4 18:43:27 2026] [::1]:41930 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41932 [404]: GET /vendor/gobmx/gobmx.js
+[Wed Feb  4 18:43:27 2026] [::1]:41932 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41944 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41946 Accepted
+[Wed Feb  4 18:43:27 2026] [::1]:41944 [200]: GET /assets/vendor/@orchidjs/sifter/sifter.index-zEuztG7.js
+[Wed Feb  4 18:43:27 2026] [::1]:41946 [200]: GET /assets/vendor/@orchidjs/unicode-variants/unicode-variants.index-OoJoyLT.js
+[Wed Feb  4 18:43:27 2026] [::1]:41944 Closing
+[Wed Feb  4 18:43:27 2026] [::1]:41946 Closing
+[Wed Feb  4 18:43:28 2026] [::1]:41956 Accepted
+[Wed Feb  4 18:43:28 2026] [::1]:41956 [200]: GET /_wdt/5d07d3?XDEBUG_IGNORE=1
+[Wed Feb  4 18:43:28 2026] [::1]:41956 Closing
+[Wed Feb  4 18:43:28 2026] [::1]:41972 Accepted
+[Wed Feb  4 18:43:28 2026] [::1]:41972 [200]: GET /assets/controllers/csrf_protection_controller-6ynUAeX.js
+[Wed Feb  4 18:43:28 2026] [::1]:41972 Closing
+[Wed Feb  4 18:43:28 2026] [::1]:41974 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:41974 [302]: POST /en/login
+[Wed Feb  4 18:43:29 2026] [::1]:41974 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:41986 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:41986 [302]: GET /
+[Wed Feb  4 18:43:29 2026] [::1]:41986 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:42000 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:42000 [200]: GET /es
+[Wed Feb  4 18:43:29 2026] [::1]:42000 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:42010 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:42026 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:42010 [200]: GET /assets/styles/app-_oa5kYc.css
+[Wed Feb  4 18:43:29 2026] [::1]:42038 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:42026 [200]: GET /assets/vendor/bootstrap/dist/css/bootstrap.min-z0zQt-h.css
+[Wed Feb  4 18:43:29 2026] [::1]:42038 [200]: GET /assets/vendor/tom-select/dist/css/tom-select.bootstrap5-PmntfHB.css
+[Wed Feb  4 18:43:29 2026] [::1]:42010 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:42026 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:42038 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:42044 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:42044 [404]: GET /vendor/gobmx/gobmx.js
+[Wed Feb  4 18:43:29 2026] [::1]:42044 Closing
+[Wed Feb  4 18:43:29 2026] [::1]:42054 Accepted
+[Wed Feb  4 18:43:29 2026] [::1]:42054 [200]: GET /_wdt/298b01?XDEBUG_IGNORE=1
+[Wed Feb  4 18:43:29 2026] [::1]:42054 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42068 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42068 [200]: GET /en/report/patient/today
+[Wed Feb  4 18:43:30 2026] [::1]:42068 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42078 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42090 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42078 [200]: GET /assets/styles/app-_oa5kYc.css
+[Wed Feb  4 18:43:30 2026] [::1]:42098 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42090 [200]: GET /assets/vendor/bootstrap/dist/css/bootstrap.min-z0zQt-h.css
+[Wed Feb  4 18:43:30 2026] [::1]:42100 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42098 [200]: GET /assets/vendor/tom-select/dist/css/tom-select.bootstrap5-PmntfHB.css
+[Wed Feb  4 18:43:30 2026] [::1]:42106 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42078 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42090 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42098 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42116 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42118 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42120 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42130 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42100 [200]: GET /assets/app-W0M_6tu.js
+[Wed Feb  4 18:43:30 2026] [::1]:42106 [200]: GET /assets/stimulus_bootstrap-xCO4u8H.js
+[Wed Feb  4 18:43:30 2026] [::1]:42100 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42106 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42116 [200]: GET /assets/vendor/bootstrap/dist/js/bootstrap.bundle.min-k8DF1Mq.js
+[Wed Feb  4 18:43:30 2026] [::1]:42116 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42118 [200]: GET /assets/@symfony/stimulus-bundle/loader-V1GtHuK.js
+[Wed Feb  4 18:43:30 2026] [::1]:42118 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42120 [200]: GET /koolreport_assets/286458459/KoolReport.js
+[Wed Feb  4 18:43:30 2026] [::1]:42120 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42130 [200]: GET /assets/vendor/@hotwired/stimulus/stimulus.index-S4zNcea.js
+[Wed Feb  4 18:43:30 2026] [::1]:42130 Closing
+[Wed Feb  4 18:43:30 2026] [::1]:42142 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42150 Accepted
+[Wed Feb  4 18:43:30 2026] [::1]:42166 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42170 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42142 [200]: GET /assets/@symfony/stimulus-bundle/controllers-hks1jG-.js
+[Wed Feb  4 18:43:31 2026] [::1]:42180 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42150 [200]: GET /assets/@symfony/ux-autocomplete/controller-KJfsNWz.js
+[Wed Feb  4 18:43:31 2026] [::1]:42196 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42142 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42150 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42166 [200]: GET /assets/@symfony/ux-turbo/turbo_controller-8wQNi2p.js
+[Wed Feb  4 18:43:31 2026] [::1]:42166 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42206 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42170 [200]: GET /assets/controllers/signature_controller-gQ7ewH6.js
+[Wed Feb  4 18:43:31 2026] [::1]:42180 [200]: GET /assets/controllers/hello_controller-VYgvytJ.js
+[Wed Feb  4 18:43:31 2026] [::1]:42170 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42208 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42180 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42196 [200]: GET /assets/controllers/dni_form_controller-NxQa-og.js
+[Wed Feb  4 18:43:31 2026] [::1]:42196 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42222 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42232 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42206 [200]: GET /assets/vendor/tom-select/tom-select.index-TPK6we8.js
+[Wed Feb  4 18:43:31 2026] [::1]:42206 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42208 [200]: GET /assets/vendor/@hotwired/turbo/turbo.index-pT15T6h.js
+[Wed Feb  4 18:43:31 2026] [::1]:42222 [200]: GET /assets/vendor/canvas2svg/canvas2svg.index-yCw1iq2.js
+[Wed Feb  4 18:43:31 2026] [::1]:42232 [404]: GET /vendor/gobmx/gobmx.js
+[Wed Feb  4 18:43:31 2026] [::1]:42232 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42242 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42250 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42242 [200]: GET /koolreport_assets/2760786039/table.css
+[Wed Feb  4 18:43:31 2026] [::1]:42258 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42208 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42222 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42250 [200]: GET /koolreport_assets/3049626909/jquery.min.js
+[Wed Feb  4 18:43:31 2026] [::1]:42268 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42258 [200]: GET /assets/vendor/@orchidjs/sifter/sifter.index-zEuztG7.js
+[Wed Feb  4 18:43:31 2026] [::1]:42242 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42250 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42258 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42282 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42268 [200]: GET /assets/vendor/@orchidjs/unicode-variants/unicode-variants.index-OoJoyLT.js
+[Wed Feb  4 18:43:31 2026] [::1]:42268 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42282 [200]: GET /_wdt/9ee7b1?XDEBUG_IGNORE=1
+[Wed Feb  4 18:43:31 2026] [::1]:42282 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42298 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42312 Accepted
+[Wed Feb  4 18:43:31 2026] [::1]:42298 [200]: GET /koolreport_assets/1293532672/googlechart.js
+[Wed Feb  4 18:43:31 2026] [::1]:42312 [200]: GET /koolreport_assets/2760786039/table.js
+[Wed Feb  4 18:43:31 2026] [::1]:42298 Closing
+[Wed Feb  4 18:43:31 2026] [::1]:42312 Closing

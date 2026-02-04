@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Patients Today Report{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans %}Patients Today Report{% endtrans %}</li>
+    </ol>
+
+    <div class="report-container mt-4">
+        {{ report|raw }}
+    </div>
+{% endblock %}
