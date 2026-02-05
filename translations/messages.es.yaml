@@ -141,6 +141,14 @@ license:
 'Date': 'Fecha'
 'Yes': 'Si'
 'No': 'No'
+## report
+'Patients Today Report': 'Reporte de pacientes de hoy'
+'Patients Attendance Status': 'Estado de asistencia de pacientes'
+'Count': 'Total'
+'Patient List': 'Lista de pacientes'
+'Patient Name': 'Nombre del paciente'
+'Attended': 'Asistió'
+'Not Attended': 'No asistió'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'

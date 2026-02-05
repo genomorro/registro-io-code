@@ -141,6 +141,14 @@ license:
 'Date': 'Date'
 'Yes': 'Yes'
 'No': 'No'
+## report
+'Patients Today Report': 'Patients Today Report'
+'Patients Attendance Status': 'Patients Attendance Status'
+'Count': 'Count'
+'Patient List': 'Patient List'
+'Patient Name': 'Patient Name'
+'Attended': 'Attended'
+'Not Attended': 'Not Attended'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'

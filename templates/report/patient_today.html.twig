@@ -6,7 +6,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
-        <li class="breadcrumb-item"><a href="#">{% trans %}Report{% endtrans %}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_report_index') }}">{% trans %}Report{% endtrans %}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{% trans %}Patients Today Report{% endtrans %}</li>
     </ol>
 
@@ -14,3 +14,4 @@
         {{ report|raw }}
     </div>
 {% endblock %}
+

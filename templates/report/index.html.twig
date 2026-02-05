@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_report_index') }}">{% trans %}Report{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Reports{% endtrans %}</h1>
+    <hr class="red">
+
+    <ol>
+	<li>{% trans %}Patients{% endtrans %}
+	    <ul>
+		<li><a href="{{ path('app_report_patient_today') }}">{% trans %}Patients Today Report{% endtrans %}</a></li>
+	    </ul>
+	</li>
+    </ol>
+{% endblock %}
