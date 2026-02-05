@@ -230,3 +230,11 @@ license:
 'Sign in!': '¡Iniciar sesión!'
 'You are logged in as': 'Iniciaste sesión como'
 'Please sign in': 'Inicia sesión, por favor'
+# Reports
+'Patients Today Report': 'Reporte de pacientes de hoy'
+'Patients Attendance Status': 'Estado de asistencia de pacientes'
+'Count': 'Total'
+'Patient List': 'Lista de pacientes'
+'Patient Name': 'Nombre del paciente'
+'Attended': 'Asistió'
+'Not Attended': 'No asistió'

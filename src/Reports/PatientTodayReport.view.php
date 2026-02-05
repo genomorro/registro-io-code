@@ -1,9 +1,11 @@
 <?php
 use koolreport\widgets\google\ColumnChart;
 use koolreport\widgets\koolphp\Table;
+
+$translator = $this->params["translator"];
 ?>
 <div class="report-content">
-    <h1 class="text-center mb-4">Patients Today Report</h1>
+    <h1 class="text-center mb-4"><?php echo $translator->trans("Patients Today Report"); ?></h1>
     <div class="row">
         <div class="col-md-12">
             <?php
@@ -12,12 +14,12 @@ use koolreport\widgets\koolphp\Table;
                 "columns" => array(
                     "status",
                     "patientName" => array(
-                        "label" => "Count",
+                        "label" => $translator->trans("Count"),
                         "type" => "number"
                     )
                 ),
                 "options" => array(
-                    "title" => "Patients Attendance Status",
+                    "title" => $translator->trans("Patients Attendance Status"),
                     "colors" => ["#3366cc", "#dc3912"]
                 )
             ));
@@ -26,19 +28,21 @@ use koolreport\widgets\koolphp\Table;
     </div>
     <div class="row mt-4">
         <div class="col-md-12">
-            <h3>Patient List</h3>
+            <h3><?php echo $translator->trans("Patient List"); ?></h3>
             <?php
             Table::create(array(
                 "dataStore" => $this->dataStore('patients'),
                 "columns" => array(
                     "patientName" => array(
-                        "label" => "Patient Name"
+                        "label" => $translator->trans("Patient Name")
                     ),
                     "attended" => array(
-                        "label" => "Attended",
+                        "label" => $translator->trans("Attended"),
                         "type" => "number",
-                        "formatValue" => function($value) {
-                            return $value > 0 ? "<span class='badge bg-success'>Yes</span>" : "<span class='badge bg-danger'>No</span>";
+                        "formatValue" => function($value) use ($translator) {
+                            $label = $value > 0 ? $translator->trans("Yes") : $translator->trans("No");
+                            $class = $value > 0 ? "bg-success" : "bg-danger";
+                            return "<span class='badge $class'>$label</span>";
                         }
                     )
                 ),

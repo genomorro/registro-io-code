@@ -230,3 +230,11 @@ license:
 'Sign in!': 'Sign in!'
 'You are logged in as': 'You are logged in as'
 'Please sign in': 'Please sign in'
+# Reports
+'Patients Today Report': 'Patients Today Report'
+'Patients Attendance Status': 'Patients Attendance Status'
+'Count': 'Count'
+'Patient List': 'Patient List'
+'Patient Name': 'Patient Name'
+'Attended': 'Attended'
+'Not Attended': 'Not Attended'
