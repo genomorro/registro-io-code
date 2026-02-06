@@ -17,37 +17,47 @@
 	<div class="collapse navbar-collapse w-100" id="subNavBarDropdown">
 	    <ul class="navbar-nav w-100 justify-content-center">
 		{# Begin: main options #}
-		<li class="nav-item">
-		    <a class="nav-link" href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a>
-		</li>
-		{% if is_granted("ROLE_ADMIN") %}
+		{% if is_granted("ROLE_USER") %}
 		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_patient_index') }}">{% trans %}Patients{% endtrans %}</a>
-		    </li>
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a>
-		    </li>
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_appointment_index') }}">{% trans %}Appointments{% endtrans %}</a>
-		    </li>
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_attendance_index') }}">{% trans %}Attendances{% endtrans %}</a>
+			<a class="nav-link" href="{{ path('app_search_index') }}">{% trans %}Search{% endtrans %}</a>
 		    </li>
 		{% endif %}
-		<li class="nav-item">
-		    <a class="nav-link" href="{{ path('app_visitor_index') }}">{% trans %}Visitors{% endtrans %}</a>
-		</li>
+		{% if is_granted("ROLE_ADMIN") %}
+		    <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle"
+			   href="#"
+			   id="userDropdown"
+			   role="button"
+			   data-bs-toggle="dropdown"
+			   aria-expanded="false">
+			    {% trans %}Patients{% endtrans %}
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="userDropdown">
+			    <li>
+				<a class="dropdown-item" href="{{ path('app_patient_index') }}">{% trans %}All Patients{% endtrans %}</a>
+			    </li>
+			    <li>
+				<a class="dropdown-item" href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a>
+			    </li>
+			</ul>
+			<li class="nav-item">
+			    <a class="nav-link" href="{{ path('app_appointment_index') }}">{% trans %}Appointments{% endtrans %}</a>
+			</li>
+			<li class="nav-item">
+			    <a class="nav-link" href="{{ path('app_attendance_index') }}">{% trans %}Attendances{% endtrans %}</a>
+			</li>
+		{% endif %}
+		{% if is_granted("ROLE_USER") %}
+		    <li class="nav-item">
+			<a class="nav-link" href="{{ path('app_visitor_index') }}">{% trans %}Visitors{% endtrans %}</a>
+		    </li>
+		{% endif %}
 		{% if is_granted('ROLE_SUPER_ADMIN') %} {# Temporal rule #}
 		    <li class="nav-item">
 			<a class="nav-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholders{% endtrans %}</a>
 		    </li>
 		    <li class="nav-item">
 			<a class="nav-link" href="{{ path('app_report_index') }}">{% trans %}Reports{% endtrans %}</a>
-		    </li>
-		{% endif %}
-		{% if is_granted('ROLE_ADMIN') %}
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_user_index') }}">{% trans %}Users{% endtrans %}</a>
 		    </li>
 		{% endif %}
 	    </ul>
@@ -65,20 +75,31 @@
 		    {% endif %}
 		{% endfor %}
 		{# End: Language switcher #}
-		{# Begin: user submenu #}
-		{% if app.user %}
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}"><i class="icon-user"></i> ({{ app.user.username }})</a>
-		    </li>
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-left"></i></a>
-		    </li>
-		{% else %}
-		    <li class="nav-item">
-			<a class="nav-link" href="{{ path('app_login') }}"><i class="bi bi-box-arrow-in-right"></i></a>
-		    </li>
-		{% endif %}
-		{# End: user submenu #}
+		{# Begin: Dropdown user #}
+		<li class="nav-item dropdown">
+		    <a class="nav-link dropdown-toggle"
+		       href="#"
+		       id="userDropdown"
+		       role="button"
+		       data-bs-toggle="dropdown"
+		       aria-expanded="false">
+			<i class="icon icon-user"></i>
+		    </a>
+		    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+			{% if app.user %}
+			    <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id}) }}">{% trans %}Profile{% endtrans %}: ({{ app.user.username }})</a></li>
+			    <li><hr class="dropdown-divider"></li>
+			    <li><a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a></li>
+			{% else %}
+			    <li><a class="dropdown-item" href="{{ path('app_login') }}">{% trans %}Sign in{% endtrans %}</a></li>
+			{% endif %}
+			{% if is_granted('ROLE_ADMIN') %}
+			    <li><hr class="dropdown-divider"></li>
+			    <li><a class="dropdown-item" href="{{ path('app_user_index') }}">{% trans %}User index{% endtrans %}</a></li>
+			{% endif %}
+		    </ul>
+		</li>
+		{# End: Dropdown user #}
 	    </ul>
 	</div>
     </div>
@@ -91,5 +112,12 @@
 	 margin-top: 42px !important;
 	 margin-bottom: -1%;
      }
+     .dropdown-menu {
+	 width:100%;
+     }
+     .dropdown-item {
+	 text-align: center;
+     }
     </style>
 {% endblock %}
+

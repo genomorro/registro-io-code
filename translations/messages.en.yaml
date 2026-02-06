@@ -29,11 +29,13 @@ license:
 ## menu.html.twig
 'Search': 'Search'
 'Patients': 'Patients'
+'All Patients': 'All Patients'
 'Hospitalized': 'Hospitalized'
 'Appointments': 'Appointments'
 'Attendances': 'Attendances'
 'Visitors': 'Visitors'
 'Stakeholders': 'Stakeholders'
+'Reports': 'Reports'
 'Language': 'Language'
 'es_MX': 'Español'
 'es': 'Español'

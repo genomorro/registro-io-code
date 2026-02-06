@@ -1,17 +1,25 @@
 <h3>Welcome!</h3>
-<p>You have entered the <i>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</i>. To use this website, you should be aware of the following navigation elements:</p>
+<p>You have entered the <i>Patient and Visitor Check-In and Check-Out System</i>. To use this website, please note the following navigation elements:</p>
 <ul>
-    <li><b>Main Menu</b>: Located at the top, just below the website header. It is used to find the different sections available in the system. It is red and contains these elements:
+    <li><b>Main Menu</b>: Located at the top, just below the website header. It allows you to find the different sections available in the system. It is red and contains these elements:
 	<ul>
-	    <li>Link to search</li>
-	    {% if is_granted('ROLE_ADMIN') %}
-		<li>Link to <i>Patients</i></li>
-		<li>Link to <i>Hospitalizeds</i></li>
-		<li>Link to <i>Appointments</i></li>
-		<li>Link to <i>Attendance</i></li>
-		<li>Link to <i>Users</i></li>
+	    {% if is_granted('ROLE_USER') %}
+		<li>Link to search</li>
 	    {% endif %}
-	    <li>Link to <i>Visitors</i></li>
+	    {% if is_granted('ROLE_ADMIN') %}
+		<li>Patients <i>submenu</i></li>
+		<li>Link to <i>Hospitalized</i> section</li>
+		<li>Link to <i>Appointments</i> section</li>
+		<li>Link to <i>Attendance</i> section</li>
+		<li>Link to <i>Users</i> section</li>
+	    {% endif %}
+	    {% if is_granted('ROLE_USER') %}
+		<li>Link to <i>Visitors</i> section</li>
+	    {% endif %}
+	    {% if is_granted('ROLE_SUPER_ADMIN') %}
+		<li>Link to <i>Stakeholders</i> section</li>
+		<li>Link to <i>Reports</i> section</li>
+	    {% endif %}
 	    <li>Change language (<i class="bi bi-translate"></i>)</li>
 	    <li>User options (<i class="icon icon-user"></i>)</li>
 	</ul>
@@ -19,16 +27,24 @@
     <li><b>Browsing path menu</b>: This is the first content element you see on the website. It shows your location within directories and subdirectories, and can also allow for faster navigation. It looks like this:
 	<ol class="breadcrumb">
 	    <li class="breadcrumb-item"><a href="#"><i class="icon icon-home"></i></a></li>
-	    <li class="breadcrumb-item"><a href="#">{% trans %}Begin{% endtrans %}</a></li>
-	    <li class="breadcrumb-item active" aria-current="page"><a href="#">{% trans %}Patients{% endtrans %}</a></li>
+	    <li class="breadcrumb-item"><a href="#">Begin</a></li>
+	    <li class="breadcrumb-item active" aria-current="page"><a href="#">Patients</a></li>
 	</ol>
 	The Home icon (<i class="icon icon-home"></i>) will always link to the main Mexican Government website. The other elements are links to pages on this website. The last element, always in <b>bold</b>, indicates the page you are currently viewing.
     </li>
 </ul>
 <hr>
-<h3>{% trans %}Sign in{% endtrans %}</h3>
-<p>To log in, you must go to the <i>{% trans %}Sign in{% endtrans %} button (<i class="bi bi-box-arrow-in-right"></i>)</i> and enter your credentials.</p>
-<p>Once you have logged in, the {% trans %}Sign in{% endtrans %} button will be replaced by the <i>{% trans %}Log out{% endtrans %} button (<i class="bi bi-box-arrow-left"></i>)</i>.</p>
-<p>If you do not have a user account for this website, you will need to request one from your supervisor in the appropriate work area.</p>
+<h3>Sign in</h3>
+<p>To log in, yout must go to the <i>user button (<i class="icon icon-user"></i>)</i>. Clicking it will display the <i>Sign in</i> option.</p>
+<p>Once you have logged in, the <i>user button (<i class="icon icon-user"></i>)</i> will have the following options:
+    <ul>
+	<li>Profile</li>
+	<li>Log out</li>
+	{% if is_granted('ROLE_ADMIN') %}
+	    <li>Users index</li>
+	{% endif %}
+    </ul>
+</p>
+<p>If you do not have a user account for this website, you will need to request one from your supervisor in the corresponding work area.</p>
 <h3>{% trans %}Language{% endtrans %}</h3>
-<p>You can change the language of this website. Click the <i>language button (<i class="bi bi-translate"></i>)</i> and select your preference. English and Spanish are currently available.</p>
+<p>You can change the language of this website. Press the <i>language button (<i class="bi bi-translate"></i>)</i> and select your preference. English and Spanish are currently available.</p>
