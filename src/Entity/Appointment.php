@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\HasUuidTrait;
+
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment
 {
+    use HasUuidTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

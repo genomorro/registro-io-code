@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_appointment_index') }}">{% trans %}Appointment{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">{% trans %}Edit{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_appointment_edit', {'id': appointment.uuid}) }}">{% trans %}Edit{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}Edit Appointment{% endtrans %}</h1>

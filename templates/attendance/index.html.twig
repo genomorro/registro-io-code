@@ -56,16 +56,16 @@
 			    {% if attendance.checkoutAt %}
 				{{ attendance.checkoutAt|date('Y-m-d H:i:s') }}
 			    {% else %}
-				<form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.id, 'redirectRoute': 'app_attendance_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_attendance_check_out', {'id': attendance.uuid, 'redirectRoute': 'app_attendance_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ attendance.id) }}">
 				    <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% endif %}
 			</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_attendance_show', {'id': attendance.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-link" href="{{ path('app_attendance_show', {'id': attendance.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
-				<a class="btn btn-secondary" href="{{ path('app_attendance_edit', {'id': attendance.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				<a class="btn btn-secondary" href="{{ path('app_attendance_edit', {'id': attendance.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 			    {% endif %}
 			</td>
 		    </tr>

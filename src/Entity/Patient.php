@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\HasUuidTrait;
 use App\Repository\PatientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(fields: ['file'], message: 'There is already a patient with this file')]
 class Patient
 {
+    use HasUuidTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

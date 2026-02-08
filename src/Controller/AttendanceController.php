@@ -85,7 +85,7 @@ final class AttendanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_attendance_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_attendance_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Attendance $attendance): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -95,7 +95,7 @@ final class AttendanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_attendance_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_attendance_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -121,7 +121,7 @@ final class AttendanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_attendance_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_attendance_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -134,7 +134,7 @@ final class AttendanceController extends AbstractController
         return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/check-out/{redirectRoute}', name: 'app_attendance_check_out', methods: ['POST'])]
+    #[Route('/{id}/check-out/{redirectRoute}', name: 'app_attendance_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager, string $redirectRoute): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -147,7 +147,7 @@ final class AttendanceController extends AbstractController
 
         $routeParameters = [];
         if ($redirectRoute === 'app_attendance_show') {
-            $routeParameters['id'] = $attendance->getId();
+            $routeParameters['id'] = $attendance->getUuid();
         }
 
         return $this->redirectToRoute($redirectRoute, $routeParameters);
