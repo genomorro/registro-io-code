@@ -11,6 +11,13 @@
 	</title>
 	{% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script>
+                if (window === window.top && window.location.pathname !== '/') {
+                    window.location.href = '/?url=' + encodeURIComponent(window.location.pathname + window.location.search);
+                } else if (window !== window.top) {
+                    document.cookie = "last_path=" + encodeURIComponent(window.location.pathname + window.location.search) + "; path=/; SameSite=Lax";
+                }
+            </script>
 	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/images/favicon.ico" rel="shortcut icon">
 	    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
         {% endblock %}

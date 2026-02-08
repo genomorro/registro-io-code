@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ app.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ 'Patient and visitor check-in and check-out system'|trans }}</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        #app-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="app-frame" src="{{ target }}" name="app-frame"></iframe>
+    <script>
+        const iframe = document.getElementById('app-frame');
+        iframe.onload = function() {
+            try {
+                if (iframe.contentWindow.document.title) {
+                    document.title = iframe.contentWindow.document.title;
+                }
+            } catch (e) {
+                // Ignore cross-origin errors if any
+            }
+            // Ensure the URL in the address bar remains static at the root
+            if (window.location.pathname !== '/' || window.location.search !== '') {
+                window.history.replaceState({}, '', '/');
+            }
+        };
+    </script>
+</body>
+</html>

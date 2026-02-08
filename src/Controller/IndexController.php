@@ -53,8 +53,19 @@ class IndexController extends AbstractController
         ]);
     }
 
-    public function redirectToLocale(): RedirectResponse
+    public function wrapper(Request $request): Response
     {
-        return $this->redirectToRoute('app_index', ['_locale' => 'es']);
+        $target = $request->query->get('url');
+        if (!$target) {
+            $target = $request->cookies->get('last_path', $this->generateUrl('app_index', ['_locale' => 'es']));
+        }
+        return $this->render('wrapper.html.twig', [
+            'target' => $target,
+        ]);
+    }
+
+    public function redirectToLocale(Request $request): Response
+    {
+        return $this->wrapper($request);
     }
 }

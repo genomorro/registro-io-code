@@ -8,7 +8,7 @@
 #   bin/console debug:router
 app_redirect:
     path: /
-    controller: App\Controller\IndexController::redirectToLocale
+    controller: App\Controller\IndexController::wrapper
 
 controllers:
     resource:
