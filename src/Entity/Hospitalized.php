@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\HasUuidTrait;
+
 use App\Repository\HospitalizedRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HospitalizedRepository::class)]
 class Hospitalized
 {
+    use HasUuidTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

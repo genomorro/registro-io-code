@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_stakeholder_delete', {'id': stakeholder.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to delete this item?{% endtrans %}');">
+<form method="post" action="{{ path('app_stakeholder_delete', {'id': stakeholder.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to delete this item?{% endtrans %}');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stakeholder.id) }}">
     <button class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
 </form>

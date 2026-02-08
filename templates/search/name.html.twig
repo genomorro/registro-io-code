@@ -33,9 +33,9 @@
                 <td>{{ patient.file }}</td>
                 <td>{{ patient.name|title }}</td>
                 <td>
-                    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+                    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.uuid}) }}">{% trans %}Show{% endtrans %}</a>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                        <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
                     {% endif %}
                 </td>
             </tr>
@@ -71,7 +71,7 @@
                 <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     {% if visitor.checkOutAt is null %}
-                        <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_name_index', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                        <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_index', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
                             <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
                             <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
                         </form>

@@ -67,7 +67,7 @@ final class StakeholderController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_stakeholder_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_stakeholder_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Stakeholder $stakeholder): Response
     {
         return $this->render('stakeholder/show.html.twig', [
@@ -75,7 +75,7 @@ final class StakeholderController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/pdf', name: 'app_stakeholder_pdf', methods: ['GET'])]
+    #[Route('/{id}/pdf', name: 'app_stakeholder_pdf', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function exportPdf(Stakeholder $stakeholder, DompdfWrapperInterface $wrapper): Response
     {
         $projectDir = $this->getParameter('kernel.project_dir');
@@ -152,7 +152,7 @@ final class StakeholderController extends AbstractController
         }
     }
 
-    #[Route('/{id}/edit', name: 'app_stakeholder_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_stakeholder_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
         $originalCheckOutAt = $stakeholder->getCheckOutAt();
@@ -176,7 +176,7 @@ final class StakeholderController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_stakeholder_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_stakeholder_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
@@ -187,7 +187,7 @@ final class StakeholderController extends AbstractController
         return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/check-out', name: 'app_stakeholder_check_out', methods: ['POST'])]
+    #[Route('/{id}/check-out', name: 'app_stakeholder_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function checkOut(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
 	/* $this->denyAccessUnlessGranted('ROLE_USER'); */
@@ -203,7 +203,7 @@ final class StakeholderController extends AbstractController
 
         switch ($redirectRoute) {
             case 'app_stakeholder_show':
-                $routeParameters['id'] = $stakeholder->getId();
+                $routeParameters['id'] = $stakeholder->getUuid();
                 break;
         }
 

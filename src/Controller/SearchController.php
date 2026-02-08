@@ -33,7 +33,7 @@ class SearchController extends AbstractController
 	    $patient = $patientRepository->findByFile($file);
 
 	    if (count($patient) === 1) {
-		return $this->redirectToRoute('app_patient_show', ['id' => $patient[0]->getId()]);
+		return $this->redirectToRoute('app_patient_show', ['id' => $patient[0]->getUuid()]);
 	    } elseif (empty($patient)) {
 		$flashFile = $translator->trans('Patient not found');
 	    } else {

@@ -54,9 +54,9 @@
 			<td>{{ hospitalized.service }}</td>
 			<td>{{ hospitalized.bed }}</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
-				<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 			    {% endif %}
 			</td>
 		    </tr>

@@ -68,7 +68,7 @@
 				{% if todays_attendance %}
 				    {{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}
 				{% else %}
-				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<input type="hidden" name="evidence" data-webrtc-target="evidence">
 					<div class="input-group">
@@ -82,7 +82,7 @@
 				{% if todays_attendance and todays_attendance.checkOutAt %}
 				    {{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
 				{% elseif todays_attendance %}
-				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.uuid}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				    </form>
@@ -91,9 +91,9 @@
 				{% endif %}
 			    </td>
 			    <td>
-				<a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+				<a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 				{% if is_granted('ROLE_SUPER_ADMIN') %}
-				    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 				{% endif %}
 			    </td>
 			</tr>

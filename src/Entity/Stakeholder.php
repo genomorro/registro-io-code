@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\HasUuidTrait;
+
 use App\Repository\StakeholderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StakeholderRepository::class)]
 class Stakeholder
 {
+    use HasUuidTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

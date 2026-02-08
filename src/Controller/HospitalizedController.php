@@ -59,7 +59,7 @@ final class HospitalizedController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_hospitalized_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_hospitalized_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Hospitalized $hospitalized): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -69,7 +69,7 @@ final class HospitalizedController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_hospitalized_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_hospitalized_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -89,7 +89,7 @@ final class HospitalizedController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_hospitalized_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_hospitalized_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');

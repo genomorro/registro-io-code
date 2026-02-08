@@ -38,3 +38,11 @@ services:
             $dbPassword: '%env(REMOTE_DB_PASSWORD)%'
             $dbHost: '%env(REMOTE_DB_HOST)%'
             $dbDriver: 'pdo_mysql'
+
+    App\Service\UuidEncoder:
+        arguments:
+            $secret: '%kernel.secret%'
+
+    App\ValueResolver\UuidEntityValueResolver:
+        tags:
+            - { name: controller.argument_value_resolver, priority: 150 }
