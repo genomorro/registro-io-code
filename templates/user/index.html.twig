@@ -56,11 +56,11 @@
 			    {% endif %}
 			</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_user_show', {'id': user.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-link" href="{{ path('app_user_show', {'id': user.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if not is_granted('ROLE_SUPER_ADMIN') and ('ROLE_SUPER_ADMIN' in user.roles) %}
 				<p></p>
 			    {% else %}
-				<a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				<a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 			    {% endif %}
 			</td>
 		    </tr>

@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item" aria-current="page"><a href="{{ path('app_hospitalized_index') }}">{% trans %}Hospitalized{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_hospitalized_show', {'id': hospitalized.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}Hospitalized{% endtrans %}</h1>
@@ -24,7 +24,7 @@
 		{% endif %}
 		<tr>
                     <th>{% trans %}File{% endtrans %}</th>
-                    <td><a class="link-underline-light" href="{{ path('app_patient_show', {'id': hospitalized.patient.id}) }}">{{ hospitalized.patient.file }}</td>
+                    <td><a class="link-underline-light" href="{{ path('app_patient_show', {'id': hospitalized.patient.uuid}) }}">{{ hospitalized.patient.file }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Patient{% endtrans %}</th>
@@ -44,7 +44,7 @@
 
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
-	    <a class="btn btn-primary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	    <a class="btn btn-primary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
 	<a class="btn btn-link" href="{{ path('app_hospitalized_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>

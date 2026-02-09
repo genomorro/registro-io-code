@@ -87,7 +87,7 @@
 		    </a>
 		    <ul class="dropdown-menu" aria-labelledby="userDropdown">
 			{% if app.user %}
-			    <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id}) }}">{% trans %}Profile{% endtrans %}: ({{ app.user.username }})</a></li>
+			    <li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.uuid}) }}">{% trans %}Profile{% endtrans %}: ({{ app.user.username }})</a></li>
 			    <li><hr class="dropdown-divider"></li>
 			    <li><a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Log out{% endtrans %}</a></li>
 			{% else %}

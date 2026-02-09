@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_appointment_index') }}">{% trans %}Appointment{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_appointment_show', {'id': appointment.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_appointment_show', {'id': appointment.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}Appointment{% endtrans %}</h1>
@@ -60,7 +60,7 @@
 
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
-	    <a class="btn btn-primary" href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	    <a class="btn btn-primary" href="{{ path('app_appointment_edit', {'id': appointment.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
 	<a class="btn btn-link" href="{{ path('app_appointment_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>

@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_user_index') }}">{% trans %}User{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_user_show', {'id': user.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_user_show', {'id': user.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}User{% endtrans %}</h1>
@@ -48,7 +48,7 @@
 	{% if not is_granted('ROLE_SUPER_ADMIN') and ('ROLE_SUPER_ADMIN' in user.roles) %}
 	    <p></p>
 	{% else %}
-	    <a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	    <a class="btn btn-secondary" href="{{ path('app_user_edit', {'id': user.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
 	{% if is_granted('ROLE_ADMIN') %}
 	    <a class="btn btn-link" href="{{ path('app_user_index') }}">{% trans %}Back to list{% endtrans %}</a>

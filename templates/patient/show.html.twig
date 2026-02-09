@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_patient_index') }}">{% trans %}Patient{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_patient_show', {'id': patient.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}Patient{% endtrans %}</h1>
@@ -107,9 +107,9 @@
                                     <tr>
 					<th>{% trans %}Check out{% endtrans %}</th>
 					<td>
-                                            <form method="post" action="{{ path('app_patient_check_out', {'id': patient.id}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+                                            <form method="post" action="{{ path('app_patient_check_out', {'id': patient.uuid}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 						<input type="hidden" name="redirect_route" value="app_patient_show">
-						<input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
+						<input type="hidden" name="redirect_params[id]" value="{{ patient.uuid }}">
 						<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
                                             </form>
 					</td>
@@ -117,7 +117,7 @@
                                     <tr>
 					<th>{% trans %}Is the patient accompanied?{% endtrans %}</th>
 					<td>
-                                            <a class="btn btn-sm btn-primary" href="{{ path('app_visitor_new', {'patientId': patient.id}) }}">{% trans %}Register visitor{% endtrans %}</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ path('app_visitor_new', {'patientId': patient.uuid}) }}">{% trans %}Register visitor{% endtrans %}</a>
 					</td>
                                     </tr>
 				{% endif %}
@@ -137,9 +137,9 @@
 	{% if todays_attendance is null or todays_attendance.checkOutAt is not null %}
             <div class="row" {{ stimulus_controller('webrtc') }} data-webrtc-logo-url="{{ asset('images/iner-logo.png') }}">
 		<div class="col-md d-flex align-items-center justify-content-center">
-                    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+                    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
 			<input type="hidden" name="redirect_route" value="app_patient_show">
-			<input type="hidden" name="redirect_params[id]" value="{{ patient.id }}">
+			<input type="hidden" name="redirect_params[id]" value="{{ patient.uuid }}">
 			<input type="hidden" name="evidence" data-webrtc-target="evidence">
 			<div class="input-group mb-3" >
                             <input type="text" name="tag" placeholder="{% trans %}Tag{% endtrans %}" required style="width: 82px; height:34px" class="form-control form-control-sm"/>
@@ -208,7 +208,7 @@
                     {% for visitor in todays_visitors %}
                         <tr>
                             <td>
-				<a class="link-underline-light" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">
+				<a class="link-underline-light" href="{{ path('app_visitor_show', {'id': visitor.uuid}) }}">
 				    {{ visitor.name }}
 				</a>
 			    </td>
@@ -225,7 +225,7 @@
 
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
-	    <a class="btn btn-primary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	    <a class="btn btn-primary" href="{{ path('app_patient_edit', {'id': patient.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
 	<a class="btn btn-link" href="{{ path('app_patient_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>

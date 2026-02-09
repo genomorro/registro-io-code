@@ -65,7 +65,7 @@ final class PatientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_patient_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_patient_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(
         Patient $patient,
         AppointmentRepository $appointmentRepository,
@@ -90,7 +90,7 @@ final class PatientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -110,7 +110,7 @@ final class PatientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
@@ -123,7 +123,7 @@ final class PatientController extends AbstractController
         return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/check-in', name: 'app_patient_check_in', methods: ['POST'])]
+    #[Route('/{id}/check-in', name: 'app_patient_check_in', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function checkIn(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -174,7 +174,7 @@ final class PatientController extends AbstractController
         return $this->redirectToRoute($redirectRoute, $redirectParams);
     }
 
-    #[Route('/{id}/check-out', name: 'app_patient_check_out', methods: ['POST'])]
+    #[Route('/{id}/check-out', name: 'app_patient_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function checkOut(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');

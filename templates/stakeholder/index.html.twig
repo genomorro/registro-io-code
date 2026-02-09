@@ -58,15 +58,15 @@
 			    {% if stakeholder.checkOutAt %}
 				{{ stakeholder.checkOutAt|date('Y-m-d H:i:s') }}
 			    {% else %}
-				<form method="post" action="{{ path('app_stakeholder_check_out', {'id': stakeholder.id, 'redirect_route': 'app_stakeholder_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_stakeholder_check_out', {'id': stakeholder.uuid, 'redirect_route': 'app_stakeholder_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ stakeholder.id) }}">
 				    <button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% endif %}
 			</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_stakeholder_show', {'id': stakeholder.id}) }}">{% trans %}Show{% endtrans %}</a>
-			    <a class="btn btn-secondary" href="{{ path('app_stakeholder_edit', {'id': stakeholder.id}) }}">{% trans %}Edit{% endtrans %}</a>
+			    <a class="btn btn-link" href="{{ path('app_stakeholder_show', {'id': stakeholder.uuid}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-secondary" href="{{ path('app_stakeholder_edit', {'id': stakeholder.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 			</td>
 		    </tr>
 {% else %}

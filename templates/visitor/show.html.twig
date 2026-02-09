@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_visitor_index') }}">{% trans %}Visitor{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_visitor_show', {'id': visitor.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}Visitor{% endtrans %}</h1>
@@ -60,7 +60,7 @@
 				{% if visitor.CheckOutAt %}
 				    {{ visitor.CheckOutAt|date('Y-m-d H:i:s') }}
 				{% else %}
-				    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_visitor_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_visitor_show'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 					<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 					<button class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				    </form>
@@ -85,7 +85,7 @@
 				<td>
 				    <ul>
 					{% for patient in visitor.patient %}
-					    <li class="text-wrap">{{ patient.name }}, {% trans %}File{% endtrans %}: <a class="link-underline-light" href="{{ path('app_patient_show', {'id': patient.id}) }}">{{ patient.file }}</a></li>
+					    <li class="text-wrap">{{ patient.name }}, {% trans %}File{% endtrans %}: <a class="link-underline-light" href="{{ path('app_patient_show', {'id': patient.uuid}) }}">{{ patient.file }}</a></li>
 					{% endfor %}
 				    </ul>
 				</td>
@@ -105,7 +105,7 @@
 
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
-	    <a class="btn btn-primary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+	    <a class="btn btn-primary" href="{{ path('app_visitor_edit', {'id': visitor.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
 	<a class="btn btn-link" href="{{ path('app_visitor_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>

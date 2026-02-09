@@ -45,29 +45,29 @@
 			<td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td class="d-flex flex-wrap">
 			    {% if tag is defined %}
-				<form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="redirect_route" value="app_search_check_index">
 				    <input type="hidden" name="redirect_params[tag]" value="{{ tag }}">
 				    <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% elseif name is defined %}
-				<form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="redirect_route" value="app_search_name_check_out">
 				    <input type="hidden" name="redirect_params[name]" value="{{ name }}">
 				    <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% else %}
-				<form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.id}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="redirect_route" value="app_search_check_list_index">
 				    <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% endif %}
 			    <div>
-				<a class="btn btn-link" href="{{ path('app_patient_show', {'id': attendance.patient.id}) }}">{% trans %}Show{% endtrans %}</a>
+				<a class="btn btn-link" href="{{ path('app_patient_show', {'id': attendance.patient.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    </div>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
 				<div>
-				    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': attendance.patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': attendance.patient.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 				</div>
 			    {% endif %}
 			</td>
@@ -106,27 +106,27 @@
 			<td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td class="d-flex flex-wrap">
 			    {% if tag is defined %}
-				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				    <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% elseif name is defined %}
-				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_name_check_out', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_check_out', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				    <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% else %}
-				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_check_list_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				<form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_check_list_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
 				    <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				    <button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 				</form>
 			    {% endif %}
 			    <div>
-				<a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.id}) }}">{% trans %}Show{% endtrans %}</a>
+				<a class="btn btn-link" href="{{ path('app_visitor_show', {'id': visitor.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    </div>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
 				<div>
-				    <a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				    <a class="btn btn-secondary" href="{{ path('app_visitor_edit', {'id': visitor.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 				</div>
 			    {% endif %}
 			</td>
