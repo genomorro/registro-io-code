@@ -13,6 +13,14 @@
     <h1>{% trans %}User{% endtrans %}</h1>
     <hr class="red">
 
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
     <div class="table-responsive">
 	<table class="table table-striped">
             <tbody>

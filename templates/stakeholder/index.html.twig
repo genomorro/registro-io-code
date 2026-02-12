@@ -12,6 +12,14 @@
     <h1>{% trans %}Stakeholder index{% endtrans %}</h1>
     <hr class="red">
 
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
     <div class="row">
 	<div class="col-12 col-md-6 d-flex justify-content-start">
 	    <form class="w-100" method="get" action="{{ path('app_stakeholder_index') }}">

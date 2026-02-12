@@ -13,6 +13,14 @@
     <h1>{% trans %}Patient{% endtrans %}</h1>
     <hr class="red">
 
+    {% for label, messages in app.flashes('primary') %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
     <div class="table-responsive">
 	<table class="table table-striped">
             <tbody>
@@ -84,6 +92,15 @@
     {% if patient.hospitalized is empty %}
 	<h2>{% trans %}Today's Attendance{% endtrans %}</h2>
 	<hr class="red">
+
+	{% for label, messages in app.flashes('success') %}
+	    {% for message in messages %}
+		<div class="alert alert-{{ label }}">
+		    {{ message|trans }}
+		</div>
+	    {% endfor %}
+	{% endfor %}
+
 	{% if todays_attendance %}
             <div class="row">
 		<div class="col-md d-flex align-items-center">

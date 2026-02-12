@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/stakeholder')]
 final class StakeholderController extends AbstractController
@@ -22,6 +23,8 @@ final class StakeholderController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
+        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+
         $filter = $request->query->get('filter');
         $query = $stakeholderRepository->paginateStakeholder($filter);
 
@@ -37,9 +40,12 @@ final class StakeholderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_stakeholder_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+
         $stakeholder = new Stakeholder();
+	$flash = $translator->trans('Stakeholder added successfully.');
         $form = $this->createForm(StakeholderType::class, $stakeholder);
         $form->handleRequest($request);
 
@@ -58,6 +64,7 @@ final class StakeholderController extends AbstractController
 
             $entityManager->flush();
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -70,6 +77,8 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}', name: 'app_stakeholder_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Stakeholder $stakeholder): Response
     {
+        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+
         return $this->render('stakeholder/show.html.twig', [
             'stakeholder' => $stakeholder,
         ]);
@@ -78,6 +87,8 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/pdf', name: 'app_stakeholder_pdf', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function exportPdf(Stakeholder $stakeholder, DompdfWrapperInterface $wrapper): Response
     {
+        /* $this->denyAccessUnlessGranted('ROLE_ADMIN'); */
+
         $projectDir = $this->getParameter('kernel.project_dir');
         $publicDir = $projectDir . '/public';
 
@@ -153,10 +164,13 @@ final class StakeholderController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_stakeholder_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function edit(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+
         $originalCheckOutAt = $stakeholder->getCheckOutAt();
         $form = $this->createForm(StakeholderType::class, $stakeholder);
+	$flash = $translator->trans('Stakeholder updated successfully.');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -167,7 +181,8 @@ final class StakeholderController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
+	    $this->addFlash('primary', $flash);
+            return $this->redirectToRoute('app_stakeholder_show', ['id' => $stakeholder->getUuid()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('stakeholder/edit.html.twig', [
@@ -177,13 +192,17 @@ final class StakeholderController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_stakeholder_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function delete(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        /* $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN'); */
+
+	$flash = $translator->trans('Stakeholder deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($stakeholder);
             $entityManager->flush();
         }
 
+	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_stakeholder_index', [], Response::HTTP_SEE_OTHER);
     }
 

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/attendance')]
 final class AttendanceController extends AbstractController
@@ -38,11 +39,12 @@ final class AttendanceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_attendance_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $attendance = new Attendance();
+	$flash = $translator->trans('Attendance added successfully.');
         $form = $this->createForm(AttendanceType::class, $attendance);
         $form->handleRequest($request);
 
@@ -76,6 +78,7 @@ final class AttendanceController extends AbstractController
 		$entityManager->flush();
             }
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -96,12 +99,13 @@ final class AttendanceController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_attendance_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function edit(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Attendance $attendance, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
 	$originalCheckOutAt = $attendance->getCheckOutAt();
         $form = $this->createForm(AttendanceType::class, $attendance);
+	$flash = $translator->trans('Attendance updated successfully.');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -112,7 +116,8 @@ final class AttendanceController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
+	    $this->addFlash('primary', $flash);
+            return $this->redirectToRoute('app_attendance_show', ['id' => $attendance->getUuid()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('attendance/edit.html.twig', [
@@ -122,23 +127,26 @@ final class AttendanceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_attendance_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function delete(Request $request, Attendance $attendance, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Attendance $attendance, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+	$flash = $translator->trans('Attendance deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$attendance->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($attendance);
             $entityManager->flush();
         }
 
+	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_attendance_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/check-out/{redirectRoute}', name: 'app_attendance_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager, string $redirectRoute): Response
+    public function checkOut(Request $request, Attendance $attendance, EntityManagerInterface $entityManager, string $redirectRoute, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
+	$flash = $translator->trans('Patient check out successfully.');
         if ($this->isCsrfTokenValid('checkout'.$attendance->getId(), $request->getPayload()->getString('_token'))) {
             $attendance->setCheckOutAt(new \DateTimeImmutable());
 	    $attendance->setCheckOutUser($this->getUser());
@@ -150,6 +158,7 @@ final class AttendanceController extends AbstractController
             $routeParameters['id'] = $attendance->getUuid();
         }
 
+	$this->addFlash('primary', $flash);
         return $this->redirectToRoute($redirectRoute, $routeParameters);
     }
 }

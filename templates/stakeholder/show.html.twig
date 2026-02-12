@@ -13,6 +13,14 @@
     <h1>{% trans %}Stakeholder{% endtrans %}</h1>
     <hr class="red">
 
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
     <div class="row">
 	<div class="col-md">
 	    <div class="table-responsive">
@@ -114,7 +122,9 @@
 	    <a class="btn btn-primary" href="{{ path('app_stakeholder_edit', {'id': stakeholder.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 	{% endif %}
 	{#
-	<a class="btn btn-secondary" href="{{ path('app_stakeholder_pdf', {'id': stakeholder.uuid}) }}" target="_blank">{% trans %}Export to PDF{% endtrans %}</a>
+	{% if is_granted('ROLE_ADMIN') %}
+	    <a class="btn btn-secondary" href="{{ path('app_stakeholder_pdf', {'id': stakeholder.uuid}) }}" target="_blank">{% trans %}Export to PDF{% endtrans %}</a>
+	{% endif %}
 	#}
 	<a class="btn btn-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>

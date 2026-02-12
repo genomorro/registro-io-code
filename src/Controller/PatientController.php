@@ -44,11 +44,12 @@ final class PatientController extends AbstractController
     }
 
     #[Route('/new', name: 'app_patient_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $patient = new Patient();
+	$flash = $translator->trans('Patient added successfully.');
         $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);
 
@@ -56,6 +57,7 @@ final class PatientController extends AbstractController
             $entityManager->persist($patient);
             $entityManager->flush();
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -91,17 +93,19 @@ final class PatientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_patient_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $form = $this->createForm(PatientType::class, $patient);
+	$flash = $translator->trans('Patient updated successfully.');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
+	    $this->addFlash('primary', $flash);
+            return $this->redirectToRoute('app_patient_show', ['id' => $patient->getUuid()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('patient/edit.html.twig', [
@@ -111,15 +115,17 @@ final class PatientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+	$flash = $translator->trans('Patient deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$patient->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($patient);
             $entityManager->flush();
         }
 
+	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -171,15 +177,17 @@ final class PatientController extends AbstractController
             $entityManager->flush();
         }
 
+	$this->addFlash('success', $translator->trans('Patient check in successfully.'));
         return $this->redirectToRoute($redirectRoute, $redirectParams);
     }
 
     #[Route('/{id}/check-out', name: 'app_patient_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function checkOut(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager): Response
+    public function checkOut(Request $request, Patient $patient, AttendanceRepository $attendanceRepository, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $attendance = $attendanceRepository->findLatestByPatientAndDate($patient, new \DateTime());
+	$flash = $translator->trans('Patient check out successfully.');
         if ($attendance) {
             $attendance->setCheckOutAt(new \DateTimeImmutable());
 	    $attendance->setCheckOutUser($this->getUser());
@@ -189,6 +197,7 @@ final class PatientController extends AbstractController
         $redirectRoute = $request->request->get('redirect_route', 'app_patient_index');
         $redirectParams = $request->request->all('redirect_params');
 
+	$this->addFlash('primary', $flash);
         return $this->redirectToRoute($redirectRoute, $redirectParams);
     }
 }
