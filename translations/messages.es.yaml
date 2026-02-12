@@ -1,10 +1,43 @@
 # src
 ## Controller
+### AppointmentController.php
+'Appointment added successfully.': 'Cita agregada exitosamente.'
+'Appointment updated successfully.': 'Cita actualizada exitosamente.'
+'Appointment deleted successfully.': 'Cita borrada exitosamente.'
+### AttendanceController.php
+'Attendance added successfully.': 'Asistencia agregada exitosamente.'
+'Attendance updated successfully.': 'Asistencia actualizada exitosamente.'
+'Attendance deleted successfully.': 'Asistencia borrada exitosamente.'
+### HospitalizedController.php
+'Patient hospitalized added successfully.': 'Paciente hospitalizado agregado exitosamente.'
+'Hospitalized updated successfully.': 'Paciente hospitalizado actualizado exitosamente.'
+'Hospitalized deleted successfully.': 'Paciente hospitalizado borrado exitosamente.'
 ### PatientController.php
-'A numeric tag is required to check in.': 'El número de gafete es requerido para la entrada.'
+'Patient added successfully.': 'Paciente agregado exitosamente.'
+'Patient updated successfully.': 'Paciente actualizado exitosamente.'
+'Patient deleted successfully.': 'Paciente borrado exitosamente.'
+'A numeric tag is required to check in.': 'Se requiere el número de gafete para el registro.'
+'Patient check in successfully.': 'Entrada de paciente registrada exitosamente.'
+'Patient check out successfully.': 'Salida de paciente registrada exitosamente.'
+### RegistrationController.php
+'User added successfully.': 'Usuario agregado exitosamente.'
 ### SearchController.php
 'Patient not found': 'Paciente no encontrado'
-'Patient nor Visitor not found for the given tag.': 'Paciente ni Visitante encontrado para ese número de gafete.'
+'Improve the search criteria': 'Mejora el criterio de búsqueda' 
+'Patient not found for the given name.': 'Paciente no encontrado para el nombre proporcionado.'
+'Patient nor Visitor not found for the given tag.': 'No se encontraron pacientes o visitantes con ese gafete.'
+### StakeholderController.php
+'Stakeholder added successfully.': 'Involucrado agregado exitosamente.'
+'Stakeholder updated successfully.': 'Involucrado actualizado exitosamente.'
+'Stakeholder deleted successfully.': 'Involucrado borrado exitosamente.'
+### UserController.php
+'User updated successfully.': 'Usuario actualizado exitosamente.'
+'User deleted successfully.': 'Usuario borrado exitosamente.'
+### VisitorController.php
+'Visitor added successfully.': 'Visitante agregado exitosamente.'
+'Visitor updated successfully.': 'Visitante actualizado exitosamente.'
+'Visitor deleted successfully.': 'Visitante borrado exitosamente.'
+'Visitor check out successfully.': 'Salida de visitante registrada exitosamente.'
 # templates
 ## about.html.twig
 'About': 'Acerca de'
@@ -26,6 +59,41 @@ license:
 'Patient and visitor check-in and check-out system': 'Sistema de registro de entrada y salida de pacientes y visitantes'
 ## index.html.twig
 'Known issues': 'Problemas conocidos'
+welcome:
+  title: '¡Bienvenido!'
+  sysname: 'Sistema de registro de entrada y salida de pacientes y visitantes'
+  paragraph:
+    one: 'Has entrado en el'
+    two: 'Para usar este sitio web debes tener en cuenta los siguientes elementos de navegación'
+    ul:
+      one:
+        title: 'Menú principal'
+        desc: 'Se encuentra en la parte superior, justo abajo del encabezado del sitio web. Sirve para encontrar las distintas secciones disponibles en el sistema. Es de color rojo y contiene estos elementos actualmente'
+        ul:
+          search: 'Enlace a la búsqueda'
+          sub: 'Submenú de'
+          link: 'Enlace a sección de'
+          lang: 'Cambiar idioma'
+          user: 'Opciones de usuario'
+      two:
+        title: 'Menú de ruta de exploración'
+        desc: 'Es el primer elemento de contenido que se observa en el sitio web. Permite conocer la ruta de su ubicación en directorios y subdirectorios, además puede permitirle una navegación más rápida. Tiene el siguiente aspecto'
+      three: 'El ícono de Home'
+      four: 'siempre será un enlace al sitio principal del Gobierno de México, los otros elementos corresponden a enlaces a páginas de este sitio web, el último elemento, siempre en'
+      five: 'negritas'
+      six: 'es la página donde se ubica actualmente'
+session:
+  title: 'Iniciar sesión'
+  paragraph:
+    one: 'Para iniciar sesión, debe ir al'
+    user: 'botón usuario'
+    two: 'al dar click aparecerá la opción'
+    three: 'Una vez que ha iniciado sesión el'
+    four: 'tendrá las opciones'
+    five: 'Si usted no tiene un usuario para este sitio web, deberá solicitarlo a su superior en el área de trabajo correspondiente.'
+    six: 'Es posible cambiar el idioma de este sitio web, presione el'
+    lang: 'botón de idioma'
+    seven: 'y seleccione su preferencia. Actualmente está disponible el idioma inglés y español.'
 ## menu.html.twig
 'Search': 'Buscar'
 'Patients': 'Pacientes'
@@ -156,13 +224,11 @@ license:
 'Search Patient by File': 'Buscar paciente por expediente'
 'Search Options': 'Opciones de búsqueda'
 'Search by Tag': 'Buscar por gafete'
-'Improve the search criteria': 'Mejora el criterio de búsqueda'
 ### check_out.html.twig
 'Check Out List': 'Lista de registro de salida'
 'Check Out by Tag': 'Registro de salida por gafete'
 ### name.html.twig
 'Search by Name': 'Buscar por nombre'
-'Patient not found for the given name.': 'No hay pacientes con el nombre proporcionado.'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Editar visitante'

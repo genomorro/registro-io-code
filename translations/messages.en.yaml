@@ -1,10 +1,43 @@
 # src
 ## Controller
+### AppointmentController.php
+'Appointment added successfully.': 'Appointment added successfully.'
+'Appointment updated successfully.': 'Appointment updated successfully.'
+'Appointment deleted successfully.': 'Appointment deleted successfully.'
+### AttendanceController.php
+'Attendance added successfully.': 'Attendance added successfully.'
+'Attendance updated successfully.': 'Attendance updated successfully.'
+'Attendance deleted successfully.': 'Attendance deleted successfully.'
+### HospitalizedController.php
+'Patient hospitalized added successfully.': 'Patient hospitalized added successfully.'
+'Hospitalized updated successfully.': 'Hospitalized updated successfully.'
+'Hospitalized deleted successfully.': 'Hospitalized deleted successfully.'
 ### PatientController.php
+'Patient added successfully.': 'Patient added successfully.'
+'Patient updated successfully.': 'Patient updated successfully.'
+'Patient deleted successfully.': 'Patient deleted successfully.'
 'A numeric tag is required to check in.': 'A numeric tag is required to check in.'
+'Patient check in successfully.': 'Patient check in successfully.'
+'Patient check out successfully.': 'Patient check out successfully.'
+### RegistrationController.php
+'User added successfully.': 'User added successfully.'
 ### SearchController.php
 'Patient not found': 'Patient not found'
+'Improve the search criteria': 'Improve the search criteria' 
+'Patient not found for the given name.': 'Patient not found for the given name.'
 'Patient nor Visitor not found for the given tag.': 'Patient nor Visitor not found for the given tag.'
+### StakeholderController.php
+'Stakeholder added successfully.': 'Stakeholder added successfully.'
+'Stakeholder updated successfully.': 'Stakeholder updated successfully.'
+'Stakeholder deleted successfully.': 'Stakeholder deleted successfully.'
+### UserController.php
+'User updated successfully.': 'User updated successfully.'
+'User deleted successfully.': 'User deleted successfully.'
+### VisitorController.php
+'Visitor added successfully.': 'Visitor added successfully.'
+'Visitor updated successfully.': 'Visitor updated successfully.'
+'Visitor deleted successfully.': 'Visitor deleted successfully.'
+'Visitor check out successfully.': 'Visitor check out successfully.'
 # templates
 ## about.html.twig
 'About': 'About'
@@ -26,6 +59,41 @@ license:
 'Patient and visitor check-in and check-out system': 'Patient and visitor check-in and check-out system'
 ## index.html.twig
 'Known issues': 'Known issues'
+welcome:
+  title: 'Welcome!'
+  sysname: 'Patient and Visitor Check-In and Check-Out System'
+  paragraph:
+    one: 'You have entered the'
+    two: 'To use this website, please note the following navigation elements'
+    ul:
+      one:
+        title: 'Main Menu'
+        desc: 'Located at the top, just below the website header. It allows you to find the different sections available in the system. It is red and contains these elements at this moment'
+        ul:
+          search: 'Link to search'
+          sub: 'Submenu'
+          link: 'Link to'
+          lang: 'Change language'
+          user: 'User options'
+      two:
+        title: 'Browsing path menu'
+        desc: 'This is the first content element you see on the website. It shows your location within directories and subdirectories, and can also allow for faster navigation. It looks like this'
+      three: 'The Home icon'
+      four: 'will always link to the main Mexican Government website. The other elements are links to pages on this website. The last element, always in'
+      five: 'bold'
+      six: 'indicates the page you are currently viewing'
+session:
+  title: 'Sign in'
+  paragraph:
+    one: 'To log in, yout must go to the'
+    user: 'user button'
+    two: 'Clicking it will display the option'
+    three: 'Once you have logged in, the'
+    four: 'will have the following options'
+    five: 'If you do not have a user account for this website, you will need to request one from your supervisor in the corresponding work area.'
+    six: 'You can change the language of this website. Press the'
+    lang: 'language button'
+    seven: 'and select your preference. English and Spanish are currently available.'
 ## menu.html.twig
 'Search': 'Search'
 'Patients': 'Patients'
@@ -156,13 +224,11 @@ license:
 'Search Patient by File': 'Search Patient by File'
 'Search Options': 'Search Options'
 'Search by Tag': 'Search by Tag'
-'Improve the search criteria': 'Improve the search criteria' 
 ### check_out.html.twig
 'Check Out List': 'Check Out List'
 'Check Out by Tag': 'Check Out by Tag'
 ### name.html.twig
 'Search by Name': 'Search by Name'
-'Patient not found for the given name.': 'Patient not found for the given name.'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Edit Visitor'

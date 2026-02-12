@@ -6,23 +6,57 @@
 	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
     </ol>
 
-    <h1>{% trans %}Patient and visitor check-in and check-out system{% endtrans %}</h1>
+    <h1>{% trans %}Patient and visitor check-in and check-out system{% endtrans %} <a class="link-dark link-underline-light" href="{{ path('app_about') }}"><sup><i class="bi bi-info-circle h6"></i></sup></a></h1>
     <hr class="red">
     <div>
-	<p>
-	    <ul class="nav nav-pills nav-fill flex-column flex-sm-row" id="nav-tab" role="tablist">
-		<li class="flex-sm-fill text-sm-center nav-link active" id="nav-tab-01" data-bs-toggle="tab" href="#nav-01" role="tab" aria-controls="nav-01" aria-selected="true">{% trans %}es{% endtrans %}</li>
-		<li class="flex-sm-fill text-sm-center nav-link" id="nav-tab-02" data-bs-toggle="tab" href="#nav-02" role="tab" aria-controls="nav-02" aria-selected="false">{% trans %}en{% endtrans %}</li>
-		<a class="flex-sm-fill text-sm-center nav-link link-underline-light" id="nav-tab-99" href="{{ path('app_about') }}">{% trans %}About{% endtrans %}</a>
+	<h3>{% trans %}welcome.title{% endtrans %}</h3>
+	<p>{% trans %}welcome.paragraph.one{% endtrans %} <i>{% trans %}welcome.sysname{% endtrans %}</i>. {% trans %}welcome.paragraph.two{% endtrans %}:</p>
+	<ul>
+	    <li><b>{% trans %}welcome.paragraph.ul.one.title{% endtrans %}</b>: {% trans %}welcome.paragraph.ul.one.desc{% endtrans %}:
+		<ul>
+		    {% if is_granted('ROLE_USER') %}
+			<li>{% trans %}welcome.paragraph.ul.one.ul.search{% endtrans %}</li>
+		    {% endif %}
+		    {% if is_granted('ROLE_ADMIN') %}
+			<li>{% trans %}welcome.paragraph.ul.one.ul.sub{% endtrans %} <i>{% trans %}Patients{% endtrans %}</i></li>
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Appointments{% endtrans %}</i></li>
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Attendances{% endtrans %}</i></li>
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Users{% endtrans %}</i></li>
+		    {% endif %}
+		    {% if is_granted('ROLE_USER') %}
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Visitors{% endtrans %}</i></li>
+		    {% endif %}
+		    {%if is_granted('ROLE_SUPER_ADMIN') %}
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Stakeholders{% endtrans %}</i></li>
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Reports{% endtrans %}</i></li>
+		    {% endif %}
+		    <li>{% trans %}welcome.paragraph.ul.one.ul.lang{% endtrans %} (<i class="bi bi-translate"></i>)</li>
+		    <li>{% trans %}welcome.paragraph.ul.one.ul.user{% endtrans %} (<i class="icon icon-user"></i>)</li>
+		</ul>
+	    </li>
+	    <li><b>{% trans %}welcome.paragraph.ul.two.title{% endtrans %}</b>: {% trans %}welcome.paragraph.ul.two.desc{% endtrans %}:
+		<ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="#"><i class="icon icon-home"></i></a></li>
+		    <li class="breadcrumb-item"><a href="#">{% trans %}Begin{% endtrans %}</a></li>
+		    <li class="breadcrumb-item active" aria-current="page"><a href="#">{% trans %}Patients{% endtrans %}</a></li>
+		</ol>
+		{% trans %}welcome.paragraph.ul.three{% endtrans %} (<i class="icon icon-home"></i>) {% trans %}welcome.paragraph.ul.four{% endtrans %} <b>{% trans %}welcome.paragraph.ul.five{% endtrans %}</b>, {% trans %}welcome.paragraph.ul.six{% endtrans %}.
+	    </li>
+	</ul>
+	<hr>
+	<h3>{% trans %}session.title{% endtrans %}</h3>
+	<p>{% trans %}session.paragraph.one{% endtrans %} <i>{% trans %}session.paragraph.user{% endtrans %} (<i class="icon icon-user"></i>)</i> {% trans %}session.paragraph.two{% endtrans %} <i>{% trans %}session.title{% endtrans %}</i>.</p>
+	<p>{% trans %}session.paragraph.three{% endtrans %} <i>{% trans %}session.paragraph.user{% endtrans %} (<i class="icon icon-user"></i>)</i> {% trans %}session.paragraph.four{% endtrans %}:
+	    <ul>
+		<li>{% trans %}Profile{% endtrans %}</li>
+		<li>{% trans %}Log out{% endtrans %}</li>
+		{% if is_granted('ROLE_ADMIN') %}
+		    <li>{% trans %}User index{% endtrans %}</li>
+		{% endif %}
 	    </ul>
 	</p>
-	<div class="tab-content" id="nav-tabContent">
-	    <div class="tab-pane fade show active" id="nav-01" role="tabpanel" aria-labelledby="nav-tab-01">
-		{{ include('_spanish.html.twig') }}
-	    </div>
-	    <div class="tab-pane fade" id="nav-02" role="tabpanel" aria-labelledby="nav-tab-02">
-		{{ include('_english.html.twig') }}
-	    </div>
-	</div>
+	<p>{% trans %}session.paragraph.five{% endtrans %}</p>
+	<h3>{% trans %}Language{% endtrans %}</h3>
+	<p>{% trans %}session.paragraph.six{% endtrans %} <i>{% trans %}session.paragraph.lang{% endtrans %} (<i class="bi bi-translate"></i>)</i> {% trans %}session.paragraph.seven{% endtrans %}</p>
     </div>
 {% endblock %}
