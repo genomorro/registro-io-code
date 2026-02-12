@@ -196,6 +196,7 @@ final class PatientController extends AbstractController
 
         $redirectRoute = $request->request->get('redirect_route', 'app_patient_index');
         $redirectParams = $request->request->all('redirect_params');
+        $redirectParams['tab'] = 'nav-01';
 
 	$this->addFlash('primary', $flash);
         return $this->redirectToRoute($redirectRoute, $redirectParams);

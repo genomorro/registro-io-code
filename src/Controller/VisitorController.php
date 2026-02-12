@@ -167,6 +167,7 @@ final class VisitorController extends AbstractController
 
         $redirectRoute = $request->query->get('redirect_route', 'app_visitor_index');
         $routeParameters = [];
+        $routeParameters['tab'] = 'nav-02';
 
         switch ($redirectRoute) {
             case 'app_visitor_show':
@@ -176,6 +177,7 @@ final class VisitorController extends AbstractController
                 $routeParameters['tag'] = $request->query->get('tag');
                 break;
             case 'app_search_name_index':
+            case 'app_search_name_check_out':
                 $routeParameters['name'] = $request->query->get('name');
                 break;
         }

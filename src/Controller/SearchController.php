@@ -41,7 +41,7 @@ class SearchController extends AbstractController
 	    }
 
 	    $this->addFlash('error', $flashFile);
-	    return $this->redirectToRoute('app_search_index');
+	    return $this->redirectToRoute('app_search_index', ['tab' => 'nav-01']);
         }
 
 
@@ -61,7 +61,7 @@ class SearchController extends AbstractController
 	    }
 
 	    $this->addFlash('error', $flashName);
-	    return $this->redirectToRoute('app_search_index');
+	    return $this->redirectToRoute('app_search_index', ['tab' => 'nav-02']);
 	}
 
 	
@@ -81,7 +81,7 @@ class SearchController extends AbstractController
 	    }
 
 	    $this->addFlash('error', $flashTag);
-	    return $this->redirectToRoute('app_search_index');
+	    return $this->redirectToRoute('app_search_index', ['tab' => 'nav-03']);
         }
 
 	
@@ -89,11 +89,12 @@ class SearchController extends AbstractController
 	    'formFile' => $formFile->createView(),
 	    'formName' => $formName->createView(),
 	    'formTag' => $formTag->createView(),
+	    'tab' => $request->query->get('tab', 'nav-01'),
         ]);
     }
 
     #[Route('/check-out-list', name: 'app_search_check_list_index')]
-    public function checkOutList(SearchRepository $searchRepository, TranslatorInterface $translator): Response
+    public function checkOutList(Request $request, SearchRepository $searchRepository, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -104,11 +105,12 @@ class SearchController extends AbstractController
 	    'patients' => $patients,
 	    'visitors' => $visitors,
 	    'title' => $translator->trans('Check Out List'),
+	    'tab' => $request->query->get('tab', 'nav-01'),
         ]);
     }
     
     #[Route('/tag/{tag}/check-out', name: 'app_search_check_index')]
-    public function checkOut(string $tag, SearchRepository $searchRepository, TranslatorInterface $translator): Response
+    public function checkOut(Request $request, string $tag, SearchRepository $searchRepository, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -120,11 +122,12 @@ class SearchController extends AbstractController
 	    'visitors' => $visitors,
 	    'tag' => $tag,
 	    'title' => $translator->trans('Check Out by Tag'),
+	    'tab' => $request->query->get('tab', 'nav-01'),
         ]);
     }
 
     #[Route('/name/{name}/check-out', name: 'app_search_name_check_out')]
-    public function name(string $name, SearchRepository $searchRepository, TranslatorInterface $translator): Response
+    public function name(Request $request, string $name, SearchRepository $searchRepository, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -136,6 +139,7 @@ class SearchController extends AbstractController
 	    'visitors' => $visitors,
 	    'name' => $name,
 	    'title' => $translator->trans('Check Out by Name'),
+	    'tab' => $request->query->get('tab', 'nav-01'),
         ]);
     }
 
