@@ -115,26 +115,27 @@ class ReportController extends AbstractController
             ];
         }
 
-        $this->fillPresenceToday($data, $attendance, 'attendance', $todayStart, $todayEnd);
-        $this->fillPresenceToday($data, $visitor, 'visitor', $todayStart, $todayEnd);
-        $this->fillPresenceToday($data, $stakeholder, 'stakeholder', $todayStart, $todayEnd);
+        $this->fillActivityToday($data, $attendance, 'attendance', $todayStart, $todayEnd);
+        $this->fillActivityToday($data, $visitor, 'visitor', $todayStart, $todayEnd);
+        $this->fillActivityToday($data, $stakeholder, 'stakeholder', $todayStart, $todayEnd);
 
         return array_values($data);
     }
 
-    private function fillPresenceToday(array &$data, array $records, string $key, \DateTime $todayStart, \DateTime $todayEnd): void
+    private function fillActivityToday(array &$data, array $records, string $key, \DateTime $todayStart, \DateTime $todayEnd): void
     {
         foreach ($records as $r) {
             $start = $r['checkInAt'];
-            $end = $r['checkOutAt'] ?? new \DateTime('now', $start->getTimezone());
+            $end = $r['checkOutAt'];
 
-            $recordStartHour = ($start < $todayStart) ? 0 : (int)$start->format('H');
-            $recordEndHour = ($end >= $todayEnd) ? 23 : (int)$end->format('H');
+            if ($start >= $todayStart && $start < $todayEnd) {
+                $h = (int)$start->format('H');
+                $data[$h][$key]++;
+            }
 
-            for ($h = $recordStartHour; $h <= $recordEndHour; $h++) {
-                if (isset($data[$h])) {
-                    $data[$h][$key]++;
-                }
+            if ($end && $end >= $todayStart && $end < $todayEnd) {
+                $h = (int)$end->format('H');
+                $data[$h][$key]++;
             }
         }
     }
@@ -142,11 +143,11 @@ class ReportController extends AbstractController
     private function processHistoricalData(array $attendance, array $visitor, array $stakeholder): array
     {
         $allDays = [];
-        $occupancyByDayAndHour = []; // [date_string => [hour => [attr => count]]]
+        $activityByDayAndHour = []; // [date_string => [hour => [attr => count]]]
 
-        $this->collectHistorical($occupancyByDayAndHour, $attendance, 'attendance', $allDays);
-        $this->collectHistorical($occupancyByDayAndHour, $visitor, 'visitor', $allDays);
-        $this->collectHistorical($occupancyByDayAndHour, $stakeholder, 'stakeholder', $allDays);
+        $this->collectHistorical($activityByDayAndHour, $attendance, 'attendance', $allDays);
+        $this->collectHistorical($activityByDayAndHour, $visitor, 'visitor', $allDays);
+        $this->collectHistorical($activityByDayAndHour, $stakeholder, 'stakeholder', $allDays);
 
         $numDays = count($allDays);
         if ($numDays === 0) $numDays = 1;
@@ -159,7 +160,7 @@ class ReportController extends AbstractController
                 'visitor' => 0,
                 'stakeholder' => 0,
             ];
-            foreach ($occupancyByDayAndHour as $day => $hours) {
+            foreach ($activityByDayAndHour as $day => $hours) {
                 if (isset($hours[$i])) {
                     $row['attendance'] += $hours[$i]['attendance'] ?? 0;
                     $row['visitor'] += $hours[$i]['visitor'] ?? 0;
@@ -174,36 +175,36 @@ class ReportController extends AbstractController
         return $result;
     }
 
-    private function collectHistorical(array &$occupancy, array $records, string $key, array &$allDays): void
+    private function collectHistorical(array &$activity, array $records, string $key, array &$allDays): void
     {
         foreach ($records as $r) {
             $start = $r['checkInAt'];
-            $end = $r['checkOutAt'] ?? new \DateTime('now', $start->getTimezone());
+            $end = $r['checkOutAt'];
 
-            $curr = clone $start;
-            $curr->setTime((int)$curr->format('H'), 0, 0);
+            $dayIn = $start->format('Y-m-d');
+            $allDays[$dayIn] = true;
+            $hIn = (int)$start->format('H');
 
-            // Cap end to now to avoid infinite loops if data is weird
-            $now = new \DateTime();
-            if ($end > $now) $end = $now;
+            if (!isset($activity[$dayIn])) {
+                $activity[$dayIn] = [];
+            }
+            if (!isset($activity[$dayIn][$hIn])) {
+                $activity[$dayIn][$hIn] = ['attendance' => 0, 'visitor' => 0, 'stakeholder' => 0];
+            }
+            $activity[$dayIn][$hIn][$key]++;
 
-            while ($curr <= $end) {
-                $dayStr = $curr->format('Y-m-d');
-                $allDays[$dayStr] = true;
-                $hour = (int)$curr->format('H');
+            if ($end) {
+                $dayOut = $end->format('Y-m-d');
+                $allDays[$dayOut] = true;
+                $hOut = (int)$end->format('H');
 
-                if (!isset($occupancy[$dayStr])) {
-                    $occupancy[$dayStr] = [];
+                if (!isset($activity[$dayOut])) {
+                    $activity[$dayOut] = [];
                 }
-                if (!isset($occupancy[$dayStr][$hour])) {
-                    $occupancy[$dayStr][$hour] = ['attendance' => 0, 'visitor' => 0, 'stakeholder' => 0];
+                if (!isset($activity[$dayOut][$hOut])) {
+                    $activity[$dayOut][$hOut] = ['attendance' => 0, 'visitor' => 0, 'stakeholder' => 0];
                 }
-                $occupancy[$dayStr][$hour][$key]++;
-
-                $curr = $curr->modify('+1 hour');
-
-                // Safety break for very long durations (e.g. forgot to check out for months)
-                if (count($allDays) > 10000) break;
+                $activity[$dayOut][$hOut][$key]++;
             }
         }
     }
