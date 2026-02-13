@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\AppointmentRepository;
+use App\Repository\UserRepository;
 use App\Report\PatientTodayReport;
+use App\Report\UserActivityReport;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -37,6 +39,27 @@ class ReportController extends AbstractController
         ]);
         
         return $this->render('report/patient_today.html.twig', [
+            'report' => $report->run()->render(true),
+        ]);
+    }
+
+    #[Route('/user/activity', name: 'app_report_user_activity', methods: ['GET'])]
+    public function userActivity(
+        UserRepository $userRepository,
+        TranslatorInterface $translator
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $today = new \DateTime('today midnight');
+
+        $data = $userRepository->findUserActivityReportData($today);
+
+        $report = new UserActivityReport([
+            "data" => $data,
+            "translator" => $translator
+        ]);
+
+        return $this->render('report/user_activity.html.twig', [
             'report' => $report->run()->render(true),
         ]);
     }

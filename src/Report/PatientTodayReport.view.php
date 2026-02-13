@@ -5,7 +5,9 @@ use koolreport\widgets\koolphp\Table;
 $translator = $this->params["translator"];
 ?>
 <div class="report-content">
-    <h1 class="text-center mb-4"><?php echo $translator->trans("Patients Today Report"); ?></h1>
+    <h1><?php echo $translator->trans("Patients Today Report"); ?></h1>
+    <hr class="red">
+
     <div class="row">
         <div class="col-md-12">
             <?php
@@ -27,7 +29,7 @@ $translator = $this->params["translator"];
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-md-12">
+        <div class="col-md-12 table-responsive">
             <h3><?php echo $translator->trans("Patient List"); ?></h3>
             <?php
             Table::create(array(

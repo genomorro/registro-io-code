@@ -1,0 +1,119 @@
+<?php
+use koolreport\widgets\google\BarChart;
+use koolreport\widgets\koolphp\Table;
+
+$translator = $this->params["translator"];
+?>
+<div class="report-content">
+    <h1><?php echo $translator->trans("User Activity Report"); ?></h1>
+    <hr class="red">
+
+    <div class="row">
+	<div class="col-md-12">
+            <?php
+            BarChart::create(array(
+		"dataStore" => $this->dataStore('user_activity'),
+		"columns" => array(
+                    "userName" => array(
+			"label" => $translator->trans("User")
+                    ),
+                    "attendanceCheckInTotal" => array(
+			"label" => $translator->trans("Attendance Check-ins Total"),
+			"type" => "number"
+                    ),
+                    "attendanceCheckOutTotal" => array(
+			"label" => $translator->trans("Attendance Check-outs Total"),
+			"type" => "number"
+                    ),
+                    "visitorCheckInTotal" => array(
+			"label" => $translator->trans("Visitor Check-ins Total"),
+			"type" => "number"
+                    ),
+                    "visitorCheckOutTotal" => array(
+			"label" => $translator->trans("Visitor Check-outs Total"),
+			"type" => "number"
+                    ),
+                    "stakeholderCheckInTotal" => array(
+			"label" => $translator->trans("Stakeholder Check-ins Total"),
+			"type" => "number"
+                    ),
+                    "stakeholderCheckOutTotal" => array(
+			"label" => $translator->trans("Stakeholder Check-outs Total"),
+			"type" => "number"
+                    ),
+		),
+		"options" => array(
+                    "title" => $translator->trans("Total User Activity"),
+                    "isStacked" => true,
+		)
+            ));
+            ?>
+	</div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12 table-responsive">
+	    <h3><?php echo $translator->trans("User Activity"); ?></h3>
+            <?php
+            Table::create(array(
+                "dataStore" => $this->dataStore('user_activity'),
+                "columns" => array(
+                    "userName" => array(
+                        "label" => $translator->trans("User")
+                    ),
+                    "attendanceCheckInToday" => array(
+                        "label" => $translator->trans("Attendance Check-ins Today"),
+                        "type" => "number"
+                    ),
+                    "attendanceCheckOutToday" => array(
+                        "label" => $translator->trans("Attendance Check-outs Today"),
+                        "type" => "number"
+                    ),
+                    "attendanceCheckInTotal" => array(
+                        "label" => $translator->trans("Attendance Check-ins Total"),
+                        "type" => "number"
+                    ),
+                    "attendanceCheckOutTotal" => array(
+                        "label" => $translator->trans("Attendance Check-outs Total"),
+                        "type" => "number"
+                    ),
+                    "visitorCheckInToday" => array(
+                        "label" => $translator->trans("Visitor Check-ins Today"),
+                        "type" => "number"
+                    ),
+                    "visitorCheckOutToday" => array(
+                        "label" => $translator->trans("Visitor Check-outs Today"),
+                        "type" => "number"
+                    ),
+                    "visitorCheckInTotal" => array(
+                        "label" => $translator->trans("Visitor Check-ins Total"),
+                        "type" => "number"
+                    ),
+                    "visitorCheckOutTotal" => array(
+                        "label" => $translator->trans("Visitor Check-outs Total"),
+                        "type" => "number"
+                    ),
+                    "stakeholderCheckInToday" => array(
+                        "label" => $translator->trans("Stakeholder Check-ins Today"),
+                        "type" => "number"
+                    ),
+                    "stakeholderCheckOutToday" => array(
+                        "label" => $translator->trans("Stakeholder Check-outs Today"),
+                        "type" => "number"
+                    ),
+                    "stakeholderCheckInTotal" => array(
+                        "label" => $translator->trans("Stakeholder Check-ins Total"),
+                        "type" => "number"
+                    ),
+                    "stakeholderCheckOutTotal" => array(
+                        "label" => $translator->trans("Stakeholder Check-outs Total"),
+                        "type" => "number"
+                    ),
+                ),
+                "cssClass" => array(
+                    "table" => "table table-hover"
+                )
+            ));
+            ?>
+        </div>
+    </div>
+</div>
