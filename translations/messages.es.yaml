@@ -212,6 +212,7 @@ session:
 'Yes': 'Si'
 'No': 'No'
 ## report
+'Report': 'Reporte'
 'Patients Today Report': 'Reporte de pacientes de hoy'
 'Patients Attendance Status': 'Estado de asistencia de pacientes'
 'Count': 'Total'

@@ -212,6 +212,7 @@ session:
 'Yes': 'Yes'
 'No': 'No'
 ## report
+'Report': 'Report'
 'Patients Today Report': 'Patients Today Report'
 'Patients Attendance Status': 'Patients Attendance Status'
 'Count': 'Count'
