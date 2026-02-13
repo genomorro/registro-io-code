@@ -33,7 +33,7 @@ $translator = $this->params["translator"];
                     ),
                 ),
                 "options" => array(
-                    "title" => $translator->trans("People present per hour (Today)"),
+                    "title" => $translator->trans("Activity by hour (Today)"),
                 )
             ));
             ?>
@@ -50,15 +50,18 @@ $translator = $this->params["translator"];
                     ),
                     "attendance" => array(
                         "label" => $translator->trans("Attendance"),
-                        "type" => "number"
+                        "type" => "number",
+                        "decimals" => 2
                     ),
                     "visitor" => array(
                         "label" => $translator->trans("Visitor"),
-                        "type" => "number"
+                        "type" => "number",
+                        "decimals" => 2
                     ),
                     "stakeholder" => array(
                         "label" => $translator->trans("Stakeholder"),
-                        "type" => "number"
+                        "type" => "number",
+                        "decimals" => 2
                     ),
                 ),
                 "cssClass" => array(
@@ -94,7 +97,7 @@ $translator = $this->params["translator"];
                     ),
                 ),
                 "options" => array(
-                    "title" => $translator->trans("Average people present per hour (Historical)"),
+                    "title" => $translator->trans("Average activity by hour (Historical)"),
                 )
             ));
             ?>
@@ -111,15 +114,18 @@ $translator = $this->params["translator"];
                     ),
                     "attendance" => array(
                         "label" => $translator->trans("Attendance"),
-                        "type" => "number"
+                        "type" => "number",
+                        "decimals" => 2
                     ),
                     "visitor" => array(
                         "label" => $translator->trans("Visitor"),
-                        "type" => "number"
+                        "type" => "number",
+                        "decimals" => 2
                     ),
                     "stakeholder" => array(
                         "label" => $translator->trans("Stakeholder"),
-                        "type" => "number"
+                        "type" => "number",
+                        "decimals" => 2
                     ),
                 ),
                 "cssClass" => array(

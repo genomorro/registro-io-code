@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Report\ActivityPerHourReport;
+use App\Report\PatientTodayReport;
+use App\Report\UserActivityReport;
 use App\Repository\AppointmentRepository;
 use App\Repository\AttendanceRepository;
 use App\Repository\StakeholderRepository;
 use App\Repository\UserRepository;
 use App\Repository\VisitorRepository;
-use App\Report\PatientTodayReport;
-use App\Report\UserActivityReport;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

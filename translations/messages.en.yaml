@@ -237,8 +237,8 @@ session:
 "Today's Activity": "Today's Activity"
 'Historical Average Activity': 'Historical Average Activity'
 'Hour': 'Hour'
-'People present per hour (Today)': 'People present per hour (Today)'
-'Average people present per hour (Historical)': 'Average people present per hour (Historical)'
+'Activity by hour (Today)': 'Activity by hour (Today)'
+'Average activity by hour (Historical)': 'Average activity by hour (Historical)'
 'Activity': 'Activity'
 ## search
 ### index.html.twig
