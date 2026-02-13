@@ -10,7 +10,6 @@ $translator = $this->params["translator"];
 
     <div class="row">
         <div class="col-md-12">
-            <h3><?php echo $translator->trans("Today's Activity"); ?></h3>
             <?php
             AreaChart::create(array(
                 "dataStore" => $this->dataStore('activity_today'),
@@ -41,6 +40,7 @@ $translator = $this->params["translator"];
     </div>
     <div class="row mt-3">
         <div class="col-md-12 table-responsive">
+            <h3><?php echo $translator->trans("Today's Activity"); ?></h3>
             <?php
             Table::create(array(
                 "dataStore" => $this->dataStore('activity_today'),
@@ -61,6 +61,10 @@ $translator = $this->params["translator"];
                         "type" => "number",
                     ),
                 ),
+		"paging" => array(
+		    "pageSize" => 12,
+		    "pageIndex" => 0,
+		),
                 "cssClass" => array(
                     "table" => "table table-hover"
                 )
@@ -71,7 +75,6 @@ $translator = $this->params["translator"];
 
     <div class="row mt-5">
         <div class="col-md-12">
-            <h3><?php echo $translator->trans("Historical Average Activity"); ?></h3>
             <?php
             AreaChart::create(array(
                 "dataStore" => $this->dataStore('activity_historical'),
@@ -102,6 +105,7 @@ $translator = $this->params["translator"];
     </div>
     <div class="row mt-3">
         <div class="col-md-12 table-responsive">
+            <h3><?php echo $translator->trans("Historical Average Activity"); ?></h3>
             <?php
             Table::create(array(
                 "dataStore" => $this->dataStore('activity_historical'),
@@ -125,6 +129,10 @@ $translator = $this->params["translator"];
                         "decimals" => 2
                     ),
                 ),
+		"paging" => array(
+		    "pageSize" => 12,
+		    "pageIndex" => 0,
+		),
                 "cssClass" => array(
                     "table" => "table table-hover"
                 )

@@ -42,7 +42,8 @@ class ReportController extends AbstractController
             "translator" => $translator
         ]);
         
-        return $this->render('report/patient_today.html.twig', [
+        return $this->render('report/report.html.twig', [
+	    'title' => 'Patients Today Report',
             'report' => $report->run()->render(true),
         ]);
     }
@@ -63,7 +64,8 @@ class ReportController extends AbstractController
             "translator" => $translator
         ]);
 
-        return $this->render('report/user_activity.html.twig', [
+        return $this->render('report/report.html.twig', [
+	    'title' => 'User Activity Report',
             'report' => $report->run()->render(true),
         ]);
     }
@@ -98,7 +100,8 @@ class ReportController extends AbstractController
             "translator" => $translator
         ]);
 
-        return $this->render('report/activity_per_hour.html.twig', [
+        return $this->render('report/report.html.twig', [
+	    'title' => 'Activity by Hour Report',
             'report' => $report->run()->render(true),
         ]);
     }

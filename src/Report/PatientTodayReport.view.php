@@ -48,6 +48,10 @@ $translator = $this->params["translator"];
                         }
                     )
                 ),
+		"paging" => array(
+		    "pageSize" => 10,
+		    "pageIndex" => 0,
+		),
                 "cssClass" => array(
                     "table" => "table table-hover"
                 )
