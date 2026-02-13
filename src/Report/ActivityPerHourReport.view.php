@@ -39,6 +39,35 @@ $translator = $this->params["translator"];
             ?>
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col-md-12 table-responsive">
+            <?php
+            Table::create(array(
+                "dataStore" => $this->dataStore('activity_today'),
+                "columns" => array(
+                    "hour" => array(
+                        "label" => $translator->trans("Hour"),
+                    ),
+                    "attendance" => array(
+                        "label" => $translator->trans("Attendance"),
+                        "type" => "number"
+                    ),
+                    "visitor" => array(
+                        "label" => $translator->trans("Visitor"),
+                        "type" => "number"
+                    ),
+                    "stakeholder" => array(
+                        "label" => $translator->trans("Stakeholder"),
+                        "type" => "number"
+                    ),
+                ),
+                "cssClass" => array(
+                    "table" => "table table-hover"
+                )
+            ));
+            ?>
+        </div>
+    </div>
 
     <div class="row mt-5">
         <div class="col-md-12">
@@ -66,6 +95,35 @@ $translator = $this->params["translator"];
                 ),
                 "options" => array(
                     "title" => $translator->trans("Average people present per hour (Historical)"),
+                )
+            ));
+            ?>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12 table-responsive">
+            <?php
+            Table::create(array(
+                "dataStore" => $this->dataStore('activity_historical'),
+                "columns" => array(
+                    "hour" => array(
+                        "label" => $translator->trans("Hour"),
+                    ),
+                    "attendance" => array(
+                        "label" => $translator->trans("Attendance"),
+                        "type" => "number"
+                    ),
+                    "visitor" => array(
+                        "label" => $translator->trans("Visitor"),
+                        "type" => "number"
+                    ),
+                    "stakeholder" => array(
+                        "label" => $translator->trans("Stakeholder"),
+                        "type" => "number"
+                    ),
+                ),
+                "cssClass" => array(
+                    "table" => "table table-hover"
                 )
             ));
             ?>
