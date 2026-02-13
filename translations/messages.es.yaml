@@ -233,6 +233,13 @@ session:
 'Stakeholder Check-outs Today': 'Involucrados - Salidas hoy'
 'Stakeholder Check-ins Total': 'Involucrados - Entradas totales'
 'Stakeholder Check-outs Total': 'Involucrados - Salidas totales'
+'Activity by Hour Report': 'Reporte de actividad por hora'
+"Today's Activity": 'Actividad de hoy'
+'Historical Average Activity': 'Promedio de actividad histórica'
+'Hour': 'Hora'
+'People present per hour (Today)': 'Personas presentes por hora (Hoy)'
+'Average people present per hour (Historical)': 'Promedio de personas presentes por hora (Histórico)'
+'Activity': 'Actividad'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'

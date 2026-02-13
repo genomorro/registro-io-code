@@ -233,6 +233,13 @@ session:
 'Stakeholder Check-outs Today': 'Stakeholder Check-outs Today'
 'Stakeholder Check-ins Total': 'Stakeholder Check-ins Total'
 'Stakeholder Check-outs Total': 'Stakeholder Check-outs Total'
+'Activity by Hour Report': 'Activity by Hour Report'
+"Today's Activity": "Today's Activity"
+'Historical Average Activity': 'Historical Average Activity'
+'Hour': 'Hour'
+'People present per hour (Today)': 'People present per hour (Today)'
+'Average people present per hour (Historical)': 'Average people present per hour (Historical)'
+'Activity': 'Activity'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'

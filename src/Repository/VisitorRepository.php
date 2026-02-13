@@ -80,4 +80,31 @@ class VisitorRepository extends ServiceEntityRepository
 
         return $query->getQuery();
     }
+
+    /**
+     * @return array
+     */
+    public function findAllCheckTimes(): array
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT v.checkInAt, v.checkOutAt FROM App\Entity\Visitor v'
+        )->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function findTodayCheckTimes(): array
+    {
+        $today = new \DateTime('today midnight');
+        $tomorrow = new \DateTime('tomorrow midnight');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT v.checkInAt, v.checkOutAt FROM App\Entity\Visitor v
+             WHERE v.checkInAt < :tomorrow AND (v.checkOutAt IS NULL OR v.checkOutAt >= :today)'
+        )
+        ->setParameter('today', $today)
+        ->setParameter('tomorrow', $tomorrow)
+        ->getResult();
+    }
 }
