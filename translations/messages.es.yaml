@@ -233,6 +233,7 @@ session:
 'Stakeholder Check-outs Today': 'Involucrados - Salidas hoy'
 'Stakeholder Check-ins Total': 'Involucrados - Entradas totales'
 'Stakeholder Check-outs Total': 'Involucrados - Salidas totales'
+'Total User Activity': 'Actividad total de usuarios'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'

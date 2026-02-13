@@ -233,6 +233,7 @@ session:
 'Stakeholder Check-outs Today': 'Stakeholder Check-outs Today'
 'Stakeholder Check-ins Total': 'Stakeholder Check-ins Total'
 'Stakeholder Check-outs Total': 'Stakeholder Check-outs Total'
+'Total User Activity': 'Total User Activity'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'
