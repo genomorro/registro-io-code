@@ -105,7 +105,6 @@ session:
 'Stakeholders': 'Involucrados'
 'Reports': 'Reportes'
 'Language': 'Idioma'
-'es_MX': 'Español'
 'es': 'Español'
 'en': 'English'
 'User': 'Usuario'
@@ -184,8 +183,11 @@ session:
 'Service': 'Servicio'
 'Bed': 'Cama'
 ### index.html.twig
-'Hospitalized index': 'Índice de hospitalizados'
+'Hospitalized index': 'Índice de pacientes hospitalizados'
 'Search by File or Name': 'Buscar por expediente o nombre'
+### new.html.twig
+'New Hospitalized': 'Nuevo paciente hospitalizado'
+'Create new Hospitalized': 'Crear nuevo paciente hospitalizado'
 ## patient
 ### edit.html.twig
 'File': 'Expediente'
@@ -221,6 +223,7 @@ session:
 'Attended': 'Asistió'
 'Not Attended': 'No asistió'
 'User Activity Report': 'Reporte de actividad de usuarios'
+'User Activity': 'Actividad de usuario'
 'Total User Activity': 'Actividad total de usuarios'
 'Attendance Check-ins Today': 'Asistencias - Entradas hoy'
 'Attendance Check-outs Today': 'Asistencias - Salidas hoy'
@@ -234,6 +237,13 @@ session:
 'Stakeholder Check-outs Today': 'Involucrados - Salidas hoy'
 'Stakeholder Check-ins Total': 'Involucrados - Entradas totales'
 'Stakeholder Check-outs Total': 'Involucrados - Salidas totales'
+'Activity by Hour Report': 'Reporte de actividad por hora'
+"Today's Activity": 'Actividad de hoy'
+'Historical Average Activity': 'Promedio de actividad histórica'
+'Hour': 'Hora'
+'Activity by hour (Today)': 'Actividad por hora (Hoy)'
+'Average activity by hour (Historical)': 'Promedio de actividad por hora (Histórico)'
+'Activity': 'Actividad'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'
@@ -243,7 +253,19 @@ session:
 'Check Out List': 'Lista de registro de salida'
 'Check Out by Tag': 'Registro de salida por gafete'
 ### name.html.twig
+'Check Out by Name': 'Registro de salida por nombre'
 'Search by Name': 'Buscar por nombre'
+## stakeholder
+'Stakeholder': 'Involucrado'
+'Stakeholder Details': 'Detalles del involucrado'
+'Subject': 'Asunto'
+'Evidence': 'Evidencia'
+'Signature': 'Firma'
+'Edit Stakeholder': 'Editar involucrado'
+'Stakeholder index': 'Índice de involucrados'
+'New Stakeholder': 'Nuevo involucrado'
+'Create new Stakeholder': 'Crear nuevo involucrado'
+'Clear Signature': 'Borrar firma'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Editar visitante'

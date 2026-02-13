@@ -105,7 +105,6 @@ session:
 'Stakeholders': 'Stakeholders'
 'Reports': 'Reports'
 'Language': 'Language'
-'es_MX': 'Español'
 'es': 'Español'
 'en': 'English'
 'User': 'User'
@@ -186,6 +185,9 @@ session:
 ### index.html.twig
 'Hospitalized index': 'Hospitalized index'
 'Search by File or Name': 'Search by File or Name'
+### new.html.twig
+'New Hospitalized': 'New Hospitalized'
+'Create new Hospitalized': 'Create new Hospitalized'
 ## patient
 ### edit.html.twig
 'File': 'File'
@@ -222,6 +224,7 @@ session:
 'Not Attended': 'Not Attended'
 'User Activity Report': 'User Activity Report'
 'Total User Activity': 'Total User Activity'
+'User Activity': 'Actividad de usuario'
 'Attendance Check-ins Today': 'Attendance Check-ins Today'
 'Attendance Check-outs Today': 'Attendance Check-outs Today'
 'Attendance Check-ins Total': 'Attendance Check-ins Total'
@@ -234,6 +237,13 @@ session:
 'Stakeholder Check-outs Today': 'Stakeholder Check-outs Today'
 'Stakeholder Check-ins Total': 'Stakeholder Check-ins Total'
 'Stakeholder Check-outs Total': 'Stakeholder Check-outs Total'
+'Activity by Hour Report': 'Activity by Hour Report'
+"Today's Activity": "Today's Activity"
+'Historical Average Activity': 'Historical Average Activity'
+'Hour': 'Hour'
+'Activity by hour (Today)': 'Activity by hour (Today)'
+'Average activity by hour (Historical)': 'Average activity by hour (Historical)'
+'Activity': 'Activity'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'
@@ -243,7 +253,19 @@ session:
 'Check Out List': 'Check Out List'
 'Check Out by Tag': 'Check Out by Tag'
 ### name.html.twig
+'Check Out by Name': 'Check Out by Name'
 'Search by Name': 'Search by Name'
+## stakeholder
+'Stakeholder': 'Stakeholder'
+'Stakeholder Details': 'Stakeholder Details'
+'Subject': 'Subject'
+'Evidence': 'Evidence'
+'Signature': 'Signature'
+'Edit Stakeholder': 'Edit Stakeholder'
+'Stakeholder index': 'Stakeholder index'
+'New Stakeholder': 'New Stakeholder'
+'Create new Stakeholder': 'Create new Stakeholder'
+'Clear Signature': 'Clear Signature'
 ## visitor
 ### edit.html.twig
 'Edit Visitor': 'Edit Visitor'
