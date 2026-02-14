@@ -10,21 +10,42 @@
     <h1>{% trans %}Reports{% endtrans %}</h1>
     <hr class="red">
 
-    <ol>
-	<li>{% trans %}Patients{% endtrans %}
-	    <ul>
-		<li><a href="{{ path('app_report_patient_today') }}">{% trans %}Patients Today Report{% endtrans %}</a></li>
-	    </ul>
-	</li>
-	<li>{% trans %}Users{% endtrans %}
-	    <ul>
-		<li><a href="{{ path('app_report_user_activity') }}">{% trans %}User Activity Report{% endtrans %}</a></li>
-	    </ul>
-	</li>
-	<li>{% trans %}Activity{% endtrans %}
-	    <ul>
-		<li><a href="{{ path('app_report_activity_hour') }}">{% trans %}Activity by Hour Report{% endtrans %}</a></li>
-	    </ul>
-	</li>
-    </ol>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+	<div class="col">
+	    <div class="card h-100">
+		<i class="bi bi-bar-chart-fill h1 text-center"></i>
+		<div class="card-body">
+		    <h5 class="card-title">{% trans %}Patients Today Report{% endtrans %}</h5>
+		    <p class="card-text">{% trans %}report.patient.today{% endtrans %}</p>
+		</div>
+		<div class="card-footer">
+		    <a href="{{ path('app_report_patient_today') }}"><small class="text-body-secondary">{% trans %}Watch report{% endtrans %}</small></a>
+		</div>
+	    </div>
+	</div>
+	<div class="col">
+	    <div class="card h-100">
+		<i class="bi bi-bar-chart-steps h1 text-center"></i>
+		<div class="card-body">
+		    <h5 class="card-title">{% trans %}User Activity Report{% endtrans %}</h5>
+		    <p class="card-text">{% trans %}report.user.activity{% endtrans %}</p>
+		</div>
+		<div class="card-footer">
+		    <a href="{{ path('app_report_user_activity') }}"><small class="text-body-secondary">{% trans %}Watch report{% endtrans %}</small></a>
+		</div>
+	    </div>
+	</div>
+	<div class="col">
+	    <div class="card h-100">
+		<i class="bi bi-graph-up h1 text-center"></i>
+		<div class="card-body">
+		    <h5 class="card-title">{% trans %}Activity by Hour Report{% endtrans %}</h5>
+		    <p class="card-text">{% trans %}report.activity.hour{% endtrans %}</p>
+		</div>
+		<div class="card-footer">
+		    <a href="{{ path('app_report_activity_hour') }}"><small class="text-body-secondary">{% trans %}Watch report{% endtrans %}</small></a>
+		</div>
+	    </div>
+	</div>
+    </div>
 {% endblock %}

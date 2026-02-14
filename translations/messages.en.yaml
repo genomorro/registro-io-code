@@ -244,6 +244,14 @@ session:
 'Activity by hour (Today)': 'Activity by hour (Today)'
 'Average activity by hour (Historical)': 'Average activity by hour (Historical)'
 'Activity': 'Activity'
+'Watch report': 'Watch report'
+report:
+  activity:
+    hour: "It tracks the number of patient, visitor, and stakeholder check in and check out. It displays the current day's hourly count and the historical hourly average."
+  patient:
+    today: 'It shows the list of patients with appointments today. It counts how many of those patients have attended.'
+  user:
+    activity: "It displays the number of patient, visitor, and stakeholder check in and check out made by each system user. It shows today's count and the total since the user registered."
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'

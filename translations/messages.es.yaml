@@ -244,6 +244,14 @@ session:
 'Activity by hour (Today)': 'Actividad por hora (Hoy)'
 'Average activity by hour (Historical)': 'Promedio de actividad por hora (Histórico)'
 'Activity': 'Actividad'
+'Watch report': 'Ver reporte'
+report:
+  activity:
+    hour: 'Contabiliza el número de ingresos y egresos de pacientes, visitantes e involucrados. Presenta el conteo del día actual por hora y el promedio histórico por hora.'
+  patient:
+    today: 'Muestra la lista de pacientes que tienen cita hoy. Cuenta cuantos de esos pacientes han asistido.'
+  user:
+    activity: 'Muestra el número de registros de ingresos y egresos de pacientes, visitantes e involucrados hecho por cada usuario del sistema. Muestra el conteo del día de hoy y el total desde que el usuario fue registrado hasta hoy.'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'
