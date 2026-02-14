@@ -23,7 +23,7 @@ final class StakeholderController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
-        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $filter = $request->query->get('filter');
         $query = $stakeholderRepository->paginateStakeholder($filter);
@@ -42,7 +42,7 @@ final class StakeholderController extends AbstractController
     #[Route('/new', name: 'app_stakeholder_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $stakeholder = new Stakeholder();
 	$flash = $translator->trans('Stakeholder added successfully.');
@@ -77,7 +77,7 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}', name: 'app_stakeholder_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Stakeholder $stakeholder): Response
     {
-        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('stakeholder/show.html.twig', [
             'stakeholder' => $stakeholder,
@@ -166,7 +166,7 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/edit', name: 'app_stakeholder_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-        /* $this->denyAccessUnlessGranted('ROLE_USER'); */
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $originalCheckOutAt = $stakeholder->getCheckOutAt();
         $form = $this->createForm(StakeholderType::class, $stakeholder);
@@ -194,7 +194,7 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}', name: 'app_stakeholder_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-        /* $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN'); */
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
 	$flash = $translator->trans('Stakeholder deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
@@ -209,7 +209,7 @@ final class StakeholderController extends AbstractController
     #[Route('/{id}/check-out', name: 'app_stakeholder_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function checkOut(Request $request, Stakeholder $stakeholder, EntityManagerInterface $entityManager): Response
     {
-	/* $this->denyAccessUnlessGranted('ROLE_USER'); */
+	$this->denyAccessUnlessGranted('ROLE_USER');
 
         if ($this->isCsrfTokenValid('checkout'.$stakeholder->getId(), $request->getPayload()->getString('_token'))) {
             $stakeholder->setCheckOutAt(new \DateTimeImmutable());

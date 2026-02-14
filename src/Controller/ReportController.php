@@ -21,7 +21,7 @@ class ReportController extends AbstractController
     #[Route(path: '/', name: 'app_report_index')]
     public function index(): Response
     {
-	/* $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN'); */
+	$this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('report/index.html.twig');
     }
 
@@ -30,7 +30,7 @@ class ReportController extends AbstractController
         AppointmentRepository $appointmentRepository,
         TranslatorInterface $translator
     ): Response {
-        /* $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN'); */
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $today = new \DateTime('today midnight');
         $tomorrow = new \DateTime('tomorrow midnight');
