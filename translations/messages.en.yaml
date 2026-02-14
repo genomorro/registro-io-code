@@ -351,3 +351,7 @@ report:
 'Sign in!': 'Sign in!'
 'You are logged in as': 'You are logged in as'
 'Please sign in': 'Please sign in'
+## common
+'Cancel': 'Cancel'
+'Confirm': 'Confirm'
+'Confirmation': 'Confirmation'

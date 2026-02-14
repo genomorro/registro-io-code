@@ -351,3 +351,7 @@ report:
 'Sign in!': '¡Iniciar sesión!'
 'You are logged in as': 'Iniciaste sesión como'
 'Please sign in': 'Inicia sesión, por favor'
+## common
+'Cancel': 'Cancelar'
+'Confirm': 'Confirmar'
+'Confirmation': 'Confirmación'
