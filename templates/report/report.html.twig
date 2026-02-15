@@ -7,7 +7,14 @@
         <li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_report_index') }}">{% trans %}Report{% endtrans %}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ title|trans }}</li>
+	{% if title == 'Patients Today Report' %}
+	    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_report_patient_today') }}">{{ title|trans }}</a></li>
+	{% elseif title == 'User Activity Report' %}
+	    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_report_user_activity') }}">{{ title|trans }}</a></li>	    
+	{% else %}
+	    <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_report_activity_hour') }}">{{ title|trans }}</a></li>	    
+	{% endif %}
+
     </ol>
 
     <div class="report-container mt-4">
