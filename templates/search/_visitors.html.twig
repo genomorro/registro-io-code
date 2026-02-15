@@ -23,17 +23,33 @@
 		    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 		    <td class="d-flex flex-wrap">
 			{% if tag is defined %}
-			    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+			    <form
+				method="post"
+					action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_check_index', 'tag': tag}) }}"
+				data-controller="modal-confirm"
+				data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+				data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+				data-action="submit->modal-confirm#confirm">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% elseif name is defined %}
-			    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_check_out', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+			    <form method="post"
+				  action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_check_out', 'name': name}) }}"
+				  data-controller="modal-confirm"
+				  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+				  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+				  data-action="submit->modal-confirm#confirm">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% else %}
-			    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_check_list_index'}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+			    <form method="post"
+				  action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_check_list_index'}) }}"
+				  data-controller="modal-confirm"
+				  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+				  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+				  data-action="submit->modal-confirm#confirm">
 				<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>

@@ -196,6 +196,9 @@ session:
 'Edit Patient': 'Editar paciente'
 ### index.html.twig
 'Patient index': 'Índice de pacientes'
+'Cancel': 'Cancelar'
+'Confirm': 'Confirmar'
+'Confirmation': 'Confirmación'
 ### new.html.twig
 'Create new Patient': 'Crear nuevo paciente'
 'New Patient': 'Nuevo paciente'

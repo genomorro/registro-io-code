@@ -96,7 +96,12 @@
 				    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 				    <td>
 					{% if visitor.checkOutAt is null %}
-					    <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_index', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+					    <form method="post"
+						  action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_index', 'name': name}) }}"
+						  data-controller="modal-confirm"
+						  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+						  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+						  data-action="submit->modal-confirm#confirm">
 						<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
 						<button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 					    </form>
@@ -114,6 +119,24 @@
 		    </table>
 		</div>
 		{# END: Visitor table #}
+	    </div>
+	</div>
+    </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+		<div class="modal-header">
+		    <h5 class="modal-title" id="confirmModalLabel" data-default-title="{% trans %}Confirmation{% endtrans %}">{% trans %}Confirmation{% endtrans %}</h5>
+		    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		    <!-- Message will be injected here -->
+		</div>
+		<div class="modal-footer">
+		    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+		    <button type="button" class="btn btn-primary btn-confirm">{% trans %}Confirm{% endtrans %}</button>
+		</div>
 	    </div>
 	</div>
     </div>

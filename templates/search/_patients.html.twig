@@ -25,19 +25,34 @@
 		    <td>{{ attendance.checkInAt ? attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 		    <td class="d-flex flex-wrap">
 			{% if tag is defined %}
-			    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid, 'tag': tag}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+			    <form method="post"
+				  action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid, 'tag': tag}) }}"
+				  data-controller="modal-confirm"
+				  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+				  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+				  data-action="submit->modal-confirm#confirm">
 				<input type="hidden" name="redirect_route" value="app_search_check_index">
 				<input type="hidden" name="redirect_params[tag]" value="{{ tag }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% elseif name is defined %}
-			    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+			    <form method="post"
+				  action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid}) }}"
+				  data-controller="modal-confirm"
+				  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+				  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+				  data-action="submit->modal-confirm#confirm">
 				<input type="hidden" name="redirect_route" value="app_search_name_check_out">
 				<input type="hidden" name="redirect_params[name]" value="{{ name }}">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>
 			{% else %}
-			    <form method="post" action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+			    <form method="post"
+				  action="{{ path('app_patient_check_out', {'id': attendance.patient.uuid}) }}"
+				  data-controller="modal-confirm"
+				  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+				  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+				  data-action="submit->modal-confirm#confirm">
 				<input type="hidden" name="redirect_route" value="app_search_check_list_index">
 				<button type="submit" class="btn btn-danger">{% trans %}Check out{% endtrans %}</button>
 			    </form>

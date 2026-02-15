@@ -76,7 +76,13 @@
 				{% if todays_attendance %}
 				    {{ todays_attendance.checkInAt|date('Y-m-d H:i:s') }}
 				{% else %}
-				    <form method="post" action="{{ path('app_patient_check_in', {'id': patient.uuid}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check in?{% endtrans %}');" data-webrtc-target="form" data-action="submit->webrtc#capture">
+				    <form method="post"
+					  action="{{ path('app_patient_check_in', {'id': patient.uuid}) }}"
+					  data-controller="modal-confirm"
+					  data-modal-confirm-message-value="{% trans %}Are you sure you want to check in?{% endtrans %}"
+					  data-modal-confirm-title-value="{% trans %}Check in{% endtrans %}"
+					  data-webrtc-target="form"
+					  data-action="submit->modal-confirm#confirm submit->webrtc#capture">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<input type="hidden" name="evidence" data-webrtc-target="evidence">
 					<div class="input-group">
@@ -90,7 +96,13 @@
 				{% if todays_attendance and todays_attendance.checkOutAt %}
 				    {{ todays_attendance.checkOutAt|date('Y-m-d H:i:s') }}
 				{% elseif todays_attendance %}
-				    <form method="post" action="{{ path('app_patient_check_out', {'id': patient.uuid}) }}" class="d-inline-block" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
+				    <form method="post"
+					  action="{{ path('app_patient_check_out', {'id': patient.uuid}) }}"
+					  class="d-inline-block"
+					  data-controller="modal-confirm"
+					  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+					  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+					  data-action="submit->modal-confirm#confirm">
 					<input type="hidden" name="redirect_route" value="app_patient_index">
 					<button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
 				    </form>
@@ -122,4 +134,22 @@
     {% if is_granted('ROLE_SUPER_ADMIN') %}
 	<a  class="btn btn-primary" href="{{ path('app_patient_new') }}">{% trans %}Create new{% endtrans %}</a>
     {% endif %}
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+		<div class="modal-header">
+		    <h5 class="modal-title" id="confirmModalLabel" data-default-title="{% trans %}Confirmation{% endtrans %}">{% trans %}Confirmation{% endtrans %}</h5>
+		    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		    <!-- Message will be injected here -->
+		</div>
+		<div class="modal-footer">
+		    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+		    <button type="button" class="btn btn-primary btn-confirm">{% trans %}Confirm{% endtrans %}</button>
+		</div>
+	    </div>
+	</div>
+    </div>
 {% endblock %}
