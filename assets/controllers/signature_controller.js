@@ -1,6 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import C2S from 'canvas2svg';
 
+/* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ["canvas", "sign", "checkInAt"];
 

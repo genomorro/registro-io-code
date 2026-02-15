@@ -6,11 +6,11 @@
 	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
     </ol>
 
-    <h1>{% trans %}Patient and visitor check-in and check-out system{% endtrans %} <a class="link-dark link-underline-light" href="{{ path('app_about') }}"><sup><i class="bi bi-info-circle h6"></i></sup></a></h1>
+    <h1>{% trans %}Patient and visitor check-in and check-out system{% endtrans %} <a class="link-dark text-decoration-none" href="{{ path('app_about') }}"><sup><span class="icon-infocircle h4" aria-hidden="true"></span></sup></a></h1>
     <hr class="red">
     <div>
 	<h3>{% trans %}welcome.title{% endtrans %}</h3>
-	<p>{% trans %}welcome.paragraph.one{% endtrans %} <i>{% trans %}welcome.sysname{% endtrans %}</i>. {% trans %}welcome.paragraph.two{% endtrans %}:</p>
+	<p>{% trans %}welcome.paragraph.one{% endtrans %} <a class="link-dark text-decoration-none" href="{{ path('app_about') }}"><i>{% trans %}welcome.sysname{% endtrans %}</i></a>. {% trans %}welcome.paragraph.two{% endtrans %}:</p>
 	<ul>
 	    <li><b>{% trans %}welcome.paragraph.ul.one.title{% endtrans %}</b>: {% trans %}welcome.paragraph.ul.one.desc{% endtrans %}:
 		<ul>

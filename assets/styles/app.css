@@ -2,14 +2,10 @@ body {
     background-color: #eaeaea;
 }
 
-main.page {
-margin-bottom: 1%;
-}
-
 video {
     margin: 5% auto;
 }
-
+/* BEGIN: UX-Autocomplete */
 .ts-control {
     height: 39px;
     font-size: 18px !important;
@@ -18,7 +14,25 @@ video {
 .ts-dropdown {
     font-size: 18px !important;
 }
-
+/* END: UX-Autocomplete */
+/* BEGIN: TABS */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	background-color: #611232 !important;
+    background-color: #611232 !important;
 }
+/* END: TABS */
+/* BEGIN: Menu */
+main nav.navbar, main a.navbar-brand {
+    background: #3a0b1e !important;
+    margin-right: 25rem !important;
+    margin-top: 42px !important;
+    margin-bottom: -1%;
+}
+
+.dropdown-menu {
+    width:100%;
+}
+
+.dropdown-item {
+    text-align: center;
+}
+/* END: Menu */
