@@ -18,3 +18,7 @@
 /public/uploads/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> KoolReport assets ###
+/public/koolreport_assets/
+###< KoolReport assets ###

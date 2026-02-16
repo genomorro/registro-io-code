@@ -12,6 +12,14 @@
     <h1>{% trans %}Hospitalized index{% endtrans %}</h1>
     <hr class="red">
 
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
     <div class="row">
 	<div class="col-12 col-md-6 d-flex justify-content-start">
 	    <form class="w-100" method="get" action="{{ path('app_hospitalized_index') }}">
@@ -54,9 +62,9 @@
 			<td>{{ hospitalized.service }}</td>
 			<td>{{ hospitalized.bed }}</td>
 			<td>
-			    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.id}) }}">{% trans %}Show{% endtrans %}</a>
+			    <a class="btn btn-link" href="{{ path('app_hospitalized_show', {'id': hospitalized.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
-				<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.id}) }}">{% trans %}Edit{% endtrans %}</a>
+				<a class="btn btn-secondary" href="{{ path('app_hospitalized_edit', {'id': hospitalized.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 			    {% endif %}
 			</td>
 		    </tr>

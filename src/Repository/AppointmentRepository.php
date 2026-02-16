@@ -56,6 +56,24 @@ class AppointmentRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return array
+     */
+    public function findPatientsWithAppointmentsAndAttendance(\DateTimeInterface $start, \DateTimeInterface $end): array
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT p.name as patientName, COUNT(att.id) as hasAttendance
+             FROM App\Entity\Patient p
+             JOIN p.appointments app
+             LEFT JOIN p.attendances att WITH att.checkInAt >= :start AND att.checkInAt < :end
+             WHERE app.date_at >= :start AND app.date_at < :end
+             GROUP BY p.id, p.name'
+        )
+        ->setParameter('start', $start)
+        ->setParameter('end', $end)
+        ->getResult();
+    }
+
+    /**
      * @return Query
      */
     public function paginateAppointment(string $filter = null): Query

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_report_index') }}">{% trans %}Report{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Reports{% endtrans %}</h1>
+    <hr class="red">
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+	<div class="col">
+	    <div class="card h-100">
+		<i class="bi bi-bar-chart-fill h1 text-center"></i>
+		<div class="card-body">
+		    <h5 class="card-title">{% trans %}Patients Today Report{% endtrans %}</h5>
+		    <p class="card-text">{% trans %}report.patient.today{% endtrans %}</p>
+		</div>
+		<div class="card-footer">
+		    <a href="{{ path('app_report_patient_today') }}"><small class="text-body-secondary">{% trans %}Watch report{% endtrans %}</small></a>
+		</div>
+	    </div>
+	</div>
+	<div class="col">
+	    <div class="card h-100">
+		<i class="bi bi-bar-chart-steps h1 text-center"></i>
+		<div class="card-body">
+		    <h5 class="card-title">{% trans %}User Activity Report{% endtrans %}</h5>
+		    <p class="card-text">{% trans %}report.user.activity{% endtrans %}</p>
+		</div>
+		<div class="card-footer">
+		    <a href="{{ path('app_report_user_activity') }}"><small class="text-body-secondary">{% trans %}Watch report{% endtrans %}</small></a>
+		</div>
+	    </div>
+	</div>
+	<div class="col">
+	    <div class="card h-100">
+		<i class="bi bi-graph-up h1 text-center"></i>
+		<div class="card-body">
+		    <h5 class="card-title">{% trans %}Activity by Hour Report{% endtrans %}</h5>
+		    <p class="card-text">{% trans %}report.activity.hour{% endtrans %}</p>
+		</div>
+		<div class="card-footer">
+		    <a href="{{ path('app_report_activity_hour') }}"><small class="text-body-secondary">{% trans %}Watch report{% endtrans %}</small></a>
+		</div>
+	    </div>
+	</div>
+    </div>
+{% endblock %}

@@ -10,15 +10,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $user = new User();
+	$flash = $translator->trans('User added successfully.');
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 	
@@ -34,6 +36,7 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_user_index');
         }
 

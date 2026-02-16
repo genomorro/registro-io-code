@@ -32,4 +32,31 @@ class StakeholderRepository extends ServiceEntityRepository
 
         return $query->getQuery();
     }
+
+    /**
+     * @return array
+     */
+    public function findAllCheckTimes(): array
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT s.checkInAt, s.checkOutAt FROM App\Entity\Stakeholder s'
+        )->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function findTodayCheckTimes(): array
+    {
+        $today = new \DateTime('today midnight');
+        $tomorrow = new \DateTime('tomorrow midnight');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT s.checkInAt, s.checkOutAt FROM App\Entity\Stakeholder s
+             WHERE s.checkInAt < :tomorrow AND (s.checkOutAt IS NULL OR s.checkOutAt >= :today)'
+        )
+        ->setParameter('today', $today)
+        ->setParameter('tomorrow', $tomorrow)
+        ->getResult();
+    }
 }

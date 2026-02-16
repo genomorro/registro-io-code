@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/appointment')]
 final class AppointmentController extends AbstractController
@@ -38,11 +39,12 @@ final class AppointmentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_appointment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $appointment = new Appointment();
+	$flash = $translator->trans('Appointment added successfully.');
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);
 
@@ -50,6 +52,7 @@ final class AppointmentController extends AbstractController
             $entityManager->persist($appointment);
             $entityManager->flush();
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -59,7 +62,7 @@ final class AppointmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Appointment $appointment): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -69,18 +72,20 @@ final class AppointmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $form = $this->createForm(AppointmentType::class, $appointment);
+	$flash = $translator->trans('Appointment updated successfully.');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
+	    $this->addFlash('primary', $flash);
+            return $this->redirectToRoute('app_appointment_show', ['id' => $appointment->getUuid()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('appointment/edit.html.twig', [
@@ -89,16 +94,18 @@ final class AppointmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
-    public function delete(Request $request, Appointment $appointment, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function delete(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+	$flash = $translator->trans('Appointment deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($appointment);
             $entityManager->flush();
         }
 
+	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
     }
 }

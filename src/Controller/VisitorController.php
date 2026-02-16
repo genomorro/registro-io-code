@@ -6,12 +6,14 @@ use App\Entity\Patient;
 use App\Entity\Visitor;
 use App\Form\VisitorType;
 use App\Repository\VisitorRepository;
+use App\Service\UuidEncoder;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/visitor')]
 final class VisitorController extends AbstractController
@@ -39,13 +41,17 @@ final class VisitorController extends AbstractController
     }
 
     #[Route('/new', name: 'app_visitor_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator, UuidEncoder $uuidEncoder): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $visitor = new Visitor();
+	$flash = $translator->trans('Visitor added successfully.');
         $patientId = $request->query->get('patientId');
         if ($patientId) {
+            if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $patientId)) {
+                $patientId = $uuidEncoder->decode($patientId);
+            }
             $patient = $entityManager->getRepository(Patient::class)->find($patientId);
             if ($patient) {
                 $visitor->addPatient($patient);
@@ -84,6 +90,7 @@ final class VisitorController extends AbstractController
 		$entityManager->flush();
             }
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -93,7 +100,7 @@ final class VisitorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_visitor_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_visitor_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Visitor $visitor): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -103,13 +110,14 @@ final class VisitorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_visitor_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_visitor_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function edit(Request $request, Visitor $visitor, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
         $originalCheckOutAt = $visitor->getCheckOutAt();
         $form = $this->createForm(VisitorType::class, $visitor);
+	$flash = $translator->trans('Visitor updated successfully.');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -120,7 +128,8 @@ final class VisitorController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
+	    $this->addFlash('primary', $flash);
+            return $this->redirectToRoute('app_visitor_show', ['id' => $visitor->getUuid()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('visitor/edit.html.twig', [
@@ -129,24 +138,27 @@ final class VisitorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_visitor_delete', methods: ['POST'])]
-    public function delete(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_visitor_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function delete(Request $request, Visitor $visitor, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+	$flash = $translator->trans('Visitor deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($visitor);
             $entityManager->flush();
         }
 
+	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_visitor_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/check-out', name: 'app_visitor_check_out', methods: ['POST'])]
-    public function checkOut(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/check-out', name: 'app_visitor_check_out', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function checkOut(Request $request, Visitor $visitor, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
 
+	$flash = $translator->trans('Visitor check out successfully.');
         if ($this->isCsrfTokenValid('checkout'.$visitor->getId(), $request->getPayload()->getString('_token'))) {
             $visitor->setCheckOutAt(new \DateTimeImmutable());
             $visitor->setCheckOutUser($this->getUser());
@@ -158,7 +170,7 @@ final class VisitorController extends AbstractController
 
         switch ($redirectRoute) {
             case 'app_visitor_show':
-                $routeParameters['id'] = $visitor->getId();
+                $routeParameters['id'] = $visitor->getUuid();
                 break;
             case 'app_search_check_index':
                 $routeParameters['tag'] = $request->query->get('tag');
@@ -168,6 +180,7 @@ final class VisitorController extends AbstractController
                 break;
         }
 
+	$this->addFlash('primary', $flash);
         return $this->redirectToRoute($redirectRoute, $routeParameters);
     }
 }

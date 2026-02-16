@@ -171,3 +171,6 @@ Error: Error
 'Please enter a valid week.': 'Please enter a valid week.'
 'Please enter a valid phone number.': '__Please enter a valid phone number.'
 'There is already a patient with this file': '__There is already a patient with this file'
+'Your password should be at least {{ limit }} characters': 'Your password should be at least {{ limit }} characters'
+'Please enter a password': 'Please enter a password'
+'There is already an account with this username': 'There is already an account with this username'

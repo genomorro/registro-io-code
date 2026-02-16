@@ -7,7 +7,7 @@
 	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
 	<li class="breadcrumb-item"><a href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholder{% endtrans %}</a></li>
-	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_stakeholder_new', {'id': stakeholder.id}) }}">{% trans %}New{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_stakeholder_new', {'id': stakeholder.uuid}) }}">{% trans %}New{% endtrans %}</a></li>
     </ol>
 
     <h1>{% trans %}Create new Stakeholder{% endtrans %}</h1>

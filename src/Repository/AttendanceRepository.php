@@ -71,4 +71,31 @@ class AttendanceRepository extends ServiceEntityRepository
 
         return $query->getQuery();
     }
+
+    /**
+     * @return array
+     */
+    public function findAllCheckTimes(): array
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT a.checkInAt, a.checkOutAt FROM App\Entity\Attendance a'
+        )->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function findTodayCheckTimes(): array
+    {
+        $today = new \DateTime('today midnight');
+        $tomorrow = new \DateTime('tomorrow midnight');
+
+        return $this->getEntityManager()->createQuery(
+            'SELECT a.checkInAt, a.checkOutAt FROM App\Entity\Attendance a
+             WHERE a.checkInAt < :tomorrow AND (a.checkOutAt IS NULL OR a.checkOutAt >= :today)'
+        )
+        ->setParameter('today', $today)
+        ->setParameter('tomorrow', $tomorrow)
+        ->getResult();
+    }
 }

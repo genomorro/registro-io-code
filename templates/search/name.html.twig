@@ -11,80 +11,133 @@
     </ol>
 
     <h1>{{ title }}</h1>
+    <hr class="red">
 
-    <h2>{% trans %}Patients{% endtrans %}</h2>
-    <table class="table">
-        <thead>
-            <tr>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <th>{% trans %}Id{% endtrans %}</th>
-		{% endif %}
-                <th>{% trans %}File{% endtrans %}</th>
-                <th>{% trans %}Name{% endtrans %}</th>
-                <th>{% trans %}actions{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for patient in patients %}
-            <tr>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <td>{{ patient.id }}</td>
-		{% endif %}
-                <td>{{ patient.file }}</td>
-                <td>{{ patient.name|title }}</td>
-                <td>
-                    <a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.id}) }}">{% trans %}Show{% endtrans %}</a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.id}) }}">{% trans %}Edit{% endtrans %}</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">{% trans %}no records found{% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
 
-    <h2>{% trans %}Visitors{% endtrans %}</h2>
-    <table class="table">
-        <thead>
-            <tr>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <th>{% trans %}Id{% endtrans %}</th>
-		{% endif %}
-                <th>{% trans %}Name{% endtrans %}</th>
-                <th>{% trans %}Tag{% endtrans %}</th>
-                <th>{% trans %}Check in{% endtrans %}</th>
-                <th>{% trans %}Check out{% endtrans %}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for visitor in visitors %}
-            <tr>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <td>{{ visitor.id }}</td>
-		{% endif %}
-                <td>{{ visitor.name|title }}</td>
-                <td>{{ visitor.tag }}</td>
-                <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    {% if visitor.checkOutAt is null %}
-                        <form method="post" action="{{ path('app_visitor_check_out', {'id': visitor.id, 'redirect_route': 'app_search_name_index', 'name': name}) }}" onsubmit="return confirm('{% trans %}Are you sure you want to check out?{% endtrans %}');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
-                            <button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
-                        </form>
-                    {% else %}
-                        {{ visitor.checkOutAt|date('Y-m-d H:i:s') }}
-                    {% endif %}
-                </td>
-            </tr>
+    <div>
+	<p>
+	    <ul class="nav nav-pills nav-fill flex-column flex-sm-row" id="nav-tab" role="tablist">
+		<li class="flex-sm-fill text-sm-center nav-link active" id="patient-tab" data-bs-toggle="tab" href="#patient" role="tab" aria-controls="patient" aria-selected="true">{% trans %}Patients{% endtrans %}</li>
+		<li class="flex-sm-fill text-sm-center nav-link" id="visitor-tab" data-bs-toggle="tab" href="#visitor" role="tab" aria-controls="visitor" aria-selected="false">{% trans %}Visitors{% endtrans %}</li>
+	    </ul>
+	</p>
+	<div class="tab-content" id="nav-tabContent">
+	    <div class="tab-pane fade show active" id="patient" role="tabpanel" aria-labelledby="patient-tab">
+		{# BEGIN: Patient table #}
+		<h2>{% trans %}Patients{% endtrans %}</h2>
+		<div class="table-responsive">
+		    <table class="table table-hover">
+			<thead>
+			    <tr>
+				{% if is_granted('ROLE_SUPER_ADMIN') %}
+				    <th>{% trans %}Id{% endtrans %}</th>
+				{% endif %}
+				<th>{% trans %}File{% endtrans %}</th>
+				<th>{% trans %}Name{% endtrans %}</th>
+				<th>{% trans %}actions{% endtrans %}</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    {% for patient in patients %}
+				<tr>
+				    {% if is_granted('ROLE_SUPER_ADMIN') %}
+					<td>{{ patient.id }}</td>
+				    {% endif %}
+				    <td>{{ patient.file }}</td>
+				    <td>{{ patient.name|title }}</td>
+				    <td>
+					<a class="btn btn-link" href="{{ path('app_patient_show', {'id': patient.uuid}) }}">{% trans %}Show{% endtrans %}</a>
+					{% if is_granted('ROLE_ADMIN') %}
+					    <a class="btn btn-secondary" href="{{ path('app_patient_edit', {'id': patient.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+					{% endif %}
+				    </td>
+				</tr>
         {% else %}
-            <tr>
-                <td colspan="5">{% trans %}no records found{% endtrans %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+				<tr>
+				    <td colspan="4">{% trans %}no records found{% endtrans %}</td>
+				</tr>
+			    {% endfor %}
+			</tbody>
+		    </table>
+		</div>
+		{# END: Patient table #}
+	    </div>
+	    <div class="tab-pane fade" id="visitor" role="tabpanel" aria-labelledby="visitor-tab">
+		{# BEGIN: Visitor table #}
+		<h2>{% trans %}Visitors{% endtrans %}</h2>
+		<div class="table-responsive">
+		    <table class="table table-hover">
+			<thead>
+			    <tr>
+				{% if is_granted('ROLE_SUPER_ADMIN') %}
+				    <th>{% trans %}Id{% endtrans %}</th>
+				{% endif %}
+				<th>{% trans %}Name{% endtrans %}</th>
+				<th>{% trans %}Tag{% endtrans %}</th>
+				<th>{% trans %}Check in{% endtrans %}</th>
+				<th>{% trans %}Check out{% endtrans %}</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    {% for visitor in visitors %}
+				<tr>
+				    {% if is_granted('ROLE_SUPER_ADMIN') %}
+					<td>{{ visitor.id }}</td>
+				    {% endif %}
+				    <td>{{ visitor.name|title }}</td>
+				    <td>{{ visitor.tag }}</td>
+				    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
+				    <td>
+					{% if visitor.checkOutAt is null %}
+					    <form method="post"
+						  action="{{ path('app_visitor_check_out', {'id': visitor.uuid, 'redirect_route': 'app_search_name_index', 'name': name}) }}"
+						  data-controller="modal-confirm"
+						  data-modal-confirm-message-value="{% trans %}Are you sure you want to check out?{% endtrans %}"
+						  data-modal-confirm-title-value="{% trans %}Check out{% endtrans %}"
+						  data-action="submit->modal-confirm#confirm">
+						<input type="hidden" name="_token" value="{{ csrf_token('checkout' ~ visitor.id) }}">
+						<button type="submit" class="btn btn-sm btn-danger">{% trans %}Check out{% endtrans %}</button>
+					    </form>
+					{% else %}
+					    {{ visitor.checkOutAt|date('Y-m-d H:i:s') }}
+					{% endif %}
+				    </td>
+				</tr>
+        {% else %}
+				<tr>
+				    <td colspan="5">{% trans %}no records found{% endtrans %}</td>
+				</tr>
+			    {% endfor %}
+			</tbody>
+		    </table>
+		</div>
+		{# END: Visitor table #}
+	    </div>
+	</div>
+    </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+		<div class="modal-header">
+		    <h5 class="modal-title" id="confirmModalLabel" data-default-title="{% trans %}Confirmation{% endtrans %}">{% trans %}Confirmation{% endtrans %}</h5>
+		    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		    <!-- Message will be injected here -->
+		</div>
+		<div class="modal-footer">
+		    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+		    <button type="button" class="btn btn-primary btn-confirm">{% trans %}Confirm{% endtrans %}</button>
+		</div>
+	    </div>
+	</div>
+    </div>
 {% endblock %}

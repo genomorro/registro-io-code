@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/hospitalized')]
 final class HospitalizedController extends AbstractController
@@ -38,11 +39,12 @@ final class HospitalizedController extends AbstractController
     }
 
     #[Route('/new', name: 'app_hospitalized_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 	
         $hospitalized = new Hospitalized();
+	$flash = $translator->trans('Patient hospitalized added successfully.');
         $form = $this->createForm(HospitalizedType::class, $hospitalized);
         $form->handleRequest($request);
 
@@ -50,6 +52,7 @@ final class HospitalizedController extends AbstractController
             $entityManager->persist($hospitalized);
             $entityManager->flush();
 
+	    $this->addFlash('success', $flash);
             return $this->redirectToRoute('app_hospitalized_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -59,7 +62,7 @@ final class HospitalizedController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_hospitalized_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_hospitalized_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Hospitalized $hospitalized): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_USER');
@@ -69,18 +72,20 @@ final class HospitalizedController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_hospitalized_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_hospitalized_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function edit(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 	
         $form = $this->createForm(HospitalizedType::class, $hospitalized);
+	$flash = $translator->trans('Hospitalized updated successfully.');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_hospitalized_index', [], Response::HTTP_SEE_OTHER);
+	    $this->addFlash('primary', $flash);
+            return $this->redirectToRoute('app_hospitalized_show', ['id' => $hospitalized->getUuid()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('hospitalized/edit.html.twig', [
@@ -89,16 +94,18 @@ final class HospitalizedController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_hospitalized_delete', methods: ['POST'])]
-    public function delete(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_hospitalized_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function delete(Request $request, Hospitalized $hospitalized, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 	
+	$flash = $translator->trans('Hospitalized deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$hospitalized->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($hospitalized);
             $entityManager->flush();
         }
 
+	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_hospitalized_index', [], Response::HTTP_SEE_OTHER);
     }
 }
