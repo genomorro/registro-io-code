@@ -26,10 +26,13 @@ class Stakeholder
     private ?int $tag = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $subject = null;
+    private ?string $company = null;
 
     #[ORM\Column(length: 255)]
     private ?string $destination = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $subject = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $checkInAt = null;
@@ -91,14 +94,14 @@ class Stakeholder
         return $this;
     }
 
-    public function getSubject(): ?string
+    public function getCompany(): ?string
     {
-        return $this->subject;
+        return $this->company;
     }
 
-    public function setSubject(string $subject): static
+    public function setCompany(string $company): static
     {
-        $this->subject = $subject;
+        $this->company = $company;
 
         return $this;
     }
@@ -111,6 +114,18 @@ class Stakeholder
     public function setDestination(string $destination): static
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(string $subject): static
+    {
+        $this->subject = $subject;
 
         return $this;
     }

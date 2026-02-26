@@ -64,15 +64,47 @@ class StakeholderType extends AbstractType
                 'data' => $dniOtherData,
             ])
             ->add('tag')
+	    ->add('company')
+            ->add('destination', ChoiceType::class, [
+		'placeholder' => 'Choose a destination',
+		'choices' => [
+		    'Adquisiciones' => 'Adquisiciones',
+		    'Almacen de víveres' => 'Almacen de víveres',
+		    'Almacen general' => 'Almacen general',
+		    'Bioterio' => 'Bioterio',
+		    'CIENI' => 'CIENI',
+		    'Comedor' => 'Comedor',
+		    'Consulta externa' => 'Consulta externa',
+		    'Empleo' => 'Empleo',
+		    'Farmacia de gratuidad' => 'Farmacia de gratuidad',
+		    'Farmacia hospitalaria' => 'Farmacia hospitalaria',
+		    'Jardín' => 'Jardín',
+		    'Obras' => 'Obras',
+		    'Patio de maniobras' => 'Patio de maniobras',
+		    'Torre de investigación' => 'Torre de investigación',
+		],
+		'tom_select_options' => [
+		    'plugins' => [
+			'remove_button' => true,
+			'clear_button' => false,
+		    ],
+		],
+		'autocomplete' => true,
+		'constraints' => [
+                    new NotBlank(),
+                ],
+	    ])
             ->add('subject', ChoiceType::class, [
 		'placeholder' => 'Choose a subject',
 		'choices' => [
 		    'Cultura' => 'Cultura',
-		    'Empleado' => 'Empleado',
+		    'Documentación' => 'Documentación',
+		    'Escuela' => 'Escuela',
+		    'Estudiante' => 'Estudiante',
+		    'Expositor' => 'Expositor',
 		    'Medio de comunicación' => 'Medio de comunicación',
-		    'ONG' => 'ONG',
-		    'Promotor' => 'Promotor',
 		    'Proveedor' => 'Proveedor',
+		    'Trabajo' => 'Trabajo',
 		],
 		'tom_select_options' => [
 		    'plugins' => [
@@ -81,20 +113,9 @@ class StakeholderType extends AbstractType
 		    ],
 		],
 		'autocomplete' => true,
-	    ])
-            ->add('destination', ChoiceType::class, [
-		'placeholder' => 'Choose a destination',
-		'choices' => [
-		    'Consulta Externa' => 'Consulta Externa',
-		    'Farmacia' => 'Farmacia',
-		],
-		'tom_select_options' => [
-		    'plugins' => [
-			'remove_button' => true,
-			'clear_button' => false,
-		    ],
-		],
-		'autocomplete' => true,
+		'constraints' => [
+                    new NotBlank(),
+                ],
 	    ])
 	    ->add('evidence', HiddenType::class)
 	    ->add('sign', HiddenType::class)
