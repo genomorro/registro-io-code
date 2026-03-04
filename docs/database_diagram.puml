@@ -1,0 +1,108 @@
+@startuml
+!theme plain
+hide circle
+skinparam linetype ortho
+
+entity "User" as user {
+  * id : integer <<PK>>
+  --
+  * username : string
+  * roles : json
+  * password : string
+  * name : string
+}
+
+entity "Patient" as patient {
+  * id : integer <<PK>>
+  --
+  * file : string
+  * name : string
+  * disability : boolean
+}
+
+entity "Hospitalized" as hospitalized {
+  * id : integer <<PK>>
+  --
+  * service : string
+  * bed : string
+  * patient_id : integer <<FK>>
+}
+
+entity "Appointment" as appointment {
+  * id : integer <<PK>>
+  --
+  * agenda : string
+  * specialty : string
+  * location : string
+  * date_at : datetime
+  * type : string
+  * status : string
+  * patient_id : integer <<FK>>
+}
+
+entity "Attendance" as attendance {
+  * id : integer <<PK>>
+  --
+  * check_in_at : datetime
+  check_out_at : datetime
+  * tag : integer
+  evidence : string
+  * patient_id : integer <<FK>>
+  * check_in_user_id : integer <<FK>>
+  check_out_user_id : integer <<FK>>
+}
+
+entity "Visitor" as visitor {
+  * id : integer <<PK>>
+  --
+  * name : string
+  phone : string
+  * dni : string
+  * tag : integer
+  * destination : string
+  * check_in_at : datetime
+  check_out_at : datetime
+  relationship : string
+  evidence : string
+  * check_in_user_id : integer <<FK>>
+  check_out_user_id : integer <<FK>>
+}
+
+entity "Stakeholder" as stakeholder {
+  * id : integer <<PK>>
+  --
+  * name : string
+  * dni : string
+  * tag : integer
+  * subject : string
+  * destination : string
+  * check_in_at : datetime
+  check_out_at : datetime
+  evidence : string
+  sign : string
+  * check_in_user_id : integer <<FK>>
+  check_out_user_id : integer <<FK>>
+}
+
+entity "visitor_patient" as visitor_patient {
+  * visitor_id : integer <<FK>>
+  * patient_id : integer <<FK>>
+}
+
+hospitalized ||--|| patient : "patient_id"
+patient ||--o{ appointment : "patient_id"
+patient ||--o{ attendance : "patient_id"
+
+visitor_patient }o--|| visitor
+visitor_patient }o--|| patient
+
+attendance }o--|| user : "check_in_user_id"
+attendance }o--o| user : "check_out_user_id"
+
+visitor }o--|| user : "check_in_user_id"
+visitor }o--o| user : "check_out_user_id"
+
+stakeholder }o--|| user : "check_in_user_id"
+stakeholder }o--o| user : "check_out_user_id"
+
+@enduml
