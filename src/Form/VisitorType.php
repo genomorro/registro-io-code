@@ -93,6 +93,7 @@ class VisitorType extends AbstractType
 		'placeholder' => 'Choose a destination',
 		'choices' => [
 		    'Consulta Externa' => 'Consulta Externa',
+		    'Consulta Externa Antigua' => 'Consulta Externa Antigua',
 		    'CIENI' => 'CIENI',
 		    'Clínica del Asma' => 'Clínica del Asma',
 		    'Clínica de EPOC' => 'Clínica de EPOC',
@@ -114,6 +115,7 @@ class VisitorType extends AbstractType
 			'Unidad de Terapia Intensiva Pediátrica' => 'Unidad de Terapia Intensiva Pediátrica',
 			'Servicio Clínico 8' => 'Servicio Clínico 8',
 			'Servicio Clínico 9' => 'Servicio Clínico 9',
+			'Servicio Clínico 10' => 'Servicio Clínico 10',
 			'Servicio Clínico 10 Postquirúrgicos' => 'Servicio Clínico 10 Postquirúrgicos',
 			'Servicio Clínico 10 Recuperación' => 'Servicio Clínico 10 Recuperación',
 		    ],
