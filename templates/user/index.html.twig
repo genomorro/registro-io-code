@@ -81,6 +81,10 @@
 	</table>
     </div>
 
+    <div class="navigation">
+        {{ knp_pagination_render(users) }}
+    </div>
+
     {% if is_granted('ROLE_ADMIN') %}
 	<a class="btn btn-primary" href="{{ path('app_register') }}">{% trans %}Create new{% endtrans %}</a>
     {% endif %}
