@@ -44,6 +44,7 @@
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Id'|trans, 'e.id') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Number'|trans, 'e.number') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Name'|trans, 'e.name') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(employees, 'Area'|trans, 'a.building') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -54,6 +55,13 @@
 			<td>{{ employee.number }}</td>
 			<td>{{ employee.name }}</td>
 			<td>
+			    {% if employee.area %}
+				<a href="{{ path('app_area_show', {'id': employee.area.uuid}) }}">
+				    {{ 'Building'|trans }} {{ employee.area.building }} - {{ employee.area.unit }}
+				</a>
+			    {% endif %}
+			</td>
+			<td>
 			    <a class="btn btn-link" href="{{ path('app_employee_show', {'id': employee.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
 				<a class="btn btn-secondary" href="{{ path('app_employee_edit', {'id': employee.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
@@ -62,7 +70,7 @@
 		    </tr>
         {% else %}
 		    <tr>
-			<td colspan="4">{% trans %}no records found{% endtrans %}</td>
+			<td colspan="5">{% trans %}no records found{% endtrans %}</td>
 		    </tr>
 		{% endfor %}
             </tbody>
