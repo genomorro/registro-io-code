@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Area index{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_area_index') }}">{% trans %}Area{% endtrans %}</a></li>
+    </ol>
+    
+    <h1>{% trans %}Area index{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
+    <div class="row">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
+	    <form class="w-100" method="get" action="{{ path('app_area_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by Unit{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">
+			<span class="icon-search" aria-hidden="true"></span>
+		    </button>
+		</div>
+	    </form>
+	</div>
+
+	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+	    Registros totales: {{ areas.getTotalItemCount }}
+	</div>
+    </div>
+
+    <div class="table-responsive">
+	<table class="table table-hover">
+	    <thead>
+		<tr>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<th scope="col">{{ knp_pagination_sortable(areas, 'Id'|trans, 'a.id') }}</th>
+		    {% endif %}
+		    <th scope="col">{{ knp_pagination_sortable(areas, 'Building'|trans, 'a.building') }}</th>
+		    <th scope="col">{{ knp_pagination_sortable(areas, 'Unit'|trans, 'a.unit') }}</th>
+		    <th scope="col">{{ knp_pagination_sortable(areas, 'Extension'|trans, 'a.extension') }}</th>
+		    <th scope="col">{% trans %}actions{% endtrans%}</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for area in areas %}
+		    <tr>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+			    <td>{{ area.id }}</td>
+			{% endif %}
+			<td>{{ area.building }}</td>
+			<td>{{ area.unit }}</td>
+			<td>{{ area.extension }}</td>
+			<td>
+			    <a class="btn btn-link" href="{{ path('app_area_show', {'id': area.uuid}) }}">{% trans %}Show{% endtrans %}</a>
+			    {% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a class="btn btn-secondary" href="{{ path('app_area_edit', {'id': area.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
+			</td>
+		    </tr>
+{% else %}
+		    <tr>
+			<td colspan="5">{% trans %}no records found{% endtrans %}</td>
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(areas) }}
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('app_area_new') }}">{% trans %}Create new{% endtrans %}</a>
+{% endblock %}

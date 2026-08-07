@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}New Employee{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_employee_index') }}">{% trans %}Employee{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_employee_new') }}">{% trans %}New{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Create new Employee{% endtrans %}</h1>
+    <hr class="red">
+
+    <div class="row">
+	{{ form_start(form) }}
+	    <div class="form-group">
+		{{ form_label(form.number) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.number) }}
+			<span class="text-danger">{{ form_errors(form.number) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.name) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.name) }}
+			<span class="text-danger">{{ form_errors(form.name) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    <div class="form-group">
+		{{ form_label(form.area) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.area) }}
+			<span class="text-danger">{{ form_errors(form.area) }}</span>
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div class="d-grid gap-2 d-md-block">
+		<button type="submit" value="Save" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+		<button type="reset" value="Reset" class="btn btn-secondary">{% trans %}Reset{% endtrans %}</button>
+		<a class="btn btn-link" href="{{ path('app_employee_index') }}" role="button">{% trans %}Back to list{% endtrans %}</a>
+	    </div>
+	{{ form_end(form) }}
+    </div>
+{% endblock %}

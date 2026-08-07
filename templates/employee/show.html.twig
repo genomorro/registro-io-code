@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Employee{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_employee_index') }}">{% trans %}Employee{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_employee_show', {'id': employee.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Employee{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
+    <div class="table-responsive">
+	<table class="table table-striped">
+            <tbody>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		    <tr>
+			<th>{% trans %}Id{% endtrans %}</th>
+			<td>{{ employee.id }}</td>
+		    </tr>
+		{% endif %}
+		<tr>
+                    <th>{% trans %}Number{% endtrans %}</th>
+                    <td>{{ employee.number }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <td>{{ employee.name }}</td>
+		</tr>
+            </tbody>
+	</table>
+    </div>
+
+    <div class="d-grid gap-2 d-md-block">
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+	    <a class="btn btn-primary" href="{{ path('app_employee_edit', {'id': employee.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
+	<a class="btn btn-link" href="{{ path('app_employee_index') }}">{% trans %}Back to list{% endtrans %}</a>
+    </div>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('employee/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Area{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}Area{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
+    <div class="table-responsive">
+	<table class="table table-striped">
+            <tbody>
+		<tr>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<th>{% trans %}Id{% endtrans %}</th>
+			<td>{{ area.id }}</td>
+		</tr>
+		    {% endif %}
+		    <tr>
+			<th>{% trans %}Building{% endtrans %}</th>
+			<td>{{ area.building }}</td>
+		    </tr>
+		    <tr>
+			<th>{% trans %}Unit{% endtrans %}</th>
+			<td>{{ area.unit }}</td>
+		    </tr>
+		    <tr>
+			<th>{% trans %}Extension{% endtrans %}</th>
+			<td>{{ area.extension }}</td>
+		    </tr>
+            </tbody>
+	</table>
+    </div>
+
+    <div class="d-grid gap-2 d-md-block">
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+	    <a class="btn btn-primary" href="{{ path('app_area_edit', {'id': area.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
+	<a class="btn btn-link" href="{{ path('app_area_index') }}">{% trans %}Back to list{% endtrans %}</a>
+    </div>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('area/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
+
+{% endblock %}
