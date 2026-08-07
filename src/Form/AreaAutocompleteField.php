@@ -28,7 +28,8 @@ class AreaAutocompleteField extends AbstractType
 	    'choice_label' => function(Area $area)
 	    {
 		return sprintf(
-		    '(%s) %s',
+		    '%s %s - %s',
+		    $this->translator->trans('Building'),
 		    $area->getBuilding(),
 		    $area->getUnit());
 	    },
