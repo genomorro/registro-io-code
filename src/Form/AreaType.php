@@ -24,7 +24,7 @@ class AreaType extends AbstractType
 		    'Edificio 9 (Servicio Clínico 1 y 2)' => '9',
 		    'Edificio 10 (Servicio Clínico 3 y 4)' => '10',
 		    'Edificio 11 (Servicio Clínico 5 y 6)' => '11',
-		    'Edificio 12 ' => '12',
+		    'Edificio 12' => '12',
 		    'Edificio 14' => '14',
 		    'Edificio 15' => '15',
 		    'Edificio 20' => '20',

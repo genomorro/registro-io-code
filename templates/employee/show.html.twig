@@ -31,12 +31,22 @@
 		    </tr>
 		{% endif %}
 		<tr>
-                    <th>{% trans %}Number{% endtrans %}</th>
+                    <th>{% trans %}Work Number{% endtrans %}</th>
                     <td>{{ employee.number }}</td>
 		</tr>
 		<tr>
                     <th>{% trans %}Name{% endtrans %}</th>
                     <td>{{ employee.name }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Area{% endtrans %}</th>
+                    <td>
+			{% if employee.area %}
+			    <a href="{{ path('app_area_show', {'id': employee.area.uuid}) }}">
+				{{ 'Building'|trans }} {{ employee.area.building }} - {{ employee.area.unit }}
+			    </a>
+			{% endif %}
+                    </td>
 		</tr>
             </tbody>
 	</table>

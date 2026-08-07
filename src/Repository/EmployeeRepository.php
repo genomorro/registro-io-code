@@ -48,6 +48,8 @@ class EmployeeRepository extends ServiceEntityRepository
     public function paginateEmployee(string $filter = null): Query
     {
 	$query = $this->createQueryBuilder('e')
+		      ->leftJoin('e.area', 'a')
+		      ->addSelect('a')
 		      ->orderBy('e.id', 'ASC');
 
 	if ($filter) {

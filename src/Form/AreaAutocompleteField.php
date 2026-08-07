@@ -28,14 +28,15 @@ class AreaAutocompleteField extends AbstractType
 	    'choice_label' => function(Area $area)
 	    {
 		return sprintf(
-		    '(%s) %s',
+		    '%s %s - %s',
+		    $this->translator->trans('Building'),
 		    $area->getBuilding(),
 		    $area->getUnit());
 	    },
 	    'searchable_fields' => ['building', 'unit'],
 	    'extra_options' => [],
 	    'tom_select_options' => [
-		'placeholder' => $this->translator->trans('Choose a Area'),
+		'placeholder' => $this->translator->trans('Choose an Area'),
 		'plugins' => [
 		    'remove_button'=> true,
 		    'clear_button' => false,

@@ -16,7 +16,7 @@ class EmployeeType extends AbstractType
     {
         $builder
             ->add('number', null, [
-		'label' => 'Worker number',
+		'label' => 'Work Number',
 		'constraints' => [
 		    new NotBlank(),
 		]

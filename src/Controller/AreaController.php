@@ -37,7 +37,7 @@ final class AreaController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $area = new Area();
-	$flash = $translator->trans('Area added successfully');
+	$flash = $translator->trans('Area added successfully.');
         $form = $this->createForm(AreaType::class, $area);
         $form->handleRequest($request);
 

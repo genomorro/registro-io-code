@@ -24,7 +24,7 @@
 	<div class="col-12 col-md-6 d-flex justify-content-start">
 	    <form class="w-100" method="get" action="{{ path('app_employee_index') }}">
 		<div class="input-group mb-3">
-		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by Name or Number{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by Name or Work Number{% endtrans %}" value="{{ app.request.query.get('filter') }}">
 		    <button class="btn btn-sm btn-info" type="submit">
 			<span class="icon-search" aria-hidden="true"></span>
 		    </button>
@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
-	    Registros totales: {{ employees.getTotalItemCount }}
+	    {% trans %}Total Records{% endtrans %}: {{ employees.getTotalItemCount }}
 	</div>
     </div>
 
@@ -42,8 +42,9 @@
             <thead>
 		<tr>
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Id'|trans, 'e.id') }}</th>
-                    <th scope="col">{{ knp_pagination_sortable(employees, 'Number'|trans, 'e.number') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(employees, 'Work Number'|trans, 'e.number') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Name'|trans, 'e.name') }}</th>
+		    <th scope="col">{{ knp_pagination_sortable(employees, 'Area'|trans, 'a.building') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -54,6 +55,9 @@
 			<td>{{ employee.number }}</td>
 			<td>{{ employee.name }}</td>
 			<td>
+			    {{ 'Building'|trans }} {{ employee.area.building }} - {{ employee.area.unit }}
+			</td>
+			<td>
 			    <a class="btn btn-link" href="{{ path('app_employee_show', {'id': employee.uuid}) }}">{% trans %}Show{% endtrans %}</a>
 			    {% if is_granted('ROLE_SUPER_ADMIN') %}
 				<a class="btn btn-secondary" href="{{ path('app_employee_edit', {'id': employee.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
@@ -62,7 +66,7 @@
 		    </tr>
         {% else %}
 		    <tr>
-			<td colspan="4">{% trans %}no records found{% endtrans %}</td>
+			<td colspan="5">{% trans %}no records found{% endtrans %}</td>
 		    </tr>
 		{% endfor %}
             </tbody>

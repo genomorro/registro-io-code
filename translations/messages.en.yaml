@@ -4,10 +4,18 @@
 'Appointment added successfully.': 'Appointment added successfully.'
 'Appointment updated successfully.': 'Appointment updated successfully.'
 'Appointment deleted successfully.': 'Appointment deleted successfully.'
+### AreaController.php
+'Area updated successfully.': 'Area updated successfully.'
+'Area added successfully.': 'Area added successfully.'
+'Area deleted successfully.': 'Area deleted successfully.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Attendance added successfully.'
 'Attendance updated successfully.': 'Attendance updated successfully.'
 'Attendance deleted successfully.': 'Attendance deleted successfully.'
+### EmployeeController.php
+'Employee added successfully.': 'Employee added successfully.'
+'Employee updated successfully.': 'Employee updated successfully.'
+'Employee deleted successfully.': 'Employee deleted successfully.'
 ### HospitalizedController.php
 'Patient hospitalized added successfully.': 'Patient hospitalized added successfully.'
 'Hospitalized updated successfully.': 'Hospitalized updated successfully.'
@@ -103,6 +111,8 @@ session:
 'Attendances': 'Attendances'
 'Visitors': 'Visitors'
 'Stakeholders': 'Stakeholders'
+'Areas': 'Areas'
+'Employees': 'Employees'
 'Reports': 'Reports'
 'Language': 'Language'
 'es': 'Español'
@@ -138,6 +148,7 @@ session:
 'Begin': 'Begin'
 ### index.html.twig
 'Search by Name, Agenda or Date': 'Search by Name, Agenda or Date'
+'Total Records': 'Total Records'
 'Id': 'Id'
 'actions': 'actions'
 'Appointment index': 'Appointment index'
@@ -158,6 +169,36 @@ session:
 'Appointment': 'Appointment'
 'Patient name': 'Patient name'
 'Patient file': 'Patient file'
+## area
+### edit.html.twig
+'Edit Area': 'Edit Area'
+'Area': 'Area'
+'Building': 'Building'
+'Choose a building': 'Choose a building'
+'Edificio 3 (Consulta externa antigua)': 'Edificio 3 (Consulta externa antigua)'
+'Edificio 5': 'Edificio 5'
+'Edificio 9 (Servicio Clínico 1 y 2)': 'Edificio 9 (Servicio Clínico 1 y 2)'
+'Edificio 10 (Servicio Clínico 3 y 4)': 'Edificio 10 (Servicio Clínico 3 y 4)'
+'Edificio 11 (Servicio Clínico 5 y 6)': 'Edificio 11 (Servicio Clínico 5 y 6)'
+'Edificio 12': 'Edificio 12'
+'Edificio 14': 'Edificio 14'
+'Edificio 15': 'Edificio 15'
+'Edificio 20': 'Edificio 20'
+'Edificio 21': 'Edificio 21'
+'Edificio 25': 'Edificio 25'
+'Edificio 26 (Consulta externa)': 'Edificio 26 (Consulta externa)'
+'Edificio 27 (Unidad de Urgencias)': 'Edificio 27 (Unidad de Urgencias)'
+'Edificio 28 (Laboratorios)': 'Edificio 28 (Laboratorios)'
+'Edificio 37': 'Edificio 37'
+'Edificio 40 (Anexo de consulta externa)': 'Edificio 40 (Anexo de consulta externa)'
+'Unit': 'Unit'
+'Extension': 'Extension'
+### index.html.twig
+'Area index': 'Area index'
+'Search by Unit': 'Search by Unit'
+### new.html.twig
+'New Area': 'New Area'
+'Create new Area': 'Create new Area'
 ## attendance
 ### edit.html.twig
 'Edit Attendance': 'Edit Attendance'
@@ -188,6 +229,19 @@ session:
 ### new.html.twig
 'New Hospitalized': 'New Hospitalized'
 'Create new Hospitalized': 'Create new Hospitalized'
+## employee
+### edit.html.twig
+'Choose an Area': 'Choose an Area'
+'Edit Employee': 'Edit Employee'
+'Employee': 'Employee'
+'Work number': 'Work number'
+### index.html.twig
+'Employee index': 'Employee index'
+'Search by Name or Work Number': 'Search by Name or Work Number'
+'Work Number': 'Work Number'
+### new.html.twig
+'New Employee': 'New Employee'
+'Create new Employee': 'Create new Employee'
 ## patient
 ### edit.html.twig
 'File': 'File'
