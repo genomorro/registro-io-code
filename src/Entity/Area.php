@@ -108,4 +108,9 @@ class Area
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->unit ? sprintf('%s - %s', $this->building, $this->unit) : $this->building;
+    }
 }

@@ -28,8 +28,9 @@ class Stakeholder
     #[ORM\Column(length: 255)]
     private ?string $company = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $destination = null;
+    #[ORM\ManyToOne(targetEntity: Area::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Area $destination = null;
 
     #[ORM\Column(length: 255)]
     private ?string $subject = null;
@@ -106,12 +107,12 @@ class Stakeholder
         return $this;
     }
 
-    public function getDestination(): ?string
+    public function getDestination(): ?Area
     {
         return $this->destination;
     }
 
-    public function setDestination(string $destination): static
+    public function setDestination(?Area $destination): static
     {
         $this->destination = $destination;
 

@@ -23,10 +23,11 @@ class StakeholderRepository extends ServiceEntityRepository
     public function paginateStakeholder(string $filter = null): Query
     {
         $query = $this->createQueryBuilder('s')
+                      ->leftJoin('s.destination', 'd')
 		      ->orderBy('s.id', 'ASC');
 
         if ($filter) {
-            $query->andWhere('s.name LIKE :filter OR s.tag LIKE :filter')
+            $query->andWhere('s.name LIKE :filter OR s.tag LIKE :filter OR d.building LIKE :filter OR d.unit LIKE :filter')
                   ->setParameter('filter', '%' . $filter . '%');
         }
 

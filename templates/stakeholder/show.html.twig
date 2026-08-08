@@ -50,7 +50,9 @@
 			</tr>
 			<tr>
 			    <th>{% trans %}Destination{% endtrans %}</th>
-			    <td class="text-wrap">{{ stakeholder.destination }}</td>
+			    <td class="text-wrap">
+				<a class="link-underline-light" href="{{ path('app_area_show', {'id': stakeholder.destination.uuid}) }}">{{ stakeholder.destination }}</a>
+			    </td>
 			</tr>
 			<tr>
 			    <th>{% trans %}Subject{% endtrans %}</th>

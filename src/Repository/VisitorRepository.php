@@ -71,10 +71,11 @@ class VisitorRepository extends ServiceEntityRepository
     public function paginateVisitor(string $filter = null): Query
     {
         $query = $this->createQueryBuilder('v')
+                      ->leftJoin('v.destination', 'd')
 		      ->orderBy('v.id', 'ASC');
 
         if ($filter) {
-            $query->andWhere('v.name LIKE :filter OR v.tag LIKE :filter')
+            $query->andWhere('v.name LIKE :filter OR v.tag LIKE :filter OR d.building LIKE :filter OR d.unit LIKE :filter')
                   ->setParameter('filter', '%' . $filter . '%');
         }
 
