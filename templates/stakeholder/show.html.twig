@@ -54,6 +54,14 @@
 				<a class="link-underline-light" href="{{ path('app_area_show', {'id': stakeholder.destination.uuid}) }}">{{ stakeholder.destination }}</a>
 			    </td>
 			</tr>
+			{% if stakeholder.host %}
+			<tr>
+			    <th>{% trans %}Host{% endtrans %}</th>
+			    <td>
+				<a class="link-underline-light" href="{{ path('app_employee_show', {'id': stakeholder.host.uuid}) }}">{{ stakeholder.host.name }}</a>
+			    </td>
+			</tr>
+			{% endif %}
 			<tr>
 			    <th>{% trans %}Subject{% endtrans %}</th>
 			    <td class="text-wrap">{{ stakeholder.subject }}</td>

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Stakeholder;
 use App\Form\AreaAutocompleteField;
+use App\Form\EmployeeAutocompleteField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -69,6 +70,12 @@ class StakeholderType extends AbstractType
             ->add('destination', AreaAutocompleteField::class, [
 		'label' => 'Destination',
 	    ])
+            ->add('host', EmployeeAutocompleteField::class, [
+                'label' => 'Host',
+                'extra_options' => [
+                    'required' => false,
+                ],
+            ])
             ->add('subject', ChoiceType::class, [
 		'placeholder' => 'Choose a subject',
 		'choices' => [
