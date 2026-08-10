@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Stakeholder;
+use App\Form\AreaAutocompleteField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -65,34 +66,8 @@ class StakeholderType extends AbstractType
             ])
             ->add('tag')
 	    ->add('company')
-            ->add('destination', ChoiceType::class, [
-		'placeholder' => 'Choose a destination',
-		'choices' => [
-		    'Adquisiciones' => 'Adquisiciones',
-		    'Almacen de víveres' => 'Almacen de víveres',
-		    'Almacen general' => 'Almacen general',
-		    'Bioterio' => 'Bioterio',
-		    'CIENI' => 'CIENI',
-		    'Comedor' => 'Comedor',
-		    'Consulta externa' => 'Consulta externa',
-		    'Empleo' => 'Empleo',
-		    'Farmacia de gratuidad' => 'Farmacia de gratuidad',
-		    'Farmacia hospitalaria' => 'Farmacia hospitalaria',
-		    'Jardín' => 'Jardín',
-		    'Obras' => 'Obras',
-		    'Patio de maniobras' => 'Patio de maniobras',
-		    'Torre de investigación' => 'Torre de investigación',
-		],
-		'tom_select_options' => [
-		    'plugins' => [
-			'remove_button' => true,
-			'clear_button' => false,
-		    ],
-		],
-		'autocomplete' => true,
-		'constraints' => [
-                    new NotBlank(),
-                ],
+            ->add('destination', AreaAutocompleteField::class, [
+		'label' => 'Destination',
 	    ])
             ->add('subject', ChoiceType::class, [
 		'placeholder' => 'Choose a subject',

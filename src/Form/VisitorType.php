@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Patient;
 use App\Entity\Visitor;
+use App\Form\AreaAutocompleteField;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -88,48 +89,8 @@ class VisitorType extends AbstractType
                     new LessThanOrEqual(9999),
                 ],
             ])
-            ->add('destination', ChoiceType::class, [
+            ->add('destination', AreaAutocompleteField::class, [
 		'label' => 'Destination',
-		'placeholder' => 'Choose a destination',
-		'choices' => [
-		    'Consulta Externa' => 'Consulta Externa',
-		    'Consulta Externa Antigua' => 'Consulta Externa Antigua',
-		    'CIENI' => 'CIENI',
-		    'Clínica del Asma' => 'Clínica del Asma',
-		    'Clínica de EPOC' => 'Clínica de EPOC',
-		    'Unidad de Urgencias Respiratorias' => 'Unidad de Urgencias Respiratorias',
-		    'Hospitalización' => [
-			'Servicio Clínico 1' => 'Servicio Clínico 1',
-			'Servicio Clínico 2' => 'Servicio Clínico 2',
-			'Servicio Clínico 3' => 'Servicio Clínico 3',
-			'Servicio Clínico 4' => 'Servicio Clínico 4',
-			'Servicio Clínico 5' => 'Servicio Clínico 5',
-			'Hospital de día' => 'Hospital de día',
-			'Unidad de Terapia Intermedia' => 'Unidad de Terapia Intermedia',
-			'Nefrología' => 'Nefrología',
-			'Oncología' => 'Oncología',
-			'Broncoscopia Intervencionista' => 'Broncoscopia Intervencionista',
-			'Broncoscopia' => 'Broncoscopia',
-			'Servicio Clínico 7' => 'Servicio Clínico 7',
-			'Neumología Pediátrica Ambulatoria' => 'Neumología Pediátrica Ambulatoria',
-			'Unidad de Terapia Intensiva Pediátrica' => 'Unidad de Terapia Intensiva Pediátrica',
-			'Servicio Clínico 8' => 'Servicio Clínico 8',
-			'Servicio Clínico 9' => 'Servicio Clínico 9',
-			'Servicio Clínico 10' => 'Servicio Clínico 10',
-			'Servicio Clínico 10 Postquirúrgicos' => 'Servicio Clínico 10 Postquirúrgicos',
-			'Servicio Clínico 10 Recuperación' => 'Servicio Clínico 10 Recuperación',
-		    ],
-		],
-		'tom_select_options' => [
-		    'plugins' => [
-			'remove_button' => true,
-			'clear_button' => false,
-		    ],
-		],
-		'autocomplete' => true,
-		'constraints' => [
-                    new NotBlank(),
-                ],
 	    ])
             ->add('relationship', ChoiceType::class, [
 		'label' => 'Relationship',

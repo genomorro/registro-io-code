@@ -101,11 +101,16 @@ class Area
     {
         if ($this->employees->removeElement($employee)) {
             // set the owning side to null (unless already changed)
-            if ($employee->getAreaId() === $this) {
-                $employee->setAreaId(null);
+            if ($employee->getArea() === $this) {
+                $employee->setArea(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->unit ? sprintf('%s - %s', $this->building, $this->unit) : $this->building;
     }
 }

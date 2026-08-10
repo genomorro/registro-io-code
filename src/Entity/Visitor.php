@@ -30,8 +30,9 @@ class Visitor
     #[ORM\Column]
     private ?int $tag = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $destination = null;
+    #[ORM\ManyToOne(targetEntity: Area::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Area $destination = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $checkInAt = null;
@@ -57,6 +58,9 @@ class Visitor
 
     #[ORM\ManyToOne(inversedBy: 'visitorsCheckOut')]
     private ?User $checkOutUser = null;
+
+    #[ORM\ManyToOne(inversedBy: 'visitors')]
+    private ?Employee $host = null;
 
     public function __construct()
     {
@@ -116,12 +120,12 @@ class Visitor
         return $this;
     }
 
-    public function getDestination(): ?string
+    public function getDestination(): ?Area
     {
         return $this->destination;
     }
 
-    public function setDestination(string $destination): static
+    public function setDestination(?Area $destination): static
     {
         $this->destination = $destination;
 
@@ -220,6 +224,18 @@ class Visitor
     public function setCheckOutUser(?User $checkOutUser): static
     {
         $this->checkOutUser = $checkOutUser;
+
+        return $this;
+    }
+
+    public function getHost(): ?Employee
+    {
+        return $this->host;
+    }
+
+    public function setHost(?Employee $host): static
+    {
+        $this->host = $host;
 
         return $this;
     }

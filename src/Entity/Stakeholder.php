@@ -28,8 +28,9 @@ class Stakeholder
     #[ORM\Column(length: 255)]
     private ?string $company = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $destination = null;
+    #[ORM\ManyToOne(targetEntity: Area::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Area $destination = null;
 
     #[ORM\Column(length: 255)]
     private ?string $subject = null;
@@ -52,6 +53,9 @@ class Stakeholder
 
     #[ORM\ManyToOne(inversedBy: 'stakeholdersCheckOut')]
     private ?User $checkOutUser = null;
+
+    #[ORM\ManyToOne(inversedBy: 'stakeholders')]
+    private ?Employee $host = null;
 
     public function getId(): ?int
     {
@@ -106,12 +110,12 @@ class Stakeholder
         return $this;
     }
 
-    public function getDestination(): ?string
+    public function getDestination(): ?Area
     {
         return $this->destination;
     }
 
-    public function setDestination(string $destination): static
+    public function setDestination(?Area $destination): static
     {
         $this->destination = $destination;
 
@@ -198,6 +202,18 @@ class Stakeholder
     public function setCheckOutUser(?User $checkOutUser): static
     {
         $this->checkOutUser = $checkOutUser;
+
+        return $this;
+    }
+
+    public function getHost(): ?Employee
+    {
+        return $this->host;
+    }
+
+    public function setHost(?Employee $host): static
+    {
+        $this->host = $host;
 
         return $this;
     }

@@ -50,7 +50,9 @@
 			</tr>
 			<tr>
 			    <th>{% trans %}Destination{% endtrans %}</th>
-			    <td>{{ visitor.destination }}</td>
+			    <td>
+				<a class="link-underline-light" href="{{ path('app_area_show', {'id': visitor.destination.uuid}) }}">{{ visitor.destination }}</a>
+			    </td>
 			</tr>
 			<tr>
 			    <th>{% trans %}Check in{% endtrans %}</th>
