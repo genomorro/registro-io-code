@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Area;
 use App\Form\AreaType;
 use App\Repository\AreaRepository;
+use App\Repository\EmployeeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,10 +57,20 @@ final class AreaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_area_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function show(Area $area): Response
+    public function show(Area $area, EmployeeRepository $employeeRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $filter = $request->query->get('filter');
+        $query = $employeeRepository->paginateEmployeesByArea($area, $filter);
+
+        $employees = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('area/show.html.twig', [
             'area' => $area,
+            'employees' => $employees,
         ]);
     }
 

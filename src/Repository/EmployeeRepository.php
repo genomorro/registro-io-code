@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Area;
 use App\Entity\Employee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -58,5 +59,23 @@ class EmployeeRepository extends ServiceEntityRepository
 	}
 
 	return $query->getQuery();
+    }
+
+    /**
+     * @return Query
+     */
+    public function paginateEmployeesByArea(Area $area, ?string $filter = null): Query
+    {
+        $query = $this->createQueryBuilder('e')
+                      ->andWhere('e.area = :area')
+                      ->setParameter('area', $area)
+                      ->orderBy('e.id', 'ASC');
+
+        if ($filter !== null && $filter !== '') {
+            $query->andWhere('e.number LIKE :filter OR e.name LIKE :filter')
+                  ->setParameter('filter', '%' . $filter . '%');
+        }
+
+        return $query->getQuery();
     }
 }
