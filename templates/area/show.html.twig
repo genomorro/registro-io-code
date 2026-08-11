@@ -39,6 +39,62 @@
 	</table>
     </div>
 
+    <h2>{% trans %}Employees{% endtrans %}</h2>
+    <hr class="red">
+
+    <div class="row">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
+	    <form class="w-100" method="get" action="{{ path('app_area_show', {'id': area.uuid}) }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by Name or Work Number{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">
+			<span class="icon-search" aria-hidden="true"></span>
+		    </button>
+		</div>
+	    </form>
+	</div>
+
+	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+	    {% trans %}Total Records{% endtrans %}: {{ employees.getTotalItemCount }}
+	</div>
+    </div>
+
+    <div class="table-responsive">
+	<table class="table table-hover table-striped">
+            <thead>
+		<tr>
+                    <th scope="col">{{ knp_pagination_sortable(employees, 'Work Number'|trans, 'e.number') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(employees, 'Name'|trans, 'e.name') }}</th>
+                    <th>{% trans %}actions{% endtrans %}</th>
+		</tr>
+            </thead>
+            <tbody>
+		{% for employee in employees %}
+		    <tr>
+			<td>
+			    <a href="{{ path('app_employee_show', {'id': employee.uuid}) }}">{{ employee.number }}</a>
+			</td>
+			<td>{{ employee.name }}</td>
+			<td>
+			    <a class="btn btn-link" href="{{ path('app_employee_show', {'id': employee.uuid}) }}">{% trans %}Show{% endtrans %}</a>
+			    {% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a class="btn btn-secondary" href="{{ path('app_employee_edit', {'id': employee.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+			    {% endif %}
+			</td>
+		    </tr>
+                {% else %}
+		    <tr>
+			<td colspan="3">{% trans %}no records found{% endtrans %}</td>
+		    </tr>
+		{% endfor %}
+            </tbody>
+	</table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(employees) }}
+    </div>
+
     <div class="d-grid gap-2 d-md-block">
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
 	    <a class="btn btn-primary" href="{{ path('app_area_edit', {'id': area.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
