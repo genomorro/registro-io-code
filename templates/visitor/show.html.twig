@@ -54,6 +54,14 @@
 				<a class="link-underline-light" href="{{ path('app_area_show', {'id': visitor.destination.uuid}) }}">{{ visitor.destination }}</a>
 			    </td>
 			</tr>
+			{% if visitor.host %}
+			<tr>
+			    <th>{% trans %}Host{% endtrans %}</th>
+			    <td>
+				<a class="link-underline-light" href="{{ path('app_employee_show', {'id': visitor.host.uuid}) }}">{{ visitor.host.name }}</a>
+			    </td>
+			</tr>
+			{% endif %}
 			<tr>
 			    <th>{% trans %}Check in{% endtrans %}</th>
 			    <td>{{ visitor.checkInAt ? visitor.checkInAt|date('Y-m-d H:i:s') : '' }}</td>

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Patient;
 use App\Entity\Visitor;
 use App\Form\AreaAutocompleteField;
+use App\Form\EmployeeAutocompleteField;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -92,6 +93,12 @@ class VisitorType extends AbstractType
             ->add('destination', AreaAutocompleteField::class, [
 		'label' => 'Destination',
 	    ])
+            ->add('host', EmployeeAutocompleteField::class, [
+                'label' => 'Host',
+                'extra_options' => [
+                    'required' => false,
+                ],
+            ])
             ->add('relationship', ChoiceType::class, [
 		'label' => 'Relationship',
 		'placeholder' => 'Choose a relationship',
