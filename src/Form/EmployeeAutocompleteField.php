@@ -27,6 +27,11 @@ class EmployeeAutocompleteField extends AbstractType
             'class' => Employee::class,
             'choice_label' => 'name',
             'searchable_fields' => ['name'],
+            'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
+                return $er->createQueryBuilder('e')
+                    ->andWhere('e.active = :active')
+                    ->setParameter('active', true);
+            },
             'extra_options' => [],
             'tom_select_options' => [
                 'placeholder' => $this->translator->trans('Choose an Employee'),
