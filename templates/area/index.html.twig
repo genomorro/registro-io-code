@@ -61,7 +61,7 @@
 			<td>{{ area.extension }}</td>
 			<td>
 			    <a class="btn btn-link" href="{{ path('app_area_show', {'id': area.uuid}) }}">{% trans %}Show{% endtrans %}</a>
-			    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			    {% if is_granted('ROLE_ADMIN') %}
 				<a class="btn btn-secondary" href="{{ path('app_area_edit', {'id': area.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
 			    {% endif %}
 			</td>
@@ -79,5 +79,7 @@
         {{ knp_pagination_render(areas) }}
     </div>
 
-    <a class="btn btn-primary" href="{{ path('app_area_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% if is_granted('ROLE_ADMIN') %}
+	<a class="btn btn-primary" href="{{ path('app_area_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% endif %}
 {% endblock %}

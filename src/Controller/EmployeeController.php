@@ -19,6 +19,8 @@ final class EmployeeController extends AbstractController
     #[Route(name: 'app_employee_index', methods: ['GET'])]
     public function index(EmployeeRepository $employeeRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
 	$filter = $request->query->get('filter');
 	$query = $employeeRepository->paginateEmployee($filter);
 
@@ -36,6 +38,8 @@ final class EmployeeController extends AbstractController
     #[Route('/new', name: 'app_employee_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $employee = new Employee();
 	$flash = $translator->trans('Employee added successfully.');
         $form = $this->createForm(EmployeeType::class, $employee);
@@ -58,6 +62,8 @@ final class EmployeeController extends AbstractController
     #[Route('/{id}', name: 'app_employee_show', methods: ['GET'])]
     public function show(Employee $employee): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('employee/show.html.twig', [
             'employee' => $employee,
         ]);
@@ -66,6 +72,8 @@ final class EmployeeController extends AbstractController
     #[Route('/{id}/edit', name: 'app_employee_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Employee $employee, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(EmployeeType::class, $employee);
 	$flash = $translator->trans('Employee updated successfully.');
         $form->handleRequest($request);
@@ -86,6 +94,8 @@ final class EmployeeController extends AbstractController
     #[Route('/{id}', name: 'app_employee_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Employee $employee, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
 	$flash = $translator->trans('Employee deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$employee->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($employee);

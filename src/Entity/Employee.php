@@ -40,6 +40,9 @@ class Employee
     #[ORM\OneToMany(targetEntity: Stakeholder::class, mappedBy: 'host')]
     private Collection $stakeholders;
 
+    #[ORM\Column]
+    private ?bool $active = null;
+
     public function __construct()
     {
         $this->visitors = new ArrayCollection();
@@ -150,5 +153,17 @@ class Employee
     public function __toString(): string
     {
         return $this->name ?? '';
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
     }
 }

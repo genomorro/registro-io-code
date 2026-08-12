@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Area;
 use App\Form\AreaType;
 use App\Repository\AreaRepository;
+use App\Repository\EmployeeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,8 @@ final class AreaController extends AbstractController
     #[Route(name: 'app_area_index', methods: ['GET'])]
     public function index(AreaRepository $areaRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
 	$filter = $request->query->get('filter');
         $query = $areaRepository->paginateArea($filter);
 
@@ -36,6 +39,8 @@ final class AreaController extends AbstractController
     #[Route('/new', name: 'app_area_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $area = new Area();
 	$flash = $translator->trans('Area added successfully.');
         $form = $this->createForm(AreaType::class, $area);
@@ -56,16 +61,30 @@ final class AreaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_area_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
-    public function show(Area $area): Response
+    public function show(Area $area, EmployeeRepository $employeeRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $filter = $request->query->get('filter');
+        $query = $employeeRepository->paginateEmployeesByArea($area, $filter);
+
+        $employees = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('area/show.html.twig', [
             'area' => $area,
+            'employees' => $employees,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_area_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Area $area, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(AreaType::class, $area);
 	$flash = $translator->trans('Area updated successfully.');
         $form->handleRequest($request);
@@ -86,6 +105,8 @@ final class AreaController extends AbstractController
     #[Route('/{id}', name: 'app_area_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Area $area, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
 	$flash = $translator->trans('Area deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$area->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($area);

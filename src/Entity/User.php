@@ -77,6 +77,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Stakeholder::class, mappedBy: 'checkOutUser')]
     private Collection $stakeholdersCheckOut;
 
+    #[ORM\Column]
+    private ?bool $active = null;
+
     public function __construct()
     {
         $this->attendancesCheckIn = new ArrayCollection();
@@ -356,6 +359,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $stakeholdersCheckOut->setCheckOutUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }

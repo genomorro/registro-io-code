@@ -45,6 +45,7 @@
                     <th scope="col">{{ knp_pagination_sortable(users, 'Name'|trans, 'u.name') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(users, 'Username'|trans, 'u.username') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(users, 'Roles'|trans, 'u.roles') }}</th>
+                    <th scope="col">{{ knp_pagination_sortable(users, 'Active'|trans, 'u.active') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
             </thead>
@@ -61,6 +62,13 @@
 				{% trans %}Admin{% endtrans %}
 			    {% else %}
 				{% trans %}User{% endtrans %}
+			    {% endif %}
+			</td>
+			<td>
+			    {% if user.active == 1 %}
+				{% trans %}Yes{% endtrans %}
+			    {% else %}
+				{% trans %}No{% endtrans %}
 			    {% endif %}
 			</td>
 			<td>

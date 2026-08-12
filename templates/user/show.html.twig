@@ -48,6 +48,16 @@
 			{% endif %}
 		    </td>
 		</tr>
+		<tr>
+		    <th>{% trans %}Activo{% endtrans %}</th>
+		    <td>
+			{% if user.active == 1 %}
+			    {% trans %}Yes{% endtrans %}
+			{% else %}
+			    {% trans %}No{% endtrans %}
+			{% endif %}
+		    </td>
+		</tr>
             </tbody>
 	</table>
     </div>

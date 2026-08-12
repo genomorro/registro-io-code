@@ -102,14 +102,20 @@ class RegistrationFormType extends AbstractType
 	    ]);
 	}
 
-	$builder->add('plainPassword', RepeatedType::class, [
-	    'type' => PasswordType::class,
-	    'first_options'  => ['label' => 'Password', 'hash_property_path' => 'password'],
-	    'second_options' => ['label' => 'Repeat Password'],
-	    'mapped' => false,
-	    'required' => !$options['is_edit'],
-	    'constraints' => $passwordConstraints,
-	]);
+	$builder
+	    ->add('plainPassword', RepeatedType::class, [
+		'type' => PasswordType::class,
+		'first_options'  => ['label' => 'Password', 'hash_property_path' => 'password'],
+		'second_options' => ['label' => 'Repeat Password'],
+		'mapped' => false,
+		'required' => !$options['is_edit'],
+		'constraints' => $passwordConstraints,
+	    ])
+	    ->add('active', CheckboxType::class, [
+		'label' => 'Is active?',
+		'required' => false,
+            ])
+	;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
