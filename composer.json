@@ -14,7 +14,6 @@
         "dragonmantank/cron-expression": "^3.6",
         "firebase/php-jwt": "^7.1",
         "knplabs/knp-paginator-bundle": "^6.10",
-        "koolreport/core": "^6.6",
         "nucleos/dompdf-bundle": "^4.5",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpstan/phpdoc-parser": "^2.3",
