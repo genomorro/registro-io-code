@@ -56,29 +56,6 @@
 			<a class="nav-link" href="{{ path('app_stakeholder_index') }}">{% trans %}Stakeholders{% endtrans %}</a>
 		    </li>
 		{% endif %}
-		{% if is_granted('ROLE_ADMIN') %}
-		    <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle"
-			   href="#"
-			   id="userDropdown"
-			   role="button"
-			   data-bs-toggle="dropdown"
-			   aria-expanded="false">
-			    {% trans %}Admin{% endtrans %}
-			</a>
-			<ul class="dropdown-menu" aria-labelledby="userDropdown">
-			    <li>
-				<a class="dropdown-item" href="{{ path('app_area_index') }}">{% trans %}Areas{% endtrans %}</a>
-			    </li>
-			    <li>
-				<a class="dropdown-item" href="{{ path('app_employee_index') }}">{% trans %}Employees{% endtrans %}</a>
-			    </li>
-			    <li>
-				<a class="dropdown-item" href="{{ path('app_report_index') }}">{% trans %}Reports{% endtrans %}</a>
-			    </li>
-			</ul>
-		    </li>
-		{% endif %}
 	    </ul>
 	    <hr>
 	    <ul class="navbar-nav ms-auto w-100 justify-content-end">
@@ -115,6 +92,10 @@
 			{% if is_granted('ROLE_ADMIN') %}
 			    <li><hr class="dropdown-divider"></li>
 			    <li><a class="dropdown-item" href="{{ path('app_user_index') }}">{% trans %}User index{% endtrans %}</a></li>
+			    <li><a class="dropdown-item" href="{{ path('app_area_index') }}">{% trans %}Areas{% endtrans %}</a></li>
+			    <li><a class="dropdown-item" href="{{ path('app_employee_index') }}">{% trans %}Employees{% endtrans %}</a></li>
+			    <li><a class="dropdown-item" href="{{ path('app_report_index') }}">{% trans %}Reports{% endtrans %}</a></li>
+
 			{% endif %}
 		    </ul>
 		</li>
