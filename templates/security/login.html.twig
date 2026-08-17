@@ -35,7 +35,33 @@
 		<label for="password">{% trans %}Password{% endtrans %}</label>
 		<div class="row">
 		    <div class="col-md-6">
-			<input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+			<div class="input-group input-group-merge form-password-toggle">
+			    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+			    <span class="input-group-text cursor-pointer"
+				  role="button"
+				  tabindex="0"
+				  aria-label="Show password"
+				  onclick="
+				    const input = this.previousElementSibling;
+				    if (input && input.type === 'password') {
+				      input.type = 'text';
+				      this.classList.add('is-password-visible');
+				      this.setAttribute('aria-label', 'Hide password');
+				    } else if (input) {
+				      input.type = 'password';
+				      this.classList.remove('is-password-visible');
+				      this.setAttribute('aria-label', 'Show password');
+				    }
+				  "
+				  onkeydown="
+				    if (event.key === 'Enter' || event.key === ' ') {
+				      event.preventDefault();
+				      this.click();
+				    }
+				  ">
+				  <span class="password-toggle-text">{% trans %}Show/Hide{% endtrans %}</span>
+			    </span>
+			</div>
 		    </div>
 		</div>
 	    </div>
