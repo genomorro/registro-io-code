@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Trait\HasUuidTrait;
 use App\Repository\StakeholderRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StakeholderRepository::class)]
@@ -56,6 +57,9 @@ class Stakeholder
 
     #[ORM\ManyToOne(inversedBy: 'stakeholders')]
     private ?Employee $host = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
 
     public function getId(): ?int
     {
@@ -214,6 +218,18 @@ class Stakeholder
     public function setHost(?Employee $host): static
     {
         $this->host = $host;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): static
+    {
+        $this->comment = $comment;
 
         return $this;
     }

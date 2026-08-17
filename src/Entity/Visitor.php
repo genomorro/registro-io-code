@@ -6,6 +6,7 @@ use App\Entity\Trait\HasUuidTrait;
 use App\Repository\VisitorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
@@ -61,6 +62,9 @@ class Visitor
 
     #[ORM\ManyToOne(inversedBy: 'visitors')]
     private ?Employee $host = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
 
     public function __construct()
     {
@@ -236,6 +240,18 @@ class Visitor
     public function setHost(?Employee $host): static
     {
         $this->host = $host;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): static
+    {
+        $this->comment = $comment;
 
         return $this;
     }

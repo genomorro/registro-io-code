@@ -108,6 +108,15 @@
 			    </div>
 			</div>
 		    </div>
+		    <div class="form-group">
+			{{ form_label(form.comment) }}:
+			<div class="row">
+			    <div class="col-md">
+				{{ form_widget(form.comment) }}
+				<span class="text-danger">{{ form_errors(form.comment) }}</span>
+			    </div>
+			</div>
+		    </div>
 		</div>    
 		<div class="col-md-6 d-flex align-items-center justify-content-center flex-column">
 		    <video data-webrtc-target="video" class="border img-fluid w-50" poster="{{ asset('images/iner-logo.png') }}" autoplay></video>

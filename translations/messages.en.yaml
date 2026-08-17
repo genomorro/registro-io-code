@@ -331,6 +331,7 @@ report:
 'Evidence': 'Evidence'
 'Signature': 'Signature'
 'Subject': 'Subject'
+'Comment': 'Comment'
 ### index.html.twig
 'Stakeholder index': 'Stakeholder index'
 ### new.html.twig

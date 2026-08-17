@@ -114,6 +114,14 @@
 				</td>
 			    </tr>
 			{% endif %}
+			{% if visitor.comment is not null %}
+			    <tr>
+				<th>{% trans %}Comment{% endtrans %}</th>
+				<td>
+				    {{ visitor.comment }}
+				</td>
+			    </tr>
+			{% endif %}
 		    </tbody>
 		</table>
 	    </div>

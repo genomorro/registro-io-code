@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -99,6 +100,7 @@ class StakeholderType extends AbstractType
                     new NotBlank(),
                 ],
 	    ])
+	    ->add('comment', TextareaType::class)
 	    ->add('evidence', HiddenType::class)
 	    ->add('sign', HiddenType::class)
         ;

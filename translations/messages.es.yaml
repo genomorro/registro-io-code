@@ -330,6 +330,7 @@ report:
 'Evidence': 'Evidencia'
 'Signature': 'Firma'
 'Subject': 'Asunto'
+'Comment': 'Observaciones'
 ### index.html.twig
 'Stakeholder index': 'Índice de involucrados'
 ### new.html.twig
