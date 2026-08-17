@@ -47,7 +47,7 @@ class PatientRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginatePatient(string $filter = null): Query
+    public function paginatePatient(?string $filter = null): Query
     {
         $today = new \DateTime('today midnight');
         $tomorrow = new \DateTime('tomorrow midnight');

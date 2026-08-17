@@ -45,7 +45,7 @@ class AreaRepository extends ServiceEntityRepository
     /**
      * @retun Query
      */
-    public function paginateArea(string $filter = null): Query
+    public function paginateArea(?string $filter = null): Query
     {
 	$query = $this->createQueryBuilder('a')
 		      ->orderBy('a.id', 'ASC');

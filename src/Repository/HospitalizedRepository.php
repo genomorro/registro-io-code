@@ -34,7 +34,7 @@ class HospitalizedRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginateHospitalized(string $filter = null): Query
+    public function paginateHospitalized(?string $filter = null): Query
     {
         $query = $this->createQueryBuilder('h')
 		      ->join('h.patient', 'p')
