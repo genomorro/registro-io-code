@@ -46,7 +46,7 @@ class EmployeeRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginateEmployee(string $filter = null): Query
+    public function paginateEmployee(?string $filter = null): Query
     {
 	$query = $this->createQueryBuilder('e')
 		      ->leftJoin('e.area', 'a')

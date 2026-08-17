@@ -20,7 +20,7 @@ class StakeholderRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginateStakeholder(string $filter = null): Query
+    public function paginateStakeholder(?string $filter = null): Query
     {
         $query = $this->createQueryBuilder('s')
                       ->leftJoin('s.destination', 'd')
