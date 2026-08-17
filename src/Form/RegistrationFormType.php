@@ -105,7 +105,7 @@ class RegistrationFormType extends AbstractType
 	$builder
 	    ->add('plainPassword', RepeatedType::class, [
 		'type' => PasswordType::class,
-		'first_options'  => ['label' => 'Password', 'hash_property_path' => 'password'],
+		'first_options'  => ['label' => 'Password'],
 		'second_options' => ['label' => 'Repeat Password'],
 		'mapped' => false,
 		'required' => !$options['is_edit'],
