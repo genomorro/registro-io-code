@@ -16,4 +16,5 @@ return [
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Nucleos\DompdfBundle\NucleosDompdfBundle::class => ['all' => true],
+    Nowo\PasswordToggleBundle\NowoPasswordToggleBundle::class => ['all' => true],
 ];

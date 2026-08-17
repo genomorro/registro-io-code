@@ -1033,7 +1033,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *     },
  *     string?: bool|array{
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *     },
  *     commonmark?: array{
  *         renderer?: array{ // Array of options for rendering HTML.
@@ -1572,6 +1572,19 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type NucleosDompdfConfig = array{
  *     defaults?: array<string, scalar|Param|null>,
  * }
+ * @psalm-type NowoPasswordToggleConfig = array{
+ *     toggle?: bool|Param, // Enable/disable toggle functionality by default // Default: true
+ *     visible_icon?: scalar|Param|null, // Icon when password is hidden (default) // Default: "tabler:eye-off"
+ *     hidden_icon?: scalar|Param|null, // Icon when password is visible (default) // Default: "tabler:eye"
+ *     visible_label?: scalar|Param|null, // Label when password is hidden (default) // Default: "Show"
+ *     hidden_label?: scalar|Param|null, // Label when password is visible (default) // Default: "Hide"
+ *     button_classes?: list<scalar|Param|null>,
+ *     toggle_container_classes?: list<scalar|Param|null>,
+ *     use_toggle_form_theme?: bool|Param, // Use the bundle's form theme for rendering (default) // Default: true
+ *     always_empty?: bool|Param, // Always render empty value (default) // Default: true
+ *     trim?: bool|Param, // Trim whitespace (default) // Default: false
+ *     invalid_message?: scalar|Param|null, // Invalid message (default) // Default: "The password is invalid."
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1587,6 +1600,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     monolog?: MonologConfig,
  *     knp_paginator?: KnpPaginatorConfig,
  *     nucleos_dompdf?: NucleosDompdfConfig,
+ *     nowo_password_toggle?: NowoPasswordToggleConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1605,6 +1619,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         maker?: MakerConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         nucleos_dompdf?: NucleosDompdfConfig,
+ *         nowo_password_toggle?: NowoPasswordToggleConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1621,6 +1636,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         nucleos_dompdf?: NucleosDompdfConfig,
+ *         nowo_password_toggle?: NowoPasswordToggleConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1638,6 +1654,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         nucleos_dompdf?: NucleosDompdfConfig,
+ *         nowo_password_toggle?: NowoPasswordToggleConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
