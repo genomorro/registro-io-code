@@ -68,7 +68,7 @@ class VisitorRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginateVisitor(string $filter = null): Query
+    public function paginateVisitor(?string $filter = null): Query
     {
         $query = $this->createQueryBuilder('v')
                       ->leftJoin('v.destination', 'd')

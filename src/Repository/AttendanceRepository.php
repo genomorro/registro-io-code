@@ -57,7 +57,7 @@ class AttendanceRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginateAttendance(string $filter = null): Query
+    public function paginateAttendance(?string $filter = null): Query
     {
         $query = $this->createQueryBuilder('a')
 		      ->join('a.patient', 'p')

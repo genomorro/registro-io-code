@@ -58,7 +58,7 @@ class AppointmentRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function paginateAppointment(string $filter = null): Query
+    public function paginateAppointment(?string $filter = null): Query
     {
         $query = $this->createQueryBuilder('a')
 		      ->join('a.patient', 'p')
