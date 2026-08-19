@@ -234,8 +234,10 @@ session:
 'Choose an Area': 'Choose an Area'
 'Edit Employee': 'Edit Employee'
 'Employee': 'Employee'
+'Is active?': 'Is active?'
 'Work number': 'Work number'
 ### index.html.twig
+'Active': 'Active'
 'Employee index': 'Employee index'
 'Search by Name or Work Number': 'Search by Name or Work Number'
 'Work Number': 'Work Number'
