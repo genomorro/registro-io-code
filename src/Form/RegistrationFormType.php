@@ -105,8 +105,14 @@ class RegistrationFormType extends AbstractType
 	$builder
 	    ->add('plainPassword', RepeatedType::class, [
 		'type' => PasswordType::class,
-		'first_options'  => ['label' => 'Password'],
-		'second_options' => ['label' => 'Repeat Password'],
+		'first_options'  => [
+		    'label' => 'Password',
+		    'attr' => ['class' => 'form-control'],
+		],
+		'second_options' => [
+		    'label' => 'Repeat Password',
+		    'attr' => ['class' => 'form-control'],
+		],
 		'mapped' => false,
 		'required' => !$options['is_edit'],
 		'constraints' => $passwordConstraints,

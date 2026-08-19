@@ -36,3 +36,33 @@ main nav.navbar, main a.navbar-brand {
     text-align: center;
 }
 /* END: Menu */
+
+/* BEGIN: Password Toggle */
+.form-password-toggle {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    position: relative;
+    width: 100%;
+}
+
+.form-password-toggle input,
+.form-password-toggle input.form-control {
+    flex: 1 1 auto !important;
+    width: 1% !important;
+    min-width: 0 !important;
+    display: block !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.form-password-toggle .input-group-text {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    padding: 0.375rem 0.75rem;
+}
+/* END: Password Toggle */
