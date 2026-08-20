@@ -16,12 +16,12 @@
          data-metabase-instance-url-value="https://accesos.iner.gob.mx/metabase"
          data-metabase-is-guest-value="true"
          data-metabase-preset-value="light">
-        <h3 class="mb-3">{% trans %}Metabase Dashboard{% endtrans %}</h3>
+        <h3 class="mb-3">{% trans %}Report Dashboard{% endtrans %}</h3>
         {% if metabaseToken is not empty %}
             <metabase-dashboard token="{{ metabaseToken }}" with-title="true" with-downloads="true"></metabase-dashboard>
         {% else %}
             <div class="alert alert-danger" role="alert">
-                {% trans %}Error: Could not generate Metabase token.{% endtrans %}
+                {% trans %}Error: Could not generate token.{% endtrans %}
             </div>
         {% endif %}
     </div>
