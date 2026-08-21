@@ -8,6 +8,7 @@
 'Area updated successfully.': 'Area updated successfully.'
 'Area added successfully.': 'Area added successfully.'
 'Area deleted successfully.': 'Area deleted successfully.'
+'Cannot delete area because it is associated with stakeholders, visitors or employees.': 'Cannot delete area because it is associated with stakeholders, visitors or employees.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Attendance added successfully.'
 'Attendance updated successfully.': 'Attendance updated successfully.'
@@ -16,6 +17,7 @@
 'Employee added successfully.': 'Employee added successfully.'
 'Employee updated successfully.': 'Employee updated successfully.'
 'Employee deleted successfully.': 'Employee deleted successfully.'
+'Cannot delete employee because it is associated with visitors or stakeholders.': 'Cannot delete employee because it is associated with visitors or stakeholders.'
 ### HospitalizedController.php
 'Patient hospitalized added successfully.': 'Patient hospitalized added successfully.'
 'Hospitalized updated successfully.': 'Hospitalized updated successfully.'
@@ -24,6 +26,7 @@
 'Patient added successfully.': 'Patient added successfully.'
 'Patient updated successfully.': 'Patient updated successfully.'
 'Patient deleted successfully.': 'Patient deleted successfully.'
+'Cannot delete patient because it is associated with appointments, attendances or visitors.': 'Cannot delete patient because it is associated with appointments, attendances or visitors.'
 'A numeric tag is required to check in.': 'A numeric tag is required to check in.'
 'Patient check in successfully.': 'Patient check in successfully.'
 'Patient check out successfully.': 'Patient check out successfully.'
@@ -41,6 +44,7 @@
 ### UserController.php
 'User updated successfully.': 'User updated successfully.'
 'User deleted successfully.': 'User deleted successfully.'
+'Cannot delete user because it is associated with attendances, stakeholders or visitors.': 'Cannot delete user because it is associated with attendances, stakeholders or visitors.'
 ### VisitorController.php
 'Visitor added successfully.': 'Visitor added successfully.'
 'Visitor updated successfully.': 'Visitor updated successfully.'

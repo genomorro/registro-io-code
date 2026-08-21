@@ -1,0 +1,140 @@
+@startuml database_diagram
+!define table(x) class x << (T,#FFAAAA) >>
+hide methods
+hide stereotypes
+
+entity "user" as user {
+  * id : INTEGER <<PK>>
+  --
+  * username : VARCHAR(180) <<UNIQUE>>
+  * roles : JSON
+  * password : VARCHAR(255)
+  * name : VARCHAR(255)
+  * active : BOOLEAN
+}
+
+entity "area" as area {
+  * id : INTEGER <<PK>>
+  --
+  * building : VARCHAR(255)
+  unit : VARCHAR(255)
+  extension : INTEGER
+}
+
+entity "employee" as employee {
+  * id : INTEGER <<PK>>
+  --
+  * number : INTEGER
+  * name : VARCHAR(255)
+  * area_id : INTEGER <<FK>>
+  * active : BOOLEAN
+}
+
+entity "patient" as patient {
+  * id : INTEGER <<PK>>
+  --
+  * file : VARCHAR(12) <<UNIQUE>>
+  * name : VARCHAR(255)
+  * disability : BOOLEAN
+}
+
+entity "appointment" as appointment {
+  * id : INTEGER <<PK>>
+  --
+  * agenda : VARCHAR(255)
+  * specialty : VARCHAR(255)
+  * location : VARCHAR(255)
+  * date_at : DATETIME
+  * type : VARCHAR(255)
+  * status : VARCHAR(255)
+  * patient_id : INTEGER <<FK>>
+}
+
+entity "attendance" as attendance {
+  * id : INTEGER <<PK>>
+  --
+  * check_in_at : DATETIME
+  check_out_at : DATETIME
+  * tag : INTEGER
+  evidence : VARCHAR(255)
+  * patient_id : INTEGER <<FK>>
+  * check_in_user_id : INTEGER <<FK>>
+  check_out_user_id : INTEGER <<FK>>
+}
+
+entity "visitor" as visitor {
+  * id : INTEGER <<PK>>
+  --
+  * name : VARCHAR(255)
+  phone : VARCHAR(255)
+  * dni : VARCHAR(255)
+  * tag : INTEGER
+  * destination_id : INTEGER <<FK>>
+  * check_in_at : DATETIME
+  check_out_at : DATETIME
+  relationship : VARCHAR(255)
+  evidence : VARCHAR(255)
+  * check_in_user_id : INTEGER <<FK>>
+  check_out_user_id : INTEGER <<FK>>
+  host_id : INTEGER <<FK>>
+  comment : TEXT
+}
+
+entity "visitor_patient" as visitor_patient {
+  * visitor_id : INTEGER <<PK, FK>>
+  * patient_id : INTEGER <<PK, FK>>
+}
+
+entity "stakeholder" as stakeholder {
+  * id : INTEGER <<PK>>
+  --
+  * name : VARCHAR(255)
+  * dni : VARCHAR(255)
+  * tag : INTEGER
+  * company : VARCHAR(255)
+  * destination_id : INTEGER <<FK>>
+  * subject : VARCHAR(255)
+  * check_in_at : DATETIME
+  check_out_at : DATETIME
+  evidence : VARCHAR(255)
+  sign : VARCHAR(255)
+  * check_in_user_id : INTEGER <<FK>>
+  check_out_user_id : INTEGER <<FK>>
+  host_id : INTEGER <<FK>>
+  comment : TEXT
+}
+
+entity "hospitalized" as hospitalized {
+  * id : INTEGER <<PK>>
+  --
+  * service : VARCHAR(255)
+  * bed : VARCHAR(255)
+  * patient_id : INTEGER <<PK, FK, UNIQUE>>
+}
+
+' Relationships
+
+area ||--o{ employee : "has"
+area ||--o{ visitor : "destination"
+area ||--o{ stakeholder : "destination"
+
+employee ||--o{ visitor : "hosts"
+employee ||--o{ stakeholder : "hosts"
+
+patient ||--o{ appointment : "has"
+patient ||--o{ attendance : "has"
+patient ||--|| hospitalized : "is"
+
+patient }|--|{ visitor_patient
+visitor }|--|{ visitor_patient
+
+user ||--o{ attendance : "checks in"
+user ||--o{ attendance : "checks out"
+
+user ||--o{ visitor : "checks in"
+user ||--o{ visitor : "checks out"
+
+user ||--o{ stakeholder : "checks in"
+user ||--o{ stakeholder : "checks out"
+
+@enduml

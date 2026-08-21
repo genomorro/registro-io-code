@@ -33,9 +33,23 @@ class Area
     #[ORM\OneToMany(targetEntity: Employee::class, mappedBy: 'area')]
     private Collection $employees;
 
+    /**
+     * @var Collection<int, Visitor>
+     */
+    #[ORM\OneToMany(targetEntity: Visitor::class, mappedBy: 'destination')]
+    private Collection $visitors;
+
+    /**
+     * @var Collection<int, Stakeholder>
+     */
+    #[ORM\OneToMany(targetEntity: Stakeholder::class, mappedBy: 'destination')]
+    private Collection $stakeholders;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
+        $this->visitors = new ArrayCollection();
+        $this->stakeholders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,6 +121,22 @@ class Area
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Visitor>
+     */
+    public function getVisitors(): Collection
+    {
+        return $this->visitors;
+    }
+
+    /**
+     * @return Collection<int, Stakeholder>
+     */
+    public function getStakeholders(): Collection
+    {
+        return $this->stakeholders;
     }
 
     public function __toString(): string
