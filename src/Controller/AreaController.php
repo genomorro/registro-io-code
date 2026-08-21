@@ -107,13 +107,18 @@ final class AreaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+        if (!$area->getEmployees()->isEmpty() || !$area->getVisitors()->isEmpty() || !$area->getStakeholders()->isEmpty()) {
+            $this->addFlash('danger', $translator->trans('Cannot delete area because it is associated with stakeholders, visitors or employees.'));
+            return $this->redirectToRoute('app_area_index', [], Response::HTTP_SEE_OTHER);
+        }
+
 	$flash = $translator->trans('Area deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$area->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($area);
             $entityManager->flush();
+            $this->addFlash('danger', $flash);
         }
 
-	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_area_index', [], Response::HTTP_SEE_OTHER);
     }
 }

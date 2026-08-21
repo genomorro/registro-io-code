@@ -8,6 +8,7 @@
 'Area updated successfully.': 'Área actualizada exitosamente.'
 'Area added successfully.': 'Área agregada exitosamente.'
 'Area deleted successfully.': 'Área borrada exitosamente.'
+'Cannot delete area because it is associated with stakeholders, visitors or employees.': 'No se puede borrar el área porque está asociada a involucrados, visitantes o empleados.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Asistencia agregada exitosamente.'
 'Attendance updated successfully.': 'Asistencia actualizada exitosamente.'
@@ -16,6 +17,7 @@
 'Employee added successfully.': 'Empleado agregado exitosamente.'
 'Employee updated successfully.': 'Empleado actualizado exitosamente.'
 'Employee deleted successfully.': 'Empleado borrado exitosamente.'
+'Cannot delete employee because it is associated with visitors or stakeholders.': 'No se puede borrar el empleado porque está asociado a visitantes o involucrados.'
 ### HospitalizedController.php
 'Patient hospitalized added successfully.': 'Paciente hospitalizado agregado exitosamente.'
 'Hospitalized updated successfully.': 'Paciente hospitalizado actualizado exitosamente.'
@@ -24,6 +26,7 @@
 'Patient added successfully.': 'Paciente agregado exitosamente.'
 'Patient updated successfully.': 'Paciente actualizado exitosamente.'
 'Patient deleted successfully.': 'Paciente borrado exitosamente.'
+'Cannot delete patient because it is associated with appointments, attendances or visitors.': 'No se puede borrar el paciente porque está asociado a citas, asistencias o visitantes.'
 'A numeric tag is required to check in.': 'Se requiere el número de gafete para el registro.'
 'Patient check in successfully.': 'Entrada de paciente registrada exitosamente.'
 'Patient check out successfully.': 'Salida de paciente registrada exitosamente.'
@@ -41,6 +44,7 @@
 ### UserController.php
 'User updated successfully.': 'Usuario actualizado exitosamente.'
 'User deleted successfully.': 'Usuario borrado exitosamente.'
+'Cannot delete user because it is associated with attendances, stakeholders or visitors.': 'No se puede borrar el usuario porque está asociado a asistencias, involucrados o visitantes.'
 ### VisitorController.php
 'Visitor added successfully.': 'Visitante agregado exitosamente.'
 'Visitor updated successfully.': 'Visitante actualizado exitosamente.'

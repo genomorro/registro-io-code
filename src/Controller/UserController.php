@@ -95,13 +95,25 @@ final class UserController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+        if (
+            !$user->getAttendancesCheckIn()->isEmpty() ||
+            !$user->getAttendancesCheckOut()->isEmpty() ||
+            !$user->getVisitorsCheckIn()->isEmpty() ||
+            !$user->getVisitorsCheckOut()->isEmpty() ||
+            !$user->getStakeholdersCheckIn()->isEmpty() ||
+            !$user->getStakeholdersCheckOut()->isEmpty()
+        ) {
+            $this->addFlash('danger', $translator->trans('Cannot delete user because it is associated with attendances, stakeholders or visitors.'));
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
 	$flash = $translator->trans('User deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
+            $this->addFlash('danger', $flash);
         }
 
-	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }

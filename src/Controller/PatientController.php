@@ -119,13 +119,18 @@ final class PatientController extends AbstractController
     {
 	$this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+        if (!$patient->getAppointments()->isEmpty() || !$patient->getAttendances()->isEmpty() || !$patient->getVisitors()->isEmpty()) {
+            $this->addFlash('danger', $translator->trans('Cannot delete patient because it is associated with appointments, attendances or visitors.'));
+            return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
+        }
+
 	$flash = $translator->trans('Patient deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$patient->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($patient);
             $entityManager->flush();
+            $this->addFlash('danger', $flash);
         }
 
-	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
     }
 
