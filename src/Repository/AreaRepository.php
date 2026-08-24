@@ -18,7 +18,7 @@ class AreaRepository extends ServiceEntityRepository
     }
 
     /**
-     * @retun Query
+     * @return Query
      */
     public function paginateArea(?string $filter = null): Query
     {

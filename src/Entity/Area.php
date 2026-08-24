@@ -45,11 +45,18 @@ class Area
     #[ORM\OneToMany(targetEntity: Stakeholder::class, mappedBy: 'destination')]
     private Collection $stakeholders;
 
+    /**
+     * @var Collection<int, Scheduled>
+     */
+    #[ORM\OneToMany(targetEntity: Scheduled::class, mappedBy: 'area')]
+    private Collection $scheduleds;
+
     public function __construct()
     {
         $this->employees = new ArrayCollection();
         $this->visitors = new ArrayCollection();
         $this->stakeholders = new ArrayCollection();
+        $this->scheduleds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,5 +149,35 @@ class Area
     public function __toString(): string
     {
         return $this->unit ? sprintf('%s - %s', $this->building, $this->unit) : $this->building;
+    }
+
+    /**
+     * @return Collection<int, Scheduled>
+     */
+    public function getScheduleds(): Collection
+    {
+        return $this->scheduleds;
+    }
+
+    public function addScheduled(Scheduled $scheduled): static
+    {
+        if (!$this->scheduleds->contains($scheduled)) {
+            $this->scheduleds->add($scheduled);
+            $scheduled->setArea($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduled(Scheduled $scheduled): static
+    {
+        if ($this->scheduleds->removeElement($scheduled)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduled->getArea() === $this) {
+                $scheduled->setArea(null);
+            }
+        }
+
+        return $this;
     }
 }
