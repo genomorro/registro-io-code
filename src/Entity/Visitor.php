@@ -31,7 +31,7 @@ class Visitor
     #[ORM\Column]
     private ?int $tag = null;
 
-    #[ORM\ManyToOne(targetEntity: Area::class)]
+    #[ORM\ManyToOne(targetEntity: Area::class, inversedBy: 'visitors')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Area $destination = null;
 

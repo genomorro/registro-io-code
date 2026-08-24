@@ -29,7 +29,7 @@ class Stakeholder
     #[ORM\Column(length: 255)]
     private ?string $company = null;
 
-    #[ORM\ManyToOne(targetEntity: Area::class)]
+    #[ORM\ManyToOne(targetEntity: Area::class, inversedBy: 'stakeholders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Area $destination = null;
 

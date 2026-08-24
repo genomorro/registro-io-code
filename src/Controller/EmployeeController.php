@@ -96,13 +96,18 @@ final class EmployeeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+        if (!$employee->getVisitors()->isEmpty() || !$employee->getStakeholders()->isEmpty()) {
+            $this->addFlash('danger', $translator->trans('Cannot delete employee because it is associated with visitors or stakeholders.'));
+            return $this->redirectToRoute('app_employee_index', [], Response::HTTP_SEE_OTHER);
+        }
+
 	$flash = $translator->trans('Employee deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$employee->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($employee);
             $entityManager->flush();
+            $this->addFlash('danger', $flash);
         }
 
-	$this->addFlash('danger', $flash);
         return $this->redirectToRoute('app_employee_index', [], Response::HTTP_SEE_OTHER);
     }
 }
