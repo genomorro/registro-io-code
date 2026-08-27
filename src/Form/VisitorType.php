@@ -142,18 +142,21 @@ class VisitorType extends AbstractType
 		    'label' => 'Check in',
                     'widget' => 'single_text',
                     'data' => new \DateTimeImmutable(),
+		    'time_label' => 'Starts On',
                 ]);
             } else {
                 // Existing visitor
                 $form->add('checkInAt', DateTimeType::class, [
 		    'label' => 'Check in',
                     'widget' => 'single_text',
+		    'time_label' => 'Starts On',
                 ]);
 
                 $checkOutOptions = [
 		    'label' => 'Check out',
                     'widget' => 'single_text',
                     'required' => false,
+		    'time_label' => 'Ends On',
                 ];
 
                 if (null === $visitor->getCheckOutAt()) {
