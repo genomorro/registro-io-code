@@ -25,7 +25,7 @@ class Employee
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'employees')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Area $area = null;
 
     /**
