@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Scheduled{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_scheduled_index') }}">{% trans %}Scheduled{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_scheduled_show', {'id': scheduled.uuid}) }}">{% trans %}Show{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Scheduled{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
+    <div class="table-responsive">
+	<table class="table table-hover">
+            <tbody>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		    <tr>
+			<th>{% trans %}Id{% endtrans %}</th>
+			<td>{{ scheduled.id }}</td>
+		    </tr>
+		{% endif %}
+		<tr>
+                    <th>{% trans %}Label{% endtrans %}</th>
+                    <td>{{ scheduled.label }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <td>{{ scheduled.name }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Institution{% endtrans %}</th>
+                    <td>{{ scheduled.institution }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}Subject{% endtrans %}</th>
+                    <td>{{ scheduled.subject }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}BeginAt{% endtrans %}</th>
+                    <td>{{ scheduled.beginAt ? scheduled.beginAt|date('Y-m-d') : '' }}</td>
+		</tr>
+		<tr>
+                    <th>{% trans %}EndAt{% endtrans %}</th>
+                    <td>{{ scheduled.endAt ? scheduled.endAt|date('Y-m-d') : '' }}</td>
+		</tr>
+            </tbody>
+	</table>
+    </div>
+
+    <div class="d-grid gap-2 d-md-block">
+	{% if is_granted('ROLE_ADMIN') %}
+	    <a class="btn btn-primary" href="{{ path('app_scheduled_edit', {'id': scheduled.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+	{% endif %}
+	<a class="btn btn-link" href="{{ path('app_scheduled_index') }}">{% trans %}Back to list{% endtrans %}</a>
+    </div>
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<div class="row">
+	    <div class="col-md-10"></div>
+	    <div class="col-md-1">
+		{{ include('scheduled/_delete_form.html.twig') }}
+	    </div>
+	</div>
+    {% endif %}
+
+{% endblock %}

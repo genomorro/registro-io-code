@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Scheduled index{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page"><a href="{{ path('app_scheduled_index') }}">{% trans %}Scheduled{% endtrans %}</a></li>
+    </ol>
+
+    <h1>{% trans %}Scheduled index{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
+    <div class="row">
+	<div class="col-12 col-md-6 d-flex justify-content-start">
+	    <form class="w-100" method="get" action="{{ path('app_scheduled_index') }}">
+		<div class="input-group mb-3">
+		    <input type="text" name="filter" class="form-control input-sm w-75" placeholder="{% trans %}Search by Label or by Name{% endtrans %}" value="{{ app.request.query.get('filter') }}">
+		    <button class="btn btn-sm btn-info" type="submit">
+			<span class="icon-search" aria-hidden="true"></span>
+		    </button>
+		</div>
+	    </form>
+	</div>
+
+
+	<div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-start mt-2 mt-md-0">
+	    {% trans %}Total Records{% endtrans %}: {{ scheduleds.getTotalItemCount }}
+	</div>
+    </div>
+
+    <div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Id'|trans, 's.id') }}</th>
+		{% endif %}
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Label'|trans, 's.label') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Name'|trans, 's.name') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Institution'|trans, 's.institution') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Subject'|trans, 's.subject') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'BeginAt'|trans, 's.beginAt') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'EndAt'|trans, 's.endAt') }}</th>
+                <th scope="col">{% trans %}actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for scheduled in scheduleds %}
+            <tr>
+                <td>{{ scheduled.id }}</td>
+                <td>{{ scheduled.label }}</td>
+                <td>{{ scheduled.name }}</td>
+                <td>{{ scheduled.institution }}</td>
+                <td>{{ scheduled.subject }}</td>
+                <td>{{ scheduled.beginAt ? scheduled.beginAt|date('Y-m-d') : '' }}</td>
+                <td>{{ scheduled.endAt ? scheduled.endAt|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a class="btn btn-link" href="{{ path('app_scheduled_show', {'id': scheduled.uuid}) }}">{% trans %}Show{% endtrans %}</a>
+		    {% if is_granted('ROLE_ADMIN') %}
+			<a class="btn btn-secondary" href="{{ path('app_scheduled_edit', {'id': scheduled.uuid}) }}">{% trans %}Edit{% endtrans %}</a>
+		    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">{% trans %}no records found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(scheduleds) }}
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+	<a class="btn btn-primary" href="{{ path('app_scheduled_new') }}">{% trans %}Create new{% endtrans %}</a>
+    {% endif %}
+{% endblock %}
