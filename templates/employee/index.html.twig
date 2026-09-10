@@ -46,7 +46,6 @@
 		    {% endif %}
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Work Number'|trans, 'e.number') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(employees, 'Name'|trans, 'e.name') }}</th>
-		    <th scope="col">{{ knp_pagination_sortable(employees, 'Area'|trans, 'a.building') }}</th>
 		    <th scope="col">{{ knp_pagination_sortable(employees, 'Active'|trans, 'e.active') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
 		</tr>
@@ -59,9 +58,6 @@
 			{% endif %}
 			<td>{{ employee.number }}</td>
 			<td>{{ employee.name }}</td>
-			<td>
-			    {{ 'Building'|trans }} {{ employee.area.building }} - {{ employee.area.unit }}
-			</td>
 			<td>
 			    {% if employee.active == 1 %}
 				{% trans %}Yes{% endtrans %}
