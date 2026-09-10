@@ -54,6 +54,16 @@
                     <th>{% trans %}EndAt{% endtrans %}</th>
                     <td>{{ scheduled.endAt ? scheduled.endAt|date('Y-m-d') : '' }}</td>
 		</tr>
+		{% if scheduled.area %}
+		    <tr>
+			<th>{% trans %}Area{% endtrans %}</th>
+			<td>
+			    <a href="{{ path('app_area_show', {'id': scheduled.area.uuid}) }}">
+				{{ 'Building'|trans }} {{ scheduled.area.building }} - {{ scheduled.area.unit }}
+			    </a>
+			</td>
+		    </tr>
+		{% endif %}
             </tbody>
 	</table>
     </div>
