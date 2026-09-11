@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Trait\HasUuidTrait;
 use App\Repository\HospitalizedRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HospitalizedRepository::class)]
 class Hospitalized
@@ -24,6 +25,7 @@ class Hospitalized
 
     #[ORM\OneToOne(inversedBy: 'hospitalized', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Please select a patient.')]
     private ?Patient $patient = null;
 
     public function getId(): ?int

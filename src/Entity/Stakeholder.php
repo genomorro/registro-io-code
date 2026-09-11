@@ -6,6 +6,7 @@ use App\Entity\Trait\HasUuidTrait;
 use App\Repository\StakeholderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: StakeholderRepository::class)]
 class Stakeholder
@@ -31,6 +32,7 @@ class Stakeholder
 
     #[ORM\ManyToOne(targetEntity: Area::class, inversedBy: 'stakeholders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Please select an area.')]
     private ?Area $destination = null;
 
     #[ORM\Column(length: 255)]

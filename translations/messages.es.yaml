@@ -8,7 +8,7 @@
 'Area updated successfully.': 'Área actualizada exitosamente.'
 'Area added successfully.': 'Área agregada exitosamente.'
 'Area deleted successfully.': 'Área borrada exitosamente.'
-'Cannot delete area because it is associated with stakeholders, visitors or employees.': 'No se puede borrar el área porque está asociada a involucrados, visitantes o empleados.'
+'Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.': 'No se puede borrar el área porque está asociada a involucrados, visitantes, empleados o programados.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Asistencia agregada exitosamente.'
 'Attendance updated successfully.': 'Asistencia actualizada exitosamente.'

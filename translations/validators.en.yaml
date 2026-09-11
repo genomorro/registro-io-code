@@ -174,3 +174,7 @@ Error: Error
 'Your password should be at least {{ limit }} characters': 'Your password should be at least {{ limit }} characters'
 'Please enter a password': 'Please enter a password'
 'There is already an account with this username': 'There is already an account with this username'
+'There is already a scheduled item with this label.': 'There is already a scheduled item with this label.'
+'The end date must be equal or greater than the begin date.': 'The end date must be equal or greater than the begin date.'
+'Please select an area.': 'Please select an area.'
+'Please select a patient.': 'Please select a patient.'

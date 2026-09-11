@@ -33,6 +33,7 @@ class Visitor
 
     #[ORM\ManyToOne(targetEntity: Area::class, inversedBy: 'visitors')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Please select an area.')]
     private ?Area $destination = null;
 
     #[ORM\Column]

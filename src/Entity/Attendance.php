@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Trait\HasUuidTrait;
 use App\Repository\AttendanceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AttendanceRepository::class)]
 class Attendance
@@ -30,6 +31,7 @@ class Attendance
 
     #[ORM\ManyToOne(inversedBy: 'attendances')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Please select a patient.')]
     private ?Patient $patient = null;
 
     #[ORM\ManyToOne(inversedBy: 'attendancesCheckIn')]
