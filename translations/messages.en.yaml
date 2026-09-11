@@ -8,7 +8,9 @@
 'Area updated successfully.': 'Area updated successfully.'
 'Area added successfully.': 'Area added successfully.'
 'Area deleted successfully.': 'Area deleted successfully.'
-'Cannot delete area because it is associated with stakeholders, visitors or employees.': 'Cannot delete area because it is associated with stakeholders, visitors or employees.'
+'Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.': 'Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.'
+'There is already a scheduled item with this label.': 'There is already a scheduled item with this label.'
+'The end date must be equal or greater than the begin date.': 'The end date must be equal or greater than the begin date.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Attendance added successfully.'
 'Attendance updated successfully.': 'Attendance updated successfully.'

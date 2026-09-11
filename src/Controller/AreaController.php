@@ -107,8 +107,8 @@ final class AreaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        if (!$area->getEmployees()->isEmpty() || !$area->getVisitors()->isEmpty() || !$area->getStakeholders()->isEmpty()) {
-            $this->addFlash('danger', $translator->trans('Cannot delete area because it is associated with stakeholders, visitors or employees.'));
+        if (!$area->getEmployees()->isEmpty() || !$area->getVisitors()->isEmpty() || !$area->getStakeholders()->isEmpty() || !$area->getScheduleds()->isEmpty()) {
+            $this->addFlash('danger', $translator->trans('Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.'));
             return $this->redirectToRoute('app_area_index', [], Response::HTTP_SEE_OTHER);
         }
 

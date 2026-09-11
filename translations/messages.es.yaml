@@ -8,7 +8,9 @@
 'Area updated successfully.': 'Área actualizada exitosamente.'
 'Area added successfully.': 'Área agregada exitosamente.'
 'Area deleted successfully.': 'Área borrada exitosamente.'
-'Cannot delete area because it is associated with stakeholders, visitors or employees.': 'No se puede borrar el área porque está asociada a involucrados, visitantes o empleados.'
+'Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.': 'No se puede borrar el área porque está asociada a involucrados, visitantes, empleados o agendados.'
+'There is already a scheduled item with this label.': 'Ya existe un agendado con este identificador.'
+'The end date must be equal or greater than the begin date.': 'La fecha final debe ser igual o mayor a la fecha inicial.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Asistencia agregada exitosamente.'
 'Attendance updated successfully.': 'Asistencia actualizada exitosamente.'
