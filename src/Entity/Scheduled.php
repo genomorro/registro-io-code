@@ -6,8 +6,12 @@ use App\Entity\Trait\HasUuidTrait;
 use App\Repository\ScheduledRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScheduledRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LABEL', fields: ['label'])]
+#[UniqueEntity(fields: ['label'], message: 'There is already a scheduled item with this label.')]
 class Scheduled
 {
     use HasUuidTrait;
@@ -33,6 +37,7 @@ class Scheduled
     private ?\DateTimeImmutable $beginAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'beginAt', message: 'The end date must be equal or greater than the begin date.')]
     private ?\DateTimeImmutable $endAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'scheduleds')]
