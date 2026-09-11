@@ -71,4 +71,20 @@ class ScheduledValidationTest extends KernelTestCase
         $this->assertGreaterThan(0, count($violations));
         $this->assertEquals('endAt', $violations[0]->getPropertyPath());
     }
+
+    public function testNullAreaIsInvalid(): void
+    {
+        $scheduled = new Scheduled();
+        $scheduled->setLabel('LABEL004');
+        $scheduled->setName('John Doe');
+        $scheduled->setInstitution('Test Inst');
+        $scheduled->setSubject('Cultura');
+        $scheduled->setBeginAt(new \DateTimeImmutable('2025-01-01'));
+        $scheduled->setEndAt(new \DateTimeImmutable('2025-01-02'));
+        $scheduled->setArea(null);
+
+        $violations = $this->validator->validate($scheduled);
+        $this->assertGreaterThan(0, count($violations));
+        $this->assertEquals('area', $violations[0]->getPropertyPath());
+    }
 }

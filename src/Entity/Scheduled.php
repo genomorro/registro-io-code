@@ -42,6 +42,7 @@ class Scheduled
 
     #[ORM\ManyToOne(inversedBy: 'scheduleds')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Please select an area.')]
     private ?Area $area = null;
 
     public function getId(): ?int

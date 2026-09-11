@@ -11,6 +11,7 @@
 'Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.': 'Cannot delete area because it is associated with stakeholders, visitors, employees or scheduleds.'
 'There is already a scheduled item with this label.': 'There is already a scheduled item with this label.'
 'The end date must be equal or greater than the begin date.': 'The end date must be equal or greater than the begin date.'
+'Please select an area.': 'Please select an area.'
 ### AttendanceController.php
 'Attendance added successfully.': 'Attendance added successfully.'
 'Attendance updated successfully.': 'Attendance updated successfully.'
