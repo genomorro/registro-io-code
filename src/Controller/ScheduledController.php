@@ -19,6 +19,8 @@ final class ScheduledController extends AbstractController
     #[Route(name: 'app_scheduled_index', methods: ['GET'])]
     public function index(ScheduledRepository $scheduledRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
 	$filter = $request->query->get('filter');
 	$query = $scheduledRepository->paginateScheduled($filter);
 
@@ -36,6 +38,8 @@ final class ScheduledController extends AbstractController
     #[Route('/new', name: 'app_scheduled_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $scheduled = new Scheduled();
 	$flash = $translator->trans('Scheduled added successfully.');
         $form = $this->createForm(ScheduledType::class, $scheduled);
@@ -58,6 +62,8 @@ final class ScheduledController extends AbstractController
     #[Route('/{id}', name: 'app_scheduled_show', methods: ['GET'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function show(Scheduled $scheduled): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('scheduled/show.html.twig', [
             'scheduled' => $scheduled,
         ]);
@@ -66,6 +72,8 @@ final class ScheduledController extends AbstractController
     #[Route('/{id}/edit', name: 'app_scheduled_edit', methods: ['GET', 'POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function edit(Request $request, Scheduled $scheduled, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(ScheduledType::class, $scheduled);
 	$flash = $translator->trans('Scheduled updated successfully.');
         $form->handleRequest($request);
@@ -86,6 +94,8 @@ final class ScheduledController extends AbstractController
     #[Route('/{id}', name: 'app_scheduled_delete', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
     public function delete(Request $request, Scheduled $scheduled, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
 	$flash = $translator->trans('Scheduled deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$scheduled->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($scheduled);
