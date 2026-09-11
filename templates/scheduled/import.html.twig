@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Import Scheduled{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_scheduled_index') }}">{% trans %}Scheduled{% endtrans %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans %}Import{% endtrans %}</li>
+    </ol>
+
+    <h1>{% trans %}Import Scheduled from File{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message|trans }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <p class="card-text">
+                {% trans %}Seleccione un archivo CSV o XLSX para importar agendados. El archivo debe contener la cabecera exacta{% endtrans %}:
+            </p>
+            <code>area_id,label,name,institution,subject,begin_at,end_at</code>
+            <ul class="mt-2">
+                <li><strong>area_id:</strong> ID del área existente.</li>
+                <li><strong>label:</strong> Identificador único del registro.</li>
+                <li><strong>subject:</strong> Debe ser uno de: Cultura, Documentación, Escuela, Estudiante, Expositor, Medio de comunicación, Proveedor, Trabajo.</li>
+                <li><strong>begin_at / end_at:</strong> Fechas en formato AAAA-MM-DD.</li>
+            </ul>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.file, null, {'label_attr': {'class': 'form-label font-weight-bold'}}) }}
+            {{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.file) }}
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('app_scheduled_index') }}" class="btn btn-secondary">{% trans %}Cancelar{% endtrans %}</a>
+            <button type="submit" class="btn btn-primary">{% trans %}Subir y Analizar Archivo{% endtrans %}</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

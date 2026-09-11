@@ -85,6 +85,9 @@
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-	<a class="btn btn-primary" href="{{ path('app_scheduled_new') }}">{% trans %}Create new{% endtrans %}</a>
+	<div class="d-flex gap-2">
+            <a class="btn btn-primary me-2" href="{{ path('app_scheduled_new') }}">{% trans %}Create new{% endtrans %}</a>
+            <a class="btn btn-success" href="{{ path('app_scheduled_import') }}">{% trans %}Import CSV/XLSX{% endtrans %}</a>
+        </div>
     {% endif %}
 {% endblock %}
