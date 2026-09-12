@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Preview Import Scheduled{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_scheduled_index') }}">{% trans %}Scheduled{% endtrans %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans %}Vista Previa de Importación{% endtrans %}</li>
+    </ol>
+
+    <h1>{% trans %}Vista Previa de Importación{% endtrans %}</h1>
+    <hr class="red">
+
+    {% if analysis.file_errors is not empty %}
+        <div class="alert alert-danger">
+            <h4 class="alert-heading">Errores en la estructura del archivo</h4>
+            <ul>
+                {% for err in analysis.file_errors %}
+                    <li>{{ err }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{{ path('app_scheduled_import') }}" class="btn btn-secondary">Regresar e intentar nuevamente</a>
+    {% else %}
+        <div class="card mb-4">
+            <div class="card-header bg-light fw-bold">
+                Resumen del Archivo: {{ analysis.filename }}
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-2 col-6 mb-2">
+                        <div class="p-2 border rounded bg-light">
+                            <div class="h5 mb-0">{{ analysis.summary.total }}</div>
+                            <small class="text-muted">Filas Totales</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-2">
+                        <div class="p-2 border rounded bg-success text-white">
+                            <div class="h5 mb-0">{{ analysis.summary.new }}</div>
+                            <small>Registros Nuevos</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-2">
+                        <div class="p-2 border rounded bg-warning text-dark">
+                            <div class="h5 mb-0">{{ analysis.summary.existing }}</div>
+                            <small>Existentes (BD)</small>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-6 mb-2">
+                        <div class="p-2 border rounded bg-info text-white">
+                            <div class="h5 mb-0">{{ analysis.summary.duplicate }}</div>
+                            <small>Duplicados en Archivo</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 mb-2">
+                        <div class="p-2 border rounded bg-danger text-white">
+                            <div class="h5 mb-0">{{ analysis.summary.error }}</div>
+                            <small>Registros con Errores</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" action="{{ path('app_scheduled_import_process') }}">
+            <div class="card mb-4">
+                <div class="card-header bg-light font-weight-bold">
+                    Opciones para registros existentes
+                </div>
+                <div class="card-body">
+                    <p class="mb-2">¿Qué desea hacer con los registros que ya existen en la base de datos?</p>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="existing_action" id="action_skip" value="skip" checked>
+                        <label class="form-check-label" for="action_skip">Omitir existentes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="existing_action" id="action_update" value="update">
+                        <label class="form-check-label" for="action_update">Actualizar existentes</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive mb-4">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Fila</th>
+                            <th>Estado</th>
+                            <th>area_id</th>
+                            <th>label</th>
+                            <th>name</th>
+                            <th>institution</th>
+                            <th>subject</th>
+                            <th>begin_at</th>
+                            <th>end_at</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in analysis.rows %}
+                            <tr class="{% if row.status == 'Error' %}table-danger{% elseif row.status == 'Existente' %}table-warning{% elseif row.status == 'Duplicado' %}table-info{% else %}table-success{% endif %}">
+                                <td><strong>{{ row.row_number }}</strong></td>
+                                <td>
+                                    {% if row.status == 'Nuevo' %}
+                                        <span class="badge bg-success text-white">Nuevo</span>
+                                    {% elseif row.status == 'Existente' %}
+                                        <span class="badge bg-warning text-dark">Existente</span>
+                                    {% elseif row.status == 'Duplicado' %}
+                                        <span class="badge bg-info text-white">Duplicado</span>
+                                    {% else %}
+                                        <span class="badge bg-danger text-white">Error</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ row.area_id }}</td>
+                                <td>{{ row.label }}</td>
+                                <td>{{ row.name }}</td>
+                                <td>{{ row.institution }}</td>
+                                <td>{{ row.subject }}</td>
+                                <td>{{ row.begin_at }}</td>
+                                <td>{{ row.end_at }}</td>
+                                <td><small>{{ row.detail }}</small></td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="10" class="text-center">No hay filas para mostrar.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between mb-4">
+                <a href="{{ path('app_scheduled_import') }}" class="btn btn-secondary">Cancelar la importación</a>
+                <button type="submit" class="btn btn-success" {% if analysis.summary.total == 0 %}disabled{% endif %}>Continuar con la importación</button>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}
