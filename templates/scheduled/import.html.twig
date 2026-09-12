@@ -21,31 +21,33 @@
         {% endfor %}
     {% endfor %}
 
-    <div class="card mb-4">
-        <div class="card-body">
+    <div class="card">
+	<div class="card-body">
             <p class="card-text">
-                {% trans %}Seleccione un archivo CSV o XLSX para importar agendados. El archivo debe contener la cabecera exacta{% endtrans %}:
+                {% trans %}scheduled.import.paragraph.one{% endtrans %}:
             </p>
             <code>area_id,label,name,institution,subject,begin_at,end_at</code>
-            <ul class="mt-2">
-                <li><strong>area_id:</strong> ID del área existente.</li>
-                <li><strong>label:</strong> Identificador único del registro.</li>
-                <li><strong>subject:</strong> Debe ser uno de: Cultura, Documentación, Escuela, Estudiante, Expositor, Medio de comunicación, Proveedor, Trabajo.</li>
-                <li><strong>begin_at / end_at:</strong> Fechas en formato AAAA-MM-DD.</li>
+            <ul class="mt-4">
+                <li><strong>area_id:</strong> {% trans %}scheduled.import.ul.li.one{% endtrans %}</li>
+                <li><strong>label:</strong> {% trans %}scheduled.import.ul.li.two{% endtrans %}</li>
+                <li><strong>subject:</strong> {% trans %}scheduled.import.ul.li.three{% endtrans %}</li>
+                <li><strong>begin_at / end_at:</strong> {% trans %}scheduled.import.ul.li.four{% endtrans %}</li>
             </ul>
-        </div>
+	</div>
     </div>
-
     {{ form_start(form) }}
-        <div class="mb-3">
-            {{ form_label(form.file, null, {'label_attr': {'class': 'form-label font-weight-bold'}}) }}
-            {{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.file) }}
-        </div>
-
-        <div class="d-flex justify-content-between mt-4">
-            <a href="{{ path('app_scheduled_index') }}" class="btn btn-secondary">{% trans %}Cancelar{% endtrans %}</a>
-            <button type="submit" class="btn btn-primary">{% trans %}Subir y Analizar Archivo{% endtrans %}</button>
-        </div>
+	<div class="col-md-6 my-5">
+	    <div class="row">
+		{{ form_label(form.file, null, {'label_attr': {'class': 'form-label font-weight-bold'}}) }}
+		{{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.file) }}
+	    </div>
+	</div>
+	<div class="col-md-12 my-5 mx-5 px-5">
+	    <div class="position-relative m-4 px-5">
+		<button class="btn btn-primary position-absolute top-0 start-0 translate-middle" value="Upload" type="submit">{% trans %}Upload File{% endtrans %}</button>
+		<a class="btn btn-danger position-absolute top-0 start-100 translate-middle" href="{{ path('app_scheduled_index') }}">{% trans %}Cancel{% endtrans %}</a>
+	    </div>
+	</div>
     {{ form_end(form) }}
 {% endblock %}
