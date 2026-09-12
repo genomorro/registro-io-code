@@ -64,14 +64,30 @@ final class ScheduledController extends AbstractController
                 $session->set('scheduled_import_analysis', $analysis);
                 $session->set('scheduled_import_temppath', $tempPath);
 
-                return $this->render('scheduled/preview.html.twig', [
-                    'analysis' => $analysis,
-                ]);
+                return $this->redirectToRoute('app_scheduled_import_preview', [], Response::HTTP_SEE_OTHER);
             }
         }
 
         return $this->render('scheduled/import.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/import/preview', name: 'app_scheduled_import_preview', methods: ['GET'])]
+    public function importPreview(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $session = $request->getSession();
+        $analysis = $session->get('scheduled_import_analysis');
+
+        if (!$analysis) {
+            $this->addFlash('danger', 'No hay datos de importación para previsualizar.');
+            return $this->redirectToRoute('app_scheduled_import', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('scheduled/preview.html.twig', [
+            'analysis' => $analysis,
         ]);
     }
 
@@ -86,7 +102,7 @@ final class ScheduledController extends AbstractController
 
         if (!$analysis || empty($analysis['rows'])) {
             $this->addFlash('danger', 'No hay datos de importación para procesar.');
-            return $this->redirectToRoute('app_scheduled_import');
+            return $this->redirectToRoute('app_scheduled_import', [], Response::HTTP_SEE_OTHER);
         }
 
         $existingAction = $request->request->get('existing_action', 'skip');
@@ -102,6 +118,22 @@ final class ScheduledController extends AbstractController
         }
         $session->remove('scheduled_import_temppath');
         $session->remove('scheduled_import_analysis');
+
+        return $this->redirectToRoute('app_scheduled_import_result', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/import/result', name: 'app_scheduled_import_result', methods: ['GET'])]
+    public function importResult(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $session = $request->getSession();
+        $result = $session->get('scheduled_import_result');
+
+        if (!$result) {
+            $this->addFlash('danger', 'No hay resultado de importación disponible.');
+            return $this->redirectToRoute('app_scheduled_index', [], Response::HTTP_SEE_OTHER);
+        }
 
         return $this->render('scheduled/result.html.twig', [
             'result' => $result,
