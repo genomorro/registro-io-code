@@ -1,0 +1,15 @@
+import_export:
+    date_format: 'Y-m-d'
+    bool_true: 'true'
+    bool_false: 'false'
+    validate_headers: true
+    csv:
+        delimiter: ','
+        enclosure: '"'
+        escape: '\'
+        bom: false
+    importers:
+        App\Entity\Scheduled:
+            fields: [area, label, name, institution, subject, beginAt, endAt]
+            unique_fields: [label]
+            allow_delete: false
