@@ -35,6 +35,9 @@
             "migrations/.gitignore"
         ]
     },
+    "hugoseigle/symfony-import-export-bundle": {
+        "version": "v2.1.3"
+    },
     "knplabs/knp-paginator-bundle": {
         "version": "v6.10.0"
     },
