@@ -44,9 +44,11 @@ class ScheduledType extends AbstractType
                 ],
 	    ])
             ->add('beginAt', DateType::class, [
+		'label' => 'Begin',
                 'widget' => 'single_text',
             ])
             ->add('endAt', DateType::class, [
+		'label' => 'End',
                 'widget' => 'single_text',
             ])
             ->add('area', AreaAutocompleteField::class, [

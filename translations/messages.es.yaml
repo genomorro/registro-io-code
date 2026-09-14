@@ -32,6 +32,14 @@
 'Patient check out successfully.': 'Salida de paciente registrada exitosamente.'
 ### RegistrationController.php
 'User added successfully.': 'Usuario agregado exitosamente.'
+### ScheduledController.php
+'Scheduled added successfully.': 'Programado agregado exitosamente.'
+'Scheduled updated successfully.': 'Programado actualizado exitosamente.'
+'Scheduled deleted successfully.': 'Programado borrado exitosamente.'
+'There is no import data to preview.': 'No hay datos de importación para previsualizar.'
+'There is no import data to process.': 'No hay datos de importación para procesar.'
+'No import result is available.': 'Resultados de importación no disponibles.'
+'There are no omitted or erroneous records to download.': 'No hay registros omitidos o erróneos por descargar'
 ### SearchController.php
 'Patient not found': 'Paciente no encontrado'
 'Improve the search criteria': 'Mejora el criterio de búsqueda' 
@@ -116,6 +124,7 @@ session:
 'Stakeholders': 'Involucrados'
 'Areas': 'Áreas'
 'Employees': 'Empleados'
+'Scheduleds': 'Programados'
 'Reports': 'Reportes'
 'Language': 'Idioma'
 'User': 'Usuario'
@@ -302,6 +311,37 @@ session:
 'Report': 'Reporte'
 'Report Dashboard': 'Tablero de Reportes'
 'Error: Could not generate token.': 'Error: No se pudo generar token.'
+## scheduled
+### edit.html.twig
+'Edit Scheduled': 'Editar programado'
+'Label': 'Etiqueta'
+'Institution': 'Institución'
+'End': 'Fin'
+### index.html.twig
+'Scheduled': 'Programado'
+'Scheduled index': 'Índice de programados'
+'Search by Label or by Name': 'Buscar por etiqueta o nombre'
+'Import': 'Importar'
+### new.html.twig
+'Create new Scheduled': 'Crear nuevo programado'
+'New Scheduled': 'Nuevo programado'
+### import.html.twig
+scheduled:
+  import:
+    paragraph:
+      one: 'Seleccione un archivo CSV o XLSX para importar agendados. El archivo debe contener la cabecera exacta'
+    ul:
+      li:
+        one: 'ID del área existente, ver lista de Áreas.'
+        two: 'Etiqueta, identificador único del registro.'
+        three: 'Asunto, debe ser uno de: Cultura, Documentación, Escuela, Estudiante, Expositor, Medio de comunicación, Proveedor, Trabajo.'
+        four: 'Fechas en formato AAAA-MM-DD.'
+'Upload File': 'Subir archivo'
+'Import Scheduled from File': 'Importar programados desde un archivo'
+'File CSV/XLSX': 'Archivo CSV/XLSX'
+'Please select a file to upload.': 'Por favor seleccione un archivo para subir.'
+'Please upload a valid file (CSV or XLSX).': 'Por favor suba un archivo válido (CSV o XLSX).'
+'Import Scheduled': 'Importar programados'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'

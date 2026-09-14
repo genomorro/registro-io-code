@@ -49,8 +49,8 @@
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Name'|trans, 's.name') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Institution'|trans, 's.institution') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Subject'|trans, 's.subject') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'BeginAt'|trans, 's.beginAt') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'EndAt'|trans, 's.endAt') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Begin'|trans, 's.beginAt') }}</th>
+                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'End'|trans, 's.endAt') }}</th>
                 <th scope="col">{% trans %}actions{% endtrans %}</th>
             </tr>
         </thead>
@@ -85,6 +85,9 @@
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-	<a class="btn btn-primary" href="{{ path('app_scheduled_new') }}">{% trans %}Create new{% endtrans %}</a>
+	<div class="btn-group" role="group" aria-label="Add">
+	    <a class="btn btn-primary mx-2 my-2" href="{{ path('app_scheduled_new') }}">{% trans %}Create new{% endtrans %}</a>
+            <a class="btn btn-primary mx-2 my-2" href="{{ path('app_scheduled_import') }}">{% trans %}Import{% endtrans %} CSV/XLSX</a>
+	</div>
     {% endif %}
 {% endblock %}

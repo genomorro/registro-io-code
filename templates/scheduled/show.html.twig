@@ -47,11 +47,11 @@
                     <td>{{ scheduled.subject }}</td>
 		</tr>
 		<tr>
-                    <th>{% trans %}BeginAt{% endtrans %}</th>
+                    <th>{% trans %}Begin{% endtrans %}</th>
                     <td>{{ scheduled.beginAt ? scheduled.beginAt|date('Y-m-d') : '' }}</td>
 		</tr>
 		<tr>
-                    <th>{% trans %}EndAt{% endtrans %}</th>
+                    <th>{% trans %}End{% endtrans %}</th>
                     <td>{{ scheduled.endAt ? scheduled.endAt|date('Y-m-d') : '' }}</td>
 		</tr>
 		{% if scheduled.area %}

@@ -32,6 +32,14 @@
 'Patient check out successfully.': 'Patient check out successfully.'
 ### RegistrationController.php
 'User added successfully.': 'User added successfully.'
+### ScheduledController.php
+'Scheduled added successfully.': 'Scheduled added successfully.'
+'Scheduled updated successfully.': 'Scheduled updated successfully.'
+'Scheduled deleted successfully.': 'Scheduled deleted successfully.'
+'There is no import data to preview.': 'There is no import data to preview.'
+'There is no import data to process.': 'There is no import data to process.'
+'No import result is available.': 'No import result is available.'
+'There are no omitted or erroneous records to download.': 'There are no omitted or erroneous records to download.'
 ### SearchController.php
 'Patient not found': 'Patient not found'
 'Improve the search criteria': 'Improve the search criteria' 
@@ -116,6 +124,7 @@ session:
 'Stakeholders': 'Stakeholders'
 'Areas': 'Areas'
 'Employees': 'Employees'
+'Scheduleds': 'Scheduleds'
 'Reports': 'Reports'
 'Language': 'Language'
 'User': 'User'
@@ -303,6 +312,37 @@ session:
 'Report': 'Report'
 'Report Dashboard': 'Report Dashboard'
 'Error: Could not generate token.': 'Error: Could not generate token.'
+## scheduled
+### edit.html.twig
+'Edit Scheduled': 'Edit Scheduled'
+'Label': 'Etiqueta'
+'Institution': 'Institution'
+'End': 'End'
+### index.html.twig
+'Scheduled': 'Scheduled'
+'Scheduled index': 'Scheduled index'
+'Search by Label or by Name': 'Search by Label or by Name'
+'Import': 'Import'
+### new.html.twig
+'Create new Scheduled': 'Create new Scheduled'
+'New Scheduled': 'New Scheduled'
+### import.html.twig
+scheduled:
+  import:
+    paragraph:
+      one: 'Select a CSV or XLSX file to import scheduled items. The file must contain the exact header'
+    ul:
+      li:
+        one: 'Existing area ID; see the Areas list.'
+        two: 'Label; unique record identifier.'
+        three: 'Subject; must be one of the following: Culture, Documentation, School, Student, Exhibitor, Media, Supplier, Work.'
+        four: 'Dates in YYYY-MM-DD format.'
+'Upload File': 'Upload File'
+'Import Scheduled from File': 'Import Scheduled from File'
+'File CSV/XLSX': 'File CSV/XLSX'
+'Please select a file to upload.': 'Please select a file to upload.'
+'Please upload a valid file (CSV or XLSX).': 'Please upload a valid file (CSV or XLSX).'
+'Import Scheduled': 'Import Scheduled'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'
