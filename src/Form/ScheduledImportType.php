@@ -55,6 +55,7 @@ class ScheduledImportType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Scheduled::class,
+            'validation_groups' => ['import'],
         ]);
     }
 }

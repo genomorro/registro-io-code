@@ -86,14 +86,32 @@ final class ScheduledController extends AbstractController
 
                 if ($result->isValid()) {
                     $preview = [];
+                    $processedLabels = [];
+                    $hasExistingRecords = false;
 
-                    foreach ($result->getCreatedEntities() as $entity) {
+                    $allEntities = array_merge($result->getCreatedEntities(), $result->getUpdatedEntities());
+
+                    foreach ($allEntities as $entity) {
                         /** @var Scheduled $entity */
+                        $label = $entity->getLabel();
+
+                        // Deduplication: skip duplicate rows with the same label in the file
+                        if (in_array($label, $processedLabels, true)) {
+                            continue;
+                        }
+                        $processedLabels[] = $label;
+
+                        $existingScheduled = $entityManager->getRepository(Scheduled::class)->findOneBy(['label' => $label]);
+                        $action = $existingScheduled ? 'update' : 'create';
+                        if ($existingScheduled) {
+                            $hasExistingRecords = true;
+                        }
+
                         $preview[] = [
-                            'action' => 'create',
+                            'action' => $action,
                             'area_id' => $entity->getArea()?->getId(),
                             'area_name' => $entity->getArea() ? (string) $entity->getArea() : '',
-                            'label' => $entity->getLabel(),
+                            'label' => $label,
                             'name' => $entity->getName(),
                             'institution' => $entity->getInstitution(),
                             'subject' => $entity->getSubject(),
@@ -102,22 +120,10 @@ final class ScheduledController extends AbstractController
                         ];
                     }
 
-                    foreach ($result->getUpdatedEntities() as $entity) {
-                        /** @var Scheduled $entity */
-                        $preview[] = [
-                            'action' => 'update',
-                            'area_id' => $entity->getArea()?->getId(),
-                            'area_name' => $entity->getArea() ? (string) $entity->getArea() : '',
-                            'label' => $entity->getLabel(),
-                            'name' => $entity->getName(),
-                            'institution' => $entity->getInstitution(),
-                            'subject' => $entity->getSubject(),
-                            'beginAt' => $entity->getBeginAt()?->format('Y-m-d'),
-                            'endAt' => $entity->getEndAt()?->format('Y-m-d'),
-                        ];
-                    }
-
-                    $session->set('scheduled_import_preview', $preview);
+                    $session->set('scheduled_import_preview', [
+                        'items' => $preview,
+                        'has_existing' => $hasExistingRecords,
+                    ]);
                     $session->remove('scheduled_import_errors');
                 } else {
                     $errors = [];
@@ -140,11 +146,12 @@ final class ScheduledController extends AbstractController
             return $this->redirectToRoute('app_scheduled_import', [], Response::HTTP_SEE_OTHER);
         }
 
-        $preview = $session->get('scheduled_import_preview');
+        $previewData = $session->get('scheduled_import_preview');
         $errors = $session->get('scheduled_import_errors');
 
         return $this->render('scheduled/import.html.twig', [
-            'preview' => $preview,
+            'preview' => $previewData['items'] ?? null,
+            'has_existing' => $previewData['has_existing'] ?? false,
             'errors' => $errors,
         ]);
     }
@@ -157,22 +164,28 @@ final class ScheduledController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $session = $request->getSession();
-        $preview = $session->get('scheduled_import_preview');
+        $previewData = $session->get('scheduled_import_preview');
 
-        if (!$preview || !is_array($preview)) {
+        if (!$previewData || !is_array($previewData) || empty($previewData['items'])) {
             $this->addFlash('danger', $translator->trans('No preview data found to import.'));
             return $this->redirectToRoute('app_scheduled_import', [], Response::HTTP_SEE_OTHER);
         }
 
+        $updateExisting = $request->request->getBoolean('update_existing', false);
+        $items = $previewData['items'];
+
         $createdCount = 0;
         $updatedCount = 0;
 
-        foreach ($preview as $item) {
+        foreach ($items as $item) {
             $scheduled = $entityManager->getRepository(Scheduled::class)->findOneBy(['label' => $item['label']]);
             if (!$scheduled) {
                 $scheduled = new Scheduled();
                 $createdCount++;
             } else {
+                if (!$updateExisting) {
+                    continue; // Skip updating existing records if user chose not to update
+                }
                 $updatedCount++;
             }
 

@@ -394,6 +394,7 @@ session:
 ### login.html.twig
 'Sign in!': 'Sign in!'
 'You are logged in as': 'You are logged in as'
+'Please sign in': 'Please sign in'
 
 'Import': 'Import'
 'Import Scheduled': 'Import Scheduled'
@@ -416,6 +417,9 @@ session:
 'Action': 'Action'
 'Create': 'Create'
 'No preview data found to import.': 'No preview data found to import.'
+'Existing Records Detected': 'Existing Records Detected'
+'Some records in the import file already exist in the database with the same label.': 'Some records in the import file already exist in the database with the same label.'
+'Do you want to update existing records with the information from the import file?': 'Do you want to update existing records with the information from the import file?'
 
 import_export:
   area: 'area_id'
@@ -425,4 +429,3 @@ import_export:
   subject: 'subject'
   begin_at: 'begin_at'
   end_at: 'end_at'
-'Please sign in': 'Please sign in'

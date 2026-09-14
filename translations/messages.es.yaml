@@ -393,6 +393,7 @@ session:
 ### login.html.twig
 'Sign in!': '¡Iniciar sesión!'
 'You are logged in as': 'Iniciaste sesión como'
+'Please sign in': 'Inicia sesión, por favor'
 
 'Import': 'Importar'
 'Import Scheduled': 'Importar programados'
@@ -415,6 +416,9 @@ session:
 'Action': 'Acción'
 'Create': 'Crear'
 'No preview data found to import.': 'No se encontraron datos de vista previa para importar.'
+'Existing Records Detected': 'Registros existentes detectados'
+'Some records in the import file already exist in the database with the same label.': 'Algunos registros en el archivo de importación ya existen en la base de datos con la misma etiqueta (label).'
+'Do you want to update existing records with the information from the import file?': '¿Desea actualizar los registros existentes con la información del archivo?'
 
 import_export:
   area: 'area_id'
@@ -424,4 +428,3 @@ import_export:
   subject: 'subject'
   begin_at: 'begin_at'
   end_at: 'end_at'
-'Please sign in': 'Inicia sesión, por favor'
