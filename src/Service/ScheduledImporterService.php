@@ -8,6 +8,7 @@ use App\Repository\ScheduledRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Shared\Date as SpreadsheetDate;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ScheduledImporterService
 {
@@ -35,7 +36,8 @@ class ScheduledImporterService
     public function __construct(
         private AreaRepository $areaRepository,
         private ScheduledRepository $scheduledRepository,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private TranslatorInterface $translator
     ) {
     }
 
@@ -50,7 +52,7 @@ class ScheduledImporterService
         if (!in_array($extension, ['csv', 'xlsx', 'xls'], true)) {
             return [
                 'filename' => $originalFilename,
-                'file_errors' => ['Extensión de archivo no permitida. Formatos aceptados: .csv, .xlsx, .xls'],
+                'file_errors' => [$this->translator->trans('File extension not allowed. Accepted formats: .csv, .xlsx, .xls')],
                 'rows' => [],
                 'summary' => [
                     'total' => 0,
@@ -66,13 +68,13 @@ class ScheduledImporterService
         if ($extension === 'csv') {
             $content = file_get_contents($filepath);
             if (!mb_check_encoding($content, 'UTF-8')) {
-                $fileErrors[] = 'El encoding del archivo no es UTF-8 correcto.';
+                $fileErrors[] = $this->translator->trans('The file encoding is not valid UTF-8.');
             }
 
             $firstLine = strtok($content, "\r\n");
             if ($firstLine !== false) {
                 if (str_contains($firstLine, ';') && !str_contains($firstLine, ',')) {
-                    $fileErrors[] = 'El delimitador del archivo no es correcto. Se requiere coma (,).';
+                    $fileErrors[] = $this->translator->trans('The file delimiter is incorrect. Comma (,) is required.');
                 }
             }
         }
@@ -84,7 +86,7 @@ class ScheduledImporterService
         } catch (\Throwable $e) {
             return [
                 'filename' => $originalFilename,
-                'file_errors' => ['No se pudo leer el archivo: ' . $e->getMessage()],
+                'file_errors' => [$this->translator->trans('Could not read file: %error%', ['%error%' => $e->getMessage()])],
                 'rows' => [],
                 'summary' => [
                     'total' => 0,
@@ -99,7 +101,7 @@ class ScheduledImporterService
         if (empty($data)) {
             return [
                 'filename' => $originalFilename,
-                'file_errors' => ['El archivo está vacío.'],
+                'file_errors' => [$this->translator->trans('The file is empty.')],
                 'rows' => [],
                 'summary' => [
                     'total' => 0,
@@ -118,23 +120,26 @@ class ScheduledImporterService
         $headerCounts = array_count_values($headerRow);
         foreach ($headerCounts as $headerName => $count) {
             if ($count > 1 && $headerName !== '') {
-                $fileErrors[] = sprintf('Cabecera duplicada encontrada: "%s".', $headerName);
+                $fileErrors[] = $this->translator->trans('Duplicate header found: "%header%".', ['%header%' => $headerName]);
             }
         }
 
         // Check missing / unknown / column count
         $missingColumns = array_diff(self::EXPECTED_HEADERS, $headerRow);
         if (!empty($missingColumns)) {
-            $fileErrors[] = 'Faltan columnas requeridas en la cabecera: ' . implode(', ', $missingColumns);
+            $fileErrors[] = $this->translator->trans('Missing required header columns: %columns%', ['%columns%' => implode(', ', $missingColumns)]);
         }
 
         $unknownColumns = array_diff($headerRow, self::EXPECTED_HEADERS);
         if (!empty($unknownColumns)) {
-            $fileErrors[] = 'Columnas desconocidas en la cabecera: ' . implode(', ', $unknownColumns);
+            $fileErrors[] = $this->translator->trans('Unknown header columns: %columns%', ['%columns%' => implode(', ', $unknownColumns)]);
         }
 
         if (count($headerRow) !== count(self::EXPECTED_HEADERS)) {
-            $fileErrors[] = sprintf('El número de columnas es incorrecto (%d encontradas, %d esperadas).', count($headerRow), count(self::EXPECTED_HEADERS));
+            $fileErrors[] = $this->translator->trans('The number of columns is incorrect (%count% found, %expected% expected).', [
+                '%count%' => count($headerRow),
+                '%expected%' => count(self::EXPECTED_HEADERS),
+            ]);
         }
 
         if (!empty($fileErrors)) {
@@ -188,28 +193,28 @@ class ScheduledImporterService
             // Validation 1: area_id exists
             $area = null;
             if ($areaId === '' || !ctype_digit($areaId)) {
-                $rowDetails[] = 'El campo area_id debe ser un entero válido.';
+                $rowDetails[] = $this->translator->trans('The field area_id must be a valid integer.');
             } else {
                 $area = $this->areaRepository->find((int) $areaId);
                 if (!$area) {
-                    $rowDetails[] = sprintf('El area_id %s no existe en la base de datos.', $areaId);
+                    $rowDetails[] = $this->translator->trans('The area_id %id% does not exist in the database.', ['%id%' => $areaId]);
                 }
             }
 
             // Validation 2: required fields
             if ($label === '') {
-                $rowDetails[] = 'El campo label es obligatorio.';
+                $rowDetails[] = $this->translator->trans('The field label is required.');
             }
             if ($name === '') {
-                $rowDetails[] = 'El campo name es obligatorio.';
+                $rowDetails[] = $this->translator->trans('The field name is required.');
             }
             if ($institution === '') {
-                $rowDetails[] = 'El campo institution es obligatorio.';
+                $rowDetails[] = $this->translator->trans('The field institution is required.');
             }
 
             // Validation 3: subject
             if (!in_array($subject, self::ALLOWED_SUBJECTS, true)) {
-                $rowDetails[] = sprintf('El subject debe ser uno de: %s.', implode(', ', self::ALLOWED_SUBJECTS));
+                $rowDetails[] = $this->translator->trans('The subject must be one of: %subjects%.', ['%subjects%' => implode(', ', self::ALLOWED_SUBJECTS)]);
             }
 
             // Validation 4: dates
@@ -217,13 +222,13 @@ class ScheduledImporterService
             $endAtDate = $this->parseDate($endAtRaw);
 
             if (!$beginAtDate) {
-                $rowDetails[] = 'La fecha begin_at no tiene un formato válido (esperado YYYY-MM-DD).';
+                $rowDetails[] = $this->translator->trans('The begin_at date format is invalid (expected YYYY-MM-DD).');
             }
             if (!$endAtDate) {
-                $rowDetails[] = 'La fecha end_at no tiene un formato válido (esperado YYYY-MM-DD).';
+                $rowDetails[] = $this->translator->trans('The end_at date format is invalid (expected YYYY-MM-DD).');
             }
             if ($beginAtDate && $endAtDate && $endAtDate < $beginAtDate) {
-                $rowDetails[] = 'La fecha end_at debe ser igual o mayor a begin_at.';
+                $rowDetails[] = $this->translator->trans('The end_at date must be equal or greater than begin_at.');
             }
 
             // Status determination
@@ -236,18 +241,21 @@ class ScheduledImporterService
                 $countError++;
             } elseif (isset($seenLabels[$label])) {
                 $status = 'Duplicado';
-                $detailMessage = sprintf('Etiqueta "%s" duplicada en el archivo (visto primero en la fila %d).', $label, $seenLabels[$label]);
+                $detailMessage = $this->translator->trans('Label "%label%" duplicated in file (first seen on row %row%).', [
+                    '%label%' => $label,
+                    '%row%' => $seenLabels[$label],
+                ]);
                 $countDuplicate++;
             } else {
                 $seenLabels[$label] = $fileRowIndex;
                 $existingInDb = $this->scheduledRepository->findOneBy(['label' => $label]);
                 if ($existingInDb) {
                     $status = 'Existente';
-                    $detailMessage = 'El registro con esta etiqueta ya existe en la base de datos.';
+                    $detailMessage = $this->translator->trans('A record with this label already exists in the database.');
                     $countExisting++;
                 } else {
                     $status = 'Nuevo';
-                    $detailMessage = 'Registro válido para importar.';
+                    $detailMessage = $this->translator->trans('Valid record for import.');
                     $countNew++;
                 }
             }
@@ -304,7 +312,7 @@ class ScheduledImporterService
             if ($status === 'Existente') {
                 if ($existingAction === 'skip') {
                     $omitted++;
-                    $row['detail'] = 'Omitido por configuración (registro existente).';
+                    $row['detail'] = $this->translator->trans('Omitted by configuration (existing record).');
                     $omittedOrErrorRows[] = $row;
                     continue;
                 }
@@ -324,7 +332,7 @@ class ScheduledImporterService
                     $updated++;
                 } else {
                     $errors++;
-                    $row['detail'] = 'Error al actualizar: no se encontró el registro en la BD.';
+                    $row['detail'] = $this->translator->trans('Update error: record not found in database.');
                     $omittedOrErrorRows[] = $row;
                 }
                 continue;
@@ -346,7 +354,7 @@ class ScheduledImporterService
                     $created++;
                 } else {
                     $errors++;
-                    $row['detail'] = 'Error al crear: area_id no válido.';
+                    $row['detail'] = $this->translator->trans('Creation error: invalid area_id.');
                     $omittedOrErrorRows[] = $row;
                 }
             }

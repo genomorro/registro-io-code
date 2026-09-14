@@ -9,12 +9,14 @@ use App\Repository\ScheduledRepository;
 use App\Service\ScheduledImporterService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ScheduledImporterServiceTest extends TestCase
 {
     private $areaRepository;
     private $scheduledRepository;
     private $entityManager;
+    private $translator;
     private ScheduledImporterService $service;
 
     protected function setUp(): void
@@ -22,11 +24,19 @@ class ScheduledImporterServiceTest extends TestCase
         $this->areaRepository = $this->createMock(AreaRepository::class);
         $this->scheduledRepository = $this->createMock(ScheduledRepository::class);
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
+        $this->translator = $this->createMock(TranslatorInterface::class);
+
+        $this->translator->expects($this->any())
+            ->method('trans')
+            ->willReturnCallback(function ($id, $parameters = []) {
+                return strtr($id, $parameters);
+            });
 
         $this->service = new ScheduledImporterService(
             $this->areaRepository,
             $this->scheduledRepository,
-            $this->entityManager
+            $this->entityManager,
+            $this->translator
         );
     }
 
@@ -34,7 +44,7 @@ class ScheduledImporterServiceTest extends TestCase
     {
         $res = $this->service->analyzeFile('/tmp/fake.pdf', 'fake.pdf');
         $this->assertNotEmpty($res['file_errors']);
-        $this->assertStringContainsString('Extensión de archivo no permitida', $res['file_errors'][0]);
+        $this->assertStringContainsString('File extension not allowed', $res['file_errors'][0]);
     }
 
     public function testAnalyzeFileMissingHeader(): void
@@ -46,7 +56,7 @@ class ScheduledImporterServiceTest extends TestCase
         unlink($csvPath);
 
         $this->assertNotEmpty($res['file_errors']);
-        $this->assertStringContainsString('Faltan columnas requeridas', $res['file_errors'][0]);
+        $this->assertStringContainsString('Missing required header columns', $res['file_errors'][0]);
     }
 
     public function testAnalyzeFileValidRowsAndDuplicates(): void
@@ -168,7 +178,7 @@ class ScheduledImporterServiceTest extends TestCase
                 'begin_at' => '2026-01-01',
                 'end_at' => '2026-01-02',
                 'status' => 'Existente',
-                'detail' => 'Omitido por configuración.',
+                'detail' => 'Omitted by configuration.',
             ]
         ];
 
