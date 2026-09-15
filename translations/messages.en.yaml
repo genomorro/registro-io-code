@@ -32,6 +32,13 @@
 'Patient check out successfully.': 'Patient check out successfully.'
 ### RegistrationController.php
 'User added successfully.': 'User added successfully.'
+### ScheduledController.php
+'Scheduled added successfully.': 'Scheduled added successfully.'
+'Scheduled updated successfully.': 'Scheduled updated successfully.'
+'Scheduled deleted successfully.': 'Scheduled deleted successfully.'
+'File is required.': 'File is required.'
+'No preview data found to import.': 'No preview data found to import.'
+'Import completed successfully. Created: %created%, Updated: %updated%': 'Import completed successfully. Created: %created%, Updated: %updated%'
 ### SearchController.php
 'Patient not found': 'Patient not found'
 'Improve the search criteria': 'Improve the search criteria' 
@@ -303,6 +310,48 @@ session:
 'Report': 'Report'
 'Report Dashboard': 'Report Dashboard'
 'Error: Could not generate token.': 'Error: Could not generate token.'
+## scheduled
+### edit.html.twig
+'Edit Scheduled': 'Edit Scheduled'
+'Label': 'Etiqueta'
+'Institution': 'Institution'
+'End': 'End'
+### index.html.twig
+'Scheduled': 'Scheduled'
+'Scheduled index': 'Scheduled index'
+'Search by Label or by Name': 'Search by Label or by Name'
+'Import': 'Import'
+### new.html.twig
+'Create new Scheduled': 'Create new Scheduled'
+'New Scheduled': 'New Scheduled'
+### import.html.twig
+'Import Preview - Errors Detected': 'Import Preview - Errors Detected'
+'The file contains errors and cannot be imported. Please review the details below:': 'The file contains errors and cannot be imported. Please review the details below:'
+'Row': 'Row'
+'Field': 'Field'
+'Error Message': 'Error Message'
+'Value': 'Value'
+'Clear Errors & Try Again': 'Clear Errors & Try Again'
+'Import Data Preview': 'Import Data Preview'
+'Review the records below before confirming the import:': 'Review the records below before confirming the import:'
+'Existing Records Detected': 'Existing Records Detected'
+'Some records in the import file already exist in the database with the same label.': 'Some records in the import file already exist in the database with the same label.'
+'Do you want to update existing records with the information from the import file?': 'Do you want to update existing records with the information from the import file?'
+'Action': 'Action'
+'Confirm Import': 'Confirm Import'
+scheduled:
+  import:
+    paragraph:
+      one: 'Select a CSV or XLSX file to import scheduled items. The file must contain the exact header'
+    ul:
+      li:
+        one: 'Existing area ID; see the Areas list.'
+        two: 'Label; unique record identifier.'
+        three: 'Subject; must be one of the following: Culture, Documentation, School, Student, Exhibitor, Media, Supplier, Work.'
+        four: 'Dates in YYYY-MM-DD format.'
+'Import Scheduled from File': 'Import Scheduled from File'
+'File CSV/XLSX': 'File CSV/XLSX'
+'Import Scheduled': 'Import Scheduled'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Search Patient by File'

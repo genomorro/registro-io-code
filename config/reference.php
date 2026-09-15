@@ -1572,6 +1572,24 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type NucleosDompdfConfig = array{
  *     defaults?: array<string, scalar|Param|null>,
  * }
+ * @psalm-type ImportExportConfig = array{
+ *     date_format?: scalar|Param|null, // Default: "Y-m-d H:i:s"
+ *     bool_true?: scalar|Param|null, // Default: "true"
+ *     bool_false?: scalar|Param|null, // Default: "false"
+ *     validate_headers?: bool|Param, // Default: true
+ *     csv?: array{
+ *         delimiter?: scalar|Param|null, // Default: ","
+ *         enclosure?: scalar|Param|null, // Default: "\""
+ *         escape?: scalar|Param|null, // Default: "\\"
+ *         bom?: bool|Param, // Default: false
+ *     },
+ *     importers?: array<string, array{ // Default: []
+ *         fields?: list<scalar|Param|null>,
+ *         allow_delete?: bool|Param, // Default: false
+ *         validate_headers?: bool|Param|null, // Default: null
+ *         unique_fields?: list<scalar|Param|null>,
+ *     }>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1587,6 +1605,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     monolog?: MonologConfig,
  *     knp_paginator?: KnpPaginatorConfig,
  *     nucleos_dompdf?: NucleosDompdfConfig,
+ *     import_export?: ImportExportConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1605,6 +1624,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         maker?: MakerConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         nucleos_dompdf?: NucleosDompdfConfig,
+ *         import_export?: ImportExportConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1621,6 +1641,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         nucleos_dompdf?: NucleosDompdfConfig,
+ *         import_export?: ImportExportConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1638,6 +1659,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         monolog?: MonologConfig,
  *         knp_paginator?: KnpPaginatorConfig,
  *         nucleos_dompdf?: NucleosDompdfConfig,
+ *         import_export?: ImportExportConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

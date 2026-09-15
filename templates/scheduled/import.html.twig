@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Import Scheduled{% endtrans %}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="https://www.gob.mx"><i class="icon icon-home"></i></a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_index') }}">{% trans %}Begin{% endtrans %}</a></li>
+	<li class="breadcrumb-item"><a href="{{ path('app_scheduled_index') }}">{% trans %}Scheduled{% endtrans %}</a></li>
+	<li class="breadcrumb-item active" aria-current="page">{% trans %}Import{% endtrans %}</li>
+    </ol>
+
+    <h1>{% trans %}Import Scheduled from File{% endtrans %}</h1>
+    <hr class="red">
+
+    {% for label, messages in app.flashes %}
+	{% for message in messages %}
+	    <div class="alert alert-{{ label }}">
+		{{ message|trans }}
+	    </div>
+	{% endfor %}
+    {% endfor %}
+
+    {% if errors is defined and errors is not empty %}
+	<div class="alert alert-danger mb-4">
+	    <h4>{% trans %}Import Preview - Errors Detected{% endtrans %}</h4>
+	    <p>{% trans %}The file contains errors and cannot be imported. Please review the details below:{% endtrans %}</p>
+	    <div class="table-responsive">
+		<table class="table table-bordered table-striped">
+		    <thead>
+			<tr>
+			    <th>{% trans %}Row{% endtrans %}</th>
+			    <th>{% trans %}Field{% endtrans %}</th>
+			    <th>{% trans %}Error Message{% endtrans %}</th>
+			    <th>{% trans %}Value{% endtrans %}</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			{% for error in errors %}
+			    <tr>
+				<td>{{ error.row }}</td>
+				<td>{{ error.field ? error.field|trans : '-' }}</td>
+				<td>{{ error.message|trans }}</td>
+				<td><code>{{ error.value }}</code></td>
+			    </tr>
+			{% endfor %}
+		    </tbody>
+		</table>
+	    </div>
+	    <form method="post" action="{{ path('app_scheduled_import_cancel') }}" class="mt-2">
+		<button type="submit" class="btn btn-secondary">{% trans %}Clear Errors & Try Again{% endtrans %}</button>
+	    </form>
+	</div>
+    {% endif %}
+
+    {% if preview is defined and preview is not empty %}
+	<div class="alert alert-info mb-4">
+	    <h4>{% trans %}Import Data Preview{% endtrans %}</h4>
+	    <p>{% trans %}Review the records below before confirming the import:{% endtrans %}</p>
+
+	    <form method="post" action="{{ path('app_scheduled_import_confirm') }}">
+		{% if has_existing %}
+		    <div class="card mb-3 border-warning">
+			<div class="card-body">
+			    <h5 class="card-title text-warning-emphasis">{% trans %}Existing Records Detected{% endtrans %}</h5>
+			    <p class="card-text">{% trans %}Some records in the import file already exist in the database with the same label.{% endtrans %}</p>
+			    <div class="form-check">
+				<input class="form-check-input" type="checkbox" name="update_existing" value="1" id="updateExistingCheck" checked>
+				<label class="form-check-label font-weight-bold" for="updateExistingCheck">
+				    {% trans %}Do you want to update existing records with the information from the import file?{% endtrans %}
+				</label>
+			    </div>
+			</div>
+		    </div>
+		{% endif %}
+
+		<div class="table-responsive">
+		    <table class="table table-hover table-bordered bg-white">
+			<thead>
+			    <tr>
+				<th>{% trans %}Action{% endtrans %}</th>
+				<th>{% trans %}Area{% endtrans %}</th>
+				<th>{% trans %}Label{% endtrans %}</th>
+				<th>{% trans %}Name{% endtrans %}</th>
+				<th>{% trans %}Institution{% endtrans %}</th>
+				<th>{% trans %}Subject{% endtrans %}</th>
+				<th>{% trans %}Begin{% endtrans %}</th>
+				<th>{% trans %}End{% endtrans %}</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    {% for row in preview %}
+				<tr>
+				    <td>
+					{% if row.action == 'create' %}
+					    <span class="badge bg-success">{% trans %}Create{% endtrans %}</span>
+					{% else %}
+					    <span class="badge bg-warning text-dark">{% trans %}Update{% endtrans %}</span>
+					{% endif %}
+				    </td>
+				    <td>{{ row.area_name }}</td>
+				    <td>{{ row.label }}</td>
+				    <td>{{ row.name }}</td>
+				    <td>{{ row.institution }}</td>
+				    <td>{{ row.subject }}</td>
+				    <td>{{ row.beginAt }}</td>
+				    <td>{{ row.endAt }}</td>
+				</tr>
+			    {% endfor %}
+			</tbody>
+		    </table>
+		</div>
+
+		    <button type="submit" class="btn btn-success m-2">{% trans %}Confirm Import{% endtrans %}</button>
+		    <button type="submit" class="btn btn-danger m-2" formaction="{{ path('app_scheduled_import_cancel') }}">{% trans %}Cancel{% endtrans %}</button>
+	    </form>
+	</div>
+    {% endif %}
+
+    {% if (preview is not defined or preview is empty) and (errors is not defined or errors is empty) %}
+	<div class="card my-5">
+	    <div class="card-body">
+		<p class="card-text">
+                    {% trans %}scheduled.import.paragraph.one{% endtrans %}:
+		</p>
+		<code>area_id,label,name,institution,subject,begin_at,end_at</code>
+		<ul class="mt-4">
+                    <li><strong>import_export.area:</strong> {% trans %}scheduled.import.ul.li.one{% endtrans %}</li>
+                    <li><strong>import_export.label:</strong> {% trans %}scheduled.import.ul.li.two{% endtrans %}</li>
+                    <li><strong>import_export.subject:</strong> {% trans %}scheduled.import.ul.li.three{% endtrans %}</li>
+                    <li><strong>import_export.begin_at / import_export.end_at:</strong> {% trans %}scheduled.import.ul.li.four{% endtrans %}</li>
+		</ul>	    
+	    </div>
+	</div>
+
+	<form method="post" action="{{ path('app_scheduled_import') }}" enctype="multipart/form-data" class="mt-4">
+	    <div class="form-group mb-3">
+		<label for="file" class="form-label">{% trans %}File CSV/XLSX{% endtrans %}</label>
+		<input type="file" name="file" id="file" class="form-control" accept=".csv, .xlsx" required>
+	    </div>
+
+	    <button type="submit" class="btn btn-primary mt-3">{% trans %}Import Scheduled{% endtrans %}</button>
+	    <a class="btn btn-link mt-3" href="{{ path('app_scheduled_index') }}">{% trans %}Back to list{% endtrans %}</a>
+	</form>
+    {% endif %}
+{% endblock %}

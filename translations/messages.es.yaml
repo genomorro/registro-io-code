@@ -32,6 +32,13 @@
 'Patient check out successfully.': 'Salida de paciente registrada exitosamente.'
 ### RegistrationController.php
 'User added successfully.': 'Usuario agregado exitosamente.'
+### ScheduledController.php
+'Scheduled added successfully.': 'Programado agregado exitosamente.'
+'Scheduled updated successfully.': 'Programado actualizado exitosamente.'
+'Scheduled deleted successfully.': 'Programado borrado exitosamente.'
+'File is required.': 'El archivo es requerido.'
+'No preview data found to import.': 'No se encontró información a exportar.'
+'Import completed successfully. Created: %created%, Updated: %updated%': 'Importación completada exitosamente. %created% registros creados, %updated% registros actualizados.'
 ### SearchController.php
 'Patient not found': 'Paciente no encontrado'
 'Improve the search criteria': 'Mejora el criterio de búsqueda' 
@@ -302,6 +309,48 @@ session:
 'Report': 'Reporte'
 'Report Dashboard': 'Tablero de Reportes'
 'Error: Could not generate token.': 'Error: No se pudo generar token.'
+## scheduled
+### edit.html.twig
+'Edit Scheduled': 'Editar programado'
+'Label': 'Etiqueta'
+'Institution': 'Institución'
+'End': 'Fin'
+### index.html.twig
+'Scheduled': 'Programado'
+'Scheduled index': 'Índice de programados'
+'Search by Label or by Name': 'Buscar por etiqueta o nombre'
+'Import': 'Importar'
+### new.html.twig
+'Create new Scheduled': 'Crear nuevo programado'
+'New Scheduled': 'Nuevo programado'
+### import.html.twig
+'Import Preview - Errors Detected': 'Previsualización de la importación - Errores detectados'
+'The file contains errors and cannot be imported. Please review the details below:': 'El archivo contiene errores y no puede ser importado. Por favor, revise los siguientes elementos:'
+'Row': 'Fila'
+'Field': 'Campo'
+'Error Message': 'Mensaje de error'
+'Value': 'Valor'
+'Clear Errors & Try Again': 'Limpiar errores e intentar de nuevo'
+'Import Data Preview': 'Previsualización de los datos a importar'
+'Review the records below before confirming the import:': 'Revise los registros mostrados antes de confirmar la importación:'
+'Existing Records Detected': 'Se detectaron registros existentes'
+'Some records in the import file already exist in the database with the same label.': 'Algunos registros en el archivo de importación ya existen en la base de datos con la misma etiqueta.'
+'Do you want to update existing records with the information from the import file?': '¿Desea actualizar los registros existentes con la información del archivo de importación?'
+'Action': 'Acción'
+'Confirm Import': 'Confirmar la importación'
+scheduled:
+  import:
+    paragraph:
+      one: 'Seleccione un archivo CSV o XLSX para importar agendados. El archivo debe contener la cabecera exacta'
+    ul:
+      li:
+        one: 'ID del área existente, ver lista de Áreas.'
+        two: 'Etiqueta, identificador único del registro.'
+        three: 'Asunto, debe ser uno de: Cultura, Documentación, Escuela, Estudiante, Expositor, Medio de comunicación, Proveedor, Trabajo.'
+        four: 'Fechas en formato AAAA-MM-DD.'
+'Import Scheduled from File': 'Importar programados desde un archivo'
+'File CSV/XLSX': 'Archivo CSV/XLSX'
+'Import Scheduled': 'Importar programados'
 ## search
 ### index.html.twig
 'Search Patient by File': 'Buscar paciente por expediente'
