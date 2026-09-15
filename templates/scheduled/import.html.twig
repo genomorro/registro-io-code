@@ -21,37 +21,37 @@
         {% endfor %}
     {% endfor %}
 
-	<div class="card my-5">
-	    <div class="card-body">
-		<p class="card-text">
-                    {% trans %}scheduled.import.paragraph.one{% endtrans %}:
-		</p>
-		<code>area_id,label,name,institution,subject,begin_at,end_at</code>
-		<ul class="mt-4">
-                    <li><strong>area_id:</strong> {% trans %}scheduled.import.ul.li.one{% endtrans %}</li>
-                    <li><strong>label:</strong> {% trans %}scheduled.import.ul.li.two{% endtrans %}</li>
-                    <li><strong>subject:</strong> {% trans %}scheduled.import.ul.li.three{% endtrans %}</li>
-                    <li><strong>begin_at / end_at:</strong> {% trans %}scheduled.import.ul.li.four{% endtrans %}</li>
-		</ul>	    
-	    </div>
+    <div class="card my-5">
+	<div class="card-body">
+	    <p class="card-text">
+                {% trans %}scheduled.import.paragraph.one{% endtrans %}:
+	    </p>
+	    <code>area_id,label,name,institution,subject,begin_at,end_at</code>
+	    <ul class="mt-4">
+                <li><strong>area:</strong> {% trans %}scheduled.import.ul.li.one{% endtrans %}</li>
+                <li><strong>label:</strong> {% trans %}scheduled.import.ul.li.two{% endtrans %}</li>
+                <li><strong>subject:</strong> {% trans %}scheduled.import.ul.li.three{% endtrans %}</li>
+                <li><strong>begin_at / end_at:</strong> {% trans %}scheduled.import.ul.li.four{% endtrans %}</li>
+	    </ul>
 	</div>
+    </div>
 
-	<div class="row">
-	    {{ form_start(form) }}
-		<div class="form-group">
-		    {{ form_label(form.file) }}:
-		    <div class="row">
-			<div class="col-md-6">
-			    {{ form_widget(form.file) }}
-			    <span class="text-danger">{{ form_errors(form.file) }}</span>
-			</div>
+    <div class="row">
+	{{ form_start(form) }}
+	    <div class="form-group">
+		{{ form_label(form.file) }}:
+		<div class="row">
+		    <div class="col-md-6">
+			{{ form_widget(form.file) }}
+			<span class="text-danger">{{ form_errors(form.file) }}</span>
 		    </div>
 		</div>
+	    </div>
 
-		<div class="d-grid gap-2 d-md-block">
-		    <button class="btn btn-primary" value="Upload" type="submit">{% trans %}Upload File{% endtrans %}</button>
-		    <a class="btn btn-link" href="{{ path('app_scheduled_index') }}">{% trans %}Back to list{% endtrans %}</a>
-		</div>
-	    {{ form_end(form) }}
-	</div>
+	    <div class="d-grid gap-2 d-md-block">
+		<button class="btn btn-primary" value="Upload" type="submit">{% trans %}Upload File{% endtrans %}</button>
+		<a class="btn btn-link" href="{{ path('app_scheduled_index') }}">{% trans %}Back to list{% endtrans %}</a>
+	    </div>
+	{{ form_end(form) }}
+    </div>
 {% endblock %}
