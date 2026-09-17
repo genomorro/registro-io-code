@@ -231,6 +231,11 @@ final class ScheduledController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
+        if (!$scheduled->getScheduledAttendances()->isEmpty()) {
+            $this->addFlash('danger', $translator->trans('Cannot delete scheduled because it is associated with scheduled attendances.'));
+            return $this->redirectToRoute('app_scheduled_index', [], Response::HTTP_SEE_OTHER);
+        }
+
 	$flash = $translator->trans('Scheduled deleted successfully.');
         if ($this->isCsrfTokenValid('delete'.$scheduled->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($scheduled);

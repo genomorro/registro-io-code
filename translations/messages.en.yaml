@@ -36,6 +36,7 @@
 'Scheduled added successfully.': 'Scheduled added successfully.'
 'Scheduled updated successfully.': 'Scheduled updated successfully.'
 'Scheduled deleted successfully.': 'Scheduled deleted successfully.'
+'Cannot delete scheduled because it is associated with scheduled attendances.': 'Cannot delete scheduled because it is associated with scheduled attendances.'
 'There is no import data to preview.': 'There is no import data to preview.'
 'There is no import data to process.': 'There is no import data to process.'
 'No import result is available.': 'No import result is available.'
