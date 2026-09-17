@@ -176,4 +176,22 @@ class Scheduled
 
         return $this;
     }
+
+    public function isWithinDateRange(?\DateTimeInterface $date = null): bool
+    {
+        $date ??= new \DateTimeImmutable();
+        $targetDate = $date->format('Y-m-d');
+
+        $begin = $this->beginAt ? $this->beginAt->format('Y-m-d') : null;
+        $end = $this->endAt ? $this->endAt->format('Y-m-d') : null;
+
+        if ($begin && $targetDate < $begin) {
+            return false;
+        }
+        if ($end && $targetDate > $end) {
+            return false;
+        }
+
+        return true;
+    }
 }
