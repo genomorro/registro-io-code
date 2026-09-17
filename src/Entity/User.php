@@ -80,6 +80,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $active = null;
 
+    /**
+     * @var Collection<int, ScheduledAttendance>
+     */
+    #[ORM\OneToMany(targetEntity: ScheduledAttendance::class, mappedBy: 'checkInUser')]
+    private Collection $scheduledAttendances;
+
     public function __construct()
     {
         $this->attendancesCheckIn = new ArrayCollection();
@@ -88,6 +94,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->visitorsCheckOut = new ArrayCollection();
         $this->stakeholdersCheckIn = new ArrayCollection();
         $this->stakeholdersCheckOut = new ArrayCollection();
+        $this->scheduledAttendances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -371,6 +378,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setActive(bool $active): static
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ScheduledAttendance>
+     */
+    public function getScheduledAttendances(): Collection
+    {
+        return $this->scheduledAttendances;
+    }
+
+    public function addScheduledAttendance(ScheduledAttendance $scheduledAttendance): static
+    {
+        if (!$this->scheduledAttendances->contains($scheduledAttendance)) {
+            $this->scheduledAttendances->add($scheduledAttendance);
+            $scheduledAttendance->setCheckInUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduledAttendance(ScheduledAttendance $scheduledAttendance): static
+    {
+        if ($this->scheduledAttendances->removeElement($scheduledAttendance)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduledAttendance->getCheckInUser() === $this) {
+                $scheduledAttendance->setCheckInUser(null);
+            }
+        }
 
         return $this;
     }

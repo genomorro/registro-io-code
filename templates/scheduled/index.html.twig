@@ -47,8 +47,6 @@
 		{% endif %}
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Label'|trans, 's.label') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Name'|trans, 's.name') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Institution'|trans, 's.institution') }}</th>
-                <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Subject'|trans, 's.subject') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'Begin'|trans, 's.beginAt') }}</th>
                 <th scope="col">{{ knp_pagination_sortable(scheduleds, 'End'|trans, 's.endAt') }}</th>
                 <th scope="col">{% trans %}actions{% endtrans %}</th>
@@ -60,8 +58,6 @@
                 <td>{{ scheduled.id }}</td>
                 <td>{{ scheduled.label }}</td>
                 <td>{{ scheduled.name }}</td>
-                <td>{{ scheduled.institution }}</td>
-                <td>{{ scheduled.subject }}</td>
                 <td>{{ scheduled.beginAt ? scheduled.beginAt|date('Y-m-d') : '' }}</td>
                 <td>{{ scheduled.endAt ? scheduled.endAt|date('Y-m-d') : '' }}</td>
                 <td>
@@ -73,7 +69,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">{% trans %}no records found{% endtrans %}</td>
+                <td colspan="5">{% trans %}no records found{% endtrans %}</td>
             </tr>
         {% endfor %}
         </tbody>

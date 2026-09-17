@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Trait\HasUuidTrait;
 use App\Repository\ScheduledRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -44,6 +46,17 @@ class Scheduled
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Please select an area.')]
     private ?Area $area = null;
+
+    /**
+     * @var Collection<int, ScheduledAttendance>
+     */
+    #[ORM\OneToMany(targetEntity: ScheduledAttendance::class, mappedBy: 'scheduled')]
+    private Collection $scheduledAttendances;
+
+    public function __construct()
+    {
+        $this->scheduledAttendances = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -130,6 +143,36 @@ class Scheduled
     public function setArea(?Area $area): static
     {
         $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ScheduledAttendance>
+     */
+    public function getScheduledAttendances(): Collection
+    {
+        return $this->scheduledAttendances;
+    }
+
+    public function addScheduledAttendance(ScheduledAttendance $scheduledAttendance): static
+    {
+        if (!$this->scheduledAttendances->contains($scheduledAttendance)) {
+            $this->scheduledAttendances->add($scheduledAttendance);
+            $scheduledAttendance->setScheduled($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduledAttendance(ScheduledAttendance $scheduledAttendance): static
+    {
+        if ($this->scheduledAttendances->removeElement($scheduledAttendance)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduledAttendance->getScheduled() === $this) {
+                $scheduledAttendance->setScheduled(null);
+            }
+        }
 
         return $this;
     }
