@@ -36,6 +36,7 @@
 'Scheduled added successfully.': 'Programado agregado exitosamente.'
 'Scheduled updated successfully.': 'Programado actualizado exitosamente.'
 'Scheduled deleted successfully.': 'Programado borrado exitosamente.'
+'Cannot delete scheduled because it is associated with scheduled attendances.': 'No se puede borrar el programado porque está asociado a asistencias de programados.'
 'There is no import data to preview.': 'No hay datos de importación para previsualizar.'
 'There is no import data to process.': 'No hay datos de importación para procesar.'
 'No import result is available.': 'Resultados de importación no disponibles.'
