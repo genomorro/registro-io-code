@@ -17,6 +17,24 @@ class ScheduledAttendanceRepository extends ServiceEntityRepository
         parent::__construct($registry, ScheduledAttendance::class);
     }
 
+    public function findLatestByScheduledAndDate(\App\Entity\Scheduled $scheduled, \DateTimeInterface $date): ?ScheduledAttendance
+    {
+        $startOfDay = (clone $date)->setTime(0, 0, 0);
+        $endOfDay = (clone $date)->setTime(23, 59, 59);
+
+        return $this->createQueryBuilder('sa')
+		    ->andWhere('sa.scheduled = :scheduled')
+		    ->andWhere('sa.checkInAt >= :startOfDay')
+		    ->andWhere('sa.checkInAt <= :endOfDay')
+		    ->setParameter('scheduled', $scheduled)
+		    ->setParameter('startOfDay', $startOfDay)
+		    ->setParameter('endOfDay', $endOfDay)
+		    ->orderBy('sa.checkInAt', 'DESC')
+		    ->setMaxResults(1)
+		    ->getQuery()
+		    ->getOneOrNullResult();
+    }
+
     /**
      * @return Query
      */

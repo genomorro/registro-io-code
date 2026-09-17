@@ -32,6 +32,13 @@ class ScheduledAutocompleteField extends AbstractType
 		    $scheduled->getName());
 	    },
 	    'searchable_fields' => ['label', 'name'],
+	    'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
+		$today = new \DateTimeImmutable('today');
+		return $er->createQueryBuilder('s')
+		    ->andWhere('s.beginAt <= :today')
+		    ->andWhere('s.endAt >= :today')
+		    ->setParameter('today', $today);
+	    },
 	    'extra_options' => [],
 	    'tom_select_options' => [
 		'placeholder' => $this->translator->trans('Search by name or label'),
