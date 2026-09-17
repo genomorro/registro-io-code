@@ -41,10 +41,12 @@
 			    <th>{% trans %}Check in{% endtrans %}</th>
 			    <td>{{ scheduled_attendance.checkInAt ? scheduled_attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			</tr>
-			<tr>
-			    <th class="text-wrap">{% trans %}User who checked in{% endtrans %}</th>
-			    <td>{{ scheduled_attendance.checkInUser.username }}</td>
-			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+			    <tr>
+				<th class="text-wrap">{% trans %}User who checked in{% endtrans %}</th>
+				<td>{{ scheduled_attendance.checkInUser.username }}</td>
+			    </tr>
+			{% endif %}
 		    </tbody>
 		</table>
 	    </div>

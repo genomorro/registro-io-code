@@ -240,4 +240,33 @@ final class ScheduledController extends AbstractController
 
         return $this->redirectToRoute('app_scheduled_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{id}/check-in', name: 'app_scheduled_check_in', methods: ['POST'], requirements: ['id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'])]
+    public function checkIn(
+        Request $request,
+        Scheduled $scheduled,
+        EntityManagerInterface $entityManager,
+        TranslatorInterface $translator
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $redirectRoute = $request->request->get('redirect_route', 'app_scheduled_index');
+        $redirectParams = $request->request->all('redirect_params');
+
+        if (!$scheduled->isWithinDateRange()) {
+            $this->addFlash('danger', $translator->trans('Cannot check in because the scheduled date is out of valid range.'));
+            return $this->redirectToRoute($redirectRoute, $redirectParams);
+        }
+
+        $scheduledAttendance = new \App\Entity\ScheduledAttendance();
+        $scheduledAttendance->setScheduled($scheduled);
+        $scheduledAttendance->setCheckInAt(new \DateTimeImmutable());
+        $scheduledAttendance->setCheckInUser($this->getUser());
+
+        $entityManager->persist($scheduledAttendance);
+        $entityManager->flush();
+
+        $this->addFlash('success', $translator->trans('Scheduled check in successfully.'));
+        return $this->redirectToRoute($redirectRoute, $redirectParams);
+    }
 }

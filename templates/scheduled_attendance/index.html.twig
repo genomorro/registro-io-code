@@ -42,7 +42,9 @@
 	<table class="table table-hover">
             <thead>
 		<tr>
-                    <th scope="col">{{ knp_pagination_sortable(scheduled_attendances, 'Id'|trans, 'a.id') }}</th>
+		    {% if is_granted('ROLE_SUPER_ADMIN') %}
+			<th scope="col">{{ knp_pagination_sortable(scheduled_attendances, 'Id'|trans, 'a.id') }}</th>
+		    {% endif %}
                     <th scope="col">{{ knp_pagination_sortable(scheduled_attendances, 'Scheduled'|trans, 's.name') }}</th>
                     <th scope="col">{{ knp_pagination_sortable(scheduled_attendances, 'Check in'|trans, 'a.checkInAt') }}</th>
                     <th>{% trans %}actions{% endtrans %}</th>
@@ -51,7 +53,9 @@
             <tbody>
 		{% for scheduled_attendance in scheduled_attendances %}
 		    <tr>
-			<td>{{ scheduled_attendance.id }}</td>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+			    <td>{{ scheduled_attendance.id }}</td>
+			{% endif %}
 			<td>{{ scheduled_attendance.scheduled.name }}</td>
 			<td>{{ scheduled_attendance.checkInAt ? scheduled_attendance.checkInAt|date('Y-m-d H:i:s') : '' }}</td>
 			<td>

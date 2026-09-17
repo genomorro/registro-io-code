@@ -40,6 +40,8 @@
 'There is no import data to process.': 'No hay datos de importación para procesar.'
 'No import result is available.': 'Resultados de importación no disponibles.'
 'There are no omitted or erroneous records to download.': 'No hay registros omitidos o erróneos por descargar'
+'Scheduled check in successfully.': 'Entrada de programado registrada exitosamente.'
+'Cannot check in because the scheduled date is out of valid range.': 'No es posible registrar la entrada porque hoy no tiene acceso.'
 ### SearchController.php
 'Patient not found': 'Paciente no encontrado'
 'Improve the search criteria': 'Mejora el criterio de búsqueda' 

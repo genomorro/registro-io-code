@@ -40,6 +40,8 @@
 'There is no import data to process.': 'There is no import data to process.'
 'No import result is available.': 'No import result is available.'
 'There are no omitted or erroneous records to download.': 'There are no omitted or erroneous records to download.'
+'Scheduled check in successfully.': 'Scheduled check in successfully.'
+'Cannot check in because the scheduled date is out of valid range.': 'Cannot check in because the scheduled date is out of valid range.'
 ### SearchController.php
 'Patient not found': 'Patient not found'
 'Improve the search criteria': 'Improve the search criteria' 
