@@ -42,6 +42,7 @@
 'There are no omitted or erroneous records to download.': 'No hay registros omitidos o erróneos por descargar'
 'Scheduled check in successfully.': 'Entrada de programado registrada exitosamente.'
 'Cannot check in because the scheduled date is out of valid range.': 'No es posible registrar la entrada porque hoy no tiene acceso.'
+'Cannot delete scheduled because it is associated with scheduled attendances.': 'No se puede borrar el registro porque está asociado a una o más asistencias.'
 ### SearchController.php
 'Patient not found': 'Paciente no encontrado'
 'Improve the search criteria': 'Mejora el criterio de búsqueda' 

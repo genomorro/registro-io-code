@@ -42,6 +42,7 @@
 'There are no omitted or erroneous records to download.': 'There are no omitted or erroneous records to download.'
 'Scheduled check in successfully.': 'Scheduled check in successfully.'
 'Cannot check in because the scheduled date is out of valid range.': 'Cannot check in because the scheduled date is out of valid range.'
+'Cannot delete scheduled because it is associated with scheduled attendances.': 'Cannot delete scheduled because it is associated with scheduled attendances.'
 ### SearchController.php
 'Patient not found': 'Patient not found'
 'Improve the search criteria': 'Improve the search criteria' 
