@@ -1,0 +1,136 @@
+erDiagram
+    USER {
+        int id PK
+        string username UK
+        json roles
+        string password
+        string name
+        boolean active
+    }
+
+    AREA {
+        int id PK
+        string building
+        string unit
+        int extension
+    }
+
+    EMPLOYEE {
+        int id PK
+        int number
+        string name
+        boolean active
+        int area_id FK
+    }
+
+    PATIENT {
+        int id PK
+        string file UK
+        string name
+        boolean disability
+    }
+
+    HOSPITALIZED {
+        int id PK
+        string service
+        string bed
+        int patient_id FK,UK
+    }
+
+    APPOINTMENT {
+        int id PK
+        string agenda
+        string specialty
+        string location
+        datetime date_at
+        string type
+        string status
+        int patient_id FK
+    }
+
+    ATTENDANCE {
+        int id PK
+        datetime check_in_at
+        datetime check_out_at
+        int tag
+        string evidence
+        int patient_id FK
+        int check_in_user_id FK
+        int check_out_user_id FK
+    }
+
+    VISITOR {
+        int id PK
+        string name
+        string phone
+        string dni
+        int tag
+        datetime check_in_at
+        datetime check_out_at
+        string relationship
+        string evidence
+        text comment
+        int destination_id FK
+        int check_in_user_id FK
+        int check_out_user_id FK
+        int host_id FK
+    }
+
+    STAKEHOLDER {
+        int id PK
+        string name
+        string dni
+        int tag
+        string company
+        string subject
+        datetime check_in_at
+        datetime check_out_at
+        string evidence
+        string sign
+        text comment
+        int destination_id FK
+        int check_in_user_id FK
+        int check_out_user_id FK
+        int host_id FK
+    }
+
+    SCHEDULED {
+        int id PK
+        string label UK
+        string name
+        string institution
+        string subject
+        date begin_at
+        date end_at
+        int area_id FK
+    }
+
+    SCHEDULED_ATTENDANCE {
+        int id PK
+        datetime check_in_at
+        int scheduled_id FK
+        int check_in_user_id FK
+    }
+
+    AREA ||--o{ EMPLOYEE : "has"
+    AREA ||--o{ VISITOR : "destination for"
+    AREA ||--o{ STAKEHOLDER : "destination for"
+    AREA ||--o{ SCHEDULED : "has"
+
+    EMPLOYEE ||--o{ VISITOR : "hosts"
+    EMPLOYEE ||--o{ STAKEHOLDER : "hosts"
+
+    PATIENT ||--o| HOSPITALIZED : "is"
+    PATIENT ||--o{ APPOINTMENT : "has"
+    PATIENT ||--o{ ATTENDANCE : "has"
+    PATIENT }o--o{ VISITOR : "visited by"
+
+    USER ||--o{ ATTENDANCE : "checks in"
+    USER ||--o{ ATTENDANCE : "checks out"
+    USER ||--o{ VISITOR : "checks in"
+    USER ||--o{ VISITOR : "checks out"
+    USER ||--o{ STAKEHOLDER : "checks in"
+    USER ||--o{ STAKEHOLDER : "checks out"
+    USER ||--o{ SCHEDULED_ATTENDANCE : "checks in"
+
+    SCHEDULED ||--o{ SCHEDULED_ATTENDANCE : "has"
