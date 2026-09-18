@@ -33,7 +33,7 @@ class ScheduledAutocompleteField extends AbstractType
 	    },
 	    'searchable_fields' => ['label', 'name'],
 	    'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
-		$today = new \DateTimeImmutable('today')->format('Y-m-d');
+		$today = (new \DateTimeImmutable('today'))->format('Y-m-d');
 		return $er->createQueryBuilder('s')
 		    ->andWhere('s.beginAt <= :today')
 		    ->andWhere('s.endAt >= :today')

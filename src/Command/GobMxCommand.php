@@ -10,8 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
-    name: 'app:gob-mx',
-    description: 'Downloads and modifies gobmx.js to avoid conflicts.',
+name: 'app:gob-mx',
+description: 'Downloads and modifies gobmx.js to avoid conflicts.',
 )]
 class GobMxCommand extends Command
 {
@@ -29,7 +29,6 @@ class GobMxCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $url = 'https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js';
         $targetDir = $this->projectDir . '/assets/vendor/gobmx';
         $targetFile = $targetDir . '/gobmx.js';
 
@@ -40,14 +39,44 @@ class GobMxCommand extends Command
             }
         }
 
-        $io->info("Downloading gobmx.js from $url");
-        try {
-            $response = $this->httpClient->request('GET', $url);
-            $content = $response->getContent();
-        } catch (\Exception $e) {
-            $io->error("Failed to download gobmx.js: " . $e->getMessage());
+        $urls = [
+            'https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js',
+            'https://web.archive.org/web/20250305104858id_/https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js',
+        ];
+
+        $requestOptions = [
+            'headers' => [
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+                'Accept' => '*/*',
+                'Referer' => 'https://www.gob.mx/',
+            ],
+            'max_redirects' => 5,
+        ];
+
+        $content = null;
+        $downloadedUrl = null;
+
+        foreach ($urls as $url) {
+            $io->info("Attempting to download gobmx.js from $url");
+            try {
+                $response = $this->httpClient->request('GET', $url, $requestOptions);
+                if ($response->getStatusCode() === 200) {
+                    $content = $response->getContent();
+                    $downloadedUrl = $url;
+                    break;
+                }
+                $io->warning("Received HTTP " . $response->getStatusCode() . " from $url");
+            } catch (\Exception $e) {
+                $io->warning("Failed to download gobmx.js from $url: " . $e->getMessage());
+            }
+        }
+
+        if ($content === null) {
+            $io->error("Failed to download gobmx.js from all configured sources.");
             return Command::FAILURE;
         }
+
+        $io->info("Successfully downloaded gobmx.js from $downloadedUrl");
 
         // Modify gobmx.js to not load Bootstrap
         $io->info("Modifying gobmx.js to disable Bootstrap loading...");
