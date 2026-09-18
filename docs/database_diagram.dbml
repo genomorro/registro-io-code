@@ -1,0 +1,123 @@
+// Database Markup Language (DBML) Diagram
+
+Table User {
+  id integer [pk, increment]
+  username varchar(180) [unique, not null]
+  roles json [not null]
+  password varchar(255) [not null]
+  name varchar(255) [not null]
+  active boolean [not null]
+}
+
+Table Area {
+  id integer [pk, increment]
+  building varchar(255) [not null]
+  unit varchar(255)
+  extension integer
+}
+
+Table Employee {
+  id integer [pk, increment]
+  number integer [not null]
+  name varchar(255) [not null]
+  active boolean [not null]
+  area_id integer [ref: > Area.id]
+}
+
+Table Patient {
+  id integer [pk, increment]
+  file varchar(12) [unique, not null]
+  name varchar(255) [not null]
+  disability boolean [not null]
+}
+
+Table Hospitalized {
+  id integer [pk, increment]
+  service varchar(255) [not null]
+  bed varchar(255) [not null]
+  patient_id integer [unique, not null, ref: - Patient.id]
+}
+
+Table Appointment {
+  id integer [pk, increment]
+  agenda varchar(255) [not null]
+  specialty varchar(255) [not null]
+  location varchar(255) [not null]
+  date_at datetime [not null]
+  type varchar(255) [not null]
+  status varchar(255) [not null]
+  patient_id integer [not null, ref: > Patient.id]
+}
+
+Table Attendance {
+  id integer [pk, increment]
+  check_in_at datetime [not null]
+  check_out_at datetime
+  tag integer [not null]
+  evidence varchar(255)
+  patient_id integer [not null, ref: > Patient.id]
+  check_in_user_id integer [not null, ref: > User.id]
+  check_out_user_id integer [ref: > User.id]
+}
+
+Table Visitor {
+  id integer [pk, increment]
+  name varchar(255) [not null]
+  phone varchar(255)
+  dni varchar(255) [not null]
+  tag integer [not null]
+  check_in_at datetime [not null]
+  check_out_at datetime
+  relationship varchar(255)
+  evidence varchar(255)
+  comment text
+  destination_id integer [not null, ref: > Area.id]
+  check_in_user_id integer [not null, ref: > User.id]
+  check_out_user_id integer [ref: > User.id]
+  host_id integer [ref: > Employee.id]
+}
+
+Table visitor_patient {
+  visitor_id integer [not null, ref: > Visitor.id]
+  patient_id integer [not null, ref: > Patient.id]
+
+  Indexes {
+    (visitor_id, patient_id) [pk]
+  }
+}
+
+Table Stakeholder {
+  id integer [pk, increment]
+  name varchar(255) [not null]
+  dni varchar(255) [not null]
+  tag integer [not null]
+  company varchar(255) [not null]
+  subject varchar(255) [not null]
+  check_in_at datetime [not null]
+  check_out_at datetime
+  evidence varchar(255)
+  sign varchar(255)
+  comment text
+  destination_id integer [not null, ref: > Area.id]
+  check_in_user_id integer [not null, ref: > User.id]
+  check_out_user_id integer [ref: > User.id]
+  host_id integer [ref: > Employee.id]
+}
+
+Table Scheduled {
+  id integer [pk, increment]
+  label varchar(255) [unique, not null]
+  name varchar(255) [not null]
+  institution varchar(255) [not null]
+  subject varchar(255) [not null]
+  begin_at date [not null]
+  end_at date [not null]
+  area_id integer [not null, ref: > Area.id]
+}
+
+Table ScheduledAttendance {
+  id integer [pk, increment]
+  check_in_at datetime [not null]
+  scheduled_id integer [not null, ref: > Scheduled.id]
+  check_in_user_id integer [not null, ref: > User.id]
+}
