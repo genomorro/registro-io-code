@@ -116,6 +116,14 @@ session:
     six: 'You can change the language of this website. Press the'
     lang: 'language button'
     seven: 'and select your preference. English and Spanish are currently available.'
+definitions:
+  title: 'Definitions'
+  patient: 'This person has a file number at the institute and receives medical care at INER.'
+  visitor: 'It is a person who visits a patient admitted to the hospital, or accompanies a patient on their visit to the INER.'
+  stakeholder: 'This is a person who has no medical relationship with INER, and comes to carry out other activities, for example: cultural, school or administrative activities.'
+  scheduled: 'This is a person who was reported to be visiting INER on specific dates.'
+  area: 'It is a specific area within INER. Every area is located in a building.'
+  employee: 'This person has an employment relationship with INER.'
 ## menu.html.twig
 'Search': 'Search'
 'Patients': 'Patients'

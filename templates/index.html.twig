@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -19,16 +20,11 @@
 		    {% endif %}
 		    {% if is_granted('ROLE_ADMIN') %}
 			<li>{% trans %}welcome.paragraph.ul.one.ul.sub{% endtrans %} <i>{% trans %}Patients{% endtrans %}</i></li>
-			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Appointments{% endtrans %}</i></li>
-			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Attendances{% endtrans %}</i></li>
-			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Users{% endtrans %}</i></li>
 		    {% endif %}
 		    {% if is_granted('ROLE_USER') %}
 			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Visitors{% endtrans %}</i></li>
-		    {% endif %}
-		    {%if is_granted('ROLE_SUPER_ADMIN') %}
 			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Stakeholders{% endtrans %}</i></li>
-			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Reports{% endtrans %}</i></li>
+			<li>{% trans %}welcome.paragraph.ul.one.ul.link{% endtrans %} <i>{% trans %}Scheduleds{% endtrans %}</i></li>
 		    {% endif %}
 		    <li>{% trans %}welcome.paragraph.ul.one.ul.lang{% endtrans %} (<i class="bi bi-translate"></i>)</li>
 		    <li>{% trans %}welcome.paragraph.ul.one.ul.user{% endtrans %} (<i class="icon icon-user"></i>)</li>
@@ -52,11 +48,34 @@
 		<li>{% trans %}Log out{% endtrans %}</li>
 		{% if is_granted('ROLE_ADMIN') %}
 		    <li>{% trans %}User index{% endtrans %}</li>
+		    <li>{% trans %}Area index{% endtrans %}</li>
+		    <li>{% trans %}Employee index{% endtrans %}</li>
+		    <li>{% trans %}Reports{% endtrans %}</li>
 		{% endif %}
 	    </ul>
 	</p>
 	<p>{% trans %}session.paragraph.five{% endtrans %}</p>
 	<h3>{% trans %}Language{% endtrans %}</h3>
 	<p>{% trans %}session.paragraph.six{% endtrans %} <i>{% trans %}session.paragraph.lang{% endtrans %} (<i class="bi bi-translate"></i>)</i> {% trans %}session.paragraph.seven{% endtrans %}</p>
+	{% if is_granted('ROLE_USER') %}
+	    <hr>
+	    <h3>{% trans %}definitions.title{% endtrans %}
+		<dl class="row mt-5">
+		    <dt class="col-2">{% trans %}Patient{% endtrans %}</dt>
+		    <dd class="col-10">{% trans %}definitions.patient{% endtrans %}</dd>
+		    <dt class="col-2">{% trans %}Visitor{% endtrans %}</dt>
+		    <dd class="col-10">{% trans %}definitions.visitor{% endtrans %}</dd>
+		    <dt class="col-2">{% trans %}Stakeholder{% endtrans %}</dt>
+		    <dd class="col-10">{% trans %}definitions.stakeholder{% endtrans %}</dd>
+		    <dt class="col-2">{% trans %}Scheduleds{% endtrans %}</dt>
+		    <dd class="col-10">{% trans %}definitions.scheduled{% endtrans %}</dd>
+		    {% if is_granted('ROLE_ADMIN') %}
+			<dt class="col-2">{% trans %}Area{% endtrans %}</dt>
+			<dd class="col-10">{% trans %}definitions.area{% endtrans %}</dd>
+			<dt class="col-2">{% trans %}Employee{% endtrans %}</dt>
+			<dd class="col-10">{% trans %}definitions.employee{% endtrans %}</dd>
+		    {% endif %}
+		</dl>
+	{% endif %}
     </div>
 {% endblock %}

@@ -24,7 +24,7 @@
     <div class="table-responsive">
 	<table class="table table-striped">
             <tbody>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		{% if is_granted('ROLE_ADMIN') %}
 		    <tr>
 			<th>{% trans %}Id{% endtrans %}</th>
 			<td>{{ area.id }}</td>

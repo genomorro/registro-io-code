@@ -36,3 +36,19 @@ main nav.navbar, main a.navbar-brand {
     text-align: center;
 }
 /* END: Menu */
+/* BEGIN: Description list alignment */
+dl.row dt {
+    font-size: 24px !important;
+    font-weight: 300 !important;
+    font-style: normal !important;
+    line-height: 1.428571429 !important;
+}
+
+dl.row dd {
+    font-size: 18px !important;
+    font-weight: 300 !important;
+    font-style: normal !important;
+    line-height: 1.428571429 !important;
+    font-family: "Noto Sans","Noso Sans",serif,"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+}
+/* END: Description list alignment */

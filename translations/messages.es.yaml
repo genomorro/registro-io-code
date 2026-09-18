@@ -116,6 +116,14 @@ session:
     six: 'Es posible cambiar el idioma de este sitio web, presione el'
     lang: 'botón de idioma'
     seven: 'y seleccione su preferencia. Actualmente está disponible el idioma inglés y español.'
+definitions:
+  title: 'Definiciones'
+  patient: 'Es una persona que tiene un número de expediente en el instituto, recibe atención médica en el INER.'
+  visitor: 'Es una persona que visita a un paciente internado en el hospital, o bien, acompaña a un paciente en su visita al INER.'
+  stakeholder: 'Es una persona que no tiene relación médica con el INER, viene a realizar otras actividades, por ejemplo: actividades culturales, escolares o administrativas.'
+  scheduled: 'Es una persona de la cual se informó que visitaría el INER en fechas específicas.'
+  area: 'Es un lugar en particular del INER. Toda área se encuentra en algún edificio.'
+  employee: 'Es una persona que tiene una relación laboral con el INER.'
 ## menu.html.twig
 'Search': 'Buscar'
 'Patients': 'Pacientes'
